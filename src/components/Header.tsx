@@ -4,6 +4,7 @@ import { MyImage } from "./MyImage";
 import { routes } from "@/libs/routes";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/className";
+import { useModes } from "@/contexts/ModesContext";
 
 const IS_ACTIVE = (path: string, href: string): boolean => {
   return path.startsWith(href);
@@ -11,14 +12,20 @@ const IS_ACTIVE = (path: string, href: string): boolean => {
 
 export const Header = () => {
   const pathname = usePathname();
+  const { modes } = useModes();
+  const logo =
+    {
+      normal: "/images/Title.png",
+      superhhh: "/images/SuperTitle.png",
+      greenwei: "/images/GreenTitle.png",
+      pikachu: "/images/KachuTitle.png",
+    }[modes[0].name] || "/images/Title.png";
+
   return (
-    <header className="bg-black/50 backdrop-blur-2xl">
+    <header className="bg-black/30 backdrop-blur-2xl">
       <div className="container flex items-center py-4">
         <Link href="/" className="h-16">
-          <MyImage
-            src={"/images/Title.png"}
-            className="w-auto h-full object-contain"
-          />
+          <MyImage src={logo} className="w-auto h-full object-contain" />
         </Link>
         <nav className="ms-auto text-2xl font-bold flex items-center justify-end gap-4">
           {routes.map((route) => {
@@ -28,11 +35,11 @@ export const Header = () => {
               <Link
                 key={route.href}
                 href={route.href}
-                className={cn("text-nowrap", {
+                className={cn("text-nowrap hover:underline", {
                   "text-(--text-color-primary)": isActive(pathname),
                 })}
               >
-                {route.label}
+                <route.icon/> {route.label}
               </Link>
             );
           })}

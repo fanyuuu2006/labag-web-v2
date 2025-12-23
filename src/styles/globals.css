@@ -95,6 +95,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    transition: background var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94), color var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   /* === 按鈕系統 === */
@@ -110,6 +113,13 @@
       cubic-bezier(0.25, 0.46, 0.45, 0.94);
     -webkit-tap-highlight-color: transparent; /* 移除移動端點擊高亮 */
   }
+  button:active,
+  .btn:active,
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-tertiary:active {
+    transform: scale(0.9);
+  }
 
   .btn {
     background: var(--background-color-secondary);
@@ -123,17 +133,14 @@
       var(--text-color-secondary)
     );
     box-shadow: var(--shadow-base);
-    color: white;
+    color: var(--text-color);
     border: none;
   }
 
   .btn-secondary {
-    background: linear-gradient(
-      135deg,
-      var(--text-color-primary),
-      var(--text-color-tertiary)
-    );
-    box-shadow: var(--shadow-base);
+    color: var(--text-color-primary);
+    background: var(--background-color-primary);
+    border: 2px solid var(--text-color-primary);
   }
 
   .btn-tertiary {

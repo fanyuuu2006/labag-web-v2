@@ -1,17 +1,40 @@
 "use client";
-import { createContext, useContext } from "react";
-import { labag } from "labag";
+import { game } from "@/libs/game";
+import { createContext, useContext, useState, useMemo } from "react";
 
-const ModesContext = createContext<{
-  modes: typeof labag.modes;
-} | null>(null);
+type Modes = typeof game.modes;
+
+interface ModesContextType {
+  modes: Modes;
+}
+
+const ModesContext = createContext<ModesContextType | null>(null);
 
 export const ModesProvider = ({ children }: { children: React.ReactNode }) => {
-  const { modes } = labag.getCurrentConfig();
+  const { modes: initialModes } = game.getCurrentConfig();
+  const [modes, setModes] = useState<Modes>(initialModes);
+  game.addEventListener("gameStart", (g) => {
+    const { modes: newModes } = g.getCurrentConfig();
+    setModes(newModes);
+  });
+
+  game.addEventListener("roundEnd", (g) => {
+    const { modes: newModes } = g.getCurrentConfig();
+    setModes(newModes);
+  });
+
+  const value = useMemo(
+    () => ({
+      modes,
+    }),
+    [modes]
+  );
+
   return (
-    <ModesContext.Provider value={{ modes }}>{children}</ModesContext.Provider>
+    <ModesContext.Provider value={value}>{children}</ModesContext.Provider>
   );
 };
+
 export const useModes = () => {
   const context = useContext(ModesContext);
   if (!context) {
