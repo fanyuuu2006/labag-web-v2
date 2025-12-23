@@ -1,0 +1,451 @@
+@import "tailwindcss";
+
+/* ==== Base Layer ==== */
+@layer base {
+  :root {
+    --background-color: #05132a;
+    --background-color-primary: #003387;
+    --background-color-secondary: #012051;
+
+    --text-color: #ffffff;
+    --text-color-primary: #00ffff;
+    --text-color-secondary: #4aaeff;
+    --text-color-tertiary: #ff6eb4;
+    --text-color-muted: #aaaaaa;
+
+    --border-color: #333333cc;
+    --border-color-light: #525252;
+    --border-color-focus: var(--text-color-primary);
+
+    /* === 效果參數 === */
+    --shadow-base: 0 0 1rem rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+    --shadow-card-hover: 0 var(--move-y) 1.5rem rgba(0, 0, 0, 1);
+
+    /* === 動畫時間 === */
+    --transition-fast: 0.15s;
+    --transition-normal: 0.3s;
+
+    /* === 尺寸和間距 === */
+    --border-radius-sm: 0.5rem;
+    --border-radius-md: 1rem;
+    --border-radius-lg: 1.5rem;
+    --container-max-width: 1280px;
+    --scroll-margin: 6rem;
+    --move-y: 0.5rem;
+  }
+
+  /* === 全域重置 === */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    scroll-behavior: smooth;
+    scroll-margin: var(--scroll-margin);
+  }
+
+  html {
+    height: 100%;
+  }
+  body[data-theme="normal"] {
+    --background-color: #05132a;
+    --background-color-primary: #003387;
+    --background-color-secondary: #012051;
+    --text-color-primary: #00ffff;
+    --text-color-secondary: #4aaeff;
+    --text-color-tertiary: #556df3;
+  }
+  body[data-theme="superhhh"] {
+    --background-color: #15052a;
+    --background-color-primary: #440087;
+    --background-color-secondary: #220151;
+    --text-color-primary: #ff00ff;
+    --text-color-secondary: #d94aff;
+    --text-color-tertiary: #b06eff;
+  }
+  body[data-theme="greenwei"] {
+    --background-color: #052a15;
+    --background-color-primary: #008739;
+    --background-color-secondary: #015122;
+    --text-color-primary: #00ff66;
+    --text-color-secondary: #4aff99;
+    --text-color-tertiary: #6effaa;
+  }
+  body[data-theme="pikachu"] {
+    --background-color: #2a2605;
+    --background-color-primary: #877800;
+    --background-color-secondary: #514801;
+    --text-color-primary: #ffff00;
+    --text-color-secondary: #ffcc4a;
+    --text-color-tertiary: #ffaa6e;
+  }
+
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    color: var(--text-color);
+    background: var(--background-color);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+      Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* === 按鈕系統 === */
+  button,
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-tertiary {
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-tap-highlight-color: transparent; /* 移除移動端點擊高亮 */
+  }
+
+  .btn {
+    background: var(--background-color-secondary);
+    border: 2px solid var(--border-color);
+  }
+
+  .btn-primary {
+    background: linear-gradient(
+      135deg,
+      var(--text-color-primary),
+      var(--text-color-secondary)
+    );
+    box-shadow: var(--shadow-base);
+    color: white;
+    border: none;
+  }
+
+  .btn-secondary {
+    background: linear-gradient(
+      135deg,
+      var(--text-color-primary),
+      var(--text-color-tertiary)
+    );
+    box-shadow: var(--shadow-base);
+  }
+
+  .btn-tertiary {
+    color: var(--text-color-primary);
+    background: var(--background-color-primary);
+    border: 2px solid var(--text-color-primary);
+  }
+
+  button:hover,
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-tertiary:hover {
+    text-decoration: none !important;
+  }
+
+  button:active,
+  .btn:active,
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-tertiary:active {
+    transition-duration: var(--transition-fast);
+  }
+
+  /* 聚焦狀態 */
+  button:focus-visible,
+  .btn:focus-visible,
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .btn-tertiary:focus-visible {
+    outline: 2px solid var(--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  /* 禁用狀態 */
+  button:disabled,
+  .btn:disabled,
+  .btn-primary:disabled,
+  .btn-secondary:disabled,
+  .btn-tertiary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: none;
+    transform: none;
+    pointer-events: none;
+  }
+
+  /* === 容器系統 === */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: var(--container-max-width);
+    margin-inline: auto;
+    padding: 1.5rem;
+    gap: 1rem;
+    width: 100%;
+  }
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+  }
+
+  /* === 卡片系統 === */
+  .card {
+    background: var(--background-color-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-base);
+    transition: all var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* .card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.03),
+      transparent
+    );
+    transform: skewX(-15deg);
+    transition: left var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  } */
+
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-color-light);
+  }
+
+  /* .card:hover::before {
+    left: 100%;
+  } */
+
+  a.card:hover {
+    transform: translateY(calc(-1 * var(--move-y)));
+    border-color: var(--text-color-primary);
+    box-shadow: var(--shadow-card-hover);
+    text-decoration: none;
+  }
+
+  /* 聚焦狀態 */
+  a.card:focus-visible {
+    outline: 2px solid var(--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  /* === 連結樣式 === */
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: all var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--border-color-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* === 滑動摺疊效果 === */
+  .slide-collapse {
+    transition: height var(--transition-normal) ease-out;
+    overflow: hidden;
+    will-change: height;
+  }
+
+  /* === 自訂滾動條 === */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+    transition: background var(--transition-normal) ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color-muted);
+  }
+
+  /* 針對 Firefox 的滾動條樣式 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+  }
+}
+
+/* ==== Utilities Layer ==== */
+@layer utilities {
+  .tooltip,
+  .overlay-wrapper {
+    position: relative;
+  }
+
+  .tooltip::before,
+  .overlay-wrapper .overlay-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 70%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1000;
+  }
+
+  .tooltip:hover:before,
+  .overlay-wrapper:hover .overlay-content {
+    bottom: 120%;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltip::before {
+    content: attr(data-tooltip);
+    width: max-content;
+    max-width: 200px;
+    background: var(--background-color-secondary);
+    border: var(--border-color) 1px solid;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+    white-space: nowrap;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-base);
+  }
+
+  /* === 動畫效果 === */
+  .animate-pop {
+    animation: pop var(--transition-fast) cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .animate-appear {
+    animation: appear var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .animate-turn {
+    animation: turn var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  /* 減少動畫效果（針對有偏好的用戶） */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pop,
+    .animate-turn,
+    .underline-spread::after,
+    .hover\:underline-spread::after {
+      animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* === Keyframe 動畫 === */
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes turn {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes underlineSpreadIn {
+    from {
+      width: 0;
+    }
+    to {
+      width: 120%;
+    }
+  }
+
+  /* === 底線擴散效果 === */
+  .underline-spread,
+  .hover\:underline-spread {
+    position: relative;
+    display: inline-block;
+  }
+
+  .hover\:underline-spread:hover {
+    text-decoration: none !important;
+  }
+
+  .underline-spread::after,
+  .hover\:underline-spread::after {
+    content: "";
+    --line-height: 0.25rem;
+    position: absolute;
+    bottom: -0.25em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: var(--line-height);
+    background: linear-gradient(
+      135deg,
+      var(--text-color-primary),
+      var(--text-color-secondary)
+    );
+    border-radius: var(--border-radius-md);
+    transition: width var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .underline-spread::after {
+    animation: underlineSpreadIn var(--transition-normal)
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .hover\:underline-spread:hover::after {
+    width: 110%;
+  }
+}
