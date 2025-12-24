@@ -7,19 +7,22 @@ import { GlowText } from "../GlowText";
 
 export const MainSection = () => {
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center py-20 gap-12">
-      <div className="container flex flex-col items-center text-center gap-6">
-        <GlowText as="h2" className="text-6xl md:text-7xl font-bold">
+    <section className="min-h-[80vh] flex flex-col items-center justify-center py-16 md:py-20 gap-8 md:gap-12">
+      <div className="container px-4 flex flex-col items-center text-center gap-6">
+        <GlowText
+          as="h2"
+          className="text-5xl sm:text-6xl md:text-8xl font-bold leading-tight tracking-tight"
+        >
           {site.title}
         </GlowText>
-        <p className="text-xl md:text-2xl text-(--text-color-muted) max-w-2xl">
+        <p className="text-base sm:text-xl md:text-2xl text-(--text-color-muted) max-w-xl md:max-w-2xl leading-relaxed">
           {site.description}
         </p>
 
-        <div className="flex gap-4 mt-8">
+        <div className="flex flex-co gap-4 sm:gap-6 mt-6 w-full justify-center items-center">
           <Link
             href={"/game"}
-            className="btn-primary font-bold px-8 py-4 text-2xl rounded-full"
+            className="btn-primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
             onClick={() => {
               game.init();
             }}
@@ -28,7 +31,7 @@ export const MainSection = () => {
           </Link>
           <Link
             href={"/rankings"}
-            className="btn-secondary font-bold px-8 py-4 text-2xl rounded-full"
+            className="btn-secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
           >
             排行榜
           </Link>

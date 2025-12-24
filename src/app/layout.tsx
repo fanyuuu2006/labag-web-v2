@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import { Header } from "@/components/Header";
+import { Header } from "@/components/Header/Header";
 import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
