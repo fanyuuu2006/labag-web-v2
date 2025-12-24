@@ -8,21 +8,34 @@ const Pattrern = ({ index }: { index: number }) => {
   const [src, setSrc] = useState<string | null>(null);
   useEffect(() => {
     const getPattern = (g: typeof game) => {
-      setTimeout(() => {
-        if (g.patterns[index]) {
-          setSrc(`/images/patterns/${g.patterns[index]?.name}.jpg`);
-        } else {
-          setSrc(null);
-        }
-      }, (index + 1) * 500);
+      const pattern = g.patterns[index];
+      const name = pattern?.name;
+      setSrc(null);
+      if (name) {
+        setTimeout(() => {
+          setSrc(`/images/patterns/${name}.jpg`);
+        }, (index + 1) * 500);
+      }
     };
-    game.addEventListener("roundEnd", getPattern);
+    const updatePattern = (g: typeof game) => {
+      const pattern = g.patterns[index];
+      const name = pattern?.name;
+      setSrc(null);
+      if (name) {
+        setTimeout(() => {
+          setSrc(`/images/patterns/${name}.jpg`);
+        }, 3000);
+      }
+    };
+    game.addEventListener("rollSlots", getPattern);
+    game.addEventListener("roundEnd", updatePattern);
     return () => {
-      game.removeEventListener("roundEnd", getPattern);
+      game.removeEventListener("rollSlots", getPattern);
+      game.removeEventListener("roundEnd", updatePattern);
     };
   }, [index]);
   return (
-    <div className="aspect-3/4 text-6xl md:text-7xl lg:text-8xl font-bold bg-(--background-color-secondary) border-2 border-(--border-color) overflow-hidden ">
+    <div className="aspect-3/4 text-6xl md:text-7xl lg:text-8xl font-bold bg-(--background-color) border border-(--text-color-primary) overflow-hidden rounded-md">
       {src ? (
         <MyImage
           src={src}
@@ -40,7 +53,7 @@ const Pattrern = ({ index }: { index: number }) => {
 };
 export const PatternsDiv = () => {
   return (
-    <div className="grid grid-cols-3 w-full md:max-w-3xl">
+    <div className="grid grid-cols-3 w-full gap-1 md:max-w-2xl">
       {Array.from({ length: 3 }).map((_, idx) => (
         <Pattrern key={idx} index={idx} />
       ))}

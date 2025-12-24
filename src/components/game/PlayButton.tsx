@@ -21,7 +21,7 @@ export const PlayButton = ({ className, ...rest }: PlayButtonProps) => {
     <button
       disabled={disable}
       className={cn(
-        "btn-primary font-bold px-8 py-4 text-2xl md:text-3xl lg:text-4xl rounded-full shadow-[0_0_30px_var(--text-color-primary)] hover:shadow-[0_0_50px_var(--text-color-primary)] transition-all duration-300 scale-100 hover:scale-105 active:scale-95",
+        "btn-primary font-bold px-8 py-4 text-2xl md:text-3xl lg:text-4xl rounded-full",
         className
       )}
       onClick={hanldeStartClick}
