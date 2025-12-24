@@ -6,9 +6,10 @@ import Link from "next/link";
 import { GlowText } from "../GlowText";
 
 export const MainSection = () => {
+
   return (
     <section className="h-full">
-      <div className="container h-full px-4 flex flex-col items-center justify-center text-center gap-6">
+      <div className="container h-full px-4 flex flex-col items-center justify-center text-center gap-4">
         <GlowText
           as="h2"
           className="text-5xl sm:text-6xl md:text-8xl font-bold leading-tight tracking-tight"

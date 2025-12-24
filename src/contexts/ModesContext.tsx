@@ -1,6 +1,6 @@
 "use client";
 import { game } from "@/libs/game";
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState, useMemo, useEffect } from "react";
 
 type Modes = typeof game.modes;
 
@@ -13,15 +13,26 @@ const ModesContext = createContext<ModesContextType | null>(null);
 export const ModesProvider = ({ children }: { children: React.ReactNode }) => {
   const { modes: initialModes } = game.getCurrentConfig();
   const [modes, setModes] = useState<Modes>(initialModes);
-  game.addEventListener("gameStart", (g) => {
-    const { modes: newModes } = g.getCurrentConfig();
-    setModes(newModes);
-  });
 
-  game.addEventListener("roundEnd", (g) => {
-    const { modes: newModes } = g.getCurrentConfig();
-    setTimeout(() => setModes(newModes), 3000);
-  });
+  useEffect(() => {
+    const handleGameStart = (g: typeof game) => {
+      const { modes: newModes } = g.getCurrentConfig();
+      setModes(newModes);
+    };
+
+    const handleRoundEnd = (g: typeof game) => {
+      const { modes: newModes } = g.getCurrentConfig();
+      setTimeout(() => setModes(newModes), 3000);
+    };
+
+    game.addEventListener("gameStart", handleGameStart);
+    game.addEventListener("roundEnd", handleRoundEnd);
+
+    return () => {
+      game.removeEventListener("gameStart", handleGameStart);
+      game.removeEventListener("roundEnd", handleRoundEnd);
+    };
+  }, []);
 
   const value = useMemo(
     () => ({
