@@ -23,4 +23,5 @@ game.addEventListener("roundEnd", (g) => {
   console.log(`Margin Score: ${g.marginScore}`);
   console.log(`Score: ${g.score}\n`);
 });
+
 export { game };
