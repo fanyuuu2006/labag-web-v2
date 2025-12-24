@@ -41,6 +41,14 @@
     --container-max-width: 1280px;
     --scroll-margin: 6rem;
     --move-y: 0.5rem;
+
+    /* === 宇宙星空特效變量 === */
+    --space-bg-top: #020617;
+    --space-bg-bottom: #0B1121;
+    --star-color: rgba(255, 255, 255, 0.9);
+    --nebula-cyan: rgba(0, 240, 255, 0.15);
+    --nebula-purple: rgba(130, 0, 255, 0.15);
+    --horizon-glow: rgba(50, 120, 255, 0.4);
   }
 
   /* === 全域重置 === */
@@ -100,7 +108,6 @@
     grid-template-rows: auto 1fr;
     height: 100vh;
     color: var(--text-color);
-    background: var(--background-color);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
       Arial, sans-serif;
     line-height: 1.6;
@@ -109,6 +116,66 @@
     text-rendering: optimizeLegibility;
     transition: background var(--transition-normal) var(--transition-timing),
       color var(--transition-normal) var(--transition-timing);
+    
+    /* 基礎背景：深空漸層 + 底部地平線光暈 */
+    background: 
+      /* 底部強烈藍光 (地平線) */
+      radial-gradient(ellipse 80% 30% at 50% 100%, var(--horizon-glow), transparent 70%),
+      /* 整體深空漸層 */
+      linear-gradient(to bottom, var(--space-bg-top), var(--space-bg-bottom));
+    background-attachment: fixed;
+  }
+
+  /* === 星空粒子特效 === */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+    background-image: 
+      radial-gradient(1px 1px at 10% 10%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 20% 30%, var(--star-color), transparent),
+      radial-gradient(2px 2px at 30% 60%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 40% 80%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 50% 40%, var(--star-color), transparent),
+      radial-gradient(2px 2px at 60% 20%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 70% 90%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 80% 50%, var(--star-color), transparent),
+      radial-gradient(1px 1px at 90% 10%, var(--star-color), transparent);
+    background-size: 500px 500px;
+    opacity: 0.8;
+    animation: stars-twinkle 100s linear infinite;
+  }
+
+  /* === 極光/星雲氛圍特效 === */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    background: 
+      radial-gradient(circle at 20% 50%, var(--nebula-cyan), transparent 60%),
+      radial-gradient(circle at 80% 30%, var(--nebula-purple), transparent 60%);
+    filter: blur(80px);
+    animation: nebula-flow 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes stars-twinkle {
+    from { background-position: 0 0; }
+    to { background-position: 0 1000px; }
+  }
+
+  @keyframes nebula-flow {
+    0% { opacity: 0.5; transform: scale(1); }
+    100% { opacity: 0.8; transform: scale(1.1); }
   }
 
   /* === 按鈕系統 === */

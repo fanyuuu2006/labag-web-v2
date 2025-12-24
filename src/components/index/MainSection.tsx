@@ -7,8 +7,8 @@ import { GlowText } from "../GlowText";
 
 export const MainSection = () => {
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center py-16 md:py-20 gap-8 md:gap-12">
-      <div className="container px-4 flex flex-col items-center text-center gap-6">
+    <section className="h-full">
+      <div className="container h-full px-4 flex flex-col items-center justify-center text-center gap-6">
         <GlowText
           as="h2"
           className="text-5xl sm:text-6xl md:text-8xl font-bold leading-tight tracking-tight"
