@@ -8,8 +8,42 @@ import { Burger } from "./Burger";
 import { useState, useCallback } from "react";
 import { Collapse } from "fanyucomponents";
 
-const IS_ACTIVE = (path: string, href: string): boolean => {
-  return path.startsWith(href);
+// 判斷路由是否激活的輔助函式
+const isRouteActive = (
+  pathname: string,
+  href: string,
+  customActiveCheck?: (path: string) => boolean
+): boolean => {
+  if (customActiveCheck) return customActiveCheck(pathname);
+  return pathname.startsWith(href);
+};
+
+// 提取 NavLink 組件以減少重複代碼
+interface NavLinkProps {
+  route: (typeof routes)[number];
+  pathname: string;
+  onClick?: () => void;
+  className?: string;
+}
+
+const NavLink = ({ route, pathname, onClick, className }: NavLinkProps) => {
+  const isActive = isRouteActive(pathname, route.href, route.isActive);
+  const Icon = route.icon;
+
+  return (
+    <Link
+      href={route.href}
+      onClick={onClick}
+      className={cn(
+        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300",
+        isActive && "text-(--text-color-primary)",
+        className
+      )}
+    >
+      <Icon className="text-[0.75em]" />
+      <span>{route.label}</span>
+    </Link>
+  );
 };
 
 export const Header = () => {
@@ -20,18 +54,17 @@ export const Header = () => {
     setMenuShow((prev) => !prev);
   }, []);
 
+  const closeMenu = useCallback(() => {
+    setMenuShow(false);
+  }, []);
+
   return (
     <header className="w-full flex flex-col border-b border-(--border-color) bg-black/45 backdrop-blur-md transition-all">
-      <div className="container flex  items-center justify-between">
-        <Link
-          href="/"
-          onClick={() => {
-            setMenuShow(false);
-          }}
-        >
+      <div className="container flex items-center justify-between">
+        <Link href="/" onClick={closeMenu}>
           <GlowText
             as="h1"
-            className="font-bold tracking-wider text-nowrap text-4xl"
+            className="font-bold tracking-wider text-nowrap text-5xl"
           >
             啦八機
           </GlowText>
@@ -48,29 +81,9 @@ export const Header = () => {
         </div>
 
         <nav className="hidden lg:flex text-3xl items-center gap-2 md:gap-4">
-          {routes.map((route) => {
-            const isActive = route.isActive
-              ? route.isActive(pathname)
-              : IS_ACTIVE(pathname, route.href);
-
-            const Icon = route.icon;
-
-            return (
-              <Link
-                key={route.href}
-                href={route.href}
-                className={cn(
-                  "text-nowrap flex items-center gap-2 text-(--text-color-muted) transition-colors duration-300",
-                  {
-                    "text-(--text-color-primary)": isActive,
-                  }
-                )}
-              >
-                <Icon className="text-[0.75em]" />
-                <span>{route.label}</span>
-              </Link>
-            );
-          })}
+          {routes.map((route) => (
+            <NavLink key={route.href} route={route} pathname={pathname} />
+          ))}
         </nav>
       </div>
       <Collapse
@@ -78,32 +91,16 @@ export const Header = () => {
         className="slide-collapse lg:hidden"
         id="mobile-nav"
       >
-        <div className="flex flex-col w-full text-xl font-semibold">
-          {routes.map((route) => {
-            const isActive = route.isActive
-              ? route.isActive(pathname)
-              : IS_ACTIVE(pathname, route.href);
-
-            const Icon = route.icon;
-            return (
-              <Link
-                key={route.href}
-                href={route.href}
-                onClick={() => {
-                  setMenuShow(false);
-                }}
-                className={cn(
-                  "text-nowrap p-2 flex items-center justify-center text-(--text-color-muted) transition-colors duration-300",
-                  {
-                    "text-(--text-color-primary)": isActive,
-                  }
-                )}
-              >
-                <Icon className="text-[0.75em]" />
-                <span>{route.label}</span>
-              </Link>
-            );
-          })}
+        <div className="flex flex-col w-full text-2xl">
+          {routes.map((route) => (
+            <NavLink
+              key={route.href}
+              route={route}
+              pathname={pathname}
+              onClick={closeMenu}
+              className="p-2"
+            />
+          ))}
         </div>
       </Collapse>
     </header>
