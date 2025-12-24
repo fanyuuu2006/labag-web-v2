@@ -74,6 +74,14 @@
     --text-color-secondary: #4aaeff;
     --text-color-tertiary: #556df3;
     --border-color: #1c2b3ecc;
+
+    /* 星空特效 - 藍色系 */
+    --space-bg-top: #020617;
+    --space-bg-bottom: #0B1121;
+    --star-color: rgba(255, 255, 255, 0.9);
+    --nebula-cyan: rgba(0, 240, 255, 0.15);
+    --nebula-purple: rgba(130, 0, 255, 0.15);
+    --horizon-glow: rgba(50, 120, 255, 0.4);
   }
   body[data-theme="superhhh"] {
     --background-color: #15052a;
@@ -83,6 +91,14 @@
     --text-color-secondary: #d94aff;
     --text-color-tertiary: #b06eff;
     --border-color: #2a1c3ecc;
+
+    /* 星空特效 - 紫色系 */
+    --space-bg-top: #1a052a;
+    --space-bg-bottom: #2d0b42;
+    --star-color: rgba(255, 230, 255, 0.9);
+    --nebula-cyan: rgba(255, 0, 255, 0.15);
+    --nebula-purple: rgba(100, 0, 200, 0.2);
+    --horizon-glow: rgba(180, 50, 255, 0.4);
   }
   body[data-theme="greenwei"] {
     --background-color: #052a15;
@@ -92,6 +108,14 @@
     --text-color-secondary: #4aff99;
     --text-color-tertiary: #6effaa;
     --border-color: #1c3e2acc;
+
+    /* 星空特效 - 綠色系 */
+    --space-bg-top: #051a0d;
+    --space-bg-bottom: #0b2d16;
+    --star-color: rgba(230, 255, 230, 0.9);
+    --nebula-cyan: rgba(0, 255, 100, 0.15);
+    --nebula-purple: rgba(0, 150, 100, 0.15);
+    --horizon-glow: rgba(50, 255, 120, 0.4);
   }
   body[data-theme="pikachu"] {
     --background-color: #2a2605;
@@ -101,6 +125,14 @@
     --text-color-secondary: #ffcc4a;
     --text-color-tertiary: #ffaa6e;
     --border-color: #3e3a1ccc;
+
+    /* 星空特效 - 黃色系 */
+    --space-bg-top: #1a1805;
+    --space-bg-bottom: #2d290b;
+    --star-color: rgba(255, 255, 200, 0.9);
+    --nebula-cyan: rgba(255, 200, 0, 0.15);
+    --nebula-purple: rgba(255, 100, 0, 0.15);
+    --horizon-glow: rgba(255, 220, 50, 0.4);
   }
 
   body {
