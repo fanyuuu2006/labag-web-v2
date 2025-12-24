@@ -14,7 +14,7 @@ export const PlayButton = () => {
   return (
     <button
       disabled={disable}
-      className="btn-tertiary font-bold px-6 py-3 text-2xl rounded-full"
+      className="btn-secondary font-bold px-6 py-3 text-2xl rounded-full"
       onClick={hanldeStartClick}
     >
       開始

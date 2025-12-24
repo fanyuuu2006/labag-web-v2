@@ -59,7 +59,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="w-full flex flex-col border-b border-(--border-color) bg-black/45 backdrop-blur-md transition-all">
+    <header className="w-full flex flex-col border-b border-(--border-color) bg-black/25 backdrop-blur-md transition-all">
       <div className="container flex items-center justify-between">
         <Link href="/" onClick={closeMenu}>
           <GlowText
