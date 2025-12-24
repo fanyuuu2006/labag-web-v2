@@ -14,7 +14,7 @@ export const PlayButton = () => {
   return (
     <button
       disabled={disable}
-      className="btn-tertiary font-bold px-6 py-3 text-2xl rounded-full"
+      className="btn-primary font-bold px-12 py-6 text-4xl rounded-full shadow-[0_0_30px_var(--text-color-primary)] hover:shadow-[0_0_50px_var(--text-color-primary)] transition-all duration-300 scale-100 hover:scale-105 active:scale-95"
       onClick={hanldeStartClick}
     >
       開始
