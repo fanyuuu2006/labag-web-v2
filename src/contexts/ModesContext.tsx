@@ -20,7 +20,7 @@ export const ModesProvider = ({ children }: { children: React.ReactNode }) => {
 
   game.addEventListener("roundEnd", (g) => {
     const { modes: newModes } = g.getCurrentConfig();
-    setModes(newModes);
+    setTimeout(() => setModes(newModes), 3000);
   });
 
   const value = useMemo(

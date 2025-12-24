@@ -3,6 +3,8 @@
 /* ==== Base Layer ==== */
 @layer base {
   :root {
+    color-scheme: dark; /* 優化：告知瀏覽器這是深色主題 */
+
     --background-color: #05132a;
     --background-color-primary: #003387;
     --background-color-secondary: #012051;
@@ -22,9 +24,10 @@
     --shadow-hover: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
     --shadow-card-hover: 0 var(--move-y) 1.5rem rgba(0, 0, 0, 1);
 
-    /* === 動畫時間 === */
+    /* === 動畫時間與曲線 === */
     --transition-fast: 0.15s;
     --transition-normal: 0.3s;
+    --transition-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* 優化：統一動畫曲線 */
 
     /* === 尺寸和間距 === */
     --border-radius-sm: 0.5rem;
@@ -95,9 +98,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transition: background var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94), color var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: background var(--transition-normal) var(--transition-timing),
+                color var(--transition-normal) var(--transition-timing);
   }
 
   /* === 按鈕系統 === */
@@ -109,16 +111,49 @@
     cursor: pointer;
     border: none;
     text-decoration: none;
-    transition: all var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    -webkit-tap-highlight-color: transparent; /* 移除移動端點擊高亮 */
+    transition: all var(--transition-normal) var(--transition-timing);
+    -webkit-tap-highlight-color: transparent;
   }
+
+  /* 整合 active 狀態 */
   button:active,
   .btn:active,
   .btn-primary:active,
   .btn-secondary:active,
   .btn-tertiary:active {
     transform: scale(0.9);
+    transition-duration: var(--transition-fast);
+  }
+
+  button:hover,
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-tertiary:hover {
+    text-decoration: none !important;
+  }
+
+  /* 聚焦狀態 */
+  button:focus-visible,
+  .btn:focus-visible,
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .btn-tertiary:focus-visible {
+    outline: 2px solid var(--border-color-focus);
+    outline-offset: 2px;
+  }
+
+  /* 禁用狀態 */
+  button:disabled,
+  .btn:disabled,
+  .btn-primary:disabled,
+  .btn-secondary:disabled,
+  .btn-tertiary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: none;
+    transform: none;
+    pointer-events: none;
   }
 
   .btn {
@@ -149,45 +184,6 @@
     border: 2px solid var(--text-color-primary);
   }
 
-  button:hover,
-  .btn:hover,
-  .btn-primary:hover,
-  .btn-secondary:hover,
-  .btn-tertiary:hover {
-    text-decoration: none !important;
-  }
-
-  button:active,
-  .btn:active,
-  .btn-primary:active,
-  .btn-secondary:active,
-  .btn-tertiary:active {
-    transition-duration: var(--transition-fast);
-  }
-
-  /* 聚焦狀態 */
-  button:focus-visible,
-  .btn:focus-visible,
-  .btn-primary:focus-visible,
-  .btn-secondary:focus-visible,
-  .btn-tertiary:focus-visible {
-    outline: 2px solid var(--border-color-focus);
-    outline-offset: 2px;
-  }
-
-  /* 禁用狀態 */
-  button:disabled,
-  .btn:disabled,
-  .btn-primary:disabled,
-  .btn-secondary:disabled,
-  .btn-tertiary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    filter: none;
-    transform: none;
-    pointer-events: none;
-  }
-
   /* === 容器系統 === */
   .container {
     position: relative;
@@ -210,37 +206,15 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-base);
-    transition: all var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all var(--transition-normal) var(--transition-timing);
     position: relative;
     overflow: hidden;
   }
-
-  /* .card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.03),
-      transparent
-    );
-    transform: skewX(-15deg);
-    transition: left var(--transition-slow) cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  } */
 
   .card:hover {
     box-shadow: var(--shadow-hover);
     border-color: var(--border-color-light);
   }
-
-  /* .card:hover::before {
-    left: 100%;
-  } */
 
   a.card:hover {
     transform: translateY(calc(-1 * var(--move-y)));
@@ -249,7 +223,6 @@
     text-decoration: none;
   }
 
-  /* 聚焦狀態 */
   a.card:focus-visible {
     outline: 2px solid var(--border-color-focus);
     outline-offset: 2px;
@@ -259,8 +232,7 @@
   a {
     color: inherit;
     text-decoration: none;
-    transition: all var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all var(--transition-normal) var(--transition-timing);
   }
 
   a:focus-visible {
@@ -319,7 +291,7 @@
     bottom: 70%;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s var(--transition-timing);
     z-index: 1000;
   }
 
@@ -349,16 +321,14 @@
   }
 
   .animate-appear {
-    animation: appear var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: appear var(--transition-normal) var(--transition-timing) forwards;
   }
 
   .animate-turn {
-    animation: turn var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: turn var(--transition-normal) var(--transition-timing) forwards;
   }
 
-  /* 減少動畫效果（針對有偏好的用戶） */
+  /* 減少動畫效果 */
   @media (prefers-reduced-motion: reduce) {
     .animate-pop,
     .animate-turn,
@@ -443,13 +413,11 @@
       var(--text-color-secondary)
     );
     border-radius: var(--border-radius-md);
-    transition: width var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: width var(--transition-normal) var(--transition-timing);
   }
 
   .underline-spread::after {
-    animation: underlineSpreadIn var(--transition-normal)
-      cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: underlineSpreadIn var(--transition-normal) var(--transition-timing) forwards;
   }
 
   .hover\:underline-spread:hover::after {
