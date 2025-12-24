@@ -3,11 +3,12 @@ import "@/styles/globals.css";
 import { Header } from "@/components/Header";
 import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
+import { site } from "@/libs/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://labag.vercel.app"),
-  title: "啦八機 LaBaG",
-  description: "只需動動手指就能在無聊時候打發時間的小遊戲",
+  title: site.title,
+  description: site.description,
   icons: {
     icon: "/favicon.ico",
   },
