@@ -10,13 +10,18 @@ type PlayButtonProps = DistributiveOmit<
 >;
 export const PlayButton = ({ className, ...rest }: PlayButtonProps) => {
   const [disable, setDisable] = useState(false);
-  const hanldeStartClick = useCallback(() => {
+  const handleStartClick = useCallback(() => {
+    if (disable) return;
     setDisable(true);
     game.play();
-    setTimeout(() => {
-      setDisable(false);
-    }, 3500);
-  }, []);
+    setTimeout(() => setDisable(false), 3500);
+  }, [disable]);
+  const handleKey = useCallback((e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleStartClick();
+    }
+  }, [handleStartClick]);
   return (
     <button
       disabled={disable}
@@ -24,7 +29,10 @@ export const PlayButton = ({ className, ...rest }: PlayButtonProps) => {
         "btn-primary select-none font-bold px-8 py-4 text-2xl md:text-3xl lg:text-4xl rounded-full",
         className
       )}
-      onClick={hanldeStartClick}
+      onClick={handleStartClick}
+      onKeyDown={handleKey}
+      aria-pressed={disable}
+      aria-live="polite"
       {...rest}
     >
       開始

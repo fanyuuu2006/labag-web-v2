@@ -5,7 +5,7 @@ import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
 
-const Pattrern = ({ index }: { index: number }) => {
+const PatternCard = ({ index }: { index: number }) => {
   const [pattern, setPattern] = useState<Pattern | null>(null);
   useEffect(() => {
     const getPattern = (g: typeof game) => {
@@ -13,9 +13,7 @@ const Pattrern = ({ index }: { index: number }) => {
       const name = pattern?.name;
       setPattern(null);
       if (name) {
-        setTimeout(() => {
-          setPattern(pattern);
-        }, (index + 1) * 500);
+        setTimeout(() => setPattern(pattern), (index + 1) * 500);
       }
     };
     const updatePattern = (g: typeof game) => {
@@ -23,9 +21,7 @@ const Pattrern = ({ index }: { index: number }) => {
       const name = pattern?.name;
       setPattern(null);
       if (name) {
-        setTimeout(() => {
-          setPattern(pattern);
-        }, 3000);
+        setTimeout(() => setPattern(pattern), 3000);
       }
     };
     game.addEventListener("rollSlots", getPattern);
@@ -46,7 +42,7 @@ const Pattrern = ({ index }: { index: number }) => {
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
-          <GlowText>?</GlowText>
+          <GlowText className="text-4xl">?</GlowText>
         </div>
       )}
     </div>
@@ -54,9 +50,9 @@ const Pattrern = ({ index }: { index: number }) => {
 };
 export const PatternsDiv = () => {
   return (
-    <div className="grid grid-cols-3 w-full gap-1 md:max-w-2xl">
+    <div className="grid grid-cols-3 w-full gap-2 md:max-w-2xl">
       {Array.from({ length: 3 }).map((_, idx) => (
-        <Pattrern key={idx} index={idx} />
+        <PatternCard key={idx} index={idx} />
       ))}
     </div>
   );

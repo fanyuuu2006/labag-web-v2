@@ -1,13 +1,14 @@
 "use client";
-import React, { Fragment, memo, useEffect, useMemo, useState } from "react";
+import React, { Fragment, memo, useEffect, useState } from "react";
 import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
+import { ModeName } from "labag";
 
 type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
 type InfoState = {
-  played: number;
+  times: Record<ModeName, number>;
   score: number;
   marginScore: number;
   gssCount: number;
@@ -16,10 +17,15 @@ type InfoState = {
 
 const ModeBadge = memo(({ mode }: { mode: string }) => {
   const style: React.CSSProperties = {
-    color: `var(--${mode}-text-color-primary)`,
+    background: `var(--${mode}-text-color-primary)`,
+    color: `var(--${mode}-background-color-primary)`,
   };
   return (
-    <span className="text-lg md:text-xl font-bold" style={style}>
+    <span
+      className="text-lg md:text-xl font-bold mr-1 rounded-full py-0.5 px-3"
+      style={style}
+      aria-label={`mode-${mode}`}
+    >
       {mode}
     </span>
   );
@@ -28,7 +34,12 @@ ModeBadge.displayName = "ModeBadge";
 
 export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
   const [info, setInfo] = useState<InfoState>({
-    played: game.played,
+    times: {
+      superhhh: game.getMode("superhhh")?.variable.times || 0,
+      greenwei: game.getMode("greenwei")?.variable.times || 0,
+      pikachu: game.getMode("pikachu")?.variable.times || 0,
+      normal: game.times - game.played,
+    },
     score: game.score,
     marginScore: game.marginScore,
     gssCount: game.getMode("greenwei")?.variable.count || 0,
@@ -42,7 +53,12 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
       // delay to allow round-end UI/animation to finish
       setTimeout(() => {
         setInfo({
-          played: g.played,
+          times: {
+            superhhh: g.getMode("superhhh")?.variable.times || 0,
+            greenwei: g.getMode("greenwei")?.variable.times || 0,
+            pikachu: g.getMode("pikachu")?.variable.times || 0,
+            normal: g.times - g.played,
+          },
           score: g.score,
           marginScore: g.marginScore,
           gssCount: g.getMode("greenwei")?.variable.count || 0,
@@ -59,11 +75,6 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
     };
   }, []);
 
-  const remaining = useMemo(
-    () => Math.max(0, game.times - info.played),
-    [info.played]
-  );
-
   return (
     <div
       className={cn(
@@ -79,87 +90,95 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
         遊戲資訊
       </GlowText>
 
-      <div className="flex flex-col gap-2 w-full items-start">
-        <p className="flex items-center gap-2">
-          <span className="text-base md:text-lg text-(--text-color-muted)">
-            剩餘次數:
-          </span>
-          <span className="text-lg md:text-xl font-bold">{remaining}</span>
-        </p>
+      <div className="flex flex-col gap-3 w-full items-start">
+        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+          <div className="flex items-center gap-2">
+            <dt className="text-base md:text-lg text-(--text-color-muted)">
+              剩餘次數:
+            </dt>
+            <dd className="text-lg md:text-xl font-bold">
+              {info.times.normal}
+            </dd>
+          </div>
 
-        <p className="flex items-center gap-2">
-          <span className="text-base md:text-lg text-(--text-color-muted)">
-            目前分數:
-          </span>
-          <GlowText as="span" className="text-lg md:text-xl font-bold">
-            {info.score}
-          </GlowText>
-          {info.marginScore !== 0 && (
-            <span className="text-yellow-200 font-bold">
-              +{info.marginScore}
-            </span>
+          <div className="flex items-center gap-2">
+            <dt className="text-base md:text-lg text-(--text-color-muted)">
+              目前分數:
+            </dt>
+            <dd className="flex items-center gap-2">
+              <GlowText as="span" className="text-lg md:text-xl font-bold">
+                {info.score}
+              </GlowText>
+              {info.marginScore !== 0 && (
+                <span className="text-yellow-200 font-bold">
+                  +{info.marginScore}
+                </span>
+              )}
+            </dd>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <dt className="text-base md:text-lg text-(--greenwei-text-color-secondary)">
+              咖波累積數:
+            </dt>
+            <dd className="text-lg md:text-xl font-bold text-(--greenwei-text-color-primary)">
+              {info.gssCount}
+            </dd>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <dt className="text-base md:text-lg text-(--text-color-muted)">
+              當前模式:
+            </dt>
+            <dd className="flex items-center flex-wrap">
+              {info.currentModes.length > 0 ? (
+                info.currentModes.map((mode, idx) => (
+                  <Fragment key={mode}>
+                    <ModeBadge mode={mode} />
+                    {idx < info.currentModes.length - 1 && <span>、</span>}
+                  </Fragment>
+                ))
+              ) : (
+                <span className="text-lg md:text-xl font-bold">無</span>
+              )}
+            </dd>
+          </div>
+        </dl>
+
+        <div className="flex flex-col gap-2 w-full">
+          {info.currentModes.includes("superhhh") && (
+            <div className="flex items-center gap-2">
+              <span className="text-base md:text-lg text-(--text-color-muted)">
+                超級阿禾剩餘次數:
+              </span>
+              <span className="text-lg md:text-xl font-bold">
+                {info.times.superhhh}
+              </span>
+            </div>
           )}
-        </p>
 
-        <p className="flex items-center gap-2">
-          <span className="text-base md:text-lg text-(--greenwei-text-color-secondary)">
-            咖波累積數:
-          </span>
-          <span className="text-lg md:text-xl font-bold text-(--greenwei-text-color-primary)">
-            {info.gssCount}
-          </span>
-        </p>
+          {info.currentModes.includes("greenwei") && (
+            <div className="flex items-center gap-2">
+              <span className="text-base md:text-lg text-(--text-color-muted)">
+                綠光阿瑋剩餘次數:
+              </span>
+              <span className="text-lg md:text-xl font-bold">
+                {info.times.greenwei}
+              </span>
+            </div>
+          )}
 
-        <div className="flex flex-col">
-          <p className="text-base md:text-lg text-(--text-color-muted)">
-            當前模式:
-          </p>
-          <p>
-            {info.currentModes.length > 0 ? (
-              info.currentModes.map((mode, idx) => (
-                <Fragment key={mode}>
-                  <ModeBadge mode={mode} />
-                  {idx < info.currentModes.length - 1 && <span>、</span>}
-                </Fragment>
-              ))
-            ) : (
-              <span className="text-lg md:text-xl font-bold">無</span>
-            )}
-          </p>
+          {info.currentModes.includes("pikachu") && (
+            <div className="flex items-center gap-2">
+              <span className="text-base md:text-lg text-(--text-color-muted)">
+                皮卡丘已觸發次數:
+              </span>
+              <span className="text-lg md:text-xl font-bold">
+                {info.times.pikachu}
+              </span>
+            </div>
+          )}
         </div>
-
-        {info.currentModes.includes("superhhh") && (
-          <p className="flex items-center gap-2">
-            <span className="text-base md:text-lg text-(--text-color-muted)">
-              超級阿禾剩餘次數:
-            </span>
-            <span className="text-lg md:text-xl font-bold">
-              {game.getMode("superhhh")?.variable.times || 0}
-            </span>
-          </p>
-        )}
-
-        {info.currentModes.includes("greenwei") && (
-          <p className="flex items-center gap-2">
-            <span className="text-base md:text-lg text-(--text-color-muted)">
-              綠光阿瑋剩餘次數:
-            </span>
-            <span className="text-lg md:text-xl font-bold">
-              {game.getMode("greenwei")?.variable.times || 0}
-            </span>
-          </p>
-        )}
-
-        {info.currentModes.includes("pikachu") && (
-          <p className="flex items-center gap-2">
-            <span className="text-base md:text-lg text-(--text-color-muted)">
-              皮卡丘已觸發次數:
-            </span>
-            <span className="text-lg md:text-xl font-bold">
-              {game.getMode("pikachu")?.variable.times || 0}
-            </span>
-          </p>
-        )}
       </div>
     </div>
   );
