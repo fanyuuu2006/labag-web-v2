@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MyImage } from "../MyImage";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
@@ -13,11 +13,14 @@ export const PatternsDiv = () => {
     null,
   ]);
 
+  const patternsRef = useRef<(Pattern | null)[]>(patterns);
+
   useEffect(() => {
     const cleanPatterns = () => {
       setPatterns([null, null, null]);
     };
     const revealPatterns = (g: typeof game) => {
+      patternsRef.current = g.patterns;
       g.patterns.forEach((p, index) => {
         const name = p?.name;
         if (name) {
@@ -25,6 +28,7 @@ export const PatternsDiv = () => {
             setPatterns((prev) => {
               const next = [...prev];
               next[index] = p;
+              console.log(p)
               return next;
             });
             playAudio(`/audios/ding.mp3`);
@@ -34,28 +38,30 @@ export const PatternsDiv = () => {
     };
     const updatePatterns = (g: typeof game) => {
       let diffName: string | null = null;
-      g.patterns.forEach((p, index) => {
-        const currentPattern = patterns[index];
+      for (let index = 0; index < g.patterns.length; index++) {
+        const p = g.patterns[index];
+        const currentPattern = patternsRef.current[index];
         if (p && (!currentPattern || p.name !== currentPattern.name)) {
           diffName = p.name;
+          break;
         }
-      });
+      }
       if (diffName) {
         setTimeout(() => {
-          setPatterns(g.patterns);
+          setPatterns([...g.patterns]);
           playAudio(`/audios/${diffName}On.mp3`);
         }, 3000);
       }
     };
     game.addEventListener("roundStart", cleanPatterns);
-    game.addEventListener("roundEnd", revealPatterns);
+    game.addEventListener("rollSlots", revealPatterns);
     game.addEventListener("roundEnd", updatePatterns);
     return () => {
       game.removeEventListener("roundStart", cleanPatterns);
-      game.removeEventListener("roundEnd", revealPatterns);
+      game.removeEventListener("rollSlots", revealPatterns);
       game.removeEventListener("roundEnd", updatePatterns);
     };
-  }, [patterns]);
+  }, []);
 
   return (
     <div className="grid grid-cols-3 w-full gap-2 md:max-w-2xl">

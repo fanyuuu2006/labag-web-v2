@@ -18,12 +18,12 @@ export const MainSection = () => {
     };
   }, [router]);
   return (
-    <section className="h-full py-8" aria-labelledby="game-section-title">
-      <div className="container mx-auto h-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
+    <section className="h-full" >
+      <div className="container h-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
         <div className="flex items-center justify-center px-2">
           <PatternsDiv />
         </div>
-        <aside className="flex flex-col justify-center items-center gap-4 md:gap-6 w-full px-2" aria-labelledby="game-info">
+        <aside className="flex flex-col justify-center items-center gap-4 md:gap-6">
           <InfoCard className="w-full" />
           <PlayButton className="w-full" />
         </aside>
