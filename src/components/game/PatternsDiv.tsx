@@ -81,7 +81,7 @@ export const PatternsDiv = () => {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <GlowText className="text-4xl">?</GlowText>
+              <GlowText className="text-8xl">?</GlowText>
             </div>
           )}
         </div>

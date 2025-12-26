@@ -17,7 +17,7 @@ type InfoState = {
 
 const ModeBadge = memo(({ mode }: { mode: string }) => {
   const style: React.CSSProperties = {
-    background: `var(--${mode}-text-color-primary)`,
+    background: `linear-gradient(135deg, var(--${mode}-text-color-primary), var(--${mode}-text-color-secondary))`,
     color: `var(--${mode}-background-color-secondary)`,
     boxShadow: `0 4px 14px rgba(0,0,0,0.25)`,
   };
@@ -180,7 +180,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                     className="text-xs sm:text-sm"
                     style={{ color: "var(--text-color-muted)" }}
                   >
-                    {mode} 剩餘次數
+                    {mode} 次數
                   </span>
                   <span className="text-sm sm:text-base font-bold">
                     {info.times[mode]}
