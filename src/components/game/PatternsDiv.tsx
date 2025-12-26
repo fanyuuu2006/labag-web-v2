@@ -28,7 +28,6 @@ export const PatternsDiv = () => {
             setPatterns((prev) => {
               const next = [...prev];
               next[index] = p;
-              console.log(p)
               return next;
             });
             playAudio(`/audios/ding.mp3`);
