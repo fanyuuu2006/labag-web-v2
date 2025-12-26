@@ -19,7 +19,7 @@ export const MainSection = () => {
   }, [router]);
   return (
     <section className="h-full py-8" aria-labelledby="game-section-title">
-      <div className="container mx-auto h-full grid grid-cols-1 md:grid-cols-2 px-4 gap-6 md:gap-12 items-center">
+      <div className="container mx-auto h-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
         <div className="flex items-center justify-center px-2">
           <PatternsDiv />
         </div>
