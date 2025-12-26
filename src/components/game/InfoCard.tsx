@@ -99,7 +99,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
         <dl className="grid grid-cols-2 md:grid-cols-2 gap-2 lg:gap-3 w-full">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <dt
-              className="text-xs sm:text-sm md:text-base uppercase"
+              className="text-xs sm:text-sm md:text-base"
               style={{ color: "var(--text-color-muted)" }}
             >
               剩餘次數
@@ -133,10 +133,10 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <dt
-              className="text-xs sm:text-sm md:text-base uppercase"
+              className="text-xs sm:text-sm md:text-base"
               style={{ color: "var(--greenwei-text-color-secondary)" }}
             >
-              gss累積數
+              GSS 累積數
             </dt>
             <dd
               className="text-base md:text-xl font-bold"
@@ -148,7 +148,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
 
           <div className="flex flex-col gap-1">
             <dt
-              className="text-sm md:text-base uppercase"
+              className="text-sm md:text-base"
               style={{ color: "var(--text-color-muted)" }}
             >
               當前模式
