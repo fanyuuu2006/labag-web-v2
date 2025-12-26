@@ -1,6 +1,7 @@
-import { labag } from "labag";
+import { LaBaG, modeList } from "labag";
 
-const game = labag;
+const game = new LaBaG(30);
+modeList.forEach((mode) => game.addMode(mode));
 
 game.addEventListener("gameStart", (g) => {
   console.log("Game Started!");

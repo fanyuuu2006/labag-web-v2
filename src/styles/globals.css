@@ -3,21 +3,8 @@
 /* ==== Base Layer ==== */
 @layer base {
   :root {
-    color-scheme: dark; /* 優化：告知瀏覽器這是深色主題 */
-
-    --background-color: #05132a;
-    --background-color-primary: #003387;
-    --background-color-secondary: #012051;
-
     --text-color: #ffffff;
-    --text-color-primary: #00ffff;
-    --text-color-secondary: #4aaeff;
-    --text-color-tertiary: #ff6eb4;
     --text-color-muted: #aaaaaa;
-
-    --border-color: #1c2b3ecc;
-    --border-color-light: #525252;
-    --border-color-focus: var(--text-color-primary);
 
     /* === 效果參數 === */
     --shadow-base: 0 0 1rem rgba(0, 0, 0, 0.5);
@@ -38,17 +25,69 @@
     --border-radius-sm: 0.5rem;
     --border-radius-md: 1rem;
     --border-radius-lg: 1.5rem;
-    --container-max-width: 1280px;
+    --container-max-width: 1800px;
     --scroll-margin: 6rem;
     --move-y: 0.5rem;
 
-    /* === 宇宙星空特效變量 === */
-    --space-bg-top: #020617;
-    --space-bg-bottom: #0b1121;
-    --star-color: rgba(255, 255, 255, 0.9);
-    --nebula-cyan: rgba(0, 240, 255, 0.15);
-    --nebula-purple: rgba(130, 0, 255, 0.15);
-    --horizon-glow: rgba(50, 120, 255, 0.4);
+    /* === Normal 主題變量 === */
+    --normal-background-color: #05132a;
+    --normal-background-color-primary: #003387;
+    --normal-background-color-secondary: #012051;
+    --normal-text-color-primary: #00ffff;
+    --normal-text-color-secondary: #4aaeff;
+    --normal-text-color-tertiary: #556df3;
+    --normal-border-color: #1c2b3ecc;
+    --normal-space-bg-top: #020617;
+    --normal-space-bg-bottom: #0b1121;
+    --normal-star-color: rgba(255, 255, 255, 0.9);
+    --normal-nebula-cyan: rgba(0, 240, 255, 0.15);
+    --normal-nebula-purple: rgba(130, 0, 255, 0.15);
+    --normal-horizon-glow: rgba(50, 120, 255, 0.4);
+
+    /* === Superhhh 主題變量 === */
+    --superhhh-background-color: #110f12;
+    --superhhh-background-color-primary: #440087;
+    --superhhh-background-color-secondary: #220151;
+    --superhhh-text-color-primary: #ff00ff;
+    --superhhh-text-color-secondary: #d94aff;
+    --superhhh-text-color-tertiary: #b06eff;
+    --superhhh-border-color: #2a1c3ecc;
+    --superhhh-space-bg-top: #1a052a;
+    --superhhh-space-bg-bottom: #2d0b42;
+    --superhhh-star-color: rgba(255, 230, 255, 0.9);
+    --superhhh-nebula-cyan: rgba(255, 0, 255, 0.15);
+    --superhhh-nebula-purple: rgba(100, 0, 200, 0.2);
+    --superhhh-horizon-glow: rgba(180, 50, 255, 0.4);
+
+    /* === Greenwei 主題變量 === */
+    --greenwei-background-color: #052a15;
+    --greenwei-background-color-primary: #008739;
+    --greenwei-background-color-secondary: #015122;
+    --greenwei-text-color-primary: #00ff66;
+    --greenwei-text-color-secondary: #4aff99;
+    --greenwei-text-color-tertiary: #6effaa;
+    --greenwei-border-color: #1c3e2acc;
+    --greenwei-space-bg-top: #051a0d;
+    --greenwei-space-bg-bottom: #0b2d16;
+    --greenwei-star-color: rgba(230, 255, 230, 0.9);
+    --greenwei-nebula-cyan: rgba(0, 255, 100, 0.15);
+    --greenwei-nebula-purple: rgba(0, 150, 100, 0.15);
+    --greenwei-horizon-glow: rgba(50, 255, 120, 0.4);
+
+    /* === Pikachu 主題變量 === */
+    --pikachu-background-color: #2a2605;
+    --pikachu-background-color-primary: #877800;
+    --pikachu-background-color-secondary: #514801;
+    --pikachu-text-color-primary: #ffff00;
+    --pikachu-text-color-secondary: #ffcc4a;
+    --pikachu-text-color-tertiary: #ffaa6e;
+    --pikachu-border-color: #3e3a1ccc;
+    --pikachu-space-bg-top: #1a1805;
+    --pikachu-space-bg-bottom: #2d290b;
+    --pikachu-star-color: rgba(255, 255, 200, 0.9);
+    --pikachu-nebula-cyan: rgba(255, 200, 0, 0.15);
+    --pikachu-nebula-purple: rgba(255, 100, 0, 0.15);
+    --pikachu-horizon-glow: rgba(255, 220, 50, 0.4);
   }
 
   /* === 全域重置 === */
@@ -67,72 +106,64 @@
     height: 100%;
   }
   body[data-theme="normal"] {
-    --background-color: #05132a;
-    --background-color-primary: #003387;
-    --background-color-secondary: #012051;
-    --text-color-primary: #00ffff;
-    --text-color-secondary: #4aaeff;
-    --text-color-tertiary: #556df3;
-    --border-color: #1c2b3ecc;
-
-    /* 星空特效 - 藍色系 */
-    --space-bg-top: #020617;
-    --space-bg-bottom: #0b1121;
-    --star-color: rgba(255, 255, 255, 0.9);
-    --nebula-cyan: rgba(0, 240, 255, 0.15);
-    --nebula-purple: rgba(130, 0, 255, 0.15);
-    --horizon-glow: rgba(50, 120, 255, 0.4);
+    --background-color: var(--normal-background-color);
+    --background-color-primary: var(--normal-background-color-primary);
+    --background-color-secondary: var(--normal-background-color-secondary);
+    --text-color-primary: var(--normal-text-color-primary);
+    --text-color-secondary: var(--normal-text-color-secondary);
+    --text-color-tertiary: var(--normal-text-color-tertiary);
+    --border-color: var(--normal-border-color);
+    --space-bg-top: var(--normal-space-bg-top);
+    --space-bg-bottom: var(--normal-space-bg-bottom);
+    --star-color: var(--normal-star-color);
+    --nebula-cyan: var(--normal-nebula-cyan);
+    --nebula-purple: var(--normal-nebula-purple);
+    --horizon-glow: var(--normal-horizon-glow);
   }
   body[data-theme="superhhh"] {
-    --background-color: #15052a;
-    --background-color-primary: #440087;
-    --background-color-secondary: #220151;
-    --text-color-primary: #ff00ff;
-    --text-color-secondary: #d94aff;
-    --text-color-tertiary: #b06eff;
-    --border-color: #2a1c3ecc;
-
-    /* 星空特效 - 紫色系 */
-    --space-bg-top: #1a052a;
-    --space-bg-bottom: #2d0b42;
-    --star-color: rgba(255, 230, 255, 0.9);
-    --nebula-cyan: rgba(255, 0, 255, 0.15);
-    --nebula-purple: rgba(100, 0, 200, 0.2);
-    --horizon-glow: rgba(180, 50, 255, 0.4);
+    --background-color: var(--superhhh-background-color);
+    --background-color-primary: var(--superhhh-background-color-primary);
+    --background-color-secondary: var(--superhhh-background-color-secondary);
+    --text-color-primary: var(--superhhh-text-color-primary);
+    --text-color-secondary: var(--superhhh-text-color-secondary);
+    --text-color-tertiary: var(--superhhh-text-color-tertiary);
+    --border-color: var(--superhhh-border-color);
+    --space-bg-top: var(--superhhh-space-bg-top);
+    --space-bg-bottom: var(--superhhh-space-bg-bottom);
+    --star-color: var(--superhhh-star-color);
+    --nebula-cyan: var(--superhhh-nebula-cyan);
+    --nebula-purple: var(--superhhh-nebula-purple);
+    --horizon-glow: var(--superhhh-horizon-glow);
   }
   body[data-theme="greenwei"] {
-    --background-color: #052a15;
-    --background-color-primary: #008739;
-    --background-color-secondary: #015122;
-    --text-color-primary: #00ff66;
-    --text-color-secondary: #4aff99;
-    --text-color-tertiary: #6effaa;
-    --border-color: #1c3e2acc;
-
-    /* 星空特效 - 綠色系 */
-    --space-bg-top: #051a0d;
-    --space-bg-bottom: #0b2d16;
-    --star-color: rgba(230, 255, 230, 0.9);
-    --nebula-cyan: rgba(0, 255, 100, 0.15);
-    --nebula-purple: rgba(0, 150, 100, 0.15);
-    --horizon-glow: rgba(50, 255, 120, 0.4);
+    --background-color: var(--greenwei-background-color);
+    --background-color-primary: var(--greenwei-background-color-primary);
+    --background-color-secondary: var(--greenwei-background-color-secondary);
+    --text-color-primary: var(--greenwei-text-color-primary);
+    --text-color-secondary: var(--greenwei-text-color-secondary);
+    --text-color-tertiary: var(--greenwei-text-color-tertiary);
+    --border-color: var(--greenwei-border-color);
+    --space-bg-top: var(--greenwei-space-bg-top);
+    --space-bg-bottom: var(--greenwei-space-bg-bottom);
+    --star-color: var(--greenwei-star-color);
+    --nebula-cyan: var(--greenwei-nebula-cyan);
+    --nebula-purple: var(--greenwei-nebula-purple);
+    --horizon-glow: var(--greenwei-horizon-glow);
   }
   body[data-theme="pikachu"] {
-    --background-color: #2a2605;
-    --background-color-primary: #877800;
-    --background-color-secondary: #514801;
-    --text-color-primary: #ffff00;
-    --text-color-secondary: #ffcc4a;
-    --text-color-tertiary: #ffaa6e;
-    --border-color: #3e3a1ccc;
-
-    /* 星空特效 - 黃色系 */
-    --space-bg-top: #1a1805;
-    --space-bg-bottom: #2d290b;
-    --star-color: rgba(255, 255, 200, 0.9);
-    --nebula-cyan: rgba(255, 200, 0, 0.15);
-    --nebula-purple: rgba(255, 100, 0, 0.15);
-    --horizon-glow: rgba(255, 220, 50, 0.4);
+    --background-color: var(--pikachu-background-color);
+    --background-color-primary: var(--pikachu-background-color-primary);
+    --background-color-secondary: var(--pikachu-background-color-secondary);
+    --text-color-primary: var(--pikachu-text-color-primary);
+    --text-color-secondary: var(--pikachu-text-color-secondary);
+    --text-color-tertiary: var(--pikachu-text-color-tertiary);
+    --border-color: var(--pikachu-border-color);
+    --space-bg-top: var(--pikachu-space-bg-top);
+    --space-bg-bottom: var(--pikachu-space-bg-bottom);
+    --star-color: var(--pikachu-star-color);
+    --nebula-cyan: var(--pikachu-nebula-cyan);
+    --nebula-purple: var(--pikachu-nebula-purple);
+    --horizon-glow: var(--pikachu-horizon-glow);
   }
 
   body {
@@ -343,8 +374,8 @@
   /* === 卡片系統 === */
   .card {
     background: var(--background-color-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--text-color-secondary);
+    border-radius: var(--border-radius-sm);
     box-shadow: var(--shadow-base);
     transition: all var(--transition-normal) var(--transition-timing);
     position: relative;
@@ -353,7 +384,7 @@
 
   .card:hover {
     box-shadow: var(--shadow-hover);
-    border-color: var(--border-color-light);
+    border-color: var(--text-color-primary);
   }
 
   a.card:hover {

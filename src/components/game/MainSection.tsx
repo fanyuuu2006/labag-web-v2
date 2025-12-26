@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { PlayButton } from "./PlayButton";
 import { useRouter } from "next/navigation";
 import { PatternsDiv } from "./PatternsDiv";
+import { InfoCard } from "./InfoCard";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -17,10 +18,15 @@ export const MainSection = () => {
     };
   }, [router]);
   return (
-    <section className={"h-full"}>
-      <div className="container h-full flex flex-col items-center justify-center">
-        <PatternsDiv />
-        <PlayButton  className="mt-6"/>
+    <section  className='h-full'>
+      <div className="container h-full grid grid-cols-1 md:grid-cols-2 px-4 gap-8 md:gap-16 items-center justify-center">
+        <div className="flex items-center justify-center">
+          <PatternsDiv />
+        </div>
+        <div className="flex flex-col justify-center items-center gap-6 md:gap-8 w-full">
+          <InfoCard className="w-full" />
+          <PlayButton className="w-full" />
+        </div>
       </div>
     </section>
   );

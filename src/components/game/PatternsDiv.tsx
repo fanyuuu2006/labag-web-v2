@@ -3,27 +3,28 @@ import { useEffect, useState } from "react";
 import { MyImage } from "../MyImage";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
+import { Pattern } from "labag";
 
 const Pattrern = ({ index }: { index: number }) => {
-  const [src, setSrc] = useState<string | null>(null);
+  const [pattern, setPattern] = useState<Pattern | null>(null);
   useEffect(() => {
     const getPattern = (g: typeof game) => {
       const pattern = g.patterns[index];
       const name = pattern?.name;
-      setSrc(null);
+      setPattern(null);
       if (name) {
         setTimeout(() => {
-          setSrc(`/images/patterns/${name}.jpg`);
+          setPattern(pattern);
         }, (index + 1) * 500);
       }
     };
     const updatePattern = (g: typeof game) => {
       const pattern = g.patterns[index];
       const name = pattern?.name;
-      setSrc(null);
+      setPattern(null);
       if (name) {
         setTimeout(() => {
-          setSrc(`/images/patterns/${name}.jpg`);
+          setPattern(pattern);
         }, 3000);
       }
     };
@@ -35,13 +36,13 @@ const Pattrern = ({ index }: { index: number }) => {
     };
   }, [index]);
   return (
-    <div className="aspect-3/4 text-6xl md:text-7xl lg:text-8xl font-bold bg-(--background-color) border border-(--text-color-primary) overflow-hidden rounded-md">
-      {src ? (
+    <div className="aspect-3/4 text-[7vh] font-bold card">
+      {pattern ? (
         <MyImage
-          src={src}
-          alt={`Pattern ${index + 1}`}
-          className="w-full h-auto object-cover"
-          onError={() => setSrc(null)}
+          src={`/images/patterns/${pattern.name}.jpg`}
+          alt={`Pattern ${index + 1}: ${pattern.name}`}
+          className="w-full h-auto object-cover scale-105"
+          title={pattern.name}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">

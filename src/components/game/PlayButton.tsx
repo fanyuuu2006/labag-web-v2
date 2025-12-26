@@ -21,7 +21,7 @@ export const PlayButton = ({ className, ...rest }: PlayButtonProps) => {
     <button
       disabled={disable}
       className={cn(
-        "btn-primary font-bold px-8 py-4 text-2xl md:text-3xl lg:text-4xl rounded-full",
+        "btn-primary select-none font-bold px-8 py-4 text-2xl md:text-3xl lg:text-4xl rounded-full",
         className
       )}
       onClick={hanldeStartClick}
