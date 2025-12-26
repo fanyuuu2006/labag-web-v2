@@ -4,24 +4,30 @@ import { MyImage } from "../MyImage";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
+import { playAudio } from "@/utils";
 
 const PatternCard = ({ index }: { index: number }) => {
   const [pattern, setPattern] = useState<Pattern | null>(null);
   useEffect(() => {
     const getPattern = (g: typeof game) => {
-      const pattern = g.patterns[index];
-      const name = pattern?.name;
+      const p = g.patterns[index];
+      const name = p?.name;
       setPattern(null);
       if (name) {
-        setTimeout(() => setPattern(pattern), (index + 1) * 500);
+        setTimeout(() => {
+          setPattern(p);
+          playAudio("/audio/ding.mp3");
+        }, (index + 1) * 500);
       }
     };
     const updatePattern = (g: typeof game) => {
-      const pattern = g.patterns[index];
-      const name = pattern?.name;
-      setPattern(null);
-      if (name) {
-        setTimeout(() => setPattern(pattern), 3000);
+      const p = g.patterns[index];
+      const name = p?.name;
+      if (name && name !== pattern?.name) {
+        setTimeout(() => {
+          setPattern(p);
+          playAudio(`/audio/${name}On.mp3`);
+        }, 3000);
       }
     };
     game.addEventListener("rollSlots", getPattern);
@@ -30,7 +36,7 @@ const PatternCard = ({ index }: { index: number }) => {
       game.removeEventListener("rollSlots", getPattern);
       game.removeEventListener("roundEnd", updatePattern);
     };
-  }, [index]);
+  }, [index, pattern]);
   return (
     <div className="aspect-3/4 text-[7vh] font-bold card">
       {pattern ? (
