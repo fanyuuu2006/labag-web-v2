@@ -18,14 +18,14 @@ export const MainSection = () => {
   const handleShare = useCallback(async () => {
     const text = `我的 LaBaG 分數：${score} 分！來挑戰我！`;
     try {
-      if (navigator.share) {
+      if (typeof navigator !== "undefined" && navigator.share) {
         await navigator.share({
           title: "LaBaG 分數",
           text,
           url: site.url.toString(),
         });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(text);
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(`${text} ${site.url.toString()}`);
       }
     } catch (e) {
       console.error("分享失敗：", e);
@@ -43,9 +43,7 @@ export const MainSection = () => {
             GAME OVER
           </GlowText>
 
-          <p
-            className="text-sm text-(--text-color-muted) mb-4"
-          >
+          <p className="text-sm text-(--text-color-muted) mb-4">
             遊戲結束 — 你的最終分數
           </p>
 
@@ -56,13 +54,21 @@ export const MainSection = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
-            <button className="btn-primary" onClick={handleReplay}>
+            <button
+              className="btn-primary"
+              onClick={handleReplay}
+              aria-label="再玩一次"
+            >
               再玩一次
             </button>
             <Link className="btn-secondary" href={"/rankings"}>
               排行榜
             </Link>
-            <button className="btn-tertiary" onClick={handleShare}>
+            <button
+              className="btn-tertiary"
+              onClick={handleShare}
+              aria-label="分享分數"
+            >
               分享分數
             </button>
           </div>
