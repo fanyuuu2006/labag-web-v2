@@ -79,7 +79,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
   return (
     <div
       className={cn(
-        "bg-black/40 rounded-md p-3 md:p-6 flex flex-col gap-2 sm:gap-3 items-start sm:items-center shadow-md",
+        "bg-black/40 rounded-md p-4 flex flex-col gap-2 sm:gap-3 items-start sm:items-center shadow-md",
         className
       )}
       {...rest}
