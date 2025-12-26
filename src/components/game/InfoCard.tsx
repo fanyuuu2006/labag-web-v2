@@ -1,40 +1,56 @@
 "use client";
+import React, { Fragment, memo, useEffect, useMemo, useState } from "react";
 import { cn } from "@/utils/className";
-import { DistributiveOmit } from "fanyucomponents";
 import { game } from "@/libs/game";
-import { Fragment, useEffect, useState } from "react";
 import { GlowText } from "../GlowText";
 
-type InfoCardProps = DistributiveOmit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "children"
->;
+type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
-export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
-  // 剩餘遊玩次數
-  const [played, setPlayed] = useState(game.played);
-  const [score, setScore] = useState(game.score);
-  const [marginScore, setMarginScore] = useState(game.marginScore);
-  const [gssCount, setGssCount] = useState(
-    game.getMode("greenwei")?.variable.count || 0
+type InfoState = {
+  played: number;
+  score: number;
+  marginScore: number;
+  gssCount: number;
+  currentModes: string[];
+};
+
+const ModeBadge = memo(({ mode }: { mode: string }) => {
+  const style: React.CSSProperties = {
+    color: `var(--${mode}-text-color-primary)`,
+  };
+  return (
+    <span className="text-lg md:text-xl font-bold" style={style}>
+      {mode}
+    </span>
   );
-  const [currentModes, setCurrentModes] = useState(
-    game.getCurrentConfig().modes.map((mode) => mode.name)
-  );
+});
+ModeBadge.displayName = "ModeBadge";
+
+export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
+  const [info, setInfo] = useState<InfoState>({
+    played: game.played,
+    score: game.score,
+    marginScore: game.marginScore,
+    gssCount: game.getMode("greenwei")?.variable.count || 0,
+    currentModes: game.getCurrentConfig().modes.map((m) => m.name),
+  });
 
   useEffect(() => {
-    const handleRoundStart = () => {
-      setMarginScore(0);
-    };
+    const handleRoundStart = () => setInfo((s) => ({ ...s, marginScore: 0 }));
+
     const handleRoundEnd = (g: typeof game) => {
+      // delay to allow round-end UI/animation to finish
       setTimeout(() => {
-        setPlayed(g.played);
-        setScore(g.score);
-        setMarginScore(g.marginScore);
-        setGssCount(g.getMode("greenwei")?.variable.count || 0);
-        setCurrentModes(g.getCurrentConfig().modes.map((mode) => mode.name));
+        setInfo({
+          played: g.played,
+          score: g.score,
+          marginScore: g.marginScore,
+          gssCount: g.getMode("greenwei")?.variable.count || 0,
+          currentModes: g.getCurrentConfig().modes.map((m) => m.name),
+        });
       }, 3000);
     };
+
     game.addEventListener("roundEnd", handleRoundEnd);
     game.addEventListener("roundStart", handleRoundStart);
     return () => {
@@ -42,6 +58,12 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
       game.removeEventListener("roundStart", handleRoundStart);
     };
   }, []);
+
+  const remaining = useMemo(
+    () => Math.max(0, game.times - info.played),
+    [info.played]
+  );
+
   return (
     <div
       className={cn(
@@ -56,51 +78,48 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
       >
         遊戲資訊
       </GlowText>
+
       <div className="flex flex-col gap-2 w-full items-start">
         <p className="flex items-center gap-2">
           <span className="text-base md:text-lg text-(--text-color-muted)">
             剩餘次數:
           </span>
-          <span className="text-lg md:text-xl font-bold">
-            {game.times - played}
-          </span>
+          <span className="text-lg md:text-xl font-bold">{remaining}</span>
         </p>
+
         <p className="flex items-center gap-2">
           <span className="text-base md:text-lg text-(--text-color-muted)">
             目前分數:
           </span>
           <GlowText as="span" className="text-lg md:text-xl font-bold">
-            {score}
+            {info.score}
           </GlowText>
-          {marginScore !== 0 && (
-            <span className="text-yellow-200 font-bold">+{marginScore}</span>
+          {info.marginScore !== 0 && (
+            <span className="text-yellow-200 font-bold">
+              +{info.marginScore}
+            </span>
           )}
         </p>
+
         <p className="flex items-center gap-2">
           <span className="text-base md:text-lg text-(--greenwei-text-color-secondary)">
             咖波累積數:
           </span>
           <span className="text-lg md:text-xl font-bold text-(--greenwei-text-color-primary)">
-            {gssCount}
+            {info.gssCount}
           </span>
         </p>
+
         <div className="flex flex-col">
           <p className="text-base md:text-lg text-(--text-color-muted)">
             當前模式:
           </p>
           <p>
-            {currentModes.length > 0 ? (
-              currentModes.map((mode, idx) => (
+            {info.currentModes.length > 0 ? (
+              info.currentModes.map((mode, idx) => (
                 <Fragment key={mode}>
-                  <span
-                    className="text-lg md:text-xl font-bold"
-                    style={{
-                      color: `var(--${mode}-text-color-primary)`,
-                    }}
-                  >
-                    {mode}
-                  </span>
-                  {idx < currentModes.length - 1 && <span>、</span>}
+                  <ModeBadge mode={mode} />
+                  {idx < info.currentModes.length - 1 && <span>、</span>}
                 </Fragment>
               ))
             ) : (
@@ -108,7 +127,8 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
             )}
           </p>
         </div>
-        {currentModes.some((m) => m === "superhhh") && (
+
+        {info.currentModes.includes("superhhh") && (
           <p className="flex items-center gap-2">
             <span className="text-base md:text-lg text-(--text-color-muted)">
               超級阿禾剩餘次數:
@@ -118,7 +138,8 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
             </span>
           </p>
         )}
-        {currentModes.some((m) => m === "greenwei") && (
+
+        {info.currentModes.includes("greenwei") && (
           <p className="flex items-center gap-2">
             <span className="text-base md:text-lg text-(--text-color-muted)">
               綠光阿瑋剩餘次數:
@@ -128,10 +149,11 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
             </span>
           </p>
         )}
-        {currentModes.some((m) => m === "pikachu") && (
+
+        {info.currentModes.includes("pikachu") && (
           <p className="flex items-center gap-2">
             <span className="text-base md:text-lg text-(--text-color-muted)">
-              皮卡丘以觸發次數:
+              皮卡丘已觸發次數:
             </span>
             <span className="text-lg md:text-xl font-bold">
               {game.getMode("pikachu")?.variable.times || 0}
@@ -141,4 +163,6 @@ export const InfoCard = ({ className, ...rest }: InfoCardProps) => {
       </div>
     </div>
   );
-};
+});
+
+InfoCard.displayName = "InfoCard";
