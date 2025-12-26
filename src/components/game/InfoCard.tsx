@@ -1,5 +1,5 @@
 "use client";
-import React, {  memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
@@ -12,7 +12,7 @@ type InfoState = {
   score: number;
   marginScore: number;
   gssCount: number;
-  currentModes: string[];
+  currentModes: ModeName[];
 };
 
 const ModeBadge = memo(({ mode }: { mode: string }) => {
@@ -44,14 +44,13 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
     score: game.score,
     marginScore: game.marginScore,
     gssCount: game.getMode("greenwei")?.variable.count || 0,
-    currentModes: game.getCurrentConfig().modes.map((m) => m.name),
+    currentModes: game.getCurrentConfig().modes.map((m) => m.name as ModeName),
   });
 
   useEffect(() => {
     const handleRoundStart = () => setInfo((s) => ({ ...s, marginScore: 0 }));
 
     const handleRoundEnd = (g: typeof game) => {
-      // delay to allow round-end UI/animation to finish
       setTimeout(() => {
         setInfo({
           times: {
@@ -63,7 +62,9 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           score: g.score,
           marginScore: g.marginScore,
           gssCount: g.getMode("greenwei")?.variable.count || 0,
-          currentModes: g.getCurrentConfig().modes.map((m) => m.name),
+          currentModes: g
+            .getCurrentConfig()
+            .modes.map((m) => m.name as ModeName),
         });
       }, 3000);
     };
@@ -95,7 +96,10 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
       <div className="flex flex-col gap-2 w-full">
         <dl className="grid grid-cols-2 md:grid-cols-2 gap-2 lg:gap-3 w-full">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt className="text-xs sm:text-sm md:text-base uppercase" style={{ color: "var(--text-color-muted)" }}>
+            <dt
+              className="text-xs sm:text-sm md:text-base uppercase"
+              style={{ color: "var(--text-color-muted)" }}
+            >
               剩餘次數
             </dt>
             <dd className="text-base md:text-xl font-extrabold">
@@ -104,63 +108,84 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt className="text-xs sm:text-sm md:text-base" style={{ color: "var(--text-color-muted)" }}>
+            <dt
+              className="text-xs sm:text-sm md:text-base"
+              style={{ color: "var(--text-color-muted)" }}
+            >
               目前分數
             </dt>
             <dd className="flex items-center gap-2">
-              <GlowText as="span" className="text-base md:text-xl font-extrabold">
+              <GlowText
+                as="span"
+                className="text-base md:text-xl font-extrabold"
+              >
                 {info.score}
               </GlowText>
               {info.marginScore !== 0 && (
-                <span className="text-yellow-300 font-semibold">+{info.marginScore}</span>
+                <span className="text-yellow-300 font-semibold">
+                  +{info.marginScore}
+                </span>
               )}
             </dd>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt className="text-xs sm:text-sm md:text-base uppercase" style={{ color: "var(--greenwei-text-color-secondary)" }}>
-              咖波累積數
+            <dt
+              className="text-xs sm:text-sm md:text-base uppercase"
+              style={{ color: "var(--greenwei-text-color-secondary)" }}
+            >
+              gss累積數
             </dt>
-            <dd className="text-base md:text-xl font-bold" style={{ color: "var(--greenwei-text-color-primary)" }}>
+            <dd
+              className="text-base md:text-xl font-bold"
+              style={{ color: "var(--greenwei-text-color-primary)" }}
+            >
               {info.gssCount}
             </dd>
           </div>
 
           <div className="flex flex-col gap-1">
-            <dt className="text-sm md:text-base uppercase" style={{ color: "var(--text-color-muted)" }}>當前模式</dt>
+            <dt
+              className="text-sm md:text-base uppercase"
+              style={{ color: "var(--text-color-muted)" }}
+            >
+              當前模式
+            </dt>
             <dd className="flex items-center flex-wrap">
               {info.currentModes.length > 0 ? (
                 info.currentModes.map((mode, idx) => (
                   <ModeBadge key={idx} mode={mode} />
                 ))
               ) : (
-                <span className="text-xs sm:text-sm md:text-base font-semibold">無</span>
+                <span className="text-xs sm:text-sm md:text-base font-semibold">
+                  無
+                </span>
               )}
             </dd>
           </div>
         </dl>
 
         <div className="flex flex-col gap-2 w-full mt-2">
-          {info.currentModes.includes("superhhh") && (
-            <div className="flex justify-between items-center gap-2 py-2 px-3 bg-white/10 rounded-md">
-              <span className="text-xs sm:text-sm" style={{ color: "var(--text-color-muted)" }}>超級阿禾剩餘次數</span>
-              <span className="text-sm sm:text-base font-bold">{info.times.superhhh}</span>
-            </div>
-          )}
-
-          {info.currentModes.includes("greenwei") && (
-            <div className="flex justify-between items-center gap-2 py-2 px-3 bg-white/10 rounded-md">
-              <span className="text-xs sm:text-sm" style={{ color: "var(--text-color-muted)" }}>綠光阿瑋剩餘次數</span>
-              <span className="text-sm sm:text-base font-bold">{info.times.greenwei}</span>
-            </div>
-          )}
-
-          {info.currentModes.includes("pikachu") && (
-            <div className="flex justify-between items-center gap-2 py-2 px-3 bg-white/10 rounded-md">
-              <span className="text-xs sm:text-sm" style={{ color: "var(--text-color-muted)" }}>皮卡丘已觸發次數</span>
-              <span className="text-sm sm:text-base font-bold">{info.times.pikachu}</span>
-            </div>
-          )}
+          {info.currentModes
+            .filter((mode) => mode !== "normal")
+            .map((mode) => {
+              return (
+                <div
+                  key={mode}
+                  className="flex justify-between items-center gap-2 py-2 px-3 bg-white/10 rounded-md"
+                >
+                  <span
+                    className="text-xs sm:text-sm"
+                    style={{ color: "var(--text-color-muted)" }}
+                  >
+                    {mode}剩餘次數
+                  </span>
+                  <span className="text-sm sm:text-base font-bold">
+                    {info.times[mode]}
+                  </span>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>

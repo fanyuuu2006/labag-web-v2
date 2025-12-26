@@ -38,19 +38,21 @@ export const PatternsDiv = () => {
       });
     };
     const updatePatterns = (g: typeof game) => {
-      let diffName: string | null = null;
+      const diffNames: string[] = [];
       for (let index = 0; index < g.patterns.length; index++) {
         const p = g.patterns[index];
         const currentPattern = patternsRef.current[index];
         if (p && (!currentPattern || p.name !== currentPattern.name)) {
-          diffName = p.name;
+          diffNames.push(p.name);
           break;
         }
       }
-      if (diffName) {
+      if (diffNames.length > 0) {
         const id = setTimeout(() => {
           setPatterns([...g.patterns]);
-          playAudio(`/audios/${diffName}On.mp3`);
+          diffNames.forEach((name) => {
+            playAudio(`/audios/${name}On.mp3`);
+          });
         }, 3000);
         timers.push(id);
       }
