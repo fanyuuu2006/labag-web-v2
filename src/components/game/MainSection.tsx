@@ -28,7 +28,7 @@ export const MainSection = () => {
   return (
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="flex items-end lg:items-center justify-center px-2">
+        <div className="flex items-end lg:items-center justify-center">
           <PatternsDiv />
         </div>
         <aside className="flex flex-col justify-center items-start lg:items-center gap-4 md:gap-6">

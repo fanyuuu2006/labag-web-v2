@@ -69,7 +69,7 @@ export const PatternsDiv = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-3 w-full gap-2 md:max-w-2xl">
+    <div className="grid grid-cols-3 w-full gap-1 md:max-w-2xl">
       {patterns.map((pattern, idx) => (
         <div key={idx} className="aspect-3/4 text-[7vh] font-bold card">
           {pattern ? (

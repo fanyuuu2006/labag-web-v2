@@ -6,7 +6,7 @@ import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://labag.vercel.app"),
+  metadataBase: site.url,
   title: site.title,
   description: site.description,
   icons: {
