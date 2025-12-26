@@ -34,7 +34,7 @@ export const MainSection = () => {
 
   return (
     <section className="h-full">
-      <div className="container h-full flex flex-col items-center justify-center gap-6">
+      <div className="container h-full flex flex-col items-center justify-center">
         <div className="card p-6 text-center w-full max-w-xl">
           <GlowText
             as="h1"
@@ -44,14 +44,13 @@ export const MainSection = () => {
           </GlowText>
 
           <p
-            className="text-sm text-gray-300 mb-4"
-            style={{ color: "var(--text-color-muted)" }}
+            className="text-sm text-(--text-color-muted) mb-4"
           >
             遊戲結束 — 你的最終分數
           </p>
 
           <div className="mb-4">
-            <GlowText as="div" className="text-5xl md:text-7xl font-extrabold">
+            <GlowText as="h2" className="text-5xl md:text-7xl font-extrabold">
               {score}
             </GlowText>
           </div>
