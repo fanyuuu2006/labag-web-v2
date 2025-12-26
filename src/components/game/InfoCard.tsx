@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, memo, useEffect, useState } from "react";
+import React, {  memo, useEffect, useState } from "react";
 import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
@@ -18,7 +18,7 @@ type InfoState = {
 const ModeBadge = memo(({ mode }: { mode: string }) => {
   const style: React.CSSProperties = {
     background: `var(--${mode}-text-color-primary)`,
-    color: `var(--${mode}-background-color-primary)`,
+    color: `var(--${mode}-background-color-secondary)`,
   };
   return (
     <span
@@ -133,10 +133,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
             <dd className="flex items-center flex-wrap">
               {info.currentModes.length > 0 ? (
                 info.currentModes.map((mode, idx) => (
-                  <Fragment key={mode}>
-                    <ModeBadge mode={mode} />
-                    {idx < info.currentModes.length - 1 && <span>、</span>}
-                  </Fragment>
+                  <ModeBadge key={idx} mode={mode} />
                 ))
               ) : (
                 <span className="text-lg md:text-xl font-bold">無</span>
