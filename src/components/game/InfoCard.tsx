@@ -52,13 +52,15 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
 
     const handleRoundEnd = (g: typeof game) => {
       setTimeout(() => {
+        const times = g.modes.reduce((acc, mode) => {
+          acc[mode.name as ModeName] =
+            mode.name === "normal"
+              ? g.times - g.played
+              : mode.variable.times || 0;
+          return acc;
+        }, {} as Record<ModeName, number>);
         setInfo({
-          times: {
-            superhhh: g.getMode("superhhh")?.variable.times || 0,
-            greenwei: g.getMode("greenwei")?.variable.times || 0,
-            pikachu: g.getMode("pikachu")?.variable.times || 0,
-            normal: g.times - g.played,
-          },
+          times: times,
           score: g.score,
           marginScore: g.marginScore,
           gssCount: g.getMode("greenwei")?.variable.count || 0,
@@ -178,7 +180,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                     className="text-xs sm:text-sm"
                     style={{ color: "var(--text-color-muted)" }}
                   >
-                    {mode}剩餘次數
+                    {mode} 剩餘次數
                   </span>
                   <span className="text-sm sm:text-base font-bold">
                     {info.times[mode]}
