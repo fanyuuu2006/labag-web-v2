@@ -383,7 +383,6 @@
   }
 
   .card:hover {
-    box-shadow: var(--shadow-hover);
     border-color: var(--text-color-primary);
   }
 
