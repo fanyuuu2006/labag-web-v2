@@ -20,7 +20,7 @@ export const PatternsDiv = () => {
       setPatterns([null, null, null]);
     };
     const revealPatterns = (g: typeof game) => {
-      patternsRef.current = g.patterns;
+      patternsRef.current = [...g.patterns];
       g.patterns.forEach((p, index) => {
         const name = p?.name;
         if (name) {
@@ -40,6 +40,7 @@ export const PatternsDiv = () => {
       for (let index = 0; index < g.patterns.length; index++) {
         const p = g.patterns[index];
         const currentPattern = patternsRef.current[index];
+        console.log(p, currentPattern);
         if (p && (!currentPattern || p.name !== currentPattern.name)) {
           diffName = p.name;
           break;
