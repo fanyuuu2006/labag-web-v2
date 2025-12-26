@@ -19,7 +19,7 @@ export const MainSection = () => {
   }, [router]);
   return (
     <section className="h-full" >
-      <div className="container h-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+      <div className="container h-full grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="flex items-center justify-center px-2">
           <PatternsDiv />
         </div>

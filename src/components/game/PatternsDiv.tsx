@@ -13,18 +13,19 @@ export const PatternsDiv = () => {
     null,
   ]);
 
-  const patternsRef = useRef<(Pattern | null)[]>(patterns);
+  const patternsRef = useRef<(Pattern | null)[]>([null, null, null]);
 
   useEffect(() => {
     const cleanPatterns = () => {
       setPatterns([null, null, null]);
     };
+    const timers: NodeJS.Timeout[] = [];
     const revealPatterns = (g: typeof game) => {
       patternsRef.current = [...g.patterns];
       g.patterns.forEach((p, index) => {
         const name = p?.name;
         if (name) {
-          setTimeout(() => {
+          const id = setTimeout(() => {
             setPatterns((prev) => {
               const next = [...prev];
               next[index] = p;
@@ -32,6 +33,7 @@ export const PatternsDiv = () => {
             });
             playAudio(`/audios/ding.mp3`);
           }, (index + 1) * 500);
+          timers.push(id);
         }
       });
     };
@@ -40,17 +42,17 @@ export const PatternsDiv = () => {
       for (let index = 0; index < g.patterns.length; index++) {
         const p = g.patterns[index];
         const currentPattern = patternsRef.current[index];
-        console.log(p, currentPattern);
         if (p && (!currentPattern || p.name !== currentPattern.name)) {
           diffName = p.name;
           break;
         }
       }
       if (diffName) {
-        setTimeout(() => {
+        const id = setTimeout(() => {
           setPatterns([...g.patterns]);
           playAudio(`/audios/${diffName}On.mp3`);
         }, 3000);
+        timers.push(id);
       }
     };
     game.addEventListener("roundStart", cleanPatterns);
@@ -60,6 +62,7 @@ export const PatternsDiv = () => {
       game.removeEventListener("roundStart", cleanPatterns);
       game.removeEventListener("rollSlots", revealPatterns);
       game.removeEventListener("roundEnd", updatePatterns);
+      timers.forEach((t) => clearTimeout(t));
     };
   }, []);
 
