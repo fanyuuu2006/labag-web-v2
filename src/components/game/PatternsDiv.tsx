@@ -101,87 +101,81 @@ export const PatternsDiv = () => {
           )}
         </div>
       ))}
-      <modal.Container className="bg-black/50 flex items-center justify-center p-4">
+      <modal.Container className="fixed inset-0 bg-black/40 flex items-center justify-center p-6 z-50">
         {modalPattern && (
-          <div className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop">
-            <GlowText
-              as="h3"
-              className="text-2xl sm:text-3xl font-extrabold underline-spread"
-            >
-              {modalPattern.name}
-            </GlowText>
-            <div className="p-2">
-              <MyImage
-                src={`/images/patterns/${modalPattern.name}.jpg`}
-                alt={modalPattern.name}
-                className="w-full h-auto max-h-[36vh] sm:max-h-[48vh] object-contain rounded-md"
-              />
-            </div>
-            <div className="w-full">
-              {modalPattern &&
-                (() => {
-                  const info = getPatternInfo(modalPattern);
-                  const pct = Math.round(info.rate * 100);
-                  return (
-                    <div className="w-full bg-white/5 rounded-md p-3 text-sm sm:text-base">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-(--text-color-muted)">
-                          出現機率
-                        </span>
-                        <span className="font-extrabold text-base">{pct}%</span>
-                      </div>
-
-                      <div className="mb-2">
-                        <div className="text-xs text-(--text-color-muted) mb-1">
-                          得分等級（高 / 中 / 低）
-                        </div>
-                        <div className="flex gap-2 items-center">
-                          {info.scores && info.scores.length > 0 ? (
-                            info.scores.map((s, i) => (
-                              <div
-                                key={i}
-                                className="px-3 py-1 bg-white/10 rounded-md font-semibold"
-                              >
-                                {s}
-                              </div>
-                            ))
-                          ) : (
-                            <span className="text-xs">暫無資料</span>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="text-sm text-(--text-color-muted)">
-                        {pct > 0 ? (
-                          <>
-                            此圖案在目前配置中佔比約{" "}
-                            <strong className="text-white font-semibold">
-                              {pct}%
-                            </strong>
-                            ，出現時可取得上述分數之一，具體得分依組合計算。
-                          </>
-                        ) : (
-                          <>
-                            此圖案目前未列入機率範圍或權重極低，難以在一般輪次中出現。
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })()}
-
-              <div className="flex w-full justify-center sm:justify-end mt-3">
-                <button
-                  className="btn-tertiary px-4 py-2 rounded-full w-full sm:w-auto"
-                  onClick={() => modal.close()}
-                >
-                  我知道了
-                </button>
-              </div>
-            </div>
-          </div>
+          <PatternInfoCard pattern={modalPattern} close={modal.close} />
         )}
       </modal.Container>
+    </div>
+  );
+};
+
+const PatternInfoCard = ({
+  pattern,
+  close,
+}: {
+  pattern: Pattern;
+  close: () => void;
+}) => {
+  const info = getPatternInfo(pattern);
+  return (
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-3 animate-pop">
+      <GlowText
+        as="h3"
+        className="text-2xl sm:text-3xl font-extrabold underline-spread"
+      >
+        {pattern.name}
+      </GlowText>
+      <div className="p-2 w-full flex justify-center">
+        <MyImage
+          src={`/images/patterns/${pattern.name}.jpg`}
+          alt={pattern.name}
+          className="w-auto max-w-full h-auto max-h-[28vh] sm:max-h-[36vh] object-contain rounded-md border border-white/10"
+        />
+      </div>
+      <div className="w-full">
+        <div className="w-full bg-white/5 rounded-md p-3 text-sm sm:text-base">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs text-(--text-color-muted)">出現機率</span>
+            <span className="font-extrabold text-base">{info.rate}%</span>
+          </div>
+
+          <div className="mb-2">
+            <div className="text-xs text-(--text-color-muted) mb-1">
+              得分等級（高 / 中 / 低）
+            </div>
+            <div className="flex gap-2 items-center">
+              {info.scores && info.scores.length > 0 ? (
+                info.scores.map((s, i) => (
+                  <div
+                    key={i}
+                    className="px-3 py-1 bg-white/10 rounded-md font-semibold"
+                  >
+                    {s}
+                  </div>
+                ))
+              ) : (
+                <span className="text-xs">暫無資料</span>
+              )}
+            </div>
+          </div>
+
+          <div className="text-sm text-(--text-color-muted)">
+            此圖案在目前配置中佔比約{" "}
+            <strong className="text-white font-semibold">{info.rate}%</strong>
+            ，出現時可取得上述分數之一，具體得分依組合計算。
+          </div>
+        </div>
+
+        <div className="flex w-full justify-center sm:justify-end mt-3">
+          <button
+            className="btn-tertiary px-4 py-2 rounded-full w-full sm:w-auto text-sm"
+            onClick={() => close()}
+          >
+            我知道了
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
