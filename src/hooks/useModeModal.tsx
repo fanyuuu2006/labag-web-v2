@@ -16,11 +16,14 @@ export const useModeModal = () => {
     [modal]
   );
 
-  const Content = mode && (
-    <div className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop">
+
+  const Content = mode ? (
+    <div
+      className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop"
+    >
       <GlowText
         as="h3"
-        className="text-2xl sm:text-3xl font-extrabold underline-spread text-(--text-color-primary)"
+        className="text-2xl sm:text-3xl font-extrabold underline-spread"
       >
         {description[mode].name}
       </GlowText>
@@ -40,7 +43,7 @@ export const useModeModal = () => {
         </button>
       </div>
     </div>
-  );
+  ) : null;
 
   return { ...modal, open, Content };
 };
