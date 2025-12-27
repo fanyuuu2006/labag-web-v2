@@ -121,16 +121,9 @@ const PatternInfoCard = ({
   const displayRate = Number(Number(rate).toFixed(1));
 
   return (
-    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 flex flex-col gap-3 shadow-md animate-pop">
-      <GlowText
-        as="h2"
-        className="text-base sm:text-lg md:text-2xl font-bold tracking-wider"
-        style={{ color: "var(--text-color-primary)" }}
-      >
-        {name}
-      </GlowText>
-
-      <div className="flex w-full gap-4 items-start">
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 md:p-6 flex flex-col gap-3 shadow-md animate-pop">
+      <div className="flex w-full gap-4 items-center">
+        {/**左側 */}
         <div className="w-1/3 min-w-30 aspect-square rounded-md overflow-hidden border border-(--border-color)">
           <MyImage
             src={`/images/patterns/${name}.jpg`}
@@ -139,7 +132,15 @@ const PatternInfoCard = ({
           />
         </div>
 
+        {/**右側 */}
         <div className="flex-1 flex flex-col gap-3">
+          <GlowText
+            as="h2"
+            className="text-base sm:text-lg md:text-2xl font-bold tracking-wider"
+            style={{ color: "var(--text-color-primary)" }}
+          >
+            {name}
+          </GlowText>
           <div className="flex items-center justify-between">
             <div className="text-xs text-(--text-color-muted)">出現率</div>
             <div className="text-sm font-bold text-(--text-color-primary)">
@@ -165,17 +166,30 @@ const PatternInfoCard = ({
 
           <div>
             <div className="text-xs text-(--text-color-muted) mb-2">
-              得分 (每一種配列可得分數)
+              得分 (計分方式請見普通模式說明)
             </div>
-            <div className="flex flex-wrap gap-2">
-              {scores.map((s, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 bg-linear-to-br from-(--text-color-primary) to-(--text-color-secondary) text-(--background-color-primary) font-bold rounded-full py-1 px-3 text-sm"
-                  aria-label={`分數 ${s}`}
-                >
-                  <span className="text-xs opacity-80">分數</span>
-                  <span className="text-base">{s}</span>
+            <div className="flex flex-col gap-2">
+              {[
+                {
+                  label: "三個相同",
+                  score: scores[0],
+                },
+                {
+                  label: "兩個相同",
+                  score: scores[1],
+                },
+                {
+                  label: "單個相同",
+                  score: scores[2],
+                },
+              ].map((item, index) => (
+                <div key={index} className="flex items-center justify-between">
+                  <div className="text-sm text-(--text-color-primary)">
+                    {item.label}
+                  </div>
+                  <div className="text-sm font-bold text-(--text-color-primary)">
+                    {item.score}
+                  </div>
                 </div>
               ))}
             </div>
