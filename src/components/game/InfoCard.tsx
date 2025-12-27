@@ -5,6 +5,7 @@ import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
 import { useModeModal } from "@/hooks/useModeModal";
+import { description } from "../../libs/game";
 
 type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -32,7 +33,9 @@ const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
       >
         {mode}
       </button>
-      <modal.Container className="bg-black/50 flex items-center justify-center">{modal.Content}</modal.Container>
+      <modal.Container className="bg-black/50 flex items-center justify-center">
+        {modal.Content}
+      </modal.Container>
     </>
   );
 });
@@ -185,7 +188,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                     className="text-xs sm:text-sm"
                     style={{ color: "var(--text-color-muted)" }}
                   >
-                    {mode} 次數
+                    {description[mode].name} 次數
                   </span>
                   <span className="text-sm sm:text-base font-bold">
                     {info.times[mode]}

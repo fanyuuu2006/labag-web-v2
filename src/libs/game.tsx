@@ -37,9 +37,7 @@ export const description: Record<
         content: (
           <>
             <strong className="text-(--text-color-primary)">遊戲目標：</strong>
-            <span className="ml-2">
-              在有限次數內爭取最高分，適合初學者與常規對戰。
-            </span>
+            <span className="ml-2">在有限次數內爭取最高分。</span>
           </>
         ),
       },
@@ -62,19 +60,9 @@ export const description: Record<
         ),
         sub: [
           { content: "三個相同：獲得該圖案的最高分。" },
-          { content: "兩個相同：獲得中等分 + 另一圖案的最低分，結果會取整。" },
+          { content: "兩個相同：獲得中等分 + 另一圖案的最低分，除以1.4後取整。" },
           { content: "皆不同：取三者最低分平均並取整。" },
         ],
-      },
-      {
-        content: (
-          <>
-            <strong className="text-(--text-color-primary)">適用情境：</strong>
-            <span className="ml-2">
-              標準玩法，無額外加成，適合作為基準模式。
-            </span>
-          </>
-        ),
       },
       {
         content: (
