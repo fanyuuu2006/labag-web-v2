@@ -5,6 +5,7 @@ import { PlayButton } from "./PlayButton";
 import { useRouter } from "next/navigation";
 import { PatternsDiv } from "./PatternsDiv";
 import { InfoCard } from "./InfoCard";
+import { playAudio } from "@/utils/audio";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ export const MainSection = () => {
 
     const handleGameOver = () => {
       timeoutId = window.setTimeout(() => {
+        playAudio(`/audios/ding.mp3`);
         router.push("/gameover");
       }, 3500);
     };
@@ -27,11 +29,11 @@ export const MainSection = () => {
 
   return (
     <section className="h-full">
-      <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="flex items-end lg:items-center justify-center">
+      <div className="container h-full flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 flex items-end lg:items-center justify-center">
           <PatternsDiv />
         </div>
-        <aside className="flex flex-col justify-start lg:justify-center items-center gap-4 md:gap-6">
+        <aside className="flex-1 flex flex-col justify-center items-center gap-6">
           <InfoCard className="w-full" />
           <PlayButton className="w-3/4" />
         </aside>
