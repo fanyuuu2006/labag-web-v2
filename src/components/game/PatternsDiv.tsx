@@ -156,11 +156,12 @@ const PatternInfoCard = ({
               </div>
 
               <div
-                className="w-full h-3 bg-black/40 rounded-full overflow-hidden"
+                className="w-full h-2 bg-black/40 rounded-full overflow-hidden"
                 role="progressbar"
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={displayRate}
+                title={`出現機率 ${displayRate}%`}
               >
                 <div
                   className="h-full rounded-full"
