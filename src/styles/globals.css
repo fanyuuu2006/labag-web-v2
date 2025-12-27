@@ -340,19 +340,19 @@
     font-weight: 700;
   }
   .btn-secondary {
-    background: var(--background-color-secondary);
-    color: var(--text-color-secondary);
-    border: 2px solid var(--text-color-secondary);
+    background: var(--background-color-primary);
+    color: var(--text-color-primary);
+    border: 2px solid var(--text-color-primary);
   }
 
   .btn-secondary:hover {
-    background: var(--text-color-secondary);
-    color: var(--background-color-secondary);
+    background: var(--text-color-primary);
+    color: var(--background-color-primary);
   }
   .btn-tertiary {
     background: var(--background-color-secondary);
-    border: 2px solid var(--text-color-primary);
-    color: var(--text-color-primary);
+    border: 2px solid var(--text-color-secondary);
+    color: var(--text-color-secondary);
     box-shadow: none;
   }
 

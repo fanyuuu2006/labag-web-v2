@@ -36,12 +36,11 @@ export const MainSection = () => {
     <section className="h-full">
       <div className="container h-full flex flex-col items-center justify-center">
         <div className="card p-6 text-center w-full max-w-xl">
-          <GlowText
-            as="h1"
-            className="text-3xl md:text-5xl font-extrabold mb-2"
+          <h1
+            className="text-(--text-color-primary) text-3xl md:text-5xl font-extrabold mb-2"
           >
             GAME OVER
-          </GlowText>
+          </h1>
 
           <p className="text-sm text-(--text-color-muted) mb-4">
             遊戲結束 — 你的最終分數

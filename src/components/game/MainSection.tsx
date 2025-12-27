@@ -31,9 +31,9 @@ export const MainSection = () => {
         <div className="flex items-end lg:items-center justify-center">
           <PatternsDiv />
         </div>
-        <aside className="flex flex-col justify-center items-start lg:items-center gap-4 md:gap-6">
+        <aside className="flex flex-col justify-start lg:justify-center items-center gap-4 md:gap-6">
           <InfoCard className="w-full" />
-          <PlayButton className="w-full" />
+          <PlayButton className="w-3/4" />
         </aside>
       </div>
     </section>
