@@ -18,7 +18,7 @@ type DetailItemProps = OverrideProps<
 export const DetailItem = ({ detail, className, ...rest }: DetailItemProps) => {
   return (
     <div {...rest} className={cn("mb-2", className)}>
-      <span>{detail.content}</span>
+      <span className="mb-1">{detail.content}</span>
       {detail.sub &&
         detail.sub.map((subDetail, index) => (
           <DetailItem
