@@ -35,7 +35,7 @@ const NavLink = ({ route, pathname, onClick, className }: NavLinkProps) => {
       href={route.href}
       onClick={onClick}
       className={cn(
-        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
+        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:underline",
         isActive && "text-(--text-color-primary)",
         className
       )}
@@ -63,6 +63,7 @@ export const Header = () => {
       <div className="container flex items-center justify-between py-4 px-6">
         <Link href="/" onClick={closeMenu}>
           <GlowText
+            role="banner"
             as="h1"
             className="font-bold tracking-wider text-nowrap text-5xl"
           >

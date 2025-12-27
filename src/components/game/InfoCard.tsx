@@ -132,7 +132,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                 {info.score}
               </GlowText>
               {info.marginScore !== 0 && (
-                <span className="text-yellow-300 font-semibold">
+                <span className="text-yellow-300 font-semibold text-[0.5em]">
                   +{info.marginScore}
                 </span>
               )}
@@ -156,10 +156,13 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
 
           <div className="flex flex-col gap-1">
             <dt
-              className="text-sm md:text-base"
+              className="text-sm md:text-base flex flex-wrap items-center"
               style={{ color: "var(--text-color-muted)" }}
             >
               當前模式
+              <span className="ms-1 text-[0.7em] text-(--text-color-muted)">
+                (點擊模式以查看說明)
+              </span>
             </dt>
             <dd className="flex items-center flex-wrap">
               {info.currentModes.length > 0 ? (
