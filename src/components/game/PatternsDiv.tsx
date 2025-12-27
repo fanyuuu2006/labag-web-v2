@@ -121,27 +121,29 @@ const PatternInfoCard = ({
   const displayRate = Number(Number(rate).toFixed(1));
 
   return (
-    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 md:p-6 flex flex-col gap-2  animate-pop">
+    <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-6 flex flex-col gap-2  animate-pop">
       <div className="flex flex-col sm:flex-row w-full gap-4 items-center">
         {/**左側 */}
-        <div className="w-1/3 min-w-30 aspect-square rounded-md overflow-hidden border border-(--text-color-primary)">
-          <MyImage
-            src={`/images/patterns/${name}.jpg`}
-            alt={name}
-            className="w-full h-full object-cover scale-105"
-          />
+        <div className="w-1/3 flex flex-col items-center gap-3">
+          <div className="w-full aspect-square rounded-md overflow-hidden">
+            <MyImage
+              src={`/images/patterns/${name}.jpg`}
+              alt={name}
+              className="w-full h-full object-cover scale-105"
+            />
+          </div>
+          {/**名稱 */}
+          <GlowText
+            as="h2"
+            className="text-xl md:text-2xl lg:text-3xl font-extrabold"
+          >
+            {name}
+          </GlowText>
         </div>
 
         {/**右側 */}
         <div className="flex-1 w-full">
           <div className="w-full flex flex-col gap-3">
-            {/**名稱 */}
-            <GlowText
-              as="h2"
-              className="text-lg md:text-xl lg:text-2xl font-extrabold"
-            >
-              {name}
-            </GlowText>
             {/**機率進度條 */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center justify-between">
@@ -174,7 +176,7 @@ const PatternInfoCard = ({
               <span className="text-xs text-(--text-color-muted)">
                 得分 (計分方式請見普通模式說明)
               </span>
-              <div className="flex flex-col gap-1">
+              <div className="text-sm flex flex-col gap-1">
                 {[
                   {
                     label: "三個相同",
@@ -191,21 +193,20 @@ const PatternInfoCard = ({
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between bg-black/20 rounded-full px-4 py-1"
                   >
-                    <div className="text-sm text-(--text-color-primary)">
-                      {item.label}
-                    </div>
-                    <div className="text-sm font-bold text-(--text-color-primary)">
-                      {item.score}
-                    </div>
+                    <div>{item.label}</div>
+                    <div className="text-[1.2em] font-bold">{item.score}</div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <button onClick={close} className="btn-secondary rounded-full px-4 py-2">
+            <div className="flex justify-center sm:justify-end">
+              <button
+                onClick={close}
+                className="btn-secondary rounded-full px-4 py-2"
+              >
                 我知道了
               </button>
             </div>
