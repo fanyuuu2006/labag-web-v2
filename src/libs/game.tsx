@@ -36,7 +36,7 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">遊戲目標：</strong>
+            <strong className="text-(--text-color-primary)">遊戲目標:</strong>
             <span className="ml-2">在有限次數內爭取最高分。</span>
           </>
         ),
@@ -44,7 +44,7 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">玩法簡述：</strong>
+            <strong className="text-(--text-color-primary)">玩法簡述:</strong>
             <span className="ml-2">
               每次轉動會產生 3 個圖案，依組合計分並累積至總分；遊戲次數有限。
             </span>
@@ -54,20 +54,20 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">計分規則：</strong>
-            <span className="ml-2">圖案組合決定得分，常見情況如下：</span>
+            <strong className="text-(--text-color-primary)">計分規則:</strong>
+            <span className="ml-2">圖案組合決定得分，常見情況如下:</span>
           </>
         ),
         sub: [
-          { content: "三個相同：獲得該圖案的最高分。" },
-          { content: "兩個相同：獲得中等分 + 另一圖案的最低分，除以1.4後取整。" },
-          { content: "皆不同：取三者最低分平均並取整。" },
+          { content: "三個相同:獲得該圖案的最高分。" },
+          { content: "兩個相同:獲得中等分 + 另一圖案的最低分，除以1.4後取整。" },
+          { content: "皆不同:取三者最低分平均並取整。" },
         ],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">結束條件：</strong>
+            <strong className="text-(--text-color-primary)">結束條件:</strong>
             <span className="ml-2">遊玩次數用盡時顯示最終成績。</span>
           </>
         ),
@@ -80,38 +80,40 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">觸發方式：</strong>
-            <span className="ml-2">
-              當輪出現三個「gss」且命中機率或累積達成門檻即會啟動。
-            </span>
+            <strong className="text-(--text-color-primary)">觸發:</strong>
+            <span className="ml-2">當輪三個為「gss」且命中機率（35%）或累積出現達 20 次時啟動。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">綠光回合：</strong>
-            <span className="ml-2">
-              啟動後贈予數回合（可疊加），期間 gss 會替換為 greenwei。
-            </span>
+            <strong className="text-(--text-color-primary)">回合數:</strong>
+            <span className="ml-2">啟動時獲得 2 回合，期間每次再出現三個「gss」可額外 +2 回合（可疊加）。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">加成效果：</strong>
-            <span className="ml-2">
-              所有該回合得分會乘以 3（四捨五入），提高高分機會。
-            </span>
+            <strong className="text-(--text-color-primary)">圖案替換:</strong>
+            <span className="ml-2">啟動當輪所有「gss」以「greenwei」顯示（視覺與計分以替換後為準）。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">結束：</strong>
-            <span className="ml-2">期數耗盡後回到普通模式。</span>
+            <strong className="text-(--text-color-primary)">分數:</strong>
+            <span className="ml-2">該回合得分乘以 3（四捨五入）。</span>
+          </>
+        ),
+      },
+      {
+        content: (
+          <>
+            <strong className="text-(--text-color-primary)">結束:</strong>
+            <span className="ml-2">綠光回合歸零後返回普通模式。</span>
           </>
         ),
       },
@@ -123,40 +125,32 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">觸發時機：</strong>
-            <span className="ml-2">
-              遊玩次數用盡後，若本輪出現任一「kachu」則啟動充電。
-            </span>
+            <strong className="text-(--text-color-primary)">觸發時機:</strong>
+            <span className="ml-2">當遊玩次數用盡且本輪出現任一「kachu」時觸發。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">充電效果：</strong>
-            <span className="ml-2">
-              每次觸發額外增加 5 次遊玩。可重複累加。
-            </span>
+            <strong className="text-(--text-color-primary)">效果:</strong>
+            <span className="ml-2">每次觸發回退 5 次遊玩（即增加 5 次可玩次數），可重複累加。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">視覺/計分：</strong>
-            <span className="ml-2">
-              觸發時該輪的 kachu 會替換為 pikachu（視覺與計分以替換後為準）。
-            </span>
+            <strong className="text-(--text-color-primary)">圖案替換:</strong>
+            <span className="ml-2">觸發當輪所有「kachu」以「pikachu」顯示（視覺與計分以替換後為準）。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">結束：</strong>
-            <span className="ml-2">
-              若額外遊玩次數用盡且本輪未再出現 kachu，則遊戲結束。
-            </span>
+            <strong className="text-(--text-color-primary)">結束:</strong>
+            <span className="ml-2">當額外次數用盡且該輪未出現「kachu」時遊戲才真正結束。</span>
           </>
         ),
       },
@@ -168,38 +162,40 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">觸發機率：</strong>
-            <span className="ml-2">
-              當輪出現 hhh 並命中機率時會啟動，啟動時贈予多回合。
-            </span>
+            <strong className="text-(--text-color-primary)">啟動條件:</strong>
+            <span className="ml-2">當輪出現任意「hhh」且命中機率（15%）時啟動；初次啟動獲得 6 回合。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">超級回合：</strong>
-            <span className="ml-2">
-              啟動後會有數回合效果，期間 hhh 會替換為 superhhh 並可疊加回合。
-            </span>
+            <strong className="text-(--text-color-primary)">超級回合規則:</strong>
+            <span className="ml-2">進入狀態後持續該回合數（可疊加）；若回合結束時三格全為「hhh」，額外 +2 回合。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">特殊加成：</strong>
-            <span className="ml-2">
-              若回合出現 3 個 superhhh，將給予額外分數（依當前總分計算）。
-            </span>
+            <strong className="text-(--text-color-primary)">圖案替換:</strong>
+            <span className="ml-2">進入超級阿禾狀態時，當輪所有「hhh」以「superhhh」顯示並計分。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">結束：</strong>
-            <span className="ml-2">期數耗盡後回到普通模式。</span>
+            <strong className="text-(--text-color-primary)">分數加成:</strong>
+            <span className="ml-2">當回合三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。</span>
+          </>
+        ),
+      },
+      {
+        content: (
+          <>
+            <strong className="text-(--text-color-primary)">結束:</strong>
+            <span className="ml-2">當超級阿禾回合數歸零後回到普通模式。</span>
           </>
         ),
       },
