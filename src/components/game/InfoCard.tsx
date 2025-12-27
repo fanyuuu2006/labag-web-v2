@@ -132,7 +132,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                 {info.score}
               </GlowText>
               {info.marginScore !== 0 && (
-                <span className="text-yellow-300 font-semibold text-[0.5em]">
+                <span className="text-yellow-300 font-semibold text-[0.8em]">
                   +{info.marginScore}
                 </span>
               )}

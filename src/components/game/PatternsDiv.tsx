@@ -154,7 +154,7 @@ const PatternInfoCard = ({
             {/**機率進度條 */}
             <div className="flex flex-col gap-1">
               <div className="flex items-center justify-between">
-                <div className="text-xs text-(--text-color-muted)">
+                <div className="text-sm font-semibold">
                   當前出現機率
                 </div>
                 <div className="text-sm font-bold text-(--text-color-primary)">
