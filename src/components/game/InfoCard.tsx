@@ -138,22 +138,6 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               )}
             </dd>
           </div>
-
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt
-              className="text-xs sm:text-sm md:text-base"
-              style={{ color: "var(--greenwei-text-color-secondary)" }}
-            >
-              GSS 累積數
-            </dt>
-            <dd
-              className="text-base md:text-xl font-bold"
-              style={{ color: "var(--greenwei-text-color-primary)" }}
-            >
-              {info.gssCount}
-            </dd>
-          </div>
-
           <div className="flex flex-col gap-1">
             <dt
               className="text-sm md:text-base flex flex-wrap items-center"
@@ -174,6 +158,20 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                   無
                 </span>
               )}
+            </dd>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+            <dt
+              className="text-xs sm:text-sm md:text-base"
+              style={{ color: "var(--greenwei-text-color-secondary)" }}
+            >
+              GSS 累積數
+            </dt>
+            <dd
+              className="text-base md:text-xl font-bold"
+              style={{ color: "var(--greenwei-text-color-primary)" }}
+            >
+              {info.gssCount}
             </dd>
           </div>
         </dl>
