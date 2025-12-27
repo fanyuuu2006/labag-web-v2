@@ -95,11 +95,17 @@ export const description: Record<
               觸發
             </strong>
             <span className="ml-2">
-              當輪出現三個「gss」且符合機率或累積次數達標時。
+              當輪出現三個「gss」有機率觸發或累積次數達標時。
             </span>
           </>
         ),
-        sub: [{ content: "典型觸發：命中率約 35% 或累積 20 次" }],
+        sub: [
+          {
+            content: `機率： ${
+              game.getMode("greenwei")?.variable.rate
+            }%；累積次數達 20 時自動觸發。`,
+          },
+        ],
       },
       {
         content: (
@@ -133,7 +139,7 @@ export const description: Record<
             <strong className="text-(--text-color-primary) font-semibold">
               結束
             </strong>
-            <span className="ml-2">綠光回合用盡後回到普通模式。</span>
+            <span className="ml-2">綠光阿瑋次數歸零時自動退出模式。</span>
           </>
         ),
       },
@@ -191,12 +197,16 @@ export const description: Record<
             <strong className="text-(--text-color-primary) font-semibold">
               啟動條件
             </strong>
-            <span className="ml-2">
-              當輪出現任意「hhh」且符合命中機率時啟動。
-            </span>
+            <span className="ml-2">當輪出現任意「hhh」且有機率觸發。</span>
           </>
         ),
-        sub: [{ content: "典型命中率：約 15%；初次啟動獲得 6 回合。" }],
+        sub: [
+          {
+            content: `機率： ${
+              game.getMode("superhhh")?.variable.rate
+            }%；初次啟動獲得 6 回合。`,
+          },
+        ],
       },
       {
         content: (
@@ -217,15 +227,15 @@ export const description: Record<
             <strong className="text-(--text-color-primary) font-semibold">
               效果
             </strong>
-            <span className="ml-2">
-              當輪 `hhh` 顯示為 `superhhh`，並套用加成計分。
-            </span>
           </>
         ),
         sub: [
           {
             content:
-              "三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。",
+              "觸發當下三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。",
+          },
+          {
+            content: "狀態期間的高分圖案機率大幅提升。",
           },
         ],
       },
@@ -235,7 +245,7 @@ export const description: Record<
             <strong className="text-(--text-color-primary) font-semibold">
               結束
             </strong>
-            <span className="ml-2">超級回合數歸零後回到普通模式。</span>
+            <span className="ml-2">超級阿禾次數歸零後自動退出模式。</span>
           </>
         ),
       },
