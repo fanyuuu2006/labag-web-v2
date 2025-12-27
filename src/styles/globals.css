@@ -375,7 +375,7 @@
   /* === 卡片系統 === */
   .card {
     background: var(--background-color-secondary);
-    border: 1px solid var(--text-color-secondary);
+    border: 2px solid var(--text-color-secondary);
     border-radius: var(--border-radius-sm);
     box-shadow: var(--shadow-base);
     transition: all var(--transition-normal) var(--transition-timing);
