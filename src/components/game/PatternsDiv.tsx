@@ -31,7 +31,7 @@ export const PatternsDiv = () => {
     const cleanPatterns = () => {
       setPatterns([null, null, null]);
     };
-    const timers: NodeJS.Timeout[] = [];
+    const timers: ReturnType<typeof setTimeout>[] = [];
     const revealPatterns = (g: typeof game) => {
       patternsRef.current = [...g.patterns];
       g.patterns.forEach((p, index) => {
@@ -85,15 +85,22 @@ export const PatternsDiv = () => {
       {patterns.map((pattern, idx) => (
         <div key={idx} className="aspect-3/4 text-[7vh] font-bold card">
           {pattern ? (
-            <>
-              <MyImage
-                src={`/images/patterns/${pattern.name}.jpg`}
-                alt={`Pattern ${idx + 1}: ${pattern.name}`}
-                className="w-full h-full object-cover scale-105"
-                title={pattern.name}
-                onClick={() => handlePatternClick(pattern)}
-              />
-            </>
+            <MyImage
+              src={`/images/patterns/${pattern.name}.jpg`}
+              alt={`Pattern ${idx + 1}: ${pattern.name}`}
+              className="w-full h-full object-cover scale-105 cursor-pointer"
+              title={pattern.name}
+              onClick={() => handlePatternClick(pattern)}
+              role="button"
+              aria-label={`開啟圖案 ${pattern.name} 詳情`}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handlePatternClick(pattern);
+                }
+              }}
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <GlowText className="text-8xl">?</GlowText>

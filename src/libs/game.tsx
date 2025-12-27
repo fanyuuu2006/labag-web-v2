@@ -4,27 +4,27 @@ import { LaBaG, modeList, ModeName } from "labag";
 export const game = new LaBaG(30);
 modeList.forEach((mode) => game.addMode(mode));
 
-game.addEventListener("gameStart", (g) => {
-  console.log("Game Started!");
-  console.log(`Total Rounds: ${g.times}\n`);
-});
-game.addEventListener("roundStart", (g) => {
-  console.log(`--- Round ${g.rounds} Start ---`);
-});
-game.addEventListener("rollSlots", (g) => {
-  const { modes, ranges } = g.getCurrentConfig();
-  console.log(`Active Modes: ${modes.map((m) => m.name).join(", ")}`);
-  console.log(
-    `Probability Ranges: ${ranges
-      .map((r) => `${r.pattern.name}<=${r.threshold}`)
-      .join(", ")}`
-  );
-});
-game.addEventListener("roundEnd", (g) => {
-  console.log(g.patterns.map((p) => (p ? p.name : "null")).join(" | "));
-  console.log(`Margin Score: ${g.marginScore}`);
-  console.log(`Score: ${g.score}\n`);
-});
+// game.addEventListener("gameStart", (g) => {
+//   console.log("Game Started!");
+//   console.log(`Total Rounds: ${g.times}\n`);
+// });
+// game.addEventListener("roundStart", (g) => {
+//   console.log(`--- Round ${g.rounds} Start ---`);
+// });
+// game.addEventListener("rollSlots", (g) => {
+//   const { modes, ranges } = g.getCurrentConfig();
+//   console.log(`Active Modes: ${modes.map((m) => m.name).join(", ")}`);
+//   console.log(
+//     `Probability Ranges: ${ranges
+//       .map((r) => `${r.pattern.name}<=${r.threshold}`)
+//       .join(", ")}`
+//   );
+// });
+// game.addEventListener("roundEnd", (g) => {
+//   console.log(g.patterns.map((p) => (p ? p.name : "null")).join(" | "));
+//   console.log(`Margin Score: ${g.marginScore}`);
+//   console.log(`Score: ${g.score}\n`);
+// });
 
 export const description: Record<
   ModeName,
@@ -126,12 +126,9 @@ export const description: Record<
             <strong className="text-(--text-color-primary) font-semibold">
               效果
             </strong>
-            <span className="ml-2">
-              當輪「gss」會以「greenwei」顯示並套用加成。
-            </span>
           </>
         ),
-        sub: [{ content: "得分乘以 3（四捨五入）。" }],
+        sub: [{ content: "獲得分數提升2倍 (乘以3)" }],
       },
       {
         content: (

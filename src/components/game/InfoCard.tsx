@@ -90,14 +90,14 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
   return (
     <div
       className={cn(
-        "bg-black/40 rounded-md p-4 flex flex-col gap-2 sm:gap-3 items-start sm:items-center shadow-md",
+        "bg-black/40 rounded-md p-4 lg:p-6 flex flex-col gap-2 sm:gap-3 items-start shadow-md",
         className
       )}
       {...rest}
     >
       <GlowText
         as="h2"
-        className="text-base sm:text-lg md:text-2xl font-bold mb-1 tracking-wider"
+        className="text-base sm:text-lg md:text-2xl font-bold mb-1"
         style={{ color: "var(--text-color-primary)" }}
       >
         遊戲資訊
