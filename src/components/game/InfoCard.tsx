@@ -4,6 +4,7 @@ import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
+import { useModeModal } from "@/hooks/useModeModal";
 
 type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -15,20 +16,24 @@ type InfoState = {
   currentModes: ModeName[];
 };
 
-const ModeBadge = memo(({ mode }: { mode: string }) => {
+const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
   const style: React.CSSProperties = {
     background: `linear-gradient(135deg, var(--${mode}-text-color-primary), var(--${mode}-text-color-secondary))`,
     color: `var(--${mode}-background-color-secondary)`,
-    boxShadow: `0 4px 14px rgba(0,0,0,0.25)`,
   };
+  const modal = useModeModal();
   return (
-    <span
-      className="text-xs sm:text-sm md:text-base font-semibold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
-      style={style}
-      aria-label={`mode-${mode}`}
-    >
-      {mode}
-    </span>
+    <>
+      <button
+        className="text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
+        style={style}
+        aria-label={`mode-${mode}`}
+        onClick={() => modal.open(mode)}
+      >
+        {mode}
+      </button>
+      <modal.Container className="bg-black/50 flex items-center justify-center">{modal.Content}</modal.Container>
+    </>
   );
 });
 ModeBadge.displayName = "ModeBadge";
