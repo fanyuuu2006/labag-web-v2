@@ -133,7 +133,7 @@ export const PatternsDiv = () => {
 
                       <div className="mb-2">
                         <div className="text-xs text-(--text-color-muted) mb-1">
-                          可能得分（低 / 中 / 高）
+                          得分等級（高 / 中 / 低）
                         </div>
                         <div className="flex gap-2 items-center">
                           {info.scores && info.scores.length > 0 ? (
