@@ -36,7 +36,9 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">遊戲目標:</strong>
+            <strong className="text-(--text-color-primary) font-semibold">
+              遊戲目標
+            </strong>
             <span className="ml-2">在有限次數內爭取最高分。</span>
           </>
         ),
@@ -44,9 +46,11 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">玩法簡述:</strong>
+            <strong className="text-(--text-color-primary) font-semibold">
+              玩法簡述
+            </strong>
             <span className="ml-2">
-              每次轉動會產生 3 個圖案，依組合計分並累積至總分；遊戲次數有限。
+              每次轉動產生 3 個圖案，依組合計分並累積至總分。
             </span>
           </>
         ),
@@ -54,21 +58,28 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">計分規則:</strong>
-            <span className="ml-2">圖案組合決定得分，常見情況如下:</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              計分規則
+            </strong>
+            <span className="ml-2">圖案組合決定得分，重點如下：</span>
           </>
         ),
         sub: [
-          { content: "三個相同:獲得該圖案的最高分。" },
-          { content: "兩個相同:獲得中等分 + 另一圖案的最低分，除以1.4後取整。" },
-          { content: "皆不同:取三者最低分平均並取整。" },
+          { content: "三個相同：獲得該圖案的最高分。" },
+          {
+            content:
+              "兩個相同：獲得中等分 + 另一圖案的最低分，除以 1.4 後取整。",
+          },
+          { content: "皆不同：取三者最低分的平均值（取整）。" },
         ],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">結束條件:</strong>
-            <span className="ml-2">遊玩次數用盡時顯示最終成績。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              結束條件
+            </strong>
+            <span className="ml-2">當可玩次數用盡，顯示最終成績。</span>
           </>
         ),
       },
@@ -80,40 +91,49 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">觸發:</strong>
-            <span className="ml-2">當輪三個為「gss」且命中機率（35%）或累積出現達 20 次時啟動。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              觸發
+            </strong>
+            <span className="ml-2">
+              當輪出現三個「gss」且符合機率或累積次數達標時。
+            </span>
           </>
         ),
+        sub: [{ content: "典型觸發：命中率約 35% 或累積 20 次" }],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">回合數:</strong>
-            <span className="ml-2">啟動時獲得 2 回合，期間每次再出現三個「gss」可額外 +2 回合（可疊加）。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              回合數
+            </strong>
+            <span className="ml-2">
+              啟動時獲得基礎回合，期間可因條件增加回合。
+            </span>
           </>
         ),
+        sub: [{ content: "啟動獲得 +2 回合；再觸發每次 +2（可疊加）" }],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">圖案替換:</strong>
-            <span className="ml-2">啟動當輪所有「gss」以「greenwei」顯示（視覺與計分以替換後為準）。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              效果
+            </strong>
+            <span className="ml-2">
+              當輪「gss」會以「greenwei」顯示並套用加成。
+            </span>
           </>
         ),
+        sub: [{ content: "得分乘以 3（四捨五入）。" }],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">分數:</strong>
-            <span className="ml-2">該回合得分乘以 3（四捨五入）。</span>
-          </>
-        ),
-      },
-      {
-        content: (
-          <>
-            <strong className="text-(--text-color-primary)">結束:</strong>
-            <span className="ml-2">綠光回合歸零後返回普通模式。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              結束
+            </strong>
+            <span className="ml-2">綠光回合用盡後回到普通模式。</span>
           </>
         ),
       },
@@ -125,32 +145,38 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">觸發時機:</strong>
-            <span className="ml-2">當遊玩次數用盡且本輪出現任一「kachu」時觸發。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              觸發時機
+            </strong>
+            <span className="ml-2">遊玩次數用盡但本輪出現任一「kachu」。</span>
           </>
         ),
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">效果:</strong>
-            <span className="ml-2">每次觸發回退 5 次遊玩（即增加 5 次可玩次數），可重複累加。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              效果
+            </strong>
+            <span className="ml-2">
+              每次觸發增加可玩次數，並替換顯示為 `pikachu`。
+            </span>
           </>
         ),
+        sub: [
+          { content: "每次觸發回復 +5 次可玩次數（可累加）。" },
+          { content: "當輪所有 `kachu` 顯示為 `pikachu`，以替換後計分。" },
+        ],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">圖案替換:</strong>
-            <span className="ml-2">觸發當輪所有「kachu」以「pikachu」顯示（視覺與計分以替換後為準）。</span>
-          </>
-        ),
-      },
-      {
-        content: (
-          <>
-            <strong className="text-(--text-color-primary)">結束:</strong>
-            <span className="ml-2">當額外次數用盡且該輪未出現「kachu」時遊戲才真正結束。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              結束
+            </strong>
+            <span className="ml-2">
+              當額外次數用盡且該輪未再出現 `kachu` 時結束遊戲。
+            </span>
           </>
         ),
       },
@@ -162,40 +188,54 @@ export const description: Record<
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">啟動條件:</strong>
-            <span className="ml-2">當輪出現任意「hhh」且命中機率（15%）時啟動；初次啟動獲得 6 回合。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              啟動條件
+            </strong>
+            <span className="ml-2">
+              當輪出現任意「hhh」且符合命中機率時啟動。
+            </span>
           </>
         ),
+        sub: [{ content: "典型命中率：約 15%；初次啟動獲得 6 回合。" }],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">超級回合規則:</strong>
-            <span className="ml-2">進入狀態後持續該回合數（可疊加）；若回合結束時三格全為「hhh」，額外 +2 回合。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              超級回合規則
+            </strong>
+            <span className="ml-2">
+              狀態期間可疊加回合，並可因特定條件延長。
+            </span>
           </>
         ),
+        sub: [{ content: "若回合結束時三格皆為 `hhh`，額外 +2 回合。" }],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">圖案替換:</strong>
-            <span className="ml-2">進入超級阿禾狀態時，當輪所有「hhh」以「superhhh」顯示並計分。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              效果
+            </strong>
+            <span className="ml-2">
+              當輪 `hhh` 顯示為 `superhhh`，並套用加成計分。
+            </span>
           </>
         ),
+        sub: [
+          {
+            content:
+              "三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。",
+          },
+        ],
       },
       {
         content: (
           <>
-            <strong className="text-(--text-color-primary)">分數加成:</strong>
-            <span className="ml-2">當回合三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。</span>
-          </>
-        ),
-      },
-      {
-        content: (
-          <>
-            <strong className="text-(--text-color-primary)">結束:</strong>
-            <span className="ml-2">當超級阿禾回合數歸零後回到普通模式。</span>
+            <strong className="text-(--text-color-primary) font-semibold">
+              結束
+            </strong>
+            <span className="ml-2">超級回合數歸零後回到普通模式。</span>
           </>
         ),
       },

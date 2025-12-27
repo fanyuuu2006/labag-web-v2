@@ -25,12 +25,10 @@ export const useModeModal = () => {
         {description[mode].name}
       </GlowText>
 
-      <div className="text-left w-full">
-        <ul className="list-disc ml-5">
-          {description[mode].details.map((detail, index) => (
-            <DetailItem key={index} detail={detail} />
-          ))}
-        </ul>
+      <div className="p-2">
+        {description[mode].details.map((detail, index) => (
+          <DetailItem key={index} detail={detail} />
+        ))}
       </div>
 
       <div className="flex w-full justify-center sm:justify-end">

@@ -1,3 +1,4 @@
+import { cn } from "@/utils/className";
 import { OverrideProps } from "fanyucomponents";
 import React from "react";
 
@@ -14,16 +15,17 @@ type DetailItemProps = OverrideProps<
   }
 >;
 
-export const DetailItem = ({ detail, ...rest }: DetailItemProps) => {
+export const DetailItem = ({ detail, className, ...rest }: DetailItemProps) => {
   return (
-    <div {...rest}>
+    <div {...rest} className={cn("mb-2", className)}>
       <span>{detail.content}</span>
       {detail.sub &&
         detail.sub.map((subDetail, index) => (
           <DetailItem
-            className="ml-2 text-[0.8em]"
+            className={cn("ml-2 text-[0.8em]", className)}
             key={index}
             detail={subDetail}
+            {...rest}
           />
         ))}
     </div>
