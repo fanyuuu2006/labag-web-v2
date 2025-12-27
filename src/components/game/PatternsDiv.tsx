@@ -195,7 +195,7 @@ const PatternInfoCard = ({
                     score: scores[1],
                   },
                   {
-                    label: "單個相同",
+                    label: "皆不同",
                     score: scores[2],
                   },
                 ].map((item, index) => (

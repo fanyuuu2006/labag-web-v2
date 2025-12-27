@@ -19,7 +19,10 @@ const Badge = ({
 );
 
 const K = ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
-  <strong className={cn("text-(--text-color-primary) font-extrabold", className)} {...rest} />
+  <strong
+    className={cn("text-(--text-color-primary) font-extrabold", className)}
+    {...rest}
+  />
 );
 
 // game.addEventListener("gameStart", (g) => {
@@ -122,7 +125,7 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>回合數</Badge>
-            <span>啟動時獲得基礎回合，期間可因條件增加回合。</span>
+            <span>觸發時獲得基礎回合，期間可因條件增加回合。</span>
           </div>
         ),
         sub: [
@@ -174,20 +177,16 @@ export const description: Record<
       },
       {
         content: (
-          <div className="flex flex-wrap gap-1 items-center">
             <Badge>效果</Badge>
-            <span>每次觸發增加可玩次數，並替換顯示為 `pikachu`。</span>
-          </div>
         ),
         sub: [
           {
             content: (
               <>
-                每次觸發回復 <K>+5</K> 次可玩次數（可累加）。
+                每次觸發 <K>+5</K> 次可玩次數。
               </>
             ),
           },
-          { content: "當輪所有 `kachu` 顯示為 `pikachu`，以替換後計分。" },
         ],
       },
       {
@@ -206,7 +205,7 @@ export const description: Record<
       {
         content: (
           <div className="flex flex-wrap gap-1 items-center">
-            <Badge>啟動條件</Badge>
+            <Badge>觸發</Badge>
             <span>當輪出現任意「hhh」且有機率觸發。</span>
           </div>
         ),
@@ -224,8 +223,8 @@ export const description: Record<
       {
         content: (
           <div className="flex flex-wrap gap-1 items-center">
-            <Badge>超級回合規則</Badge>
-            <span>狀態期間可疊加回合，並可因特定條件延長。</span>
+            <Badge>回合數</Badge>
+            <span>觸發時獲得基礎回合，期間可因條件增加回合。</span>
           </div>
         ),
         sub: [

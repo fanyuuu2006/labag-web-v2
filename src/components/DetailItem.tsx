@@ -6,12 +6,11 @@ export type Detail = {
   content: React.ReactNode;
   sub?: Detail[];
 };
-
 type DetailItemProps = OverrideProps<
   React.HTMLAttributes<HTMLDivElement>,
   {
     detail: Detail;
-    children?: never;
+    children: never;
   }
 >;
 
