@@ -118,12 +118,13 @@ const PatternInfoCard = ({
   close: () => void;
 }) => {
   const { name, scores, rate } = getPatternInfo(pattern);
+  const displayRate = Number(Number(rate).toFixed(1));
 
   return (
-    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 flex flex-col gap-2 sm:gap-3 items-start sm:items-center shadow-md animate-pop">
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 flex flex-col gap-3 shadow-md animate-pop">
       <GlowText
         as="h2"
-        className="text-base sm:text-lg md:text-2xl font-bold mb-1 tracking-wider"
+        className="text-base sm:text-lg md:text-2xl font-bold tracking-wider"
         style={{ color: "var(--text-color-primary)" }}
       >
         {name}
@@ -138,47 +139,51 @@ const PatternInfoCard = ({
           />
         </div>
 
-        <div className="flex-1 flex flex-col gap-2">
+        <div className="flex-1 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="text-xs text-(--text-color-muted)">出現率</div>
             <div className="text-sm font-bold text-(--text-color-primary)">
-              {rate}%
+              {displayRate}%
             </div>
           </div>
 
-          <div className="w-full h-3 bg-black/40 rounded-full overflow-hidden">
+          <div
+            className="w-full h-3 bg-black/40 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={displayRate}
+          >
             <div
               className="h-full rounded-full"
               style={{
-                width: `${Math.max(0, Math.min(100, rate))}%`,
+                width: `${Math.max(0, Math.min(100, displayRate))}%`,
                 background: `linear-gradient(90deg, var(--text-color-primary), var(--text-color-secondary))`,
               }}
             />
           </div>
 
-          <div className="flex items-center flex-wrap gap-2 pt-1">
-            {scores.map((s, i) => (
-              <div
-                key={i}
-                className="text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
-                style={{
-                  background: `linear-gradient(135deg, var(--text-color-primary), var(--text-color-secondary))`,
-                  color: `var(--background-color-primary)`,
-                }}
-              >
-                {s}
-              </div>
-            ))}
+          <div>
+            <div className="text-xs text-(--text-color-muted) mb-2">
+              得分 (每一種配列可得分數)
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {scores.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 bg-linear-to-br from-(--text-color-primary) to-(--text-color-secondary) text-(--background-color-primary) font-bold rounded-full py-1 px-3 text-sm"
+                  aria-label={`分數 ${s}`}
+                >
+                  <span className="text-xs opacity-80">分數</span>
+                  <span className="text-base">{s}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="mt-2 flex justify-end">
-            <button
-              onClick={() => {
-                close();
-              }}
-              className="btn-secondary"
-            >
-              好的
+            <button onClick={close} className="btn-secondary">
+              了解
             </button>
           </div>
         </div>
