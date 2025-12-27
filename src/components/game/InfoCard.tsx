@@ -104,7 +104,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
       </GlowText>
 
       <div className="flex flex-col gap-2 w-full">
-        <dl className="grid grid-cols-2 md:grid-cols-2 gap-2 lg:gap-3 w-full">
+        <dl className="grid grid-cols-2 gap-2 lg:gap-3 w-full">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <dt
               className="text-xs sm:text-sm md:text-base"

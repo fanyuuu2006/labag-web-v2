@@ -1,5 +1,5 @@
 import { cn } from "@/utils/className";
-import { OverrideProps } from "fanyucomponents";
+import { OverrideProps, DistributiveOmit } from "fanyucomponents";
 import React from "react";
 
 export type Detail = {
@@ -7,10 +7,9 @@ export type Detail = {
   sub?: Detail[];
 };
 type DetailItemProps = OverrideProps<
-  React.HTMLAttributes<HTMLDivElement>,
+  DistributiveOmit<React.HTMLAttributes<HTMLDivElement>, "children">,
   {
     detail: Detail;
-    children: never;
   }
 >;
 
