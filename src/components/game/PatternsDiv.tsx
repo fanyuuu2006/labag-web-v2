@@ -117,63 +117,70 @@ const PatternInfoCard = ({
   pattern: Pattern;
   close: () => void;
 }) => {
-  const info = getPatternInfo(pattern);
+  const { name, scores, rate } = getPatternInfo(pattern);
+
   return (
-    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-3 animate-pop">
+    <div className="w-full max-w-sm sm:max-w-md md:max-w-lg card p-4 flex flex-col gap-2 sm:gap-3 items-start sm:items-center shadow-md animate-pop">
       <GlowText
-        as="h3"
-        className="text-2xl sm:text-3xl font-extrabold underline-spread"
+        as="h2"
+        className="text-base sm:text-lg md:text-2xl font-bold mb-1 tracking-wider"
+        style={{ color: "var(--text-color-primary)" }}
       >
-        {pattern.name}
+        {name}
       </GlowText>
-      <div className="p-2 w-full flex justify-center">
-        <MyImage
-          src={`/images/patterns/${pattern.name}.jpg`}
-          alt={pattern.name}
-          className="w-auto max-w-full h-auto max-h-[28vh] sm:max-h-[36vh] object-contain rounded-md border border-white/10"
-        />
-      </div>
-      <div className="w-full">
-        <div className="w-full bg-white/5 rounded-md p-3 text-sm sm:text-base">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs text-(--text-color-muted)">出現機率</span>
-            <span className="font-extrabold text-base">{info.rate}%</span>
-          </div>
 
-          <div className="mb-2">
-            <div className="text-xs text-(--text-color-muted) mb-1">
-              得分等級（高 / 中 / 低）
-            </div>
-            <div className="flex gap-2 items-center">
-              {info.scores && info.scores.length > 0 ? (
-                info.scores.map((s, i) => (
-                  <div
-                    key={i}
-                    className="px-3 py-1 bg-white/10 rounded-md font-semibold"
-                  >
-                    {s}
-                  </div>
-                ))
-              ) : (
-                <span className="text-xs">暫無資料</span>
-              )}
-            </div>
-          </div>
-
-          <div className="text-sm text-(--text-color-muted)">
-            此圖案在目前配置中佔比約{" "}
-            <strong className="text-white font-semibold">{info.rate}%</strong>
-            ，出現時可取得上述分數之一，具體得分依組合計算。
-          </div>
+      <div className="flex w-full gap-4 items-start">
+        <div className="w-1/3 min-w-30 aspect-square rounded-md overflow-hidden border border-(--border-color)">
+          <MyImage
+            src={`/images/patterns/${name}.jpg`}
+            alt={name}
+            className="w-full h-full object-cover scale-105"
+          />
         </div>
 
-        <div className="flex w-full justify-center sm:justify-end mt-3">
-          <button
-            className="btn-tertiary px-4 py-2 rounded-full w-full sm:w-auto text-sm"
-            onClick={() => close()}
-          >
-            我知道了
-          </button>
+        <div className="flex-1 flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <div className="text-xs text-(--text-color-muted)">出現率</div>
+            <div className="text-sm font-bold text-(--text-color-primary)">
+              {rate}%
+            </div>
+          </div>
+
+          <div className="w-full h-3 bg-black/40 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full"
+              style={{
+                width: `${Math.max(0, Math.min(100, rate))}%`,
+                background: `linear-gradient(90deg, var(--text-color-primary), var(--text-color-secondary))`,
+              }}
+            />
+          </div>
+
+          <div className="flex items-center flex-wrap gap-2 pt-1">
+            {scores.map((s, i) => (
+              <div
+                key={i}
+                className="text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
+                style={{
+                  background: `linear-gradient(135deg, var(--text-color-primary), var(--text-color-secondary))`,
+                  color: `var(--background-color-primary)`,
+                }}
+              >
+                {s}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-2 flex justify-end">
+            <button
+              onClick={() => {
+                close();
+              }}
+              className="btn-secondary"
+            >
+              好的
+            </button>
+          </div>
         </div>
       </div>
     </div>

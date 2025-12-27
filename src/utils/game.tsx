@@ -24,7 +24,7 @@ export const getPatternInfo = (
   const currentThreshold = ranges[index].threshold;
   const totalThreshold = ranges.at(-1)!.threshold;
 
-  const rate = (currentThreshold - prevThreshold) / totalThreshold;
+  const rate = Math.round((currentThreshold - prevThreshold) / totalThreshold * 100);
 
   return {
     name: pattern.name,
