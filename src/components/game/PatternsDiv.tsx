@@ -89,7 +89,7 @@ export const PatternsDiv = () => {
               <MyImage
                 src={`/images/patterns/${pattern.name}.jpg`}
                 alt={`Pattern ${idx + 1}: ${pattern.name}`}
-                className="w-full h-auto object-cover scale-105"
+                className="w-full h-full object-cover scale-105"
                 title={pattern.name}
                 onClick={() => handlePatternClick(pattern)}
               />
