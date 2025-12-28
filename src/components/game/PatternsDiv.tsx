@@ -43,7 +43,7 @@ export const PatternsDiv = () => {
               next[index] = p;
               return next;
             });
-            playAudio(`/audios/ding.mp3`, { volume: 0 });
+            playAudio(`/audios/ding.mp3`, { volume: 0.5 });
           }, (index + 1) * 500);
           timers.push(id);
         }
