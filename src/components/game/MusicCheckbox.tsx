@@ -1,10 +1,9 @@
 "use client";
-import { DistributiveOmit } from "fanyucomponents";
 import { useModes } from "@/contexts/ModesContext";
 import { useCallback, useRef, useState, useEffect } from "react";
 
-type MusicCheckboxProps = DistributiveOmit<
-  React.InputHTMLAttributes<HTMLInputElement>,
+type MusicCheckboxProps = Omit<
+  React.LabelHTMLAttributes<HTMLLabelElement>,
   "children"
 >;
 
@@ -12,81 +11,69 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // 切換播放狀態
   const handleChange = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
-  /**
-   * 根據目前的模式設定音樂來源
-   */
+
+  // 當 mode 改變時，設定音檔來源；使用 dataset 作為來源紀錄，避免與絕對 URL 比對錯誤
   useEffect(() => {
     const audio = audioRef.current;
-    const modeName = modes?.[0]?.name;
     if (!audio) return;
+
+    const modeName = modes?.[0]?.name;
+
+    // 若無 mode，清除來源並暫停播放
     if (!modeName) {
-      // 如果沒有 modeName，確保不要播放並移除來源
-      try {
-        audio.pause();
-      } catch {}
+      audio.pause();
       audio.removeAttribute("src");
+      delete audio.dataset.src;
       return;
     }
 
     const src = `/audios/bgm/${modeName}.mp3`;
-    // 只有在來源不同時才設定，避免不必要的重載
-    if (!audio.src || !audio.src.endsWith(src)) {
-      audio.src = src;
-    }
-  }, [modes]);
+    if (audio.dataset.src === src) return; // 若相同來源，跳過
 
-  // 控制播放 / 暫停，以及組件卸載時清理
+    audio.dataset.src = src; // 紀錄目前來源
+    audio.src = src;
+    // 若當前為播放狀態，嘗試播放（瀏覽器若無使用者互動會拒絕，這裡以 catch 處理）
+    if (isPlaying) {
+      audio.play().catch((err) => console.warn("music play blocked:", err));
+    }
+  }, [modes, isPlaying]);
+
+  // 當 isPlaying 改變時，執行播放或暫停
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
-      audio.play().catch((error) => console.error("無法播放音樂:", error));
+      audio.play().catch((err) => console.warn("music play blocked:", err));
     } else {
-      try {
-        audio.pause();
-      } catch (e) {
-        console.error("暫停音樂失敗:", e);
-      }
+      audio.pause();
     }
 
+    // unmount 時確保暫停
     return () => {
-      try {
-        audio.pause();
-      } catch {}
+      audio.pause();
     };
   }, [isPlaying]);
 
-  // 清理 audio 在卸載時
-  useEffect(() => {
-    return () => {
-      const audio = audioRef.current;
-      if (!audio) return;
-      try {
-        audio.pause();
-      } catch {}
-      try {
-        audio.removeAttribute("src");
-      } catch {}
-      audioRef.current = null;
-    };
-  }, []);
-
   return (
     <>
-      <label className={className}>
+      <label className={className} {...rest}>
         <input
           type="checkbox"
           className="sr-only peer"
           checked={isPlaying}
           onChange={handleChange}
           aria-label={isPlaying ? "停止背景音樂" : "播放背景音樂"}
-          {...rest}
         />
-        <div className="bg-gray-500 rounded-full">???</div>
+        {/* 可替換為圖示或文字，這裡保留簡單的占位 */}
+        <div className="bg-gray-500 rounded-full w-8 h-8 flex items-center justify-center">
+          音
+        </div>
       </label>
       <audio id="background-music" loop preload="auto" ref={audioRef} />
     </>
