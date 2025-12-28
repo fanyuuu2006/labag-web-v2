@@ -45,9 +45,7 @@ class Recorder {
   // 如果底層 event 支援移除 listener，呼叫之
   dispose() {
     if (!this.started) return;
-    if (typeof this.game.removeEventListener === "function") {
-      this.game.removeEventListener("roundEnd", this.onRoundEndBound);
-    }
+    this.game.removeEventListener("roundEnd", this.onRoundEndBound);
     this.started = false;
   }
 
