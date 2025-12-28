@@ -45,32 +45,34 @@ export const MainSection = () => {
             遊戲結束 — 你的最終分數
           </p>
 
-          <div className="mb-4">
+          <div className="mb-4" role="status" aria-live="polite">
             <GlowText
               as="h2"
               onClick={handleShare}
               aria-label="點擊以分享分數"
               className="cursor-pointer text-5xl md:text-7xl font-extrabold"
             >
+              <span className="sr-only">你的分數：</span>
               {score}
             </GlowText>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+          <nav aria-label="遊戲結束操作" className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <button
               className="btn-primary font-bold"
               onClick={handleReplay}
               aria-label="再玩一次"
+              title="再玩一次"
             >
               再玩一次
             </button>
-            <Link className="btn-secondary" href={"/rankings"}>
+            <Link className="btn-secondary" href={"/rankings"} title="查看排行榜">
               排行榜
             </Link>
-            <DownloadRecordButton className="btn-tertiary" aria-label="下載遊戲紀錄">
+            <DownloadRecordButton className="btn-tertiary" aria-label="下載遊戲紀錄" title="下載遊戲紀錄">
               下載遊戲紀錄
             </DownloadRecordButton>
-          </div>
+          </nav>
         </div>
       </div>
     </section>

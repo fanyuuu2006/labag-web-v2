@@ -9,7 +9,7 @@ type RoundRecord = {
 class Recorder {
   private game: LaBaG;
   private rounds: RoundRecord[] = [];
-  private readonly onRoundEndBound: (e: LaBaG) => void;
+  private onRoundEndBound: (e: LaBaG) => void;
   private started = false;
 
   constructor(gameInstance: LaBaG) {
@@ -52,7 +52,7 @@ class Recorder {
   }
 
   // 取得複本，不讓外部直接修改內部陣列
-  getRecords() {
+  getRecords(): RoundRecord[] {
     return this.rounds.map((r) => ({ ...r, randNums: { ...r.randNums } }));
   }
 
