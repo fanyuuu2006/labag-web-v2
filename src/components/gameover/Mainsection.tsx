@@ -37,9 +37,7 @@ export const MainSection = () => {
     <section className="h-full">
       <div className="container h-full flex flex-col items-center justify-center">
         <div className="card p-6 text-center w-full max-w-xl">
-          <h1
-            className="text-(--text-color-primary) text-3xl md:text-5xl font-extrabold mb-2"
-          >
+          <h1 className="text-(--text-color-primary) text-3xl md:text-5xl font-extrabold mb-2">
             GAME OVER
           </h1>
 
@@ -48,14 +46,19 @@ export const MainSection = () => {
           </p>
 
           <div className="mb-4">
-            <GlowText as="h2" className="text-5xl md:text-7xl font-extrabold">
+            <GlowText
+              as="h2"
+              onClick={handleShare}
+              aria-label="點擊以分享分數"
+              className="cursor-pointer text-5xl md:text-7xl font-extrabold"
+            >
               {score}
             </GlowText>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <button
-              className="btn-primary"
+              className="btn-primary font-bold"
               onClick={handleReplay}
               aria-label="再玩一次"
             >
@@ -64,17 +67,12 @@ export const MainSection = () => {
             <Link className="btn-secondary" href={"/rankings"}>
               排行榜
             </Link>
-            <button
-              className="btn-tertiary"
-              onClick={handleShare}
-              aria-label="分享分數"
-            >
-              分享分數
-            </button>
+            <DownloadRecordButton className="btn-tertiary" aria-label="下載遊戲紀錄">
+              下載遊戲紀錄
+            </DownloadRecordButton>
           </div>
         </div>
       </div>
-      <DownloadRecordButton className="absolute z-99 left-1/2 -translate-x-1/2 bottom-4 btn rounded-full px-4 py-2">下載本次遊戲紀錄</DownloadRecordButton>
     </section>
   );
 };
