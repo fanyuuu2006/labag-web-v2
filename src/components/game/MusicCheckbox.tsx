@@ -1,31 +1,20 @@
 "use client";
 import { DistributiveOmit } from "fanyucomponents";
-import { cn } from "@/utils/className";
 import { useModes } from "@/contexts/ModesContext";
 import { useCallback, useRef, useState, useEffect } from "react";
 
-type MusicButtonProps = DistributiveOmit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
+type MusicCheckboxProps = DistributiveOmit<
+  React.InputHTMLAttributes<HTMLInputElement>,
   "children"
 >;
 
-export const MusicButton = ({
-  className,
-  onClick,
-  ...rest
-}: MusicButtonProps) => {
+export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
-
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      setIsPlaying((prev) => !prev);
-      onClick?.(e);
-    },
-    [onClick]
-  );
-
+  const handleChange = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
   /**
    * 根據目前的模式設定音樂來源
    */
@@ -88,15 +77,17 @@ export const MusicButton = ({
 
   return (
     <>
-      <button
-        className={cn('', className)}
-        onClick={handleClick}
-        aria-pressed={isPlaying}
-        aria-label={isPlaying ? "停止背景音樂" : "播放背景音樂"}
-        {...rest}
-      >
-        {isPlaying ? "停止音樂" : "播放音樂"}
-      </button>
+      <label className={className}>
+        <input
+          type="checkbox"
+          className="sr-only peer"
+          checked={isPlaying}
+          onChange={handleChange}
+          aria-label={isPlaying ? "停止背景音樂" : "播放背景音樂"}
+          {...rest}
+        />
+        <div className="bg-gray-500 rounded-full">???</div>
+      </label>
       <audio id="background-music" loop preload="auto" ref={audioRef} />
     </>
   );
