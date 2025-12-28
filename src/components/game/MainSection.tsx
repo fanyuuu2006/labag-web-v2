@@ -7,6 +7,7 @@ import { PatternsDiv } from "./PatternsDiv";
 import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
 import { recorder } from "@/libs/recorder";
+import { MusicButton } from "./MusicButton";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -46,6 +47,7 @@ export const MainSection = () => {
           <PlayButton className="w-3/4" />
         </aside>
       </div>
+      <MusicButton className="fixed bottom-4 right-4 z-50" />
     </section>
   );
 };

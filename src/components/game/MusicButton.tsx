@@ -11,7 +11,7 @@ type MusicButtonProps = DistributiveOmit<
 export const MusicButton = ({ className, ...rest }: MusicButtonProps) => {
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const handleClick = useCallback(() => {
     const audio = audioRef.current;
@@ -36,7 +36,7 @@ export const MusicButton = ({ className, ...rest }: MusicButtonProps) => {
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const src = `/assets/audios/bgm/${modes?.[0]?.name ?? "normal"}.mp3`;
+    const src = `/audios/bgm/${modes?.[0]?.name ?? "normal"}.mp3`;
     if (audio.src && audio.src.endsWith(src)) return;
     audio.src = src;
     audio.load();
@@ -48,16 +48,6 @@ export const MusicButton = ({ className, ...rest }: MusicButtonProps) => {
     }
   }, [modes, isPlaying]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    return () => {
-      if (audio) {
-        try {
-          audio.pause();
-        } catch {}
-      }
-    };
-  }, []);
   return (
     <>
       <button
