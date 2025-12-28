@@ -1,5 +1,6 @@
 "use client";
 import { useModes } from "@/contexts/ModesContext";
+import { cn } from "@/utils/className";
 import { useCallback, useRef, useState, useEffect } from "react";
 
 type MusicCheckboxProps = Omit<
@@ -11,20 +12,14 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const handleChange = useCallback(() => setIsPlaying((v) => !v), []);
 
-  // 切換播放狀態
-  const handleChange = useCallback(() => {
-    setIsPlaying((prev) => !prev);
-  }, []);
-
-  // 當 mode 改變時，設定音檔來源；使用 dataset 作為來源紀錄，避免與絕對 URL 比對錯誤
+  // 更新音檔來源（只在 mode 變更時更新），並在 isPlaying 時嘗試播放
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const modeName = modes?.[0]?.name;
-
-    // 若無 mode，清除來源並暫停播放
     if (!modeName) {
       audio.pause();
       audio.removeAttribute("src");
@@ -43,7 +38,7 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
     }
   }, [modes, isPlaying]);
 
-  // 當 isPlaying 改變時，執行播放或暫停
+  // 播放 / 暫停 控制
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -62,7 +57,10 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
 
   return (
     <>
-      <label className={className} {...rest}>
+      <label
+        className={`inline-flex items-center gap-3 ${className ?? ""}`}
+        {...rest}
+      >
         <input
           type="checkbox"
           className="sr-only peer"
@@ -70,11 +68,19 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
           onChange={handleChange}
           aria-label={isPlaying ? "停止背景音樂" : "播放背景音樂"}
         />
-        {/* 可替換為圖示或文字，這裡保留簡單的占位 */}
-        <div className="bg-gray-500 rounded-full w-8 h-8 flex items-center justify-center">
-          音
+
+        {/* 可及性友好的滑動開關樣式 */}
+        <div
+          className={cn(
+            "font-bold flex items-center justify-center h-[2em] aspect-square rounded-full border-2 cursor-pointer transition-all duration-200",
+            "bg-gray-500 text-black border-black/20",
+            "peer-checked:bg-green-500 peer-checked:border-green-950/20 peer-checked:text-green-950 peer-checked:drop-shadow-[0_0_5px_green]"
+          )}
+        >
+          <span>{isPlaying ? "關" : "開"}</span>
         </div>
       </label>
+
       <audio id="background-music" loop preload="auto" ref={audioRef} />
     </>
   );
