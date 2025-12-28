@@ -246,15 +246,6 @@
     animation: nebula-flow 20s ease-in-out infinite alternate;
   }
 
-  @keyframes stars-twinkle {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: 0 1000px;
-    }
-  }
-
   @keyframes nebula-flow {
     0% {
       opacity: 0.5;
