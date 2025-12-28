@@ -19,10 +19,17 @@ type DownloadRecordButtonProps = React.HTMLAttributes<HTMLButtonElement>;
  *
  * @param props 標準按鈕屬性；若提供 `onClick`，會先呼叫該函式再執行下載。
  */
-export const DownloadRecordButton = ({ onClick, ...rest }: DownloadRecordButtonProps) => {
+export const DownloadRecordButton = ({
+  onClick,
+  ...rest
+}: DownloadRecordButtonProps) => {
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(e);
+      if (recorder.getRecords().length < game.times) {
+        alert("目前沒有可下載的遊戲紀錄喔！");
+        return;
+      }
 
       const today = new Date();
       const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, ""); // 轉成 YYYYMMDD
