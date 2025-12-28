@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { PatternsDiv } from "./PatternsDiv";
 import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
+import { recorder } from "@/libs/recorder";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -26,6 +27,13 @@ export const MainSection = () => {
       game.removeEventListener("gameOver", handleGameOver);
     };
   }, [router]);
+
+  useEffect(() => {
+    recorder.init();
+    return () => {
+      recorder.dispose();
+    }
+  }, []);
 
   return (
     <section className="h-full">

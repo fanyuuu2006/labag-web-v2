@@ -5,6 +5,7 @@ import { GlowText } from "../GlowText";
 import { game } from "@/libs/game";
 import Link from "next/link";
 import { site } from "@/libs/site";
+import { DownloadRecordButton } from "./DownloadRecordButton";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -73,6 +74,7 @@ export const MainSection = () => {
           </div>
         </div>
       </div>
+      <DownloadRecordButton className="absolute z-99 left-1/2 -translate-x-1/2 bottom-4 btn rounded-full px-4 py-2">下載本次遊戲紀錄</DownloadRecordButton>
     </section>
   );
 };
