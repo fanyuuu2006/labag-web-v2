@@ -1,4 +1,12 @@
-export const playAudio = (src: string) => {
+export const playAudio = async(
+  src: string,
+  option?: {
+    volume?: number; // 0-1
+  }
+) => {
   const audio = new Audio(src);
-  audio.play();
+  if (option?.volume !== undefined) {
+    audio.volume = Math.max(0, Math.min(1, option.volume));
+  }
+   await audio.play();
 };
