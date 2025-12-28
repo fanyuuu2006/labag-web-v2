@@ -63,7 +63,7 @@ export const PatternsDiv = () => {
         const id = setTimeout(() => {
           setPatterns([...g.patterns]);
           diffNames.forEach((name) => {
-            playAudio(`/audios/on/${name}On.mp3`);
+            playAudio(`/audios/on/${name}.mp3`);
           });
         }, 3000);
         timers.push(id);

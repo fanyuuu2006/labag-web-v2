@@ -69,4 +69,6 @@ class Recorder {
   }
 }
 
-export const recorder = new Recorder(game);
+export const recorder = new Recorder(game, { debug: 
+  false
+ });
