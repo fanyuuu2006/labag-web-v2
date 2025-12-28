@@ -1,3 +1,4 @@
+"use client";
 import { DistributiveOmit } from "fanyucomponents";
 import { cn } from "@/utils/className";
 import { useModes } from "@/contexts/ModesContext";
@@ -14,39 +15,20 @@ export const MusicButton = ({ className, ...rest }: MusicButtonProps) => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   const handleClick = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-      return;
-    }
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => setIsPlaying(true))
-        .catch(() => {
-          setIsPlaying(false);
-        });
-    } else {
-      setIsPlaying(true);
-    }
-  }, [isPlaying]);
+    setIsPlaying((prev) => !prev);
+  }, []);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const src = `/audios/bgm/${modes?.[0]?.name ?? "normal"}.mp3`;
-    if (audio.src && audio.src.endsWith(src)) return;
-    audio.src = src;
-    audio.load();
+    // 根據 isPlaying 狀態播放或暫停音樂
     if (isPlaying) {
-      const p = audio.play();
-      if (p instanceof Promise) {
-        p.catch(() => setIsPlaying(false));
-      }
+      audio.src = `/audios/bgm/${modes[0].name}.mp3`;
+      audio.play().catch((error) => console.error("無法播放音樂:", error));
+    } else {
+      audio.pause();
     }
-  }, [modes, isPlaying]);
+  }, [isPlaying, modes]);
 
   return (
     <>
