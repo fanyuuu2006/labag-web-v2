@@ -44,7 +44,7 @@ export const SettingProvider = ({
           <GlowText as="h4" className="text-2xl sm:text-3xl font-extrabold mb-2">
             設定
           </GlowText>
-          <div className="flex flex-col gap-3 text-lg md:text-xl">
+          <div className="flex flex-col gap-3 text-lg md:text-xl text-nowrap">
             <div className="flex items-center justify-between">
               <span className="font-medium text-neutral-200">背景音樂</span>
               <ToggleSwitch id="music" value={music} setValue={setMusic} />
