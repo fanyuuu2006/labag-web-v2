@@ -25,6 +25,12 @@ class Recorder {
   private onRoundEnd(g: LaBaG) {
     const randNums: Record<string, number> = {};
 
+    g.randNums.forEach((value, key) => {
+      if (!isNaN(value)) {
+        randNums[key] = value;
+      }
+    });
+
     // 收集各模式的 randNum（若為數值且有效）
     g.modes.forEach((mode) => {
       const rn = mode?.variable?.randNum;
@@ -69,6 +75,4 @@ class Recorder {
   }
 }
 
-export const recorder = new Recorder(game, { debug: 
-  false
- });
+export const recorder = new Recorder(game, { debug: false });
