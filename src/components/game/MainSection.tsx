@@ -8,6 +8,7 @@ import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
 import { recorder } from "@/libs/recorder";
 import { MusicCheckbox } from "./MusicCheckbox";
+import { MusicAudio } from "./MusicAudio";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -47,7 +48,7 @@ export const MainSection = () => {
           <PlayButton className="w-3/4" />
         </aside>
       </div>
-      <MusicCheckbox className="fixed bottom-4 right-4 z-50 text-xl md:text-2xl lg:text-3xl" />
+      <MusicAudio loop preload='auto' />
     </section>
   );
 };

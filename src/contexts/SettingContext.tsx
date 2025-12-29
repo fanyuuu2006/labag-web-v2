@@ -1,4 +1,5 @@
 "use client";
+import { useModal } from "fanyucomponents";
 import { createContext, useContext, useState, useMemo } from "react";
 
 type SettingOption<T> = {
@@ -7,6 +8,7 @@ type SettingOption<T> = {
 };
 
 interface SettingContextType {
+  modal: ReturnType<typeof useModal>;
   music: SettingOption<boolean>;
 }
 
@@ -17,18 +19,25 @@ export const SettingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const modal = useModal({});
   const [music, setMusic] = useState<boolean>(true);
   const value = useMemo(
     () => ({
+      modal,
       music: {
         value: music,
         set: setMusic,
       },
     }),
-    [music]
+    [modal, music]
   );
   return (
-    <settingContext.Provider value={value}>{children}</settingContext.Provider>
+    <settingContext.Provider value={value}>
+      {children}
+      <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
+        <div className="card w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 flex flex-col gap-2 animate-pop"></div>
+      </modal.Container>
+    </settingContext.Provider>
   );
 };
 

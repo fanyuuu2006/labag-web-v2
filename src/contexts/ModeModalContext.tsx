@@ -39,7 +39,7 @@ export const ModeModalProvider = ({
       {children}
       <modal.Container
         data-theme={mode}
-        className="fixed inset-0 bg-black/40 flex items-center justify-center p-6 z-50"
+        className="bg-black/40 flex items-center justify-center p-6 z-50"
       >
         {mode ? (
           <div className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop">

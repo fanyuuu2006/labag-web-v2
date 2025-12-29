@@ -74,9 +74,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <SettingProvider>
-        <ModesProvider>
-          <Body>
+      <ModesProvider>
+        <Body>
+          <SettingProvider>
             <PatternModalProvider>
               <ModeModalProvider>
                 <link rel="icon" href="/favicon.ico" />
@@ -85,9 +85,9 @@ export default function RootLayout({
                 <main>{children}</main>
               </ModeModalProvider>
             </PatternModalProvider>
-          </Body>
-        </ModesProvider>
-      </SettingProvider>
+          </SettingProvider>
+        </Body>
+      </ModesProvider>
     </html>
   );
 }

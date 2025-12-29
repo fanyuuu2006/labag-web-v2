@@ -79,7 +79,9 @@ export const PatternsDiv = () => {
   return (
     <div className="grid grid-cols-3 w-full gap-1 md:max-w-2xl relative">
       <div className="absolute top-full left-1/2 -translate-x-1/2">
-        <span className="text-xs md:text-sm text-(--text-color-muted)/30">點擊圖案查看圖案資訊</span>
+        <span className="text-xs md:text-sm text-(--text-color-muted)/30 text-nowrap">
+          點擊查看圖案資訊
+        </span>
       </div>
       {patterns.map((pattern, idx) => (
         <div key={idx} className="aspect-3/4 text-[7vh] font-bold card">

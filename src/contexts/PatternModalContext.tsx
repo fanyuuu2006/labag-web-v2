@@ -42,7 +42,7 @@ export const PatternModalProvider = ({
   return (
     <patternModalContext.Provider value={value}>
       {children}
-      <modal.Container className="fixed inset-0 bg-black/40 flex items-center justify-center p-6 z-50">
+      <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
         {pattern && (
           <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-6 flex flex-col gap-2  animate-pop">
             <div className="flex flex-col sm:flex-row w-full gap-4 items-center">
