@@ -5,24 +5,21 @@ import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
 import { playAudio } from "@/utils/audio";
-import { useModal } from "@/hooks/useModal";
-import { PatternInfoCard } from "./PatternInfoCard";
+import { usePatternModal } from "@/contexts/PatternModalContext";
 
 export const PatternsDiv = () => {
-  const modal = useModal({});
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
     null,
     null,
   ]);
-  const [modalPattern, setModalPattern] = useState<Pattern | null>(null);
+  const modal = usePatternModal();
 
   const patternsRef = useRef<(Pattern | null)[]>([null, null, null]);
 
   const handlePatternClick = useCallback(
     (pattern: Pattern) => {
-      modal.open();
-      setModalPattern(pattern);
+      modal.open(pattern);
     },
     [modal]
   );
@@ -108,11 +105,6 @@ export const PatternsDiv = () => {
           )}
         </div>
       ))}
-      <modal.Container className="fixed inset-0 bg-black/40 flex items-center justify-center p-6 z-50">
-        {modalPattern && (
-          <PatternInfoCard pattern={modalPattern} close={modal.close} />
-        )}
-      </modal.Container>
     </div>
   );
 };

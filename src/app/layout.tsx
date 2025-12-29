@@ -5,6 +5,7 @@ import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
 import { SettingProvider } from "@/contexts/SettingContext";
+import { PatternModalProvider } from "@/contexts/PatternModalContext";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -75,10 +76,12 @@ export default function RootLayout({
       <SettingProvider>
         <ModesProvider>
           <Body>
-            <link rel="icon" href="/favicon.ico" />
-            <link rel="manifest" href="/manifest.json" />
-            <Header />
-            <main>{children}</main>
+            <PatternModalProvider>
+              <link rel="icon" href="/favicon.ico" />
+              <link rel="manifest" href="/manifest.json" />
+              <Header />
+              <main>{children}</main>
+            </PatternModalProvider>
           </Body>
         </ModesProvider>
       </SettingProvider>
