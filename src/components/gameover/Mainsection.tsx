@@ -59,17 +59,17 @@ export const MainSection = () => {
 
           <nav aria-label="遊戲結束操作" className="flex flex-col sm:flex-row gap-3 justify-center mt-6">
             <button
-              className="btn-primary font-bold"
+              className="btn-primary font-bold rounded-2xl py-2 px-6"
               onClick={handleReplay}
               aria-label="再玩一次"
               title="再玩一次"
             >
               再玩一次
             </button>
-            <Link className="btn-secondary" href={"/rankings"} title="查看排行榜">
+            <Link className="btn-secondary rounded-2xl py-2 px-6" href={"/rankings"} title="查看排行榜">
               排行榜
             </Link>
-            <DownloadRecordButton className="btn-tertiary" aria-label="下載遊戲紀錄" title="下載遊戲紀錄">
+            <DownloadRecordButton className="btn-tertiary rounded-2xl py-2 px-6" aria-label="下載遊戲紀錄" title="下載遊戲紀錄">
               下載遊戲紀錄
             </DownloadRecordButton>
           </nav>

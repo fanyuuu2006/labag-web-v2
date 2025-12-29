@@ -43,7 +43,7 @@ export const SettingProvider = ({
           aria-modal="true"
           aria-labelledby="setting-title"
           aria-describedby="setting-desc"
-          className="card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-4"
+          className="animate-pop card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-4"
         >
           <div
             id="setting-header"
