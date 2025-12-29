@@ -27,11 +27,11 @@ export const ToggleSwitch = ({
       />
       <div
         className={cn(
-          "h-[1.2em] w-[2.5em] flex items-center rounded-full cursor-pointer",
+          "h-[1.2em] w-[2.4em] flex items-center justify-center rounded-full cursor-pointer",
           "transition-colors duration-200",
-          "bg-gray-500 peer-checked:bg-(--text-color-secondary)",
+          "bg-gray-500 peer-checked:bg-(--text-color-secondary) border border-black/20",
           'before:content-[""] before:h-full before:aspect-square before:bg-white before:rounded-full before:border before:border-gray-300',
-          "before:transition-transform before:duration-200 before:translate-x-0 peer-checked:before:translate-x-[106%]"
+          "before:transition-transform before:duration-200 before:-translate-x-1/2 peer-checked:before:translate-x-1/2"
         )}
       />
     </label>
