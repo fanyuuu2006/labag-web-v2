@@ -14,7 +14,7 @@ type PatternModalContextType = OverrideProps<
   }
 >;
 
-const PatternModalContext = createContext<PatternModalContextType | null>(null);
+const patternModalContext = createContext<PatternModalContextType | null>(null);
 
 export const PatternModalProvider = ({
   children,
@@ -32,15 +32,15 @@ export const PatternModalProvider = ({
     () => ({
       ...modal,
       open: (p: Pattern) => {
-        modal.open();
         setPattern(p);
+        modal.open();
       },
     }),
     [modal]
   );
 
   return (
-    <PatternModalContext.Provider value={value}>
+    <patternModalContext.Provider value={value}>
       {children}
       <modal.Container className="fixed inset-0 bg-black/40 flex items-center justify-center p-6 z-50">
         {pattern && (
@@ -140,12 +140,12 @@ export const PatternModalProvider = ({
           </div>
         )}
       </modal.Container>
-    </PatternModalContext.Provider>
+    </patternModalContext.Provider>
   );
 };
 
 export const usePatternModal = () => {
-  const context = useContext(PatternModalContext);
+  const context = useContext(patternModalContext);
   if (!context) {
     throw new Error("usePatternModal 必須在 PatternModalProvider 內使用");
   }

@@ -4,8 +4,9 @@ import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
-import { useModeModal } from "@/hooks/useModeModal";
 import { description } from "../../libs/game";
+import { usePatternModal } from "@/contexts/PatternModalContext";
+import { useModeModal } from "@/contexts/ModeModalContext";
 
 type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -29,9 +30,6 @@ const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
       >
         {mode}
       </button>
-      <modal.Container className="bg-black/50 flex items-center justify-center">
-        {modal.Content}
-      </modal.Container>
     </>
   );
 });
@@ -50,6 +48,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
     gssCount: game.getMode("greenwei")?.variable.count || 0,
     currentModes: game.getCurrentConfig().modes.map((m) => m.name as ModeName),
   });
+  const patternModal = usePatternModal();
 
   useEffect(() => {
     const handleRoundStart = () => setInfo((s) => ({ ...s, marginScore: 0 }));
@@ -157,11 +156,17 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
             </dd>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt
-              className="text-xs sm:text-sm md:text-base"
-              style={{ color: "var(--greenwei-text-color-secondary)" }}
-            >
-              {game.getMode('greenwei')?.variable.bindPattern.name} 累積數
+            <dt className="text-xs sm:text-sm md:text-base text-(--greenwei-text-color-secondary)">
+              <button
+                onClick={() =>
+                  patternModal.open(
+                    game.getMode("greenwei")?.variable.bindPattern
+                  )
+                }
+              >
+                {game.getMode("greenwei")?.variable.bindPattern.name}
+              </button>{" "}
+              累積數
             </dt>
             <dd
               className="text-base md:text-xl font-bold"
