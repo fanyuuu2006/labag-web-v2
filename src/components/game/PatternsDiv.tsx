@@ -13,15 +13,14 @@ export const PatternsDiv = () => {
     null,
     null,
   ]);
-  const modal = usePatternModal();
-
+  const patternModal = usePatternModal();
   const patternsRef = useRef<(Pattern | null)[]>([null, null, null]);
 
   const handlePatternClick = useCallback(
     (pattern: Pattern) => {
-      modal.open(pattern);
+      patternModal.open(pattern);
     },
-    [modal]
+    [patternModal]
   );
 
   useEffect(() => {
