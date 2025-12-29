@@ -179,15 +179,17 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               return (
                 <div
                   key={mode}
-                  className="flex justify-between items-center gap-2 py-2 px-3 bg-white/10 rounded-md"
+                  data-theme={mode}
+                  className="flex items-center justify-between gap-3 py-2 px-3 bg-white/5 rounded-md border border-white/6"
                 >
-                  <span
-                    className="text-xs sm:text-sm"
-                    style={{ color: "var(--text-color-muted)" }}
-                  >
-                    {description[mode].name} 次數
-                  </span>
-                  <span className="text-sm sm:text-base font-bold">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-(--text-color-primary)" />
+                    <span className="text-xs sm:text-sm text-(--text-color-muted)">
+                      {description[mode].name} 次數
+                    </span>
+                  </div>
+
+                  <span className="text-sm sm:text-base font-bold text-(--text-color-primary)">
                     {info.times[mode]}
                   </span>
                 </div>
