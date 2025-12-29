@@ -107,7 +107,10 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
-            <span>當輪出現三個「gss」有機率觸發或累積次數達標時。</span>
+            <span>
+              當輪出現三個「{game.getMode("greenwei")?.variable.bindPattern}
+              」有機率觸發或累積次數達標時。
+            </span>
           </div>
         ),
         sub: [
@@ -115,7 +118,11 @@ export const description: Record<
             content: (
               <>
                 機率： <K>{game.getMode("greenwei")?.variable.rate}</K>
-                %；累積次數達 <K>20</K> 時自動觸發。
+                %；累積次數達{" "}
+                <K>
+                  {game.getMode("greenwei")?.variable.requiredGssCount}
+                </K>{" "}
+                時自動觸發。
               </>
             ),
           },
@@ -132,7 +139,10 @@ export const description: Record<
           {
             content: (
               <>
-                啟動獲得 <K>+2</K> 回合；再觸發每次 <K>+2</K>（可疊加）
+                啟動獲得 <K>+{game.getMode("greenwei")?.variable.bonusTimes}</K>{" "}
+                回合；期間同時出現全
+                {game.getMode("greenwei")?.variable.bindPattern}再
+                <K>+{game.getMode("greenwei")?.variable.extendTimes}</K>
               </>
             ),
           },
@@ -148,7 +158,9 @@ export const description: Record<
           {
             content: (
               <>
-                獲得分數提升 <K>2</K> 倍 (乘以<K>3</K>)
+                獲得分數提升{" "}
+                <K>{game.getMode("greenwei")?.variable.mutiplier - 1}</K> 倍
+                (乘以<K>{game.getMode("greenwei")?.variable.mutiplier}</K>)
               </>
             ),
           },
@@ -171,19 +183,21 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發時機</Badge>
-            <span>遊玩次數用盡時出現任一「kachu」。</span>
+            <span>
+              遊玩次數用盡時出現任一「
+              {game.getMode("pikachu")?.variable.bindPattern}」。
+            </span>
           </div>
         ),
       },
       {
-        content: (
-            <Badge>效果</Badge>
-        ),
+        content: <Badge>效果</Badge>,
         sub: [
           {
             content: (
               <>
-                每次觸發 <K>+5</K> 次可玩次數。
+                每次觸發 <K>+{game.getMode("pikachu")?.variable.bonusRounds}</K>{" "}
+                次可玩次數。
               </>
             ),
           },
@@ -193,7 +207,7 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>結束</Badge>
-            <span>當額外次數用盡且該輪未再出現 `kachu` 時結束遊戲。</span>
+            <span>當額外次數用盡且該輪未再出現 `{game.getMode("pikachu")?.variable.bindPattern}` 時結束遊戲。</span>
           </div>
         ),
       },
@@ -206,7 +220,7 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
-            <span>當輪出現任意「hhh」且有機率觸發。</span>
+            <span>當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern}」且有機率觸發。</span>
           </div>
         ),
         sub: [
@@ -214,7 +228,7 @@ export const description: Record<
             content: (
               <>
                 機率： <K>{game.getMode("superhhh")?.variable.rate}</K>
-                %；初次啟動獲得 <K>6</K> 回合。
+                %；初次啟動獲得 <K>{game.getMode("superhhh")?.variable.bonusTimes}</K> 回合。
               </>
             ),
           },
@@ -231,7 +245,7 @@ export const description: Record<
           {
             content: (
               <>
-                若回合結束時三格皆為 `hhh`，額外 <K>+2</K> 回合。
+                若回合期間時三格皆為 `{game.getMode("superhhh")?.variable.bindPattern}`，額外 <K>+{game.getMode("superhhh")?.variable.extendTimes}</K> 回合。
               </>
             ),
           },
@@ -246,7 +260,7 @@ export const description: Record<
         sub: [
           {
             content:
-              "觸發當下三格皆為 `superhhh` 時，額外加分為當前總分的一半（四捨五入）。",
+              `觸發當下三格皆為 \`${game.getMode("superhhh")?.variable.bindPattern}\` 時，額外加分為當前總分的一半（四捨五入）。`,
           },
           {
             content: "狀態期間的高分圖案機率大幅提升。",
