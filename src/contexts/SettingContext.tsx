@@ -2,6 +2,7 @@
 import { GlowText } from "@/components/GlowText";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { useModal } from "@/hooks/useModal";
+import { CloseOutlined } from "@ant-design/icons";
 import { createContext, useContext, useState, useMemo } from "react";
 
 type SettingOption<T> = {
@@ -38,15 +39,40 @@ export const SettingProvider = ({
       {children}
       <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
         <div
-          aria-label="設定選單"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="setting-title"
+          aria-describedby="setting-desc"
           className="card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-4"
         >
-          <GlowText as="h4" className="text-2xl sm:text-3xl font-extrabold mb-2">
-            設定
-          </GlowText>
+          <div
+            id="setting-header"
+            className="text-2xl sm:text-3xl flex items-center justify-between"
+          >
+            <GlowText
+              as="h4"
+              id="setting-title"
+              className="font-extrabold mb-2"
+            >
+              設定
+            </GlowText>
+            <button
+              id="settings-close"
+              onClick={modal.close}
+              aria-label="關閉設定選單"
+              title="關閉設定"
+            >
+              <CloseOutlined />
+            </button>
+          </div>
+          <p id="setting-desc" className="sr-only">
+            此選單可切換遊戲設定。按下 Esc 或按關閉按鈕可關閉。
+          </p>
           <div className="flex flex-col gap-3 text-lg md:text-xl text-nowrap">
             <div className="flex items-center justify-between">
-              <span className="font-medium text-neutral-200">背景音樂</span>
+              <label htmlFor="music" className="font-medium text-neutral-200">
+                遊戲背景音樂
+              </label>
               <ToggleSwitch id="music" value={music} setValue={setMusic} />
             </div>
           </div>
