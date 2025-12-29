@@ -7,6 +7,7 @@ import { site } from "@/libs/site";
 import { SettingProvider } from "@/contexts/SettingContext";
 import { PatternModalProvider } from "@/contexts/PatternModalContext";
 import { ModeModalProvider } from "@/contexts/ModeModalContext";
+import { SettingButton } from "@/components/SettingButton";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -83,6 +84,7 @@ export default function RootLayout({
                 <link rel="manifest" href="/manifest.json" />
                 <Header />
                 <main>{children}</main>
+                <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
               </ModeModalProvider>
             </PatternModalProvider>
           </SettingProvider>

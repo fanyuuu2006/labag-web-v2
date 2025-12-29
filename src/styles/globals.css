@@ -306,7 +306,7 @@
   }
 
   .btn {
-    background: var(--background-color-secondary);
+    background: var(--background-color-primary);
     border: 2px solid var(--border-color);
     color: var(--text-color);
   }

@@ -7,7 +7,6 @@ import { PatternsDiv } from "./PatternsDiv";
 import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
 import { recorder } from "@/libs/recorder";
-import { MusicCheckbox } from "./MusicCheckbox";
 import { MusicAudio } from "./MusicAudio";
 
 export const MainSection = () => {
@@ -49,6 +48,7 @@ export const MainSection = () => {
         </aside>
       </div>
       <MusicAudio loop preload='auto' />
+      
     </section>
   );
 };
