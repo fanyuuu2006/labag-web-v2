@@ -2,7 +2,6 @@ import { LaBaG } from "labag";
 import { game } from "./game";
 
 type RoundRecord = {
-  roundNumber: number;
   randNums: Record<string, number>;
 };
 
@@ -40,7 +39,6 @@ class Recorder {
     });
 
     const record: RoundRecord = {
-      roundNumber: g?.rounds ?? 0,
       randNums,
     };
 

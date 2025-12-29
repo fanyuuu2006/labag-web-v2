@@ -201,13 +201,24 @@ export const description: Record<
               </>
             ),
           },
+          {
+            content: (
+              <>
+                模式期間處現任一`{game.getMode("pikachu")?.variable.bindPattern}
+                ` ，則額外增加 <K>+(當前已觸發皮卡丘充電次數)</K> 次可玩次數。
+              </>
+            ),
+          },
         ],
       },
       {
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>結束</Badge>
-            <span>當額外次數用盡且該輪未再出現 `{game.getMode("pikachu")?.variable.bindPattern}` 時結束遊戲。</span>
+            <span>
+              當額外次數用盡且該輪未再出現 `
+              {game.getMode("pikachu")?.variable.bindPattern}` 時結束遊戲。
+            </span>
           </div>
         ),
       },
@@ -220,7 +231,10 @@ export const description: Record<
         content: (
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
-            <span>當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern}」且有機率觸發。</span>
+            <span>
+              當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern}
+              」且有機率觸發。
+            </span>
           </div>
         ),
         sub: [
@@ -228,7 +242,8 @@ export const description: Record<
             content: (
               <>
                 機率： <K>{game.getMode("superhhh")?.variable.rate}</K>
-                %；初次啟動獲得 <K>{game.getMode("superhhh")?.variable.bonusTimes}</K> 回合。
+                %；初次啟動獲得{" "}
+                <K>{game.getMode("superhhh")?.variable.bonusTimes}</K> 回合。
               </>
             ),
           },
@@ -245,7 +260,9 @@ export const description: Record<
           {
             content: (
               <>
-                若回合期間時三格皆為 `{game.getMode("superhhh")?.variable.bindPattern}`，額外 <K>+{game.getMode("superhhh")?.variable.extendTimes}</K> 回合。
+                若回合期間時三格皆為 `
+                {game.getMode("superhhh")?.variable.bindPattern}`，額外{" "}
+                <K>+{game.getMode("superhhh")?.variable.extendTimes}</K> 回合。
               </>
             ),
           },
@@ -259,8 +276,9 @@ export const description: Record<
         ),
         sub: [
           {
-            content:
-              `觸發當下三格皆為 \`${game.getMode("superhhh")?.variable.bindPattern}\` 時，額外加分為當前總分的一半（四捨五入）。`,
+            content: `觸發當下三格皆為 \`${
+              game.getMode("superhhh")?.variable.bindPattern
+            }\` 時，額外加分為當前總分的一半（四捨五入）。`,
           },
           {
             content: "狀態期間的高分圖案機率大幅提升。",
