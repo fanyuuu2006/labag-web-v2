@@ -4,6 +4,7 @@ import { Header } from "@/components/Header/Header";
 import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
+import { SettingProvider } from "@/contexts/SettingContext";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -71,14 +72,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ModesProvider>
-        <Body>
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="manifest" href="/manifest.json" />
-          <Header />
-          <main>{children}</main>
-        </Body>
-      </ModesProvider>
+      <SettingProvider>
+        <ModesProvider>
+          <Body>
+            <link rel="icon" href="/favicon.ico" />
+            <link rel="manifest" href="/manifest.json" />
+            <Header />
+            <main>{children}</main>
+          </Body>
+        </ModesProvider>
+      </SettingProvider>
     </html>
   );
 }

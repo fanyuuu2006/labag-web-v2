@@ -1,7 +1,8 @@
 "use client";
 import { useModes } from "@/contexts/ModesContext";
+import { useSetting } from "@/contexts/SettingContext";
 import { cn } from "@/utils/className";
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useRef, useEffect } from "react";
 
 type MusicCheckboxProps = Omit<
   React.LabelHTMLAttributes<HTMLLabelElement>,
@@ -9,10 +10,10 @@ type MusicCheckboxProps = Omit<
 >;
 
 export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
+  const { music } = useSetting();
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const handleChange = useCallback(() => setIsPlaying((v) => !v), []);
+  const handleChange = useCallback(() => music.set((v) => !v), [music]);
 
   // 更新音檔來源（只在 mode 變更時更新），並在 isPlaying 時嘗試播放
   useEffect(() => {
@@ -33,17 +34,17 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
     audio.dataset.src = src; // 紀錄目前來源
     audio.src = src;
     // 若當前為播放狀態，嘗試播放（瀏覽器若無使用者互動會拒絕，這裡以 catch 處理）
-    if (isPlaying) {
+    if (music.value) {
       audio.play().catch((err) => console.warn("music play blocked:", err));
     }
-  }, [modes, isPlaying]);
+  }, [modes, music.value]);
 
   // 播放 / 暫停 控制
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
+    if (music.value) {
       audio.play().catch((err) => console.warn("music play blocked:", err));
     } else {
       audio.pause();
@@ -53,7 +54,7 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
     return () => {
       audio.pause();
     };
-  }, [isPlaying]);
+  }, [music.value]);
 
   return (
     <>
@@ -64,9 +65,9 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
         <input
           type="checkbox"
           className="sr-only peer"
-          checked={isPlaying}
+          checked={music.value}
           onChange={handleChange}
-          aria-label={isPlaying ? "停止背景音樂" : "播放背景音樂"}
+          aria-label={music.value ? "停止背景音樂" : "播放背景音樂"}
         />
 
         {/* 可及性友好的滑動開關樣式 */}
@@ -74,10 +75,10 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
           className={cn(
             "font-bold flex items-center justify-center h-[2em] aspect-square rounded-full border-2 cursor-pointer transition-all duration-200",
             "bg-gray-500 text-black border-black/20",
-            "peer-checked:bg-green-500 peer-checked:border-green-950/20 peer-checked:text-green-950 peer-checked:drop-shadow-[0_0_5px_green]"
+            "peer-checked:bg-green-400 peer-checked:border-green-950/20 peer-checked:text-green-950 peer-checked:drop-shadow-[0_0_10px_green]"
           )}
         >
-          <span>{isPlaying ? "關" : "開"}</span>
+          <span>{music.value ? "關" : "開"}</span>
         </div>
       </label>
 
