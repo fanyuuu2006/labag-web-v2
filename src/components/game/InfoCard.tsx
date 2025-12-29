@@ -161,7 +161,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               className="text-xs sm:text-sm md:text-base"
               style={{ color: "var(--greenwei-text-color-secondary)" }}
             >
-              GSS 累積數
+              {game.getMode('greenwei')?.variable.bindPattern} 累積數
             </dt>
             <dd
               className="text-base md:text-xl font-bold"
