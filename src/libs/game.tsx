@@ -108,7 +108,7 @@ export const description: Record<
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
             <span>
-              當輪出現三個「{game.getMode("greenwei")?.variable.bindPattern}
+              當輪出現三個「{game.getMode("greenwei")?.variable.bindPattern.name}
               」有機率觸發或累積次數達標時。
             </span>
           </div>
@@ -141,7 +141,7 @@ export const description: Record<
               <>
                 啟動獲得 <K>+{game.getMode("greenwei")?.variable.bonusTimes}</K>{" "}
                 回合；期間同時出現全
-                {game.getMode("greenwei")?.variable.bindPattern}再
+                {game.getMode("greenwei")?.variable.bindPattern.name}再
                 <K>+{game.getMode("greenwei")?.variable.extendTimes}</K>
               </>
             ),
@@ -185,7 +185,7 @@ export const description: Record<
             <Badge>觸發時機</Badge>
             <span>
               遊玩次數用盡時出現任一「
-              {game.getMode("pikachu")?.variable.bindPattern}」。
+              {game.getMode("pikachu")?.variable.bindPattern.name}」。
             </span>
           </div>
         ),
@@ -204,7 +204,7 @@ export const description: Record<
           {
             content: (
               <>
-                模式期間處現任一`{game.getMode("pikachu")?.variable.bindPattern}
+                模式期間處現任一`{game.getMode("pikachu")?.variable.bindPattern.name}
                 ` ，則額外增加 <K>+(當前已觸發皮卡丘充電次數)</K> 次可玩次數。
               </>
             ),
@@ -217,7 +217,7 @@ export const description: Record<
             <Badge>結束</Badge>
             <span>
               當額外次數用盡且該輪未再出現 `
-              {game.getMode("pikachu")?.variable.bindPattern}` 時結束遊戲。
+              {game.getMode("pikachu")?.variable.bindPattern.name}` 時結束遊戲。
             </span>
           </div>
         ),
@@ -232,7 +232,7 @@ export const description: Record<
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
             <span>
-              當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern}
+              當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern.name}
               」且有機率觸發。
             </span>
           </div>
@@ -261,7 +261,7 @@ export const description: Record<
             content: (
               <>
                 若回合期間時三格皆為 `
-                {game.getMode("superhhh")?.variable.bindPattern}`，額外{" "}
+                {game.getMode("superhhh")?.variable.bindPattern.name}`，額外{" "}
                 <K>+{game.getMode("superhhh")?.variable.extendTimes}</K> 回合。
               </>
             ),
@@ -277,7 +277,7 @@ export const description: Record<
         sub: [
           {
             content: `觸發當下三格皆為 \`${
-              game.getMode("superhhh")?.variable.bindPattern
+              game.getMode("superhhh")?.variable.bindPattern.name
             }\` 時，額外加分為當前總分的一半（四捨五入）。`,
           },
           {

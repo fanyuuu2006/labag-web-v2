@@ -76,7 +76,7 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
           className={cn(
             "font-bold flex items-center justify-center h-[2em] aspect-square rounded-full border-2 cursor-pointer transition-all duration-200",
             "bg-radial from-gray-600 to-gray-400 text-black border-black/20",
-            "peer-checked:from-green-600 peer-checked:to-green-400 peer-checked:border-green-900/50 peer-checked:text-green-900 peer-checked:drop-shadow-[0_0_10px_green]"
+            "peer-checked:from-green-600 peer-checked:to-green-400 peer-checked:border-green-900/50 peer-checked:text-green-200 peer-checked:drop-shadow-[0_0_10px_green]"
           )}
         >
             <CustomerServiceOutlined />
