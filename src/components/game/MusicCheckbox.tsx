@@ -2,6 +2,7 @@
 import { useModes } from "@/contexts/ModesContext";
 import { useSetting } from "@/contexts/SettingContext";
 import { cn } from "@/utils/className";
+import { CustomerServiceOutlined } from "@ant-design/icons";
 import { useCallback, useRef, useEffect } from "react";
 
 type MusicCheckboxProps = Omit<
@@ -74,11 +75,11 @@ export const MusicCheckbox = ({ className, ...rest }: MusicCheckboxProps) => {
         <div
           className={cn(
             "font-bold flex items-center justify-center h-[2em] aspect-square rounded-full border-2 cursor-pointer transition-all duration-200",
-            "bg-gray-500 text-black border-black/20",
-            "peer-checked:bg-green-400 peer-checked:border-green-950/20 peer-checked:text-green-950 peer-checked:drop-shadow-[0_0_10px_green]"
+            "bg-radial from-gray-600 to-gray-400 text-black border-black/20",
+            "peer-checked:from-green-600 peer-checked:to-green-400 peer-checked:border-green-900/50 peer-checked:text-green-900 peer-checked:drop-shadow-[0_0_10px_green]"
           )}
         >
-          <span>{music.value ? "關" : "開"}</span>
+            <CustomerServiceOutlined />
         </div>
       </label>
 
