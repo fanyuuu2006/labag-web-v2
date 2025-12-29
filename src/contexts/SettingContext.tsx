@@ -38,7 +38,7 @@ export const SettingProvider = ({
     <settingContext.Provider value={value}>
       {children}
       <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
-        <div className="card w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 flex flex-col gap-2 animate-pop">
+        <div className="card w-full max-w-md sm:max-w-lg p-6 flex flex-col gap-2 animate-pop">
           <GlowText
             as="h4"
             className="text-2xl sm:text-3xl font-extrabold mb-4"
@@ -50,7 +50,7 @@ export const SettingProvider = ({
               <span className="font-medium text-(--text-color-primary)">
                 背景音樂
               </span>
-              <ToggleSwitch htmlFor="music" value={music} setValue={setMusic} />
+              <ToggleSwitch id="music" value={music} setValue={setMusic} />
             </div>
           </div>
         </div>
@@ -78,6 +78,8 @@ const ToggleSwitch = ({
         id={id}
         className="sr-only peer"
         type="checkbox"
+        role="switch"
+        aria-checked={value}
         checked={value}
         onChange={() => setValue((prev) => !prev)}
       />
