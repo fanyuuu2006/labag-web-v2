@@ -16,9 +16,9 @@ export const useModeModal = () => {
     [modal]
   );
 
-
   const Content = mode ? (
     <div
+      data-theme={mode}
       className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop"
     >
       <GlowText

@@ -106,7 +106,7 @@
   html {
     height: 100%;
   }
-  body[data-theme="normal"] {
+  * [data-theme="normal"] {
     --background-color: var(--normal-background-color);
     --background-color-primary: var(--normal-background-color-primary);
     --background-color-secondary: var(--normal-background-color-secondary);
@@ -121,7 +121,7 @@
     --nebula-purple: var(--normal-nebula-purple);
     --horizon-glow: var(--normal-horizon-glow);
   }
-  body[data-theme="superhhh"] {
+  * [data-theme="superhhh"] {
     --background-color: var(--superhhh-background-color);
     --background-color-primary: var(--superhhh-background-color-primary);
     --background-color-secondary: var(--superhhh-background-color-secondary);
@@ -136,7 +136,7 @@
     --nebula-purple: var(--superhhh-nebula-purple);
     --horizon-glow: var(--superhhh-horizon-glow);
   }
-  body[data-theme="greenwei"] {
+  * [data-theme="greenwei"] {
     --background-color: var(--greenwei-background-color);
     --background-color-primary: var(--greenwei-background-color-primary);
     --background-color-secondary: var(--greenwei-background-color-secondary);
@@ -151,7 +151,7 @@
     --nebula-purple: var(--greenwei-nebula-purple);
     --horizon-glow: var(--greenwei-horizon-glow);
   }
-  body[data-theme="pikachu"] {
+  * [data-theme="pikachu"] {
     --background-color: var(--pikachu-background-color);
     --background-color-primary: var(--pikachu-background-color-primary);
     --background-color-secondary: var(--pikachu-background-color-secondary);

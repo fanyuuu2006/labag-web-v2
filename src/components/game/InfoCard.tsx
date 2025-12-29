@@ -18,18 +18,14 @@ type InfoState = {
 };
 
 const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
-  const style: React.CSSProperties = {
-    background: `linear-gradient(135deg, var(--${mode}-text-color-primary), var(--${mode}-text-color-secondary))`,
-    color: `var(--${mode}-background-color-secondary)`,
-  };
   const modal = useModeModal();
   return (
     <>
       <button
-        className="text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
-        style={style}
+        className="btn-primary text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
         aria-label={`mode-${mode}`}
         onClick={() => modal.open(mode)}
+        data-theme={mode}
       >
         {mode}
       </button>
