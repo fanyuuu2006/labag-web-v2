@@ -10,7 +10,7 @@ type RecorderOptions = {
 };
 class Recorder {
   private game: LaBaG;
-  private rounds: RoundRecord[] = [];
+  #rounds: RoundRecord[] = [];
   private onRoundEndBound: (e: LaBaG) => void;
   private started = false;
   private debug = false;
@@ -20,6 +20,12 @@ class Recorder {
     this.onRoundEndBound = this.onRoundEnd.bind(this);
     this.debug = !!options?.debug;
   }
+  
+  
+  get rounds() {
+    return this.#rounds.map((r) => ({ ...r }));
+  }
+
 
   private onRoundEnd(g: LaBaG) {
     const randNums: Record<string, number> = {};
@@ -38,18 +44,18 @@ class Recorder {
       }
     });
 
-    const record: RoundRecord = {
+    const round: RoundRecord = {
       randNums,
     };
 
-    if (this.debug) console.debug("recorder:onRoundEnd", record);
+    if (this.debug) console.debug("recorder:onRoundEnd", round);
 
-    this.rounds.push(record);
+    this.#rounds.push(round);
   }
 
   init(clearExisting = true) {
     if (this.started) return;
-    if (clearExisting) this.rounds = [];
+    if (clearExisting) this.#rounds = [];
     if (typeof this.game.addEventListener === "function") {
       this.game.addEventListener("roundEnd", this.onRoundEndBound);
       this.started = true;
@@ -62,14 +68,8 @@ class Recorder {
     this.game.removeEventListener("roundEnd", this.onRoundEndBound);
     this.started = false;
   }
-
-  // 取得複本，不讓外部直接修改內部陣列
-  getRecords(): RoundRecord[] {
-    return this.rounds.map((r) => ({ ...r, randNums: { ...r.randNums } }));
-  }
-
   clear() {
-    this.rounds = [];
+    this.#rounds = [];
   }
 }
 

@@ -26,7 +26,7 @@ export const DownloadRecordButton = ({
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(e);
-      if (recorder.getRecords().length < game.times) {
+      if (recorder.rounds.length < game.times) {
         alert("目前沒有可下載的遊戲紀錄喔！");
         return;
       }
@@ -35,7 +35,7 @@ export const DownloadRecordButton = ({
       const formattedDate = today.toISOString().slice(0, 10).replace(/-/g, ""); // 轉成 YYYYMMDD
       const fileName = `labag_${formattedDate}_${game.score}.json`;
 
-      const records = recorder.getRecords();
+      const records = recorder.rounds;
       const jsonString = JSON.stringify(records, null, 2);
       const blob = new Blob([jsonString], { type: "application/json" });
       const url = URL.createObjectURL(blob);
