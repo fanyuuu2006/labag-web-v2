@@ -25,28 +25,6 @@ const K = ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
   />
 );
 
-// game.addEventListener("gameStart", (g) => {
-//   console.log("Game Started!");
-//   console.log(`Total Rounds: ${g.times}\n`);
-// });
-// game.addEventListener("roundStart", (g) => {
-//   console.log(`--- Round ${g.rounds} Start ---`);
-// });
-// game.addEventListener("rollSlots", (g) => {
-//   const { modes, ranges } = g.getCurrentConfig();
-//   console.log(`Active Modes: ${modes.map((m) => m.name).join(", ")}`);
-//   console.log(
-//     `Probability Ranges: ${ranges
-//       .map((r) => `${r.pattern.name}<=${r.threshold}`)
-//       .join(", ")}`
-//   );
-// });
-// game.addEventListener("roundEnd", (g) => {
-//   console.log(g.patterns.map((p) => (p ? p.name : "null")).join(" | "));
-//   console.log(`Margin Score: ${g.marginScore}`);
-//   console.log(`Score: ${g.score}\n`);
-// });
-
 export const description: Record<
   ModeName,
   { name: string; details: Detail[] }
@@ -108,7 +86,8 @@ export const description: Record<
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
             <span>
-              當輪出現三個「{game.getMode("greenwei")?.variable.bindPattern.name}
+              當輪出現三個「
+              {game.getMode("greenwei")?.variable.bindPattern.name}
               」有機率觸發或累積次數達標時。
             </span>
           </div>
@@ -204,8 +183,9 @@ export const description: Record<
           {
             content: (
               <>
-                模式期間處現任一`{game.getMode("pikachu")?.variable.bindPattern.name}
-                ` ，則額外增加 <K>+(當前已觸發皮卡丘充電次數)</K> 次可玩次數。
+                模式期間處現任一`
+                {game.getMode("pikachu")?.variable.bindPattern.name}`
+                ，則額外增加 <K>+(當前已觸發皮卡丘充電次數)</K> 次可玩次數。
               </>
             ),
           },
@@ -232,7 +212,8 @@ export const description: Record<
           <div className="flex flex-wrap gap-1 items-center">
             <Badge>觸發</Badge>
             <span>
-              當輪出現任意「{game.getMode("superhhh")?.variable.bindPattern.name}
+              當輪出現任意「
+              {game.getMode("superhhh")?.variable.bindPattern.name}
               」且有機率觸發。
             </span>
           </div>
@@ -276,9 +257,14 @@ export const description: Record<
         ),
         sub: [
           {
-            content: `觸發當下三格皆為 \`${
-              game.getMode("superhhh")?.variable.bindPattern.name
-            }\` 時，額外加分為當前總分的一半（四捨五入）。`,
+            content: (
+              <>
+                {`觸發當下三格皆為 \`${
+                  game.getMode("superhhh")?.name
+                }\` 時，獲得額外加分`}
+                <K>(當前總分的一半)</K>
+              </>
+            ),
           },
           {
             content: "狀態期間的高分圖案機率大幅提升。",
