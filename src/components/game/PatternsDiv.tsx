@@ -6,8 +6,10 @@ import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
 import { playAudio } from "@/utils/audio";
 import { usePatternModal } from "@/contexts/PatternModalContext";
+import { useSetting } from "@/contexts/SettingContext";
 
 export const PatternsDiv = () => {
+  const { sound } = useSetting();
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
     null,
@@ -39,7 +41,9 @@ export const PatternsDiv = () => {
               next[index] = p;
               return next;
             });
-            playAudio(`/audios/ding.mp3`, { volume: 0.5 });
+            if (sound.value) {
+              playAudio(`/audios/ding.mp3`, { volume: 0.5 });
+            }
           }, (index + 1) * 500);
           timers.push(id);
         }
@@ -59,7 +63,9 @@ export const PatternsDiv = () => {
         const id = setTimeout(() => {
           setPatterns([...g.patterns]);
           diffNames.forEach((name) => {
-            playAudio(`/audios/on/${name}.mp3`);
+            if (sound.value) {
+              playAudio(`/audios/on/${name}.mp3`);
+            }
           });
         }, 3000);
         timers.push(id);
@@ -74,7 +80,7 @@ export const PatternsDiv = () => {
       game.removeEventListener("roundEnd", updatePatterns);
       timers.forEach((t) => clearTimeout(t));
     };
-  }, []);
+  }, [sound.value]);
 
   return (
     <div className="grid grid-cols-3 w-full gap-1 md:max-w-2xl relative">
