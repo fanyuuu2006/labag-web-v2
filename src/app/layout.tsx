@@ -77,17 +77,17 @@ export default function RootLayout({
     <html lang="en">
       <ModesProvider>
         <Body>
-          <SettingProvider>
-            <PatternModalProvider>
-              <ModeModalProvider>
+          <PatternModalProvider>
+            <ModeModalProvider>
+              <SettingProvider>
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="manifest" href="/manifest.json" />
                 <Header />
                 <main>{children}</main>
                 <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
-              </ModeModalProvider>
-            </PatternModalProvider>
-          </SettingProvider>
+              </SettingProvider>
+            </ModeModalProvider>
+          </PatternModalProvider>
         </Body>
       </ModesProvider>
     </html>

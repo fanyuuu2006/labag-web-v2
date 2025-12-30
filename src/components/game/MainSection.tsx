@@ -17,7 +17,7 @@ export const MainSection = () => {
     const handleGameOver = () => {
       timeoutId = window.setTimeout(() => {
         playAudio(`/audios/ding.mp3`);
-        router.push("/gameover");
+        router.replace("/gameover");
       }, 3500);
     };
 
