@@ -8,15 +8,19 @@ import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
 import { recorder } from "@/libs/recorder";
 import { MusicAudio } from "./MusicAudio";
+import { useSetting } from "@/contexts/SettingContext";
 
 export const MainSection = () => {
   const router = useRouter();
+  const {sound} = useSetting();
   useEffect(() => {
     let timeoutId: number | null = null;
 
     const handleGameOver = () => {
       timeoutId = window.setTimeout(() => {
-        playAudio(`/audios/ding.mp3`);
+        if (sound.value) {
+          playAudio(`/audios/ding.mp3`);
+        }
         router.replace("/gameover");
       }, 3500);
     };
@@ -27,7 +31,7 @@ export const MainSection = () => {
       if (timeoutId) clearTimeout(timeoutId);
       game.removeEventListener("gameOver", handleGameOver);
     };
-  }, [router]);
+  }, [router, sound.value]);
 
   useEffect(() => {
     recorder.init();
