@@ -13,6 +13,7 @@ type SettingOption<T> = {
 interface SettingContextType {
   modal: ReturnType<typeof useModal>;
   music: SettingOption<boolean>;
+  sound: SettingOption<boolean>;
 }
 
 const settingContext = createContext<SettingContextType | null>(null);
@@ -24,6 +25,7 @@ export const SettingProvider = ({
 }) => {
   const modal = useModal({});
   const [music, setMusic] = useState<boolean>(true);
+  const [sound, setSound] = useState<boolean>(true);
   const value = useMemo(
     () => ({
       modal,
@@ -31,8 +33,12 @@ export const SettingProvider = ({
         value: music,
         set: setMusic,
       },
+      sound: {
+        value: sound,
+        set: setSound,
+      },
     }),
-    [modal, music]
+    [modal, music, sound]
   );
   return (
     <settingContext.Provider value={value}>
@@ -68,12 +74,18 @@ export const SettingProvider = ({
           <p id="setting-desc" className="sr-only">
             此選單可切換遊戲設定。按下 Esc 或按關閉按鈕可關閉。
           </p>
-          <div className="flex flex-col gap-3 text-lg md:text-xl text-nowrap">
+          <div className="flex flex-col gap-3 text-xl md:text-2xl text-nowrap">
             <div className="flex items-center justify-between">
               <label htmlFor="music" className="font-medium text-neutral-200">
                 遊戲背景音樂
               </label>
               <ToggleSwitch id="music" value={music} setValue={setMusic} />
+            </div>
+            <div className="flex items-center justify-between">
+              <label htmlFor="music" className="font-medium text-neutral-200">
+                遊戲音效
+              </label>
+              <ToggleSwitch id="sound" value={sound} setValue={setSound} />
             </div>
           </div>
         </div>

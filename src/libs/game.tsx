@@ -99,7 +99,7 @@ export const description: Record<
                 機率： <K>{game.getMode("greenwei")?.variable.rate}</K>
                 %；累積次數達{" "}
                 <K>
-                  {game.getMode("greenwei")?.variable.requiredGssCount}
+                  {game.getMode("greenwei")?.variable.requiredBindPatternCount}
                 </K>{" "}
                 時自動觸發。
               </>

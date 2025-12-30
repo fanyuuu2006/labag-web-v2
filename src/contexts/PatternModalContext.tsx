@@ -23,10 +23,10 @@ export const PatternModalProvider = ({
 }) => {
   const [pattern, setPattern] = useState<Pattern | null>(null);
   const modal = useModal({});
-  const { name, scores, rate } = useMemo(
-    () => pattern ? getPatternInfo(pattern) : { name: "", scores: [0, 0, 0], rate: 0 },
-    [pattern]
+  const { name, rate, scores } = getPatternInfo(
+    pattern ?? { name: "", scores: [0, 0, 0] }
   );
+
   const displayRate = Number(Number(rate).toFixed(1));
   const value = useMemo(
     () => ({
