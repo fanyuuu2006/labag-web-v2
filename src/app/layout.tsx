@@ -8,6 +8,7 @@ import { SettingProvider } from "@/contexts/SettingContext";
 import { PatternModalProvider } from "@/contexts/PatternModalContext";
 import { ModeModalProvider } from "@/contexts/ModeModalContext";
 import { SettingButton } from "@/components/SettingButton";
+import { UserProvider } from "@/contexts/UserContext";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -75,21 +76,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ModesProvider>
-        <Body>
-          <PatternModalProvider>
-            <ModeModalProvider>
-              <SettingProvider>
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="manifest" href="/manifest.json" />
-                <Header />
-                <main>{children}</main>
-                <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
-              </SettingProvider>
-            </ModeModalProvider>
-          </PatternModalProvider>
-        </Body>
-      </ModesProvider>
+      <UserProvider>
+        <ModesProvider>
+          <Body>
+            <PatternModalProvider>
+              <ModeModalProvider>
+                <SettingProvider>
+                  <link rel="icon" href="/favicon.ico" />
+                  <link rel="manifest" href="/manifest.json" />
+                  <Header />
+                  <main>{children}</main>
+                  <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
+                </SettingProvider>
+              </ModeModalProvider>
+            </PatternModalProvider>
+          </Body>
+        </ModesProvider>
+      </UserProvider>
     </html>
   );
 }
