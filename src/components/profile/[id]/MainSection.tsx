@@ -7,7 +7,6 @@ import { SupabaseAllowFieldsUser, SupabaseRecord } from "@/types/backend";
 
 export const MainSection = ({
   user,
-  records,
 }: {
   user: SupabaseAllowFieldsUser | null;
   records: SupabaseRecord[];
