@@ -95,7 +95,7 @@ export const Header = () => {
             <NavLink key={route.href} route={route} pathname={pathname} />
           ))}
           <div className="p-2 flex items-center justify-center">
-            <AuthButton />
+            <AuthButton className="text-[0.75em] font-bold" />
           </div>
         </nav>
       </div>
@@ -116,7 +116,7 @@ export const Header = () => {
             />
           ))}
           <div className="p-2 flex items-center justify-center">
-            <AuthButton />
+            <AuthButton className="text-[0.75em] font-bold" />
           </div>
         </div>
       </Collapse>
