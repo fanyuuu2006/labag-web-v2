@@ -13,6 +13,7 @@ import {
 import { game } from "@/libs/game";
 import { fetcher } from "@/utils/fetcher";
 import { recorder } from "@/libs/recorder";
+import { userProfile } from "@/utils/backend";
 
 interface UserContextType {
   user: SupabaseUser | null;
@@ -37,17 +38,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
   }, []);
   const refresh = useCallback(() => {
+    const token = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!token) return;
     setLoading(true);
-    fetcher<BackendResponse<SupabaseUser>>(
-      `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/profile`,
-      {
-        headers: {
-          Authorization: `Bearer ${
-            localStorage.getItem(LOCAL_STORAGE_KEY) || ""
-          }`,
-        },
-      }
-    )
+    userProfile(token)
       .then((data) => {
         setUser(data.data);
       })
