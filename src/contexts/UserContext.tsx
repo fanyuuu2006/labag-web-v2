@@ -20,6 +20,8 @@ interface UserContextType {
   logOut: () => void;
 }
 
+export const LOCAL_STORAGE_KEY = "authToken";
+
 const userContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -29,14 +31,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     window.location.href = `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/${signBy}/`;
   }, []);
   const logOut = useCallback(() => {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     setUser(null);
   }, []);
   const refresh = useCallback(() => {
     setLoading(true);
     fetch(`${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/profile`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
+        Authorization: `Bearer ${
+          localStorage.getItem(LOCAL_STORAGE_KEY) || ""
+        }`,
       },
     })
       .then(async (res) => {
@@ -64,10 +68,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }),
     [user, loading, logIn, logOut, refresh]
   );
+
   useEffect(() => {
-    if (typeof window === "undefined") return; // 避免伺服器端執行
-    Promise.resolve().then(() => refresh());
-  }, [refresh]);
+    if (user || !localStorage.getItem(LOCAL_STORAGE_KEY)) return;
+    const fetchUser = async () => {
+      refresh();
+    };
+    fetchUser();
+  }, [refresh, user]);
 
   return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };

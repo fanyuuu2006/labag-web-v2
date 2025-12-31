@@ -21,18 +21,17 @@ export const PatternModalProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [pattern, setPattern] = useState<Pattern | null>(null);
   const modal = useModal({});
-  const { name, rate, scores } = getPatternInfo(
-    pattern ?? { name: "", scores: [0, 0, 0] }
+  const [info, setInfo] = useState<ReturnType<typeof getPatternInfo> | null>(
+    null
   );
 
-  const displayRate = Number(Number(rate).toFixed(1));
+  const displayRate = Number(Number(info?.rate ?? 0).toFixed(1));
   const value = useMemo(
     () => ({
       ...modal,
       open: (p: Pattern) => {
-        setPattern(p);
+        setInfo(getPatternInfo(p));
         modal.open();
       },
     }),
@@ -43,15 +42,15 @@ export const PatternModalProvider = ({
     <patternModalContext.Provider value={value}>
       {children}
       <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
-        {pattern && (
+        {info && (
           <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-6 flex flex-col gap-2  animate-pop">
             <div className="flex flex-col sm:flex-row w-full gap-4 items-center">
               {/**左側 */}
               <div className="w-1/3 flex flex-col items-center gap-3">
                 <div className="w-full aspect-square rounded-md overflow-hidden">
                   <MyImage
-                    src={`/images/patterns/${name}.jpg`}
-                    alt={name}
+                    src={`/images/patterns/${info.name}.jpg`}
+                    alt={info.name}
                     className="w-full h-full object-cover scale-105"
                   />
                 </div>
@@ -60,7 +59,7 @@ export const PatternModalProvider = ({
                   as="h2"
                   className="text-xl md:text-2xl lg:text-3xl font-extrabold"
                 >
-                  {name}
+                  {info.name}
                 </GlowText>
               </div>
 
@@ -102,15 +101,15 @@ export const PatternModalProvider = ({
                       {[
                         {
                           label: "三個相同",
-                          score: scores[0],
+                          score: info.scores[0],
                         },
                         {
                           label: "兩個相同",
-                          score: scores[1],
+                          score: info.scores[1],
                         },
                         {
                           label: "皆不同",
-                          score: scores[2],
+                          score: info.scores[2],
                         },
                       ].map((item, index) => (
                         <div
