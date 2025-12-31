@@ -1,3 +1,5 @@
+import { ALLOW_USER_FIELDS } from "@/libs/backend";
+
 export type SignBy = "google";
 
 export type BackendResponse<T> = {
@@ -12,6 +14,7 @@ export type SupabaseUser = {
   avatar?: string;
   provider_id?: string;
 };
+export type SupabaseAllowFieldsUser = Pick<SupabaseUser, (typeof ALLOW_USER_FIELDS)[number]>
 
 export type SupabaseRecord = {
   id: number;
