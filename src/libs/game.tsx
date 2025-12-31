@@ -2,7 +2,7 @@ import { Detail } from "@/components/DetailItem";
 import { cn } from "@/utils/className";
 import { LaBaG, modeList, ModeName } from "labag";
 
-export const game = new LaBaG(30);
+export const game = new LaBaG(3);
 modeList.forEach((mode) => game.addMode(mode));
 
 const Badge = ({
