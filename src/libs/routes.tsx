@@ -1,10 +1,11 @@
-import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
+import { HomeOutlined, TrophyOutlined, UserOutlined } from "@ant-design/icons";
 
 export const routes: {
   label: string;
   href: string;
   icon: React.ElementType;
   isActive?: (path: string) => boolean;
+  needsAuth?: boolean;
 }[] = [
   {
     label: "首頁",
@@ -16,5 +17,11 @@ export const routes: {
     label: "排行榜",
     href: "/rankings",
     icon: TrophyOutlined,
+  },
+  {
+    label: "個人資料",
+    href: "/profile",
+    icon: UserOutlined,
+    needsAuth: true,
   },
 ];

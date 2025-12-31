@@ -7,6 +7,7 @@ import { GlowText } from "../GlowText";
 import { Burger } from "./Burger";
 import { useState, useCallback } from "react";
 import { Collapse } from "fanyucomponents";
+import { useUser } from "@/contexts/UserContext";
 
 // 判斷路由是否激活的輔助函式
 const isRouteActive = (
@@ -27,8 +28,13 @@ interface NavLinkProps {
 }
 
 const NavLink = ({ route, pathname, onClick, className }: NavLinkProps) => {
+  const { user } = useUser();
   const isActive = isRouteActive(pathname, route.href, route.isActive);
   const Icon = route.icon;
+
+  if (route.needsAuth && !user) {
+    return null;
+  }
 
   return (
     <Link
@@ -79,7 +85,7 @@ export const Header = () => {
             onChange={handleMenuToggle}
             aria-label={menuShow ? "關閉選單" : "開啟選單"}
             aria-expanded={menuShow}
-            aria-controls="mobile-nav"
+            aria-controls="desktop-nav"
           />
         </div>
 
