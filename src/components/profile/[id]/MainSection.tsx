@@ -18,8 +18,8 @@ export const MainSection = ({
           {user ? (
             <>
               <div className="card w-full flex flex-col items-center p-4 md:p-6 gap-4">
-                <div className="w-full flex items-center gap-2">
-                  <div className="h-[5em] w-auto aspect-square rounded-full overflow-hidden">
+                <div className="text-base sm:text-lg md:text-xl lg:text-2xl w-full flex items-center gap-2">
+                  <div className="card h-[4em] w-auto aspect-square rounded-full overflow-hidden">
                     <MyImage
                       src={user.avatar}
                       fallbackSrc={`/default-avatar.jpg`}
@@ -28,7 +28,7 @@ export const MainSection = ({
                     />
                   </div>
                   <div className="flex-1">
-                    <GlowText as="h2" className="text-3xl font-bold">
+                    <GlowText as="h2" className="font-bold">
                       {user.name || "用戶"}
                     </GlowText>
                     <p className="text-(--text-color-muted)">{user.id}</p>
