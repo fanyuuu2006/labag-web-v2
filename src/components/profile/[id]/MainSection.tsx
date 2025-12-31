@@ -5,26 +5,25 @@ import Link from "next/link";
 import { MyImage } from "@/components/MyImage";
 import { SupabaseAllowFieldsUser, SupabaseRecord } from "@/types/backend";
 import { CopyButton } from "@/components/CopyButton";
-import { useMemo } from "react";
 
 export const MainSection = ({
   user,
-  records,
+  // records,
 }: {
   user: SupabaseAllowFieldsUser | null;
   records: SupabaseRecord[];
 }) => {
-  const orderedRecords = useMemo(() => {
-    return [...records].sort((a, b) => {
-      return (
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-    });
-  }, [records]);
-  const highestScore = useMemo(() => {
-    if (records.length === 0) return 0;
-    return Math.max(...records.map((record) => record.score));
-  }, [records]);
+  // const orderedRecords = useMemo(() => {
+  //   return [...records].sort((a, b) => {
+  //     return (
+  //       new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  //     );
+  //   });
+  // }, [records]);
+  // const highestScore = useMemo(() => {
+  //   if (records.length === 0) return 0;
+  //   return Math.max(...records.map((record) => record.score));
+  // }, [records]);
   return (
     <section className="h-full">
       <div className="container h-full">
