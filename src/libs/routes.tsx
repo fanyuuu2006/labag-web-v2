@@ -22,6 +22,5 @@ export const routes: {
     label: "個人資料",
     href: "/profile",
     icon: UserOutlined,
-    needsAuth: true,
   },
 ];
