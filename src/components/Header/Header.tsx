@@ -90,6 +90,7 @@ export const Header = () => {
         </nav>
       </div>
       <Collapse
+        as="nav"
         state={menuShow}
         className="slide-collapse lg:hidden"
         id="mobile-nav"

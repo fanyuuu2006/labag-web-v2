@@ -2,6 +2,7 @@
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
 import { BackendResponse } from "@/types/api";
 import { User } from "@/types/user";
+import { SignBy } from "../types/api";
 import {
   createContext,
   useContext,
@@ -15,7 +16,7 @@ interface UserContextType {
   user: User | null;
   loading: boolean;
   refresh: () => void;
-  logIn: () => void;
+  logIn: (signBy: SignBy) => void;
   logOut: () => void;
 }
 
@@ -24,8 +25,8 @@ const userContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const logIn = useCallback(() => {
-    window.location.href = `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/google`;
+  const logIn = useCallback((signBy: SignBy) => {
+    window.location.href = `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/${signBy}/`;
   }, []);
   const logOut = useCallback(() => {
     localStorage.removeItem("authToken");
@@ -33,7 +34,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
   const refresh = useCallback(() => {
     setLoading(true);
-    fetch(`${NEXT_PUBLIC_BACKEND_URL}/v1/users/profile`, {
+    fetch(`${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/profile`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken") || ""}`,
       },
@@ -63,7 +64,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }),
     [user, loading, logIn, logOut, refresh]
   );
-   useEffect(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return; // 避免伺服器端執行
     Promise.resolve().then(() => refresh());
   }, [refresh]);
