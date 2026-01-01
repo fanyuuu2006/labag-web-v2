@@ -31,7 +31,7 @@ export const MainSection = ({
   }, [records]);
   const joinDate = useMemo(() => {
     if (!user) return "";
-    return formatDate(user.created_at);
+    return formatDate("YYYY/MM/DD", user.created_at);
   }, [user]);
   return (
     <section className="h-full">
@@ -116,7 +116,10 @@ export const MainSection = ({
                           >
                             <div className="flex flex-col gap-1">
                               <span className="text-xs text-(--text-color-muted) group-hover:text-(--text-color-secondary) transition-colors">
-                                {formatDate(record.created_at)}
+                                {formatDate(
+                                  "YYYY/MM/DD HH:mm:ss",
+                                  record.created_at
+                                )}
                               </span>
                             </div>
 

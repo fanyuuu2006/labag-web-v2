@@ -1,14 +1,34 @@
+type DateFormatToken =
+  | "YYYY"
+  | "MM"
+  | "DD"
+  | "HH"
+  | "mm"
+  | "ss";
+
+type DateFormat =
+  | `${DateFormatToken}`
+  | `${DateFormatToken}${string}`;
+
 export const formatDate = (
+  format: DateFormat = "YYYY/MM/DD HH:mm:ss",
   ...args: ConstructorParameters<typeof Date>
 ): string => {
   const date = new Date(...args);
-  return date.toLocaleString("zh-TW", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  const map: Record<DateFormatToken, string> = {
+    YYYY: String(date.getFullYear()),
+    MM: pad(date.getMonth() + 1),
+    DD: pad(date.getDate()),
+    HH: pad(date.getHours()),
+    mm: pad(date.getMinutes()),
+    ss: pad(date.getSeconds()),
+  };
+
+  return format.replace(
+    /YYYY|MM|DD|HH|mm|ss/g,
+    (token) => map[token as DateFormatToken]
+  );
 };
