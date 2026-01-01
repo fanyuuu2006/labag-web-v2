@@ -105,35 +105,29 @@ export const MainSection = ({
                       </GlowText>
                     </div>
 
-                    <div className="flex flex-col gap-2 max-h-100 overflow-y-auto pr-2">
+                    <div className="flex flex-col gap-2 max-h-100 overflow-y-auto bg-black/25 border border-(--border-color) rounded-md">
                       {orderedRecords.length > 0 ? (
-                        orderedRecords
-                          .slice(0, RECORD_SIZE)
-                          .map((record, index) => (
-                            <div
-                              key={record.id}
-                              className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
-                            >
-                              <div className="flex items-center gap-4">
-                                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-sm font-mono text-(--text-color-muted) group-hover:text-white group-hover:bg-white/10 transition-colors">
-                                  {orderedRecords.length - index}
-                                </div>
-                                <div className="flex flex-col gap-0.5">
-                                  <span className="text-sm text-(--text-color-muted)">
-                                    {formatDate(record.created_at)}
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <GlowText className="text-xl font-bold">
-                                  {record.score.toLocaleString()}
-                                </GlowText>
-                                <span className="text-xs text-(--text-color-muted) mt-1">
-                                  pts
-                                </span>
-                              </div>
+                        orderedRecords.slice(0, RECORD_SIZE).map((record) => (
+                          <div
+                            key={record.id}
+                            className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors"
+                          >
+                            {/**日期與時間 */}
+                            <span className="text-(--text-color-muted) text-sm">
+                              {formatDate(record.created_at)}
+                            </span>
+
+                            {/**分數 */}
+                            <div className="flex items-center gap-1">
+                              <GlowText className="text-xl font-bold">
+                                {record.score.toLocaleString()}
+                              </GlowText>
+                              <span className="text-xs text-(--text-color-muted) mt-1">
+                                分
+                              </span>
                             </div>
-                          ))
+                          </div>
+                        ))
                       ) : (
                         <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted)">
                           <p>尚無遊玩紀錄</p>
