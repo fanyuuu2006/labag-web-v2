@@ -69,7 +69,7 @@ export const MainSection = ({
                   </div>
 
                   {/**用戶統計資料 */}
-                  <div className="text-lg md:text-xl lg:text-2xl flex items-center justify-between text-nowrap gap-4 md:gap-6">
+                  <div className="text-base md:text-xl lg:text-2xl flex items-center justify-between text-nowrap gap-2 md:gap-6">
                     {[
                       {
                         label: "最高分數",
@@ -101,8 +101,8 @@ export const MainSection = ({
                   {/**遊玩紀錄列表 */}
                   <div className="flex flex-col gap-4 w-full">
                     <div className="flex items-center justify-between px-2">
-                      <h3 className="text-lg font-bold">最近遊玩紀錄</h3>
-                      <span className="text-sm text-(--text-color-muted)">
+                      <h3 className="text-base md:text-lg font-bold">最近遊玩紀錄</h3>
+                      <span className="text-xs md:text-sm text-(--text-color-muted)">
                         顯示最近 {Math.min(records.length, RECORD_SIZE)} 筆
                       </span>
                     </div>
@@ -112,10 +112,10 @@ export const MainSection = ({
                         orderedRecords.slice(0, RECORD_SIZE).map((record) => (
                           <div
                             key={record.id}
-                            className="group flex items-center justify-between p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-300"
+                            className="group flex items-center justify-between p-3 md:p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-300"
                           >
-                            <div className="flex flex-col gap-1">
-                              <span className="text-xs text-(--text-color-muted) group-hover:text-(--text-color-secondary) transition-colors">
+                            <div className="flex flex-col gap-0.5 md:gap-1">
+                              <span className="text-[10px] md:text-xs text-(--text-color-muted) group-hover:text-(--text-color-secondary) transition-colors">
                                 {formatDate(
                                   "YYYY/MM/DD HH:mm:ss",
                                   record.created_at
@@ -123,19 +123,19 @@ export const MainSection = ({
                               </span>
                             </div>
 
-                            <div className="flex items-baseline gap-1.5">
-                              <GlowText className="text-2xl font-bold">
+                            <div className="flex items-baseline gap-1 md:gap-1.5">
+                              <GlowText className="text-lg md:text-2xl font-bold">
                                 {record.score.toLocaleString()}
                               </GlowText>
-                              <span className="text-xs text-(--text-color-muted)">
+                              <span className="text-[10px] md:text-xs text-(--text-color-muted)">
                                 分
                               </span>
                             </div>
                           </div>
                         ))
                       ) : (
-                        <div className="flex flex-col items-center justify-center py-16 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-2">
-                          <div className="text-4xl opacity-50">🎮</div>
+                        <div className="flex flex-col items-center justify-center py-10 md:py-16 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-2">
+                          <div className="text-3xl md:text-4xl opacity-50">🎮</div>
                           <p>尚無遊玩紀錄</p>
                         </div>
                       )}
