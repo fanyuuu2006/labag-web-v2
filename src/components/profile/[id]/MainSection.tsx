@@ -34,137 +34,115 @@ export const MainSection = ({
     return formatDate("YYYY/MM/DD", user.created_at);
   }, [user]);
   return (
-    <section className="h-full">
-      <div className="container h-full">
-        <div className="flex flex-col items-center justify-center h-full">
-          {user ? (
-            <>
-              {/**用戶資料卡片 */}
-              <div className="card p-4 md:p-6 lg-p-8 gap-4 w-full max-w-4xl max-h-full">
-                {/**名稱與頭像 */}
-                <div className="w-full flex flex-col gap-4">
-                  <div className="text-xl md:text-2xl lg:text-3xl flex items-center gap-4">
-                    <div className="card h-[3em] w-[3em] rounded-full overflow-hidden shrink-0 shadow-sm">
-                      <MyImage
-                        src={user.avatar}
-                        fallbackSrc={`/default-avatar.jpg`}
-                        alt={`${name} 的頭像`}
-                        title={`${name} 的頭像`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col items-start gap-1">
-                        <GlowText as="h2" className="font-bold">
-                          {name}
-                        </GlowText>
-                        <CopyButton
-                          content={`${user.id}`}
-                          className="text-[0.5em] text-(--text-color-muted)"
-                        >
-                          用戶ID: {user.id}
-                        </CopyButton>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/**用戶統計資料 */}
-                  <div className="text-base md:text-xl lg:text-2xl flex items-center justify-between text-nowrap gap-2 md:gap-6">
-                    {[
-                      {
-                        label: "最高分數",
-                        value: highestScore,
-                      },
-                      {
-                        label: "遊玩次數",
-                        value: records.length,
-                      },
-                      {
-                        label: "加入日期",
-                        value: joinDate,
-                      },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="w-full flex flex-col items-center"
-                      >
-                        <GlowText className="font-extrabold">
-                          {item.value}
-                        </GlowText>
-                        <span className="text-[0.5em] text-(--text-color-muted)">
-                          {item.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/**遊玩紀錄列表 */}
-                  <div className="flex flex-col gap-4 w-full">
-                    <div className="flex items-center justify-between px-2">
-                      <h3 className="text-base md:text-lg font-bold">最近遊玩紀錄</h3>
-                      <span className="text-xs md:text-sm text-(--text-color-muted)">
-                        顯示最近 {Math.min(records.length, RECORD_SIZE)} 筆
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col gap-1 max-h-100 overflow-y-auto">
-                      {orderedRecords.length > 0 ? (
-                        orderedRecords.slice(0, RECORD_SIZE).map((record) => (
-                          <div
-                            key={record.id}
-                            className="group flex items-center justify-between p-3 md:p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-300"
-                          >
-                            <div className="flex flex-col gap-0.5 md:gap-1">
-                              <span className="text-[10px] md:text-xs text-(--text-color-muted) group-hover:text-(--text-color-secondary) transition-colors">
-                                {formatDate(
-                                  "YYYY/MM/DD HH:mm:ss",
-                                  record.created_at
-                                )}
-                              </span>
-                            </div>
-
-                            <div className="flex items-baseline gap-1 md:gap-1.5">
-                              <GlowText className="text-lg md:text-2xl font-bold">
-                                {record.score.toLocaleString()}
-                              </GlowText>
-                              <span className="text-[10px] md:text-xs text-(--text-color-muted)">
-                                分
-                              </span>
-                            </div>
-                          </div>
-                        ))
-                      ) : (
-                        <div className="flex flex-col items-center justify-center py-10 md:py-16 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-2">
-                          <div className="text-3xl md:text-4xl opacity-50">🎮</div>
-                          <p>尚無遊玩紀錄</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="card p-6 max-w-md w-full text-center space-y-4">
-              <GlowText as="h2" className="text-3xl font-bold">
-                找不到該用戶
+    <section className="h-full w-full flex items-center justify-center p-4 md:p-6">
+      {user ? (
+        <div className="card w-full max-w-3xl flex flex-col gap-6 p-6 md:p-8 max-h-full overflow-hidden">
+          {/**頭像與名稱 */}
+          <div className="flex items-center gap-4 text-2xl md:text-3xl">
+            <div className="h-[3em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
+              <MyImage
+                src={user.avatar}
+                fallbackSrc={`/default-avatar.jpg`}
+                alt={`${name} 的頭像`}
+                title={`${name} 的頭像`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-1 min-w-0">
+              <GlowText as="h2" className=" font-bold">
+                {name}
               </GlowText>
-              <p className="text-(--text-color-muted)">
-                我們找不到與此 ID 對應的用戶。可能是用戶已刪除或您輸入了錯誤的
-                ID。
-              </p>
-              <div className="flex justify-center gap-4 mt-2">
-                <Link
-                  href="/"
-                  className="btn-primary px-4 py-2 rounded-full font-bold"
+              <div className="flex items-center">
+                <CopyButton
+                  content={`${user.id}`}
+                  className="text-[0.5em] text-(--text-color-muted)"
                 >
-                  返回首頁
-                </Link>
+                  用戶ID: {user.id}
+                </CopyButton>
               </div>
             </div>
-          )}
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-3 gap-2 p-2">
+            {[
+              { label: "最高分數", value: highestScore },
+              { label: "遊玩次數", value: records.length },
+              { label: "加入日期", value: joinDate },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="text-lg md:text-xl flex flex-col items-center justify-center gap-1"
+              >
+                <GlowText className="font-extrabold">
+                  {item.value}
+                </GlowText>
+                <span className="text-[0.5em] text-(--text-color-muted)">
+                  {item.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Records List */}
+          <div className="flex flex-col gap-3 h-100 md:h-120 overflow-hidden">
+            <div className="flex items-center justify-between px-1 shrink-0">
+              <h3 className="text-base font-bold flex items-center gap-2">
+                最近遊玩紀錄
+              </h3>
+              <span className="text-xs text-(--text-color-muted)">
+                顯示最近 {Math.min(records.length, RECORD_SIZE)} 筆
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2 overflow-y-auto">
+              {orderedRecords.length > 0 ? (
+                orderedRecords.slice(0, RECORD_SIZE).map((record) => (
+                  <div
+                    key={record.id}
+                    className="group flex items-center justify-between p-2 md:p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-200"
+                  >
+                    <span className="text-xs md:text-sm text-(--text-color-muted) group-hover:text-white transition-colors">
+                      {formatDate("YYYY/MM/DD HH:mm:ss", record.created_at)}
+                    </span>
+                    <div className="flex items-baseline gap-1.5">
+                      <GlowText className="text-lg md:text-xl font-bold">
+                        {record.score.toLocaleString()}
+                      </GlowText>
+                      <span className="text-xs text-(--text-color-muted)">
+                        分
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-3">
+                  <p>尚無遊玩紀錄</p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="card p-8 max-w-md w-full text-center space-y-6">
+          <div className="space-y-2">
+            <GlowText as="h2" className="text-3xl font-bold">
+              找不到該用戶
+            </GlowText>
+            <p className="text-(--text-color-muted)">
+              我們找不到與此 ID 對應的用戶。
+              <br />
+              可能是用戶已刪除或您輸入了錯誤的 ID。
+            </p>
+          </div>
+          <Link
+            href="/"
+            className="btn-primary px-6 py-2 rounded-full font-bold inline-block"
+          >
+            返回首頁
+          </Link>
+        </div>
+      )}
     </section>
   );
 };

@@ -5,13 +5,9 @@ type DateFormatToken =
   | "HH"
   | "mm"
   | "ss";
-
-type DateFormat =
-  | `${DateFormatToken}`
-  | `${DateFormatToken}${string}`;
-
+  
 export const formatDate = (
-  format: DateFormat = "YYYY/MM/DD HH:mm:ss",
+  format: string,
   ...args: ConstructorParameters<typeof Date>
 ): string => {
   const date = new Date(...args);
