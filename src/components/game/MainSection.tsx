@@ -1,12 +1,11 @@
 "use client";
-import { game } from "@/libs/game";
+import { game, recorder } from "@/libs/game";
 import { useEffect } from "react";
 import { PlayButton } from "./PlayButton";
 import { useRouter } from "next/navigation";
 import { PatternsDiv } from "./PatternsDiv";
 import { InfoCard } from "./InfoCard";
 import { playAudio } from "@/utils/audio";
-import { recorder } from "@/libs/recorder";
 import { MusicAudio } from "./MusicAudio";
 import { useSetting } from "@/contexts/SettingContext";
 

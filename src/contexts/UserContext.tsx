@@ -10,9 +10,8 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { game } from "@/libs/game";
+import { game, recorder } from "@/libs/game";
 import { fetcher } from "@/utils/fetcher";
-import { recorder } from "@/libs/recorder";
 import { userProfile } from "@/utils/backend";
 
 interface UserContextType {

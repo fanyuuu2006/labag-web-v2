@@ -1,6 +1,5 @@
-import { game } from "@/libs/game";
+import { game, recorder } from "@/libs/game";
 import { useCallback } from "react";
-import { recorder } from "../../libs/recorder";
 
 /**
  * `DownloadRecordButton` 的 props。

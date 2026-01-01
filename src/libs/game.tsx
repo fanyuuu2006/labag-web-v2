@@ -1,8 +1,9 @@
 import { Detail } from "@/components/DetailItem";
 import { cn } from "@/utils/className";
-import { LaBaG, modeList, ModeName } from "labag";
+import { LaBaG, modeList, ModeName, Recorder } from "labag";
 
 export const game = new LaBaG(30);
+export const recorder = new Recorder(game);
 modeList.forEach((mode) => game.addMode(mode));
 
 const Badge = ({
