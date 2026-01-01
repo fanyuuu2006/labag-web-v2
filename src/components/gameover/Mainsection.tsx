@@ -66,7 +66,7 @@ export const MainSection = () => {
             >
               再玩一次
             </button>
-            <Link className="btn-secondary rounded-2xl py-2 px-6" href={"/rankings"} title="查看排行榜">
+            <Link className="btn-secondary rounded-2xl py-2 px-6" href={"/ranking"} title="查看排行榜">
               排行榜
             </Link>
             <DownloadRecordButton className="btn-tertiary rounded-2xl py-2 px-6" aria-label="下載遊戲紀錄" title="下載遊戲紀錄">
