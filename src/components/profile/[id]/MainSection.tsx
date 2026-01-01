@@ -8,6 +8,7 @@ import { CopyButton } from "@/components/CopyButton";
 import { useMemo } from "react";
 import { formatDate } from "@/utils/date";
 
+const RECORD_SIZE = 10;
 export const MainSection = ({
   user,
   records,
@@ -97,32 +98,48 @@ export const MainSection = ({
                   </div>
 
                   {/**遊玩紀錄列表 */}
-                  <div>
-                    <table className="w-full table-auto text-center">
-                      <thead>
-                        <tr>
-                          <th>時間</th>
-                          <th>分數</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {orderedRecords.map((record) => (
-                          <tr
-                            key={record.id}
-                            className="border-t border-(--border-color)"
-                          >
-                            <td className="py-2">
-                              {formatDate(record.created_at)}
-                            </td>
-                            <td className="py-2">
-                              <GlowText className="font-bold">
-                                {record.score}
-                              </GlowText>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="flex flex-col gap-4 w-full">
+                    <div className="flex items-center justify-between px-1">
+                      <GlowText as="h3" className="text-xl font-bold">
+                        最近遊玩紀錄
+                      </GlowText>
+                    </div>
+
+                    <div className="flex flex-col gap-2 max-h-100 overflow-y-auto pr-2">
+                      {orderedRecords.length > 0 ? (
+                        orderedRecords
+                          .slice(0, RECORD_SIZE)
+                          .map((record, index) => (
+                            <div
+                              key={record.id}
+                              className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+                            >
+                              <div className="flex items-center gap-4">
+                                <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-sm font-mono text-(--text-color-muted) group-hover:text-white group-hover:bg-white/10 transition-colors">
+                                  {orderedRecords.length - index}
+                                </div>
+                                <div className="flex flex-col gap-0.5">
+                                  <span className="text-sm text-(--text-color-muted)">
+                                    {formatDate(record.created_at)}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <GlowText className="text-xl font-bold">
+                                  {record.score.toLocaleString()}
+                                </GlowText>
+                                <span className="text-xs text-(--text-color-muted) mt-1">
+                                  pts
+                                </span>
+                              </div>
+                            </div>
+                          ))
+                      ) : (
+                        <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted)">
+                          <p>尚無遊玩紀錄</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
