@@ -38,7 +38,7 @@ export const MainSection = ({
         <div className="flex flex-col items-center justify-center h-full">
           {user ? (
             <>
-              <div className="card p-4 md:p-6 lg-p-8 gap-4">
+              <div className="card p-4 md:p-6 lg-p-8 gap-4 w-full max-w-4xl max-h-full">
                 {/**用戶名稱與頭像 */}
                 <div className="w-full flex flex-col gap-4">
                   <div className="text-xl md:text-2xl lg:text-3xl flex items-center gap-4">
@@ -84,7 +84,7 @@ export const MainSection = ({
                     ].map((item) => (
                       <div
                         key={item.label}
-                        className="flex flex-col items-center"
+                        className="w-full flex flex-col items-center"
                       >
                         <GlowText className="font-extrabold">
                           {item.value}
