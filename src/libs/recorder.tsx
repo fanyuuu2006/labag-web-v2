@@ -13,14 +13,12 @@ class Recorder {
   #rounds: RoundRecord[] = [];
   private score: number = 0;
   private onRoundEndBound: (e: LaBaG) => void;
-  private onGameOverBound: (e: LaBaG) => void;
   private started = false;
   private debug = false;
 
   constructor(gameInstance: LaBaG, options?: RecorderOptions) {
     this.game = gameInstance;
     this.onRoundEndBound = this.onRoundEnd.bind(this);
-    this.onGameOverBound = this.onGameOver.bind(this);
     this.debug = !!options?.debug;
   }
 
@@ -49,25 +47,23 @@ class Recorder {
       randNums,
     };
 
-    if (this.debug) console.debug("recorder:onRoundEnd", round);
+    if (this.debug)
+      console.debug("recorder:onRoundEnd", {
+        round,
+        score: g.score,
+      });
 
     this.#rounds.push(round);
-  }
-
-  private onGameOver(g: LaBaG) {
     this.score = g.score;
-    if (this.debug) console.debug("recorder:onGameOver", this.score);
   }
 
   init(clearExisting = true) {
     if (this.started) return;
     if (clearExisting) {
-      this.#rounds = [];
-      this.score = 0;
+      this.clear();
     }
     if (typeof this.game.addEventListener === "function") {
       this.game.addEventListener("roundEnd", this.onRoundEndBound);
-      this.game.addEventListener("gameOver", this.onGameOverBound);
       this.started = true;
     }
   }
@@ -76,25 +72,21 @@ class Recorder {
   dispose() {
     if (!this.started) return;
     this.game.removeEventListener("roundEnd", this.onRoundEndBound);
-    this.game.removeEventListener("gameOver", this.onGameOverBound);
     this.started = false;
   }
   clear() {
+    if (this.debug) console.debug("clear");
     this.score = 0;
     this.#rounds = [];
   }
 
   getRecord(): { score: number; rounds: RoundRecord[] } {
+    if (this.debug) console.debug("get");
     return {
       score: this.score,
       rounds: this.#rounds,
     };
   }
-
-  // backward-compatible typo alias
-  getReacord(): { score: number; rounds: RoundRecord[] } {
-    return this.getRecord();
-  }
 }
 
-export const recorder = new Recorder(game, { debug: false });
+export const recorder = new Recorder(game, { debug: true });

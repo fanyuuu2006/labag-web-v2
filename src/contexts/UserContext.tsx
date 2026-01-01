@@ -74,7 +74,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!user) return;
-    const handleGameOver = (g: typeof game) => {
+    const handleGameOver = () => {
       fetcher<BackendResponse<SupabaseRecord>>(
         `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records/`,
         {
@@ -85,11 +85,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
               localStorage.getItem(LOCAL_STORAGE_KEY) || ""
             }`,
           },
-          body: JSON.stringify({
-            score: g.score,
-            user_id: user.id,
-            record: recorder.getRecord(),
-          }),
+          body: JSON.stringify(recorder.getRecord()),
         }
       )
         .then((res) => {
