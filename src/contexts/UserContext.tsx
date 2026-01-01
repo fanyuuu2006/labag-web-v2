@@ -13,6 +13,7 @@ import {
 import { game, recorder } from "@/libs/game";
 import { fetcher } from "@/utils/fetcher";
 import { userProfile } from "@/utils/backend";
+import { useRouter } from "next/navigation";
 
 interface UserContextType {
   user: SupabaseUser | null;
@@ -29,13 +30,15 @@ const userContext = createContext<UserContextType | null>(null);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
   const logIn = useCallback((signBy: SignBy) => {
     window.location.href = `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/${signBy}/`;
   }, []);
   const logOut = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    router.replace("/");
     setUser(null);
-  }, []);
+  }, [router]);
   const refresh = useCallback(() => {
     const token = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!token) return;
