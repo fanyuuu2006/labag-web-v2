@@ -80,9 +80,14 @@ class Recorder {
     this.#rounds = [];
   }
 
-  getRecord(): { score: number; rounds: RoundRecord[] } {
+  getRecord(): {
+    times: number;
+    score: number;
+    rounds: RoundRecord[];
+  } {
     if (this.debug) console.debug("get");
     return {
+      times: this.game.times,
       score: this.score,
       rounds: this.#rounds,
     };
