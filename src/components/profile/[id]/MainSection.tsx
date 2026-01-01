@@ -39,8 +39,9 @@ export const MainSection = ({
         <div className="flex flex-col items-center justify-center h-full">
           {user ? (
             <>
+              {/**用戶資料卡片 */}
               <div className="card p-4 md:p-6 lg-p-8 gap-4 w-full max-w-4xl max-h-full">
-                {/**用戶名稱與頭像 */}
+                {/**名稱與頭像 */}
                 <div className="w-full flex flex-col gap-4">
                   <div className="text-xl md:text-2xl lg:text-3xl flex items-center gap-4">
                     <div className="card h-[3em] w-[3em] rounded-full overflow-hidden shrink-0 shadow-sm">
@@ -99,37 +100,39 @@ export const MainSection = ({
 
                   {/**遊玩紀錄列表 */}
                   <div className="flex flex-col gap-4 w-full">
-                    <div className="flex items-center justify-between px-1">
-                      <GlowText as="h3" className="text-xl font-bold">
-                        最近遊玩紀錄
-                      </GlowText>
+                    <div className="flex items-center justify-between px-2">
+                      <h3 className="text-lg font-bold">最近遊玩紀錄</h3>
+                      <span className="text-sm text-(--text-color-muted)">
+                        顯示最近 {Math.min(records.length, RECORD_SIZE)} 筆
+                      </span>
                     </div>
 
-                    <div className="flex flex-col gap-2 max-h-100 overflow-y-auto bg-black/25 border border-(--border-color) rounded-md">
+                    <div className="flex flex-col gap-1 max-h-100 overflow-y-auto">
                       {orderedRecords.length > 0 ? (
                         orderedRecords.slice(0, RECORD_SIZE).map((record) => (
                           <div
                             key={record.id}
-                            className="flex items-center justify-between p-4 hover:bg-white/5 transition-colors"
+                            className="group flex items-center justify-between p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-300"
                           >
-                            {/**日期與時間 */}
-                            <span className="text-(--text-color-muted) text-sm">
-                              {formatDate(record.created_at)}
-                            </span>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-xs text-(--text-color-muted) group-hover:text-(--text-color-secondary) transition-colors">
+                                {formatDate(record.created_at)}
+                              </span>
+                            </div>
 
-                            {/**分數 */}
-                            <div className="flex items-center gap-1">
-                              <GlowText className="text-xl font-bold">
+                            <div className="flex items-baseline gap-1.5">
+                              <GlowText className="text-2xl font-bold">
                                 {record.score.toLocaleString()}
                               </GlowText>
-                              <span className="text-xs text-(--text-color-muted) mt-1">
+                              <span className="text-xs text-(--text-color-muted)">
                                 分
                               </span>
                             </div>
                           </div>
                         ))
                       ) : (
-                        <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted)">
+                        <div className="flex flex-col items-center justify-center py-16 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-2">
+                          <div className="text-4xl opacity-50">🎮</div>
                           <p>尚無遊玩紀錄</p>
                         </div>
                       )}
