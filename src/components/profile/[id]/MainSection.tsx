@@ -6,6 +6,7 @@ import { MyImage } from "@/components/MyImage";
 import { SupabaseAllowFieldsUser, SupabaseRecord } from "@/types/backend";
 import { CopyButton } from "@/components/CopyButton";
 import { useMemo } from "react";
+import { formatDate } from "@/utils/date";
 
 export const MainSection = ({
   user,
@@ -29,14 +30,8 @@ export const MainSection = ({
   }, [records]);
   const joinDate = useMemo(() => {
     if (!user) return "";
-    const date = new Date(user.created_at);
-    return date.toLocaleDateString("zh-TW", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    return formatDate(user.created_at);
   }, [user]);
-
   return (
     <section className="h-full">
       <div className="container h-full">
@@ -71,7 +66,8 @@ export const MainSection = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-nowrap gap-4">
+                  {/**用戶統計資料 */}
+                  <div className="text-lg md:text-xl lg:text-2xl flex items-center justify-between text-nowrap gap-4 md:gap-6">
                     {[
                       {
                         label: "最高分數",
@@ -98,6 +94,35 @@ export const MainSection = ({
                         </span>
                       </div>
                     ))}
+                  </div>
+
+                  {/**遊玩紀錄列表 */}
+                  <div>
+                    <table className="w-full table-auto text-center">
+                      <thead>
+                        <tr>
+                          <th>時間</th>
+                          <th>分數</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {orderedRecords.map((record) => (
+                          <tr
+                            key={record.id}
+                            className="border-t border-(--border-color)"
+                          >
+                            <td className="py-2">
+                              {formatDate(record.created_at)}
+                            </td>
+                            <td className="py-2">
+                              <GlowText className="font-bold">
+                                {record.score}
+                              </GlowText>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
