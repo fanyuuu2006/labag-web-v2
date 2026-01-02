@@ -68,7 +68,7 @@ export const MainSection = ({
                   {item.score.toLocaleString()}
                 </div>
                 <div className="text-right text-xs text-(--text-color-muted) w-24 hidden sm:block">
-                  {formatDate("YYYY/MM/DD", item.created_at)}
+                  {formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
                 </div>
               </Link>
             );
