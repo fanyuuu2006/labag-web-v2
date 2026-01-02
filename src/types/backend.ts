@@ -22,3 +22,11 @@ export type SupabaseRecord = {
   score: number;
   user_id: number;
 };
+
+export type SupabaseRankingViewItem = {
+  user_id: SupabaseUser["id"];
+  user_name: SupabaseUser["name"];
+  score: SupabaseRecord["score"];
+  record_id: SupabaseRecord["id"];
+  created_at: SupabaseRecord["created_at"];
+};
