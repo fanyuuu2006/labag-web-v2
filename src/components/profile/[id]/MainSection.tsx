@@ -3,18 +3,23 @@
 import { GlowText } from "@/components/GlowText";
 import Link from "next/link";
 import { MyImage } from "@/components/MyImage";
-import { SupabaseAllowFieldsUser, SupabaseRecord } from "@/types/backend";
+import {
+  SupabaseAllowFieldsUser,
+  SupabaseRecord,
+  SupabaseUserStatsViewItem,
+} from "@/types/backend";
 import { CopyButton } from "@/components/CopyButton";
 import { useMemo } from "react";
 import { formatDate } from "@/utils/date";
 
-const RECORD_SIZE = 10;
 export const MainSection = ({
   user,
   records,
+  stats,
 }: {
   user: SupabaseAllowFieldsUser | null;
   records: SupabaseRecord[];
+  stats: SupabaseUserStatsViewItem;
 }) => {
   const name = user?.name || `用戶 ${user?.id}`;
 
@@ -24,10 +29,6 @@ export const MainSection = ({
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       );
     });
-  }, [records]);
-  const highestScore = useMemo(() => {
-    if (records.length === 0) return 0;
-    return Math.max(...records.map((record) => record.score));
   }, [records]);
   const joinDate = useMemo(() => {
     if (!user) return "";
@@ -66,17 +67,15 @@ export const MainSection = ({
           {/* Stats Grid */}
           <div className="grid grid-cols-3 gap-2 p-2">
             {[
-              { label: "最高分數", value: highestScore },
-              { label: "遊玩次數", value: records.length },
+              { label: "最高分數", value: stats.highest_score },
+              { label: "遊玩次數", value: stats.play_count },
               { label: "加入日期", value: joinDate },
             ].map((item) => (
               <div
                 key={item.label}
                 className="text-lg md:text-xl flex flex-col items-center justify-center gap-1"
               >
-                <GlowText className="font-extrabold">
-                  {item.value}
-                </GlowText>
+                <GlowText className="font-extrabold">{item.value}</GlowText>
                 <span className="text-[0.5em] text-(--text-color-muted)">
                   {item.label}
                 </span>
@@ -91,13 +90,13 @@ export const MainSection = ({
                 最近遊玩紀錄
               </h3>
               <span className="text-xs text-(--text-color-muted)">
-                顯示最近 {Math.min(records.length, RECORD_SIZE)} 筆
+                顯示最近 10 筆
               </span>
             </div>
 
             <div className="flex flex-col gap-2 overflow-y-auto">
               {orderedRecords.length > 0 ? (
-                orderedRecords.slice(0, RECORD_SIZE).map((record) => (
+                orderedRecords.map((record) => (
                   <div
                     key={record.id}
                     className="group flex items-center justify-between p-2 md:p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-200"

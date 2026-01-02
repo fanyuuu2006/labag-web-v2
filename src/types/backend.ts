@@ -30,3 +30,8 @@ export type SupabaseRankingViewItem = {
   record_id: SupabaseRecord["id"];
   created_at: SupabaseRecord["created_at"];
 };
+export type SupabaseUserStatsViewItem = {
+    user_id: SupabaseUser["id"];
+    play_count: number;
+    highest_score: number;
+}

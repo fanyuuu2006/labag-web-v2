@@ -4,6 +4,7 @@ import {
   SupabaseRankingViewItem,
   SupabaseRecord,
   SupabaseUser,
+  SupabaseUserStatsViewItem,
 } from "@/types/backend";
 import { fetcher } from "./fetcher";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
@@ -30,6 +31,11 @@ export const records = () =>
 export const recordsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseRecord[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records`
+  );
+
+  export const statsById = (id: SupabaseUser["id"]) =>
+  fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`
   );
 
 export const ranking = () =>
