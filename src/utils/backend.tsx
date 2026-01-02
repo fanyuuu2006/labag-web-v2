@@ -24,15 +24,18 @@ export const userById = (id: SupabaseUser["id"]) =>
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`
   );
 
-export const records = () =>
-  fetcher<BackendResponse<SupabaseRecord[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records`
+export const records = (queryParams?: Record<"count", string>) => {
+  const param = new URLSearchParams(queryParams);
+  const query = param.toString();
+  return fetcher<BackendResponse<SupabaseRecord[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records${query ? `?${query}` : ""}`
   );
+};
 export const recordsById = (
   id: SupabaseUser["id"],
-  ...args: ConstructorParameters<typeof URLSearchParams>
+  queryParams?: Record<"count", string>
 ) => {
-  const param = new URLSearchParams(...args);
+  const param = new URLSearchParams(queryParams);
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseRecord[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records${
