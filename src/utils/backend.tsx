@@ -28,12 +28,20 @@ export const records = () =>
   fetcher<BackendResponse<SupabaseRecord[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records`
   );
-export const recordsById = (id: SupabaseUser["id"]) =>
-  fetcher<BackendResponse<SupabaseRecord[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records`
+export const recordsById = (
+  id: SupabaseUser["id"],
+  ...args: ConstructorParameters<typeof URLSearchParams>
+) => {
+  const param = new URLSearchParams(...args);
+  const query = param.toString();
+  return fetcher<BackendResponse<SupabaseRecord[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records${
+      query ? `?${query}` : ""
+    }`
   );
+};
 
-  export const statsById = (id: SupabaseUser["id"]) =>
+export const statsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`
   );
