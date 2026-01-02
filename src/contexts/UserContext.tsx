@@ -12,7 +12,7 @@ import {
 } from "react";
 import { game, recorder } from "@/libs/game";
 import { fetcher } from "@/utils/fetcher";
-import { userProfile } from "@/utils/backend";
+import { userMe } from "@/utils/backend";
 import { useRouter } from "next/navigation";
 
 interface UserContextType {
@@ -43,7 +43,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const token = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (!token) return;
     setLoading(true);
-    userProfile(token)
+    userMe(token)
       .then((data) => {
         setUser(data.data);
       })
