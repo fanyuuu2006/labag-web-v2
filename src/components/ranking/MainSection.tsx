@@ -50,71 +50,100 @@ export const MainSection = ({
           </GlowText>
         </div>
 
-        <table className="w-full table-auto border-collapse">
-          <thead>
-            <tr className="text-(--text-color-muted)">
-              {[
-                {
-                  label: "#",
-                  className: "",
-                },
-                {
-                  label: "玩家",
-                  className: "",
-                },
-                {
-                  label: "分數",
-                  className: "",
-                },
-                {
-                  label: "日期",
-                  className: "",
-                },
-              ].map((header, index) => (
-                <th
-                  className={cn("text-center p-2", header.className)}
-                  key={index}
-                >
-                  <span>{header.label}</span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {orderedItems.length === 0 ? (
-              <>
-                <tr>
-                  <td
-                    colSpan={4}
-                    className="py-4 text-center text-(--text-color-muted)"
+        <div className="w-full rounded-md border border-(--border-color) overflow-hidden">
+          <table className="w-full table-auto border-collapse">
+            <thead>
+              <tr className="text-(--text-color-muted)">
+                {[
+                  {
+                    label: "#",
+                    className: "",
+                  },
+                  {
+                    label: "玩家",
+                    className: "",
+                  },
+                  {
+                    label: "分數",
+                    className: "",
+                  },
+                  {
+                    label: "日期",
+                    className: "",
+                  },
+                ].map((header, index) => (
+                  <th
+                    className={cn("text-center p-2", header.className)}
+                    key={index}
                   >
-                    當前無排行資料
-                  </td>
-                </tr>
-              </>
-            ) : (
-              orderedItems.map((item, index) => (
-                <tr key={index}>
-                  <td className="text-center p-2">
-                    <Rank index={index} className="font-bold text-lg" />
-                  </td>
-                  <td className="text-center p-2">
-                    <Link
-                      href={`/profile/${item.user_id}`}
-                      className="font-semibold hover:underline"
+                    <span>{header.label}</span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {orderedItems.length === 0 ? (
+                <>
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="py-4 text-center text-(--text-color-muted)"
                     >
-                      {item.user_name}
-                    </Link>
-                  </td>
-                  <td className="text-center p-2 font-bold">{item.score}</td>
-                  <td className="text-center p-2">
-                    {formatDate("YYYY/MM/DD", item.created_at)}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                      當前無排行資料
+                    </td>
+                  </tr>
+                </>
+              ) : (
+                orderedItems.map((item, index) => (
+                  <tr
+                    className={cn({
+                      "bg-yellow-400/20": index === 0,
+                      "bg-gray-400/20": index === 1,
+                      "bg-amber-800/20": index === 2,
+                    })}
+                    key={index}
+                    id={index.toString()}
+                  >
+                    {[
+                      {
+                        value: <Rank index={index} />,
+                        className: "",
+                      },
+                      {
+                        value: (
+                          <Link
+                            href={`/profile/${item.user_id}`}
+                            className="font-semibold"
+                          >
+                            {item.user_name}
+                          </Link>
+                        ),
+                        className: "",
+                      },
+                      {
+                        value: item.score,
+                        className: "font-bold",
+                      },
+                      {
+                        value: formatDate("YYYY/MM/DD", item.created_at),
+                        className: "",
+                      },
+                    ].map((cell, cellIndex) => {
+                      return (
+                        <td
+                          key={cellIndex}
+                          className={cn("p-2 text-center", cell.className)}
+                        >
+                          {cell.value}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
