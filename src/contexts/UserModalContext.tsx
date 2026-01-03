@@ -75,7 +75,7 @@ export const UserModalProvider = ({
       {children}
       <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
         {id && (
-          <div className="card w-full max-w-3xl flex flex-col gap-6 p-6 md:p-8 max-h-full overflow-hidden">
+          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-6 p-6 md:p-8 max-h-full overflow-hidden">
             {/**頭像與名稱 */}
             <div className="flex items-center gap-4 text-2xl md:text-3xl">
               <div className="h-[3em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
