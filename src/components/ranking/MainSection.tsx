@@ -121,12 +121,12 @@ export const MainSection = ({
                         className: "",
                       },
                       {
-                        value: item.score,
+                        value: <GlowText>{item.score}</GlowText>,
                         className: "font-bold",
                       },
                       {
-                        value: formatDate("YYYY/MM/DD", item.created_at),
-                        className: "",
+                        value: formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at),
+                        className: "text-(--text-color-muted) text-[0.5em]",
                       },
                     ].map((cell, cellIndex) => {
                       return (
