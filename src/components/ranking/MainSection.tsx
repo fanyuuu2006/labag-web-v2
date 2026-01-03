@@ -30,7 +30,7 @@ export const MainSection = ({
           </GlowText>
         </div>
 
-        <div className="w-full rounded-md border border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
+        <div className="w-full rounded-md border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
           <table className="text-base md:text-lg lg:text-xl w-full table-auto border-collapse">
             <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
               <tr>
