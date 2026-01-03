@@ -20,7 +20,7 @@ export const userMe = (token: string) =>
   );
 
 export const userById = (id: SupabaseUser["id"]) =>
-  fetcher<BackendResponse<SupabaseAllowFieldsUser | null>>(
+  fetcher<BackendResponse<SupabaseAllowFieldsUser>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`
   );
 

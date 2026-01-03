@@ -18,12 +18,13 @@ export const MainSection = ({
   stats,
 }: {
   user: SupabaseAllowFieldsUser | null;
-  records: SupabaseRecord[];
-  stats: SupabaseUserStatsViewItem;
+  records: SupabaseRecord[] | null;
+  stats: SupabaseUserStatsViewItem | null;
 }) => {
   const name = user?.name || `用戶 ${user?.id}`;
 
   const orderedRecords = useMemo(() => {
+    if (!records) return [];
     return [...records].sort((a, b) => {
       return (
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
@@ -68,8 +69,8 @@ export const MainSection = ({
             {/* Stats Grid */}
             <div className="grid grid-cols-3 gap-2 p-2">
               {[
-                { label: "最高分數", value: stats.highest_score },
-                { label: "遊玩次數", value: stats.play_count },
+                { label: "最高分數", value: stats?.highest_score || 0 },
+                { label: "遊玩次數", value: stats?.play_count || 0 },
                 { label: "加入日期", value: joinDate },
               ].map((item) => (
                 <div

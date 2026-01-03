@@ -9,11 +9,12 @@ import { cn } from "@/utils/className";
 export const MainSection = ({
   items,
 }: {
-  items: SupabaseRankingViewItem[];
+  items: SupabaseRankingViewItem[] | null;
 }) => {
   const { user } = useUser();
 
   const orderedItems = useMemo(() => {
+    if (!items) return [];
     return [...items].sort((a, b) => b.score - a.score);
   }, [items]);
 

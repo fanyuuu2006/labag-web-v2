@@ -3,7 +3,7 @@ import { ALLOW_USER_FIELDS } from "@/libs/backend";
 export type SignBy = "google";
 
 export type BackendResponse<T> = {
-  data: T;
+  data: T | null;
   message?: string;
 };
 export type SupabaseUser = {
