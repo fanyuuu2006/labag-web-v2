@@ -6,6 +6,8 @@ import { RankBadge } from "./RankBadge";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseRankingViewItem } from "@/types/backend";
 
+import { memo } from "react";
+
 type RankTableRowProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLTableRowElement>, "children">,
   {
@@ -14,7 +16,7 @@ type RankTableRowProps = OverrideProps<
   }
 >;
 
-export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
+export const RankTableRow = memo(({ item, className, index, ...props }: RankTableRowProps) => {
   return (
     <tr
       className={cn(
@@ -28,6 +30,7 @@ export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
       )}
       key={item.record_id}
       id={item.record_id.toString()}
+      {...props}
     >
       <td className="p-2 text-center">
         <RankBadge index={index} />
@@ -44,14 +47,12 @@ export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
         <GlowText>{item.score}</GlowText>
       </td>
       <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
-        <div className="flex flex-col">
-          {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)
-            .split("\n")
-            .map((line, idx) => (
-              <span key={idx}>{line}</span>
-            ))}
+        <div className="whitespace-pre-line leading-tight">
+          {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)}
         </div>
       </td>
     </tr>
   );
-};
+});
+
+RankTableRow.displayName = "RankTableRow";

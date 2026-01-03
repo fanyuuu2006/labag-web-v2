@@ -12,12 +12,17 @@ export const MainSection = ({
   items: SupabaseRankingViewItem[];
 }) => {
   const { user } = useUser();
+  
   const orderedItems = useMemo(() => {
     return [...items].sort((a, b) => b.score - a.score);
   }, [items]);
-  const userRank = useMemo(() => {
-    return orderedItems.find((item) => user && item.user_id === user?.id);
+
+  const userRankIndex = useMemo(() => {
+    if (!user) return -1;
+    return orderedItems.findIndex((item) => item.user_id === user.id);
   }, [orderedItems, user]);
+
+  const userRank = userRankIndex !== -1 ? orderedItems[userRankIndex] : undefined;
 
   return (
     <section className="h-full flex flex-col items-center justify-center p-4 md:p-6">
@@ -68,9 +73,9 @@ export const MainSection = ({
             {userRank && (
               <tfoot className="border-t border-(--border-color) sticky bottom-0 z-10 backdrop-blur-md">
                 <RankTableRow
-                  className=" bg-black/50"
+                  className="bg-black/50"
                   item={userRank}
-                  index={orderedItems.indexOf(userRank)}
+                  index={userRankIndex}
                 />
               </tfoot>
             )}
