@@ -20,9 +20,9 @@ export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
       className={cn(
         "transition-colors",
         {
-          "bg-yellow-400/20": index === 0,
-          "bg-gray-400/20": index === 1,
-          "bg-amber-800/20": index === 2,
+          "bg-yellow-400/30": index === 0, // 🥇
+          "bg-slate-300/30": index === 1, // 🥈
+          "bg-orange-400/30": index === 2, // 🥉
         },
         className
       )}

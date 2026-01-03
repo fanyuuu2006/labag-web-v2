@@ -1,4 +1,4 @@
-import { HomeOutlined, TrophyOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
 
 export const routes: {
   label: string;
@@ -17,10 +17,5 @@ export const routes: {
     label: "排行榜",
     href: "/ranking",
     icon: TrophyOutlined,
-  },
-  {
-    label: "個人資料",
-    href: "/profile",
-    icon: UserOutlined,
   },
 ];

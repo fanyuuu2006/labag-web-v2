@@ -4,6 +4,7 @@ import { GlowText } from "../GlowText";
 import { useMemo } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { RankTableRow } from "./RankTableRow";
+import { cn } from "@/utils/className";
 
 export const MainSection = ({
   items,
@@ -30,7 +31,7 @@ export const MainSection = ({
           </GlowText>
         </div>
 
-        <div className="w-full rounded-md border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
+        <div className="w-full rounded-md bg-(--background-color) border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
           <table className="text-base md:text-lg lg:text-xl w-full table-auto border-collapse">
             <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
               <tr>
@@ -55,15 +56,19 @@ export const MainSection = ({
                   <RankTableRow
                     key={item.record_id}
                     item={item}
-                    className="hover:backdrop-brightness-105"
+                    className={cn("hover:backdrop-brightness-105", {
+                      "border border-(--text-color-primary)/30":
+                        user && item.user_id === user?.id,
+                    })}
                     index={index}
                   />
                 ))
               )}
             </tbody>
             {userRank && (
-              <tfoot className="text-base md:text-lg lg:text-xl sticky bottom-0 bg-black/50  z-10 backdrop-blur-md">
+              <tfoot className="text-base md:text-lg lg:text-xl sticky bottom-0 z-10 backdrop-blur-md">
                 <RankTableRow
+                  className=" bg-black/50"
                   item={userRank}
                   index={orderedItems.indexOf(userRank)}
                 />
