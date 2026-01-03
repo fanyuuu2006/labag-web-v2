@@ -134,12 +134,15 @@ export const UserModalProvider = ({
                   {name}
                 </GlowText>
                 <div className="flex items-center">
-                  <CopyButton
-                    content={`${id}`}
-                    className="text-[0.5em] text-(--text-color-muted)"
-                  >
-                    用戶ID: {id}
-                  </CopyButton>
+                  <div className="text-[0.5em] text-(--text-color-muted)">
+                    {id}
+                    <CopyButton
+                      content={`${id}`}
+                      className="ml-2 text-(--text-color-muted)"
+                      aria-label="複製用戶 ID"
+                      title="複製用戶ID"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
