@@ -4,6 +4,30 @@ import Link from "next/link";
 import { GlowText } from "../GlowText";
 import { cn } from "@/utils/className";
 import { useMemo } from "react";
+import { DistributiveOmit, OverrideProps } from "fanyucomponents";
+
+type RankPorps = OverrideProps<
+  DistributiveOmit<React.HTMLAttributes<HTMLSpanElement>, "children">,
+  {
+    index: number;
+  }
+>;
+const Rank = ({ index, ...rest }: RankPorps) => {
+  const children = useMemo(() => {
+    switch (index) {
+      case 0:
+        return "🥇";
+      case 1:
+        return "🥈";
+      case 2:
+        return "🥉";
+      default:
+        return (index + 1).toString();
+    }
+  }, [index]);
+
+  return <span {...rest}>{children}</span>;
+};
 
 export const MainSection = ({
   items,
@@ -13,23 +37,6 @@ export const MainSection = ({
   const orderedItems = useMemo(() => {
     return items.sort((a, b) => b.score - a.score);
   }, [items]);
-
-  const getRankDisplay = (index: number) => {
-    switch (index) {
-      case 0:
-        return <span className="text-2xl">🥇</span>;
-      case 1:
-        return <span className="text-2xl">🥈</span>;
-      case 2:
-        return <span className="text-2xl">🥉</span>;
-      default:
-        return (
-          <span className="text-lg font-bold text-(--text-color-muted)">
-            {index + 1}
-          </span>
-        );
-    }
-  };
 
   return (
     <section className="h-full flex flex-col items-center justify-center p-4 md:p-6">
@@ -43,60 +50,75 @@ export const MainSection = ({
           </GlowText>
         </div>
 
-        {/* Header Row */}
-        <div className="grid grid-cols-[3rem_1fr_auto_auto] gap-2 px-4 py-2 border-b border-(--border-color) text-(--text-color-muted) text-sm font-bold">
-          <div className="text-center">#</div>
-          <div>玩家</div>
-          <div className="text-right w-20 md:w-24">分數</div>
-          <div className="text-right w-24 md:w-32">日期</div>
-        </div>
-
-        {/* List */}
-        {orderedItems.length > 0 ? (
-          <div className="flex flex-col gap-1 overflow-y-auto custom-scrollbar flex-1 pr-1">
-            {orderedItems.map((item, index) => (
-              <div
-                key={item.record_id}
-                className={cn(
-                  "grid grid-cols-[3rem_1fr_auto_auto] gap-2 px-4 py-3 items-center rounded-lg transition-colors",
-                  "hover:bg-(--background-color-primary)/20",
-                  index % 2 === 0 ? "bg-(--background-color-primary)/5" : ""
-                )}
-              >
-                {/* Rank */}
-                <div className="flex justify-center items-center">
-                  {getRankDisplay(index)}
-                </div>
-
-                {/* Player */}
-                <div className="truncate">
-                  <Link
-                    href={`/profile/${item.user_id}`}
-                    className="text-base font-medium hover:text-(--text-color-primary) transition-colors"
+        <table className="w-full table-auto border-collapse">
+          <thead>
+            <tr className="text-(--text-color-muted)">
+              {[
+                {
+                  label: "#",
+                  className: "text-left",
+                },
+                {
+                  label: "玩家",
+                  className: "text-left",
+                },
+                {
+                  label: "分數",
+                  className: "text-right",
+                },
+                {
+                  label: "日期",
+                  className: "text-right",
+                },
+              ].map((header, index) => (
+                <th className={cn(header.className)} key={index}>
+                  <span>{header.label}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {orderedItems.length === 0 ? (
+              <>
+                <tr>
+                  <td
+                    colSpan={4}
+                    className="py-4 text-center text-(--text-color-muted)"
                   >
-                    {item.user_name}
-                  </Link>
-                </div>
-
-                {/* Score */}
-                <div className="text-right w-20 md:w-24">
-                  <span className="font-mono text-lg font-bold text-(--text-color-secondary)">
-                    {item.score.toLocaleString()}
-                  </span>
-                </div>
-
-                {/* Date */}
-                <div className="text-right w-24 md:w-32 text-sm text-(--text-color-muted)">
-                  {formatDate("YYYY/MM/DD", item.created_at)}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center flex-1 min-h-32 text-(--text-color-muted)">
-            <p>暫無排名資料</p>
-          </div>
-        )}
+                    當前無排行資料
+                  </td>
+                </tr>
+              </>
+            ) : (
+              orderedItems.map((item, index) => (
+                <tr
+                  key={index}
+                  className={cn(
+                    index % 2 === 0 ? "bg-black/20" : "bg-black/10"
+                  )}
+                >
+                  <td className="py-2 px-4">
+                    <Rank index={index} className="font-bold" />
+                  </td>
+                  <td className="py-2 px-4">
+                    <Link
+                      href={`/profile/${item.user_id}`}
+                      className="font-semibold underline hover:text-(--text-color-primary) transition-colors"
+                    >
+                      {item.user_name || "匿名玩家"}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-4 text-right font-bold">
+                    {item.score}
+                  </td>
+                  <td className="py-2 px-4 text-right text-(--text-color-muted)">
+                    {formatDate("YYYY/MM/DD", item.created_at)}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </section>
   );
