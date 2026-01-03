@@ -9,6 +9,7 @@ import { PatternModalProvider } from "@/contexts/PatternModalContext";
 import { ModeModalProvider } from "@/contexts/ModeModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
+import { UserModalProvider } from "@/contexts/UserModalContext";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -82,11 +83,13 @@ export default function RootLayout({
             <PatternModalProvider>
               <ModeModalProvider>
                 <SettingProvider>
-                  <link rel="icon" href="/favicon.ico" />
-                  <link rel="manifest" href="/manifest.json" />
-                  <Header />
-                  <main>{children}</main>
-                  <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
+                  <UserModalProvider>
+                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="manifest" href="/manifest.json" />
+                    <Header />
+                    <main>{children}</main>
+                    <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
+                  </UserModalProvider>
                 </SettingProvider>
               </ModeModalProvider>
             </PatternModalProvider>

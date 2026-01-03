@@ -1,12 +1,12 @@
 import { cn } from "@/utils/className";
 import { formatDate } from "@/utils/date";
-import Link from "next/link";
 import { GlowText } from "../GlowText";
 import { RankBadge } from "./RankBadge";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseRankingViewItem } from "@/types/backend";
 
 import { memo } from "react";
+import { useUserModal } from "@/contexts/UserModalContext";
 
 type RankTableRowProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLTableRowElement>, "children">,
@@ -18,6 +18,7 @@ type RankTableRowProps = OverrideProps<
 
 export const RankTableRow = memo(
   ({ item, className, index, ...props }: RankTableRowProps) => {
+    const modal = useUserModal();
     return (
       <tr
         className={cn(
@@ -37,12 +38,14 @@ export const RankTableRow = memo(
           <RankBadge index={index} />
         </td>
         <td className={cn("text-[0.75em] p-2")}>
-          <Link
-            href={`/profile/${item.user_id}`}
+          <button
             className="max-w-[14ch] truncate block text-center m-auto"
+            onClick={() => {
+              modal.open(item.user_id);
+            }}
           >
             {item.user_name || "未知玩家"}
-          </Link>
+          </button>
         </td>
         <td className="p-2 text-center font-extrabold">
           <GlowText>{item.score}</GlowText>
