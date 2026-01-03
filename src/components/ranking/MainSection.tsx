@@ -51,8 +51,8 @@ export const MainSection = ({
         </div>
 
         <div className="w-full rounded-md border border-(--border-color) overflow-hidden">
-          <table className="w-full table-auto border-collapse">
-            <thead className="text-[0.5em] text-(--text-color-muted)">
+          <table className="text-lg md:text-xl lg:text-2xl w-full table-auto border-collapse">
+            <thead className="text-[0.75em] text-(--text-color-muted)">
               <tr>
                 {[
                   {
@@ -96,7 +96,7 @@ export const MainSection = ({
               ) : (
                 orderedItems.map((item, index) => (
                   <tr
-                    className={cn({
+                    className={cn('hover:backdrop-brightness-105',{
                       "bg-yellow-400/20": index === 0,
                       "bg-gray-400/20": index === 1,
                       "bg-amber-800/20": index === 2,
