@@ -48,7 +48,7 @@ export const RankTableRow = memo(
           </button>
         </td>
         <td className="p-2 text-center font-extrabold">
-          <GlowText>{item.score}</GlowText>
+          <GlowText>{item.score.toLocaleString()}</GlowText>
         </td>
         <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
           <div className="whitespace-pre-line leading-tight">
