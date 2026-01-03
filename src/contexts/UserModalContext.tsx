@@ -33,30 +33,48 @@ export const UserModalProvider = ({
   const [user, setUser] = useState<SupabaseAllowFieldsUser | null>(null);
   const [stats, setStats] = useState<SupabaseUserStatsViewItem | null>(null);
   const [records, setRecords] = useState<SupabaseRecord[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const value = useMemo(
     () => ({
       ...modal,
-      open: (id: SupabaseUser["id"]) => {
-        setId(id);
+      open: (newId: SupabaseUser["id"]) => {
+        if (newId !== id) {
+          setUser(null);
+          setStats(null);
+          setRecords(null);
+        }
+        setId(newId);
         modal.open();
       },
     }),
-    [modal]
+    [modal, id]
   );
+
   useEffect(() => {
+    if (!id) return;
+
     const fetchData = async () => {
-      if (!id) return;
-      const userRes = await userById(id);
-      const statsRes = await statsById(id);
-      const recordRes = await recordsById(id);
-      setUser(userRes.data);
-      setStats(statsRes.data);
-      setRecords(recordRes.data);
+      setIsLoading(true);
+      try {
+        const [userRes, statsRes, recordRes] = await Promise.all([
+          userById(id),
+          statsById(id),
+          recordsById(id),
+        ]);
+        setUser(userRes.data);
+        setStats(statsRes.data);
+        setRecords(recordRes.data);
+      } catch (error) {
+        console.error("獲取用戶資料失敗:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [id]);
 
-  const name = user?.name || `用戶 ${user?.id}`;
+  const name = user?.name || (id ? `用戶 ${id}` : "載入中...");
   const joinDate = useMemo(() => {
     if (!user) return "";
     return formatDate("YYYY/MM/DD", user.created_at);
@@ -93,10 +111,10 @@ export const UserModalProvider = ({
                 </GlowText>
                 <div className="flex items-center">
                   <CopyButton
-                    content={`${user?.id}`}
+                    content={`${id}`}
                     className="text-[0.5em] text-(--text-color-muted)"
                   >
-                    用戶ID: {user?.id}
+                    用戶ID: {id}
                   </CopyButton>
                 </div>
               </div>
@@ -133,7 +151,11 @@ export const UserModalProvider = ({
               </div>
 
               <div className="flex flex-col gap-2 overflow-y-auto">
-                {orderedRecords.length > 0 ? (
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-3">
+                    <p>載入中...</p>
+                  </div>
+                ) : orderedRecords.length > 0 ? (
                   orderedRecords.map((record) => (
                     <div
                       key={record.id}
