@@ -62,7 +62,7 @@ export const MainSection = ({
                     key={item.record_id}
                     item={item}
                     className={cn("hover:backdrop-brightness-125", {
-                      "outline outline-yellow-200/50":
+                      "outline outline-white/50":
                         user && item.user_id === user?.id,
                     })}
                     index={index}
