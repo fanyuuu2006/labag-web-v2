@@ -1,44 +1,22 @@
+"use client";
 import { SupabaseRankingViewItem } from "@/types/backend";
-import { formatDate } from "@/utils/date";
-import Link from "next/link";
 import { GlowText } from "../GlowText";
-import { cn } from "@/utils/className";
 import { useMemo } from "react";
-import { DistributiveOmit, OverrideProps } from "fanyucomponents";
-
-type RankPorps = OverrideProps<
-  DistributiveOmit<React.HTMLAttributes<HTMLSpanElement>, "children">,
-  {
-    index: number;
-  }
->;
-const Rank = ({ index, ...rest }: RankPorps) => {
-  let children: string;
-  switch (index) {
-    case 0:
-      children = "🥇";
-      break;
-    case 1:
-      children = "🥈";
-      break;
-    case 2:
-      children = "🥉";
-      break;
-    default:
-      children = (index + 1).toString();
-  }
-
-  return <span {...rest}>{children}</span>;
-};
+import { useUser } from "@/contexts/UserContext";
+import { RankTableRow } from "./RankTableRow";
 
 export const MainSection = ({
   items,
 }: {
   items: SupabaseRankingViewItem[];
 }) => {
+  const { user } = useUser();
   const orderedItems = useMemo(() => {
     return [...items].sort((a, b) => b.score - a.score);
   }, [items]);
+  const userRank = useMemo(() => {
+    return orderedItems.find((item) => user && item.user_id === user?.id);
+  }, [orderedItems, user]);
 
   return (
     <section className="h-full flex flex-col items-center justify-center p-4 md:p-6">
@@ -74,45 +52,23 @@ export const MainSection = ({
                 </tr>
               ) : (
                 orderedItems.map((item, index) => (
-                  <tr
-                    className={cn(
-                      "hover:backdrop-brightness-105 transition-colors",
-                      {
-                        "bg-yellow-400/20": index === 0,
-                        "bg-gray-400/20": index === 1,
-                        "bg-amber-800/20": index === 2,
-                      }
-                    )}
+                  <RankTableRow
                     key={item.record_id}
-                    id={item.record_id.toString()}
-                  >
-                    <td className="p-2 text-center">
-                      <Rank index={index} />
-                    </td>
-                    <td className="p-2 text-center text-nowrap">
-                      <Link
-                        href={`/profile/${item.user_id}`}
-                        className="font-semibold hover:underline"
-                      >
-                        {item.user_name}
-                      </Link>
-                    </td>
-                    <td className="p-2 text-center font-bold">
-                      <GlowText>{item.score}</GlowText>
-                    </td>
-                    <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
-                      <div className="flex flex-col">
-                        {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)
-                          .split("\n")
-                          .map((line, idx) => (
-                            <span key={idx}>{line}</span>
-                          ))}
-                      </div>
-                    </td>
-                  </tr>
+                    item={item}
+                    className="hover:backdrop-brightness-105"
+                    index={index}
+                  />
                 ))
               )}
             </tbody>
+            {userRank && (
+              <tfoot className="text-base md:text-lg lg:text-xl sticky bottom-0 bg-black/50  z-10 backdrop-blur-md">
+                <RankTableRow
+                  item={userRank}
+                  index={orderedItems.indexOf(userRank)}
+                />
+              </tfoot>
+            )}
           </table>
         </div>
       </div>
