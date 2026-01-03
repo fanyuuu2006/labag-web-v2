@@ -52,8 +52,8 @@ export const MainSection = ({
 
         <div className="w-full rounded-md border border-(--border-color) overflow-hidden">
           <table className="w-full table-auto border-collapse">
-            <thead>
-              <tr className="text-(--text-color-muted)">
+            <thead className="text-[0.5em] text-(--text-color-muted)">
+              <tr>
                 {[
                   {
                     label: "#",
@@ -125,7 +125,7 @@ export const MainSection = ({
                         className: "font-bold",
                       },
                       {
-                        value: formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at),
+                        value: formatDate("YYYY/MM/DD", item.created_at),
                         className: "text-(--text-color-muted) text-[0.5em]",
                       },
                     ].map((cell, cellIndex) => {
