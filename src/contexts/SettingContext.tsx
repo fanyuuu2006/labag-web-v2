@@ -4,6 +4,8 @@ import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { useModal } from "@/hooks/useModal";
 import { CloseOutlined } from "@ant-design/icons";
 import { createContext, useContext, useState, useMemo } from "react";
+import { useUserModal } from "./UserModalContext";
+import { useUser } from "./UserContext";
 
 type SettingOption<T> = {
   value: T;
@@ -26,6 +28,8 @@ export const SettingProvider = ({
   const modal = useModal({});
   const [music, setMusic] = useState<boolean>(true);
   const [sound, setSound] = useState<boolean>(true);
+  const userModal = useUserModal();
+  const { user } = useUser();
   const value = useMemo(
     () => ({
       modal,
@@ -87,6 +91,16 @@ export const SettingProvider = ({
               </label>
               <ToggleSwitch id="sound" value={sound} setValue={setSound} />
             </div>
+            {user && (
+              <div className="flex items-center justify-between">
+                <button
+                  className="btn-secondary w-full rounded-xl p-1"
+                  onClick={() => userModal.open(user.id)}
+                >
+                  開啟個人檔案
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </modal.Container>

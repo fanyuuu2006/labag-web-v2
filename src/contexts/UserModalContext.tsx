@@ -95,7 +95,7 @@ export const UserModalProvider = ({
     <userModalContext.Provider value={value}>
       {children}
       <modal.Container
-        className="bg-black/40 flex items-center justify-center p-6 z-50"
+        className="bg-black/40 flex items-center justify-center p-6 z-51"
         aria-labelledby="user-modal-title"
       >
         {id && !isLoading && (

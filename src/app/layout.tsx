@@ -80,19 +80,19 @@ export default function RootLayout({
       <UserProvider>
         <ModesProvider>
           <Body>
-            <PatternModalProvider>
-              <ModeModalProvider>
-                <SettingProvider>
-                  <UserModalProvider>
+            <UserModalProvider>
+              <PatternModalProvider>
+                <ModeModalProvider>
+                  <SettingProvider>
                     <link rel="icon" href="/favicon.ico" />
                     <link rel="manifest" href="/manifest.json" />
                     <Header />
                     <main>{children}</main>
                     <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
-                  </UserModalProvider>
-                </SettingProvider>
-              </ModeModalProvider>
-            </PatternModalProvider>
+                  </SettingProvider>
+                </ModeModalProvider>
+              </PatternModalProvider>
+            </UserModalProvider>
           </Body>
         </ModesProvider>
       </UserProvider>
