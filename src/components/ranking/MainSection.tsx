@@ -56,22 +56,25 @@ export const MainSection = ({
               {[
                 {
                   label: "#",
-                  className: "text-left",
+                  className: "",
                 },
                 {
                   label: "玩家",
-                  className: "text-left",
+                  className: "",
                 },
                 {
                   label: "分數",
-                  className: "text-right",
+                  className: "",
                 },
                 {
                   label: "日期",
-                  className: "text-right",
+                  className: "",
                 },
               ].map((header, index) => (
-                <th className={cn(header.className)} key={index}>
+                <th
+                  className={cn("text-center p-2", header.className)}
+                  key={index}
+                >
                   <span>{header.label}</span>
                 </th>
               ))}
@@ -91,27 +94,20 @@ export const MainSection = ({
               </>
             ) : (
               orderedItems.map((item, index) => (
-                <tr
-                  key={index}
-                  className={cn(
-                    index % 2 === 0 ? "bg-black/20" : "bg-black/10"
-                  )}
-                >
-                  <td className="py-2 px-4">
-                    <Rank index={index} className="font-bold" />
+                <tr key={index}>
+                  <td className="text-center p-2">
+                    <Rank index={index} className="font-bold text-lg" />
                   </td>
-                  <td className="py-2 px-4">
+                  <td className="text-center p-2">
                     <Link
                       href={`/profile/${item.user_id}`}
-                      className="font-semibold underline hover:text-(--text-color-primary) transition-colors"
+                      className="font-semibold hover:underline"
                     >
-                      {item.user_name || "匿名玩家"}
+                      {item.user_name}
                     </Link>
                   </td>
-                  <td className="py-2 px-4 text-right font-bold">
-                    {item.score}
-                  </td>
-                  <td className="py-2 px-4 text-right text-(--text-color-muted)">
+                  <td className="text-center p-2 font-bold">{item.score}</td>
+                  <td className="text-center p-2">
                     {formatDate("YYYY/MM/DD", item.created_at)}
                   </td>
                 </tr>
