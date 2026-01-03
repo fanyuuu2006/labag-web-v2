@@ -53,8 +53,8 @@ export const MainSection = ({
         </div>
 
         <div className="w-full rounded-md border border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
-          <table className="text-md md:text-lg lg:text-xl w-full table-auto border-collapse">
-            <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-(--background-color) z-10 backdrop-blur-md">
+          <table className="text-base md:text-lg lg:text-xl w-full table-auto border-collapse">
+            <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
               <tr>
                 <th className="text-center p-2">#</th>
                 <th className="text-center p-2">玩家</th>
@@ -101,7 +101,13 @@ export const MainSection = ({
                       <GlowText>{item.score}</GlowText>
                     </td>
                     <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
-                      {formatDate("YYYY/MM/DD", item.created_at)}
+                      <div className="flex flex-col">
+                        {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)
+                          .split("\n")
+                          .map((line, idx) => (
+                            <span key={idx}>{line}</span>
+                          ))}
+                      </div>
                     </td>
                   </tr>
                 ))
