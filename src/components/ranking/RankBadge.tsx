@@ -1,26 +1,20 @@
+import { memo } from "react";
 import { OverrideProps, DistributiveOmit } from "fanyucomponents";
 
-type RankBadgePorps = OverrideProps<
+type RankBadgeProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLSpanElement>, "children">,
   {
     index: number;
   }
 >;
-export const RankBadge = ({ index, ...rest }: RankBadgePorps) => {
-  let children: string;
-  switch (index) {
-    case 0:
-      children = "🥇";
-      break;
-    case 1:
-      children = "🥈";
-      break;
-    case 2:
-      children = "🥉";
-      break;
-    default:
-      children = (index + 1).toString();
-  }
 
-  return <span {...rest}>{children}</span>;
-};
+const MEDALS = ["🥇", "🥈", "🥉"];
+
+export const RankBadge = memo(({ index, ...rest }: RankBadgeProps) => {
+  const content =
+    index < MEDALS.length ? MEDALS[index] : (index + 1).toString();
+
+  return <span {...rest}>{content}</span>;
+});
+
+RankBadge.displayName = "RankBadge";
