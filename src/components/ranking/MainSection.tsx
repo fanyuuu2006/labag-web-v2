@@ -30,10 +30,10 @@ export const MainSection = ({
     <section className="h-full">
       <div className="container h-full flex flex-col items-center justify-center p-4">
         <div className="card w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-full overflow-hidden">
-          <div className="flex justify-center items-center py-2 shrink-0">
+          <div className="flex justify-center items-center shrink-0">
             <GlowText
               as="h2"
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider"
+              className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wider"
             >
               排行榜
             </GlowText>
