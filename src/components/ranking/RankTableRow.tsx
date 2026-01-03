@@ -18,7 +18,7 @@ export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
   return (
     <tr
       className={cn(
-        "transition-colors",
+        "transition-colors border border-white/25",
         {
           "bg-yellow-400/30": index === 0, // 🥇
           "bg-slate-300/30": index === 1, // 🥈
@@ -32,15 +32,15 @@ export const RankTableRow = ({ item, className, index }: RankTableRowProps) => {
       <td className="p-2 text-center">
         <RankBadge index={index} />
       </td>
-      <td className={cn("p-2 text-center max-w-[8ch] truncate")}>
+      <td className={cn("p-2 flex items-center justify-center")}>
         <Link
           href={`/profile/${item.user_id}`}
-          className="font-semibold hover:underline"
+          className="max-w-[14ch] truncate block"
         >
-          {item.user_name}
+          {item.user_name || "未知玩家"}
         </Link>
       </td>
-      <td className="p-2 text-center font-bold">
+      <td className="p-2 text-center font-extrabold">
         <GlowText>{item.score}</GlowText>
       </td>
       <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">

@@ -36,7 +36,7 @@ export const MainSection = ({
             <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
               <tr>
                 <th className="text-center p-2">#</th>
-                <th className="text-center p-2">玩家</th>
+                <th className="text-center p-2">玩家名稱</th>
                 <th className="text-center p-2">分數</th>
                 <th className="text-center p-2">日期</th>
               </tr>
@@ -56,8 +56,8 @@ export const MainSection = ({
                   <RankTableRow
                     key={item.record_id}
                     item={item}
-                    className={cn("hover:backdrop-brightness-105", {
-                      "border border-(--text-color-primary)/30":
+                    className={cn("hover:backdrop-brightness-125", {
+                      "outline outline-yellow-200/50":
                         user && item.user_id === user?.id,
                     })}
                     index={index}
@@ -66,7 +66,7 @@ export const MainSection = ({
               )}
             </tbody>
             {userRank && (
-              <tfoot className="text-base md:text-lg lg:text-xl sticky bottom-0 z-10 backdrop-blur-md">
+              <tfoot className="border-t border-(--border-color) sticky bottom-0 z-10 backdrop-blur-md">
                 <RankTableRow
                   className=" bg-black/50"
                   item={userRank}
