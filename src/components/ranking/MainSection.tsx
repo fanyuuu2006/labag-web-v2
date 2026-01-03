@@ -12,7 +12,7 @@ export const MainSection = ({
   items: SupabaseRankingViewItem[];
 }) => {
   const { user } = useUser();
-  
+
   const orderedItems = useMemo(() => {
     return [...items].sort((a, b) => b.score - a.score);
   }, [items]);
@@ -22,7 +22,8 @@ export const MainSection = ({
     return orderedItems.findIndex((item) => item.user_id === user.id);
   }, [orderedItems, user]);
 
-  const userRank = userRankIndex !== -1 ? orderedItems[userRankIndex] : undefined;
+  const userRank =
+    userRankIndex !== -1 ? orderedItems[userRankIndex] : undefined;
 
   return (
     <section className="h-full flex flex-col items-center justify-center p-4 md:p-6">
@@ -30,14 +31,14 @@ export const MainSection = ({
         <div className="flex justify-center items-center py-2 shrink-0">
           <GlowText
             as="h2"
-            className="text-3xl sm:text-4xl font-extrabold tracking-wider"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider"
           >
             排行榜
           </GlowText>
         </div>
 
         <div className="w-full rounded-md bg-(--background-color) border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
-          <table className="text-base md:text-lg lg:text-xl w-full table-auto border-collapse">
+          <table className="text-base sm:text-lg md:text-xl lg:text-2xl w-full table-auto border-collapse">
             <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
               <tr>
                 <th className="text-center p-2">#</th>
@@ -61,10 +62,7 @@ export const MainSection = ({
                   <RankTableRow
                     key={item.record_id}
                     item={item}
-                    className={cn("hover:backdrop-brightness-125", {
-                      "outline outline-white/50":
-                        user && item.user_id === user?.id,
-                    })}
+                    className={cn("hover:backdrop-brightness-125", {})}
                     index={index}
                   />
                 ))
