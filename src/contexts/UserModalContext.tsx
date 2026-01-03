@@ -13,6 +13,7 @@ import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
 import { formatDate } from "@/utils/date";
 import { recordsById, statsById, userById } from "@/utils/backend";
+import { CloseOutlined } from "@ant-design/icons";
 
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -96,9 +97,24 @@ export const UserModalProvider = ({
       <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
         {id && !isLoading && (
           <div className="animate-pop card w-full max-w-3xl flex flex-col gap-6 p-6 md:p-8 max-h-full overflow-hidden">
+            {/** Header */}
+            <div className="flex">
+              <GlowText
+                as="h2"
+                className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wider"
+              >
+                用戶資料
+              </GlowText>
+              <button
+                className="ml-auto text-(--text-color-muted) text-sm underline"
+                onClick={modal.close}
+              >
+                <CloseOutlined />
+              </button>
+            </div>
             {/**頭像與名稱 */}
             <div className="flex items-center gap-4 text-2xl md:text-3xl">
-              <div className="h-[3em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
+              <div className="h-[2.5em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
                 <MyImage
                   src={user?.avatar}
                   fallbackSrc={`/default-avatar.jpg`}
