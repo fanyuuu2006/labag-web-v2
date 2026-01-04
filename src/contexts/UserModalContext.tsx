@@ -101,7 +101,7 @@ export const UserModalProvider = ({
         aria-labelledby="currUser-modal-title"
       >
         {id && (
-          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-3 p-4 md:p-6 max-h-[85vh] overflow-hidden">
+          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-[85vh] overflow-hidden">
             {/** Header */}
             <header className="flex items-center justify-between">
               <GlowText
@@ -172,7 +172,7 @@ export const UserModalProvider = ({
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className={`card-primary text-base sm:text-lg md:text-xl lg:text-2xl flex flex-col items-center justify-center p-2 md:p-3 lg:p-4`}
+                      className={`text-base sm:text-lg md:text-xl lg:text-2xl flex flex-col items-center justify-center`}
                     >
                       <GlowText className={`font-extrabold`}>
                         {item.value}
