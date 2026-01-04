@@ -203,7 +203,7 @@ export const UserModalProvider = ({
                       orderedRecords.map((record) => (
                         <div
                           key={record.id}
-                          className="card-primary flex items-center justify-between p-3 md:p-4"
+                          className="card-primary flex items-center justify-between p-3 md:p-4 hover:brightness-125"
                         >
                           <span className="text-xs md:text-sm text-(--text-color-muted) font-mono">
                             {formatDate(
@@ -222,7 +222,7 @@ export const UserModalProvider = ({
                         </div>
                       ))
                     ) : (
-                      <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-3 h-full">
+                      <div className="card-primary flex flex-col items-center justify-center py-12 h-full">
                         <p>尚無遊玩紀錄</p>
                       </div>
                     )}
