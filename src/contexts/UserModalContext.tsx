@@ -186,11 +186,11 @@ export const UserModalProvider = ({
 
                 {/* Records List */}
                 <div className="flex flex-col gap-3 min-h-0 flex-1">
-                  <div className="flex items-center justify-between px-1 shrink-0 border-b border-white/10 pb-2">
-                    <h3 className="text-base md:text-lg font-bold flex items-center gap-2 text-white/90">
+                  <div className="text-base md:text-lg flex items-center justify-between px-1 border-b border-white/10 pb-2">
+                    <h3 className="font-bold flex items-center gap-2 text-white/90">
                       最近遊玩紀錄
                     </h3>
-                    <span className="text-xs text-(--text-color-muted) bg-white/5 px-2 py-1 rounded-full">
+                    <span className="text-[0.75em] text-(--text-color-muted) bg-white/5 px-2 py-1 rounded-full">
                       最近 10 筆
                     </span>
                   </div>
@@ -203,13 +203,15 @@ export const UserModalProvider = ({
                           className="card-primary flex items-center justify-between p-3 md:p-4 hover:brightness-125"
                         >
                           <div className="text-xs md:text-sm text-(--text-color-muted) font-mono whitespace-pre-line flex flex-col">
+                            <span className="text-[0.75em] opacity-70">
+                              ID: {record.id}
+                            </span>
                             <span>
                               {formatDate(
                                 "YYYY/MM/DD\nHH:mm",
                                 record.created_at
                               )}
                             </span>
-                              <span className="text-[0.75em]">ID: {record.id}</span>
                           </div>
                           <div className="flex items-baseline gap-1.5">
                             <GlowText className="text-lg md:text-xl font-bold tabular-nums transition-transform">
