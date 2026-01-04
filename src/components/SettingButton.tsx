@@ -10,7 +10,7 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
     <button
       onClick={modal.open}
       className={cn(
-        "btn rounded-full flex items-center justify-center p-3",
+        "btn-tertiary rounded-full flex items-center justify-center p-3",
         className
       )}
       {...rest}
