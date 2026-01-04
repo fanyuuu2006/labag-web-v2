@@ -31,7 +31,7 @@ export const UserModalProvider = ({
 }) => {
   const modal = useModal({});
   const [id, setId] = useState<SupabaseUser["id"] | null>(null);
-  const [user, setUser] = useState<SupabaseAllowFieldsUser | null>(null);
+  const [currUser, setCurrUser] = useState<SupabaseAllowFieldsUser | null>(null);
   const [stats, setStats] = useState<SupabaseUserStatsViewItem | null>(null);
   const [records, setRecords] = useState<SupabaseRecord[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,7 @@ export const UserModalProvider = ({
       ...modal,
       open: (newId: SupabaseUser["id"]) => {
         if (newId !== id) {
-          setUser(null);
+          setCurrUser(null);
           setStats(null);
           setRecords(null);
         }
@@ -65,7 +65,7 @@ export const UserModalProvider = ({
             count: "10",
           }),
         ]);
-        setUser(userRes.data);
+        setCurrUser(userRes.data);
         setStats(statsRes.data);
         setRecords(recordRes.data);
       } catch (error) {
@@ -77,11 +77,11 @@ export const UserModalProvider = ({
     fetchData();
   }, [id]);
 
-  const name = user?.name || (id ? `用戶 ${id}` : "載入中...");
+  const name = currUser?.name || (id ? `用戶 ${id}` : "載入中...");
   const joinDate = useMemo(() => {
-    if (!user) return "";
-    return formatDate("YYYY/MM/DD", user.created_at);
-  }, [user]);
+    if (!currUser) return "";
+    return formatDate("YYYY/MM/DD", currUser.created_at);
+  }, [currUser]);
   const orderedRecords = useMemo(() => {
     if (!records) return [];
     return [...records].sort((a, b) => {
@@ -96,7 +96,7 @@ export const UserModalProvider = ({
       {children}
       <modal.Container
         className="bg-black/40 flex items-center justify-center p-6 z-51"
-        aria-labelledby="user-modal-title"
+        aria-labelledby="currUser-modal-title"
       >
         {id && !isLoading && (
           <div className="animate-pop card w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-full overflow-hidden">
@@ -104,7 +104,7 @@ export const UserModalProvider = ({
             <header className="text-xl flex items-center justify-between">
               <GlowText
                 as="h2"
-                id="user-modal-title"
+                id="currUser-modal-title"
                 className="font-extrabold tracking-wider"
               >
                 用戶資料
@@ -122,7 +122,7 @@ export const UserModalProvider = ({
             <div className="flex items-center gap-4 text-2xl md:text-3xl">
               <div className="h-[2.5em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
                 <MyImage
-                  src={user?.avatar}
+                  src={currUser?.avatar}
                   fallbackSrc={`/default-avatar.jpg`}
                   alt={`${name} 的頭像`}
                   title={`${name} 的頭像`}
