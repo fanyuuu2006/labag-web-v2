@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/utils/className";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type ModalContainerProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -15,24 +15,23 @@ export const useModal = ({
 }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpen = useCallback(() => {
-    if (dialogRef.current && !dialogRef.current.open) {
-      requestAnimationFrame(() => {
-        dialogRef.current?.showModal();
-        onOpen?.(dialogRef.current!);
-      });
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+      setIsModalOpen(true);
+      onOpen?.(dialog);
     }
   }, [onOpen]);
 
   const handleClose = useCallback(() => {
-    if (dialogRef.current?.open) {
-      requestAnimationFrame(() => dialogRef.current?.close());
-      onClose?.(dialogRef.current);
+    const dialog = dialogRef.current;
+    if (dialog?.open) {
+      dialog.close();
     }
-  }, [onClose]);
-
-  const isOpen = useCallback(() => dialogRef.current?.open ?? false, []);
+  }, []);
 
   const Container = useCallback(
     ({ className, ...rest }: ModalContainerProps) => {
@@ -40,8 +39,14 @@ export const useModal = ({
         <dialog
           ref={dialogRef}
           className={cn(
-            "w-full h-full bg-transparent max-w-none max-h-none text-inherit"
+            "w-full h-full bg-transparent max-w-none max-h-none text-inherit backdrop:bg-black/50"
           )}
+          onClose={() => {
+            setIsModalOpen(false);
+            if (dialogRef.current) {
+              onClose?.(dialogRef.current);
+            }
+          }}
         >
           <div
             ref={contentRef}
@@ -56,13 +61,24 @@ export const useModal = ({
         </dialog>
       );
     },
-    [clickOutsideToClose, handleClose]
+    [clickOutsideToClose, handleClose, onClose]
   );
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   return {
     Container,
     open: handleOpen,
     close: handleClose,
-    isOpen,
+    isOpen: isModalOpen,
   };
 };
