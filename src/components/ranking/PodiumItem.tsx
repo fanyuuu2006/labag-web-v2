@@ -3,6 +3,7 @@ import { SupabaseRankingViewItem } from "@/types/backend";
 import { cn } from "@/utils/className";
 import { GlowText } from "../GlowText";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
+import { formatDate } from "@/utils/date";
 
 const MEDALS = ["🥇", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
@@ -66,6 +67,10 @@ export const PodiumItem = ({
         <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent pointer-events-none" />
         {/** 滑鼠懸停遮罩 */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
+        {/** 日期 */}
+        <span className="absolute bottom-1 text-[0.5em] text-(--text-color-muted)">
+          {formatDate("YYYY/MM/DD", item.created_at)}
+        </span>
       </div>
     </div>
   );

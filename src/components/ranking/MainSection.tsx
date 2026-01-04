@@ -69,7 +69,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
             <div className="card-secondary w-full max-h-full overflow-y-auto p-4">
               {rest.length === 0 && orderedItems.length <= 3 ? (
                 <div className="text-center p-8 text-white/30 italic">
-                  期待更多挑戰者加入...
+                  期待更多玩家加入...
                 </div>
               ) : (
                 <div className="flex flex-col gap-3">
