@@ -13,7 +13,7 @@ import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
 import { formatDate } from "@/utils/date";
 import { recordsById, statsById, userById } from "@/utils/backend";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
 
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -31,7 +31,9 @@ export const UserModalProvider = ({
 }) => {
   const modal = useModal({});
   const [id, setId] = useState<SupabaseUser["id"] | null>(null);
-  const [currUser, setCurrUser] = useState<SupabaseAllowFieldsUser | null>(null);
+  const [currUser, setCurrUser] = useState<SupabaseAllowFieldsUser | null>(
+    null
+  );
   const [stats, setStats] = useState<SupabaseUserStatsViewItem | null>(null);
   const [records, setRecords] = useState<SupabaseRecord[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -79,16 +81,16 @@ export const UserModalProvider = ({
 
   const name = currUser?.name || (id ? `用戶 ${id}` : "載入中...");
   const joinDate = useMemo(() => {
-    if (!currUser) return "";
+    if (!currUser) return "---";
     return formatDate("YYYY/MM/DD", currUser.created_at);
   }, [currUser]);
+
   const orderedRecords = useMemo(() => {
     if (!records) return [];
-    return [...records].sort((a, b) => {
-      return (
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-    });
+    // ISO 8601 字串可以直接比較，比 new Date() 更快
+    return [...records].sort((a, b) =>
+      b.created_at.localeCompare(a.created_at)
+    );
   }, [records]);
 
   return (
@@ -98,112 +100,136 @@ export const UserModalProvider = ({
         className="bg-black/40 flex items-center justify-center p-6 z-51"
         aria-labelledby="currUser-modal-title"
       >
-        {id && !isLoading && (
-          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-full overflow-hidden">
+        {id && (
+          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-5 p-5 md:p-8 max-h-[90vh] overflow-hidden">
             {/** Header */}
-            <header className="text-xl flex items-center justify-between">
+            <header className="flex items-center justify-between">
               <GlowText
                 as="h2"
                 id="currUser-modal-title"
-                className="font-extrabold tracking-wider"
+                className="text-2xl md:text-3xl font-extrabold tracking-wider"
               >
                 用戶資料
               </GlowText>
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--text-color-muted) hover:text-white transition-colors"
+                className="text-(--text-color-muted) p-2 rounded-full"
                 onClick={modal.close}
               >
-                <CloseOutlined />
+                <CloseOutlined className="text-xl" />
               </button>
             </header>
-            {/**頭像與名稱 */}
-            <div className="flex items-center gap-4 text-2xl md:text-3xl">
-              <div className="h-[2.5em] aspect-square rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
-                <MyImage
-                  src={currUser?.avatar}
-                  fallbackSrc={`/default-avatar.jpg`}
-                  alt={`${name} 的頭像`}
-                  title={`${name} 的頭像`}
-                  className="w-full h-full object-cover"
-                />
+
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-20 gap-4 h-full">
+                <LoadingOutlined className="text-5xl text-(--normal-text-color-primary)" />
+                <p className="text-(--text-color-muted) animate-pulse tracking-widest">
+                  資料讀取中...
+                </p>
               </div>
-              <div className="flex flex-col gap-1 min-w-0">
-                <GlowText as="h2" className=" font-bold">
-                  {name}
-                </GlowText>
-                <div className="flex items-center">
-                  <div className="text-[0.5em] text-(--text-color-muted)">
-                    {id}
-                    <CopyButton
-                      content={`${id}`}
-                      className="ml-2 text-(--text-color-muted)"
-                      aria-label="複製用戶 ID"
-                      title="複製用戶ID"
+            ) : (
+              <>
+                {/** User Info Section */}
+                <div className="flex items-center gap-5 md:gap-6 shrink-0">
+                  <div className="relative h-20 w-20 md:h-24 md:w-24 shrink-0 rounded-full overflow-hidden border-2 border-(--normal-text-color-secondary) shadow-[0_0_15px_rgba(74,174,255,0.3)]">
+                    <MyImage
+                      src={currUser?.avatar}
+                      fallbackSrc={`/default-avatar.jpg`}
+                      alt={`${name} 的頭像`}
+                      title={`${name} 的頭像`}
+                      className="w-full h-full object-cover"
                     />
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-2 p-2">
-              {[
-                { label: "最高分數", value: stats?.highest_score || 0 },
-                { label: "遊玩次數", value: stats?.play_count || 0 },
-                { label: "加入日期", value: joinDate },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="text-lg md:text-xl flex flex-col items-center justify-center gap-1"
-                >
-                  <GlowText className="font-extrabold">{item.value}</GlowText>
-                  <span className="text-[0.5em] text-(--text-color-muted)">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Records List */}
-            <div className="flex flex-col gap-3 h-100 md:h-120 overflow-hidden">
-              <div className="flex items-center justify-between px-1 shrink-0">
-                <h3 className="text-base font-bold flex items-center gap-2">
-                  最近遊玩紀錄
-                </h3>
-                <span className="text-xs text-(--text-color-muted)">
-                  顯示最近 10 筆
-                </span>
-              </div>
-
-              <div className="flex flex-col gap-2 overflow-y-auto">
-                {orderedRecords.length > 0 ? (
-                  orderedRecords.map((record) => (
-                    <div
-                      key={record.id}
-                      className="group flex items-center justify-between p-2 md:p-4 rounded-xl bg-white/5 border border-transparent hover:border-(--text-color-secondary) hover:bg-white/10 transition-all duration-200"
+                  <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                    <GlowText
+                      as="h3"
+                      className="text-2xl md:text-3xl font-bold"
                     >
-                      <span className="text-xs md:text-sm text-(--text-color-muted) group-hover:text-white transition-colors">
-                        {formatDate("YYYY/MM/DD HH:mm:ss", record.created_at)}
-                      </span>
-                      <div className="flex items-baseline gap-1.5">
-                        <GlowText className="text-lg md:text-xl font-bold">
-                          {record.score.toLocaleString()}
-                        </GlowText>
-                        <span className="text-xs text-(--text-color-muted)">
-                          分
-                        </span>
-                      </div>
+                      {name}
+                    </GlowText>
+                    <div className="flex items-center gap-2 text-sm text-(--text-color-muted)">
+                      <span className="font-mono">ID: {id}</span>
+                      <CopyButton
+                        content={`${id}`}
+                        className="text-(--text-color-muted)"
+                        aria-label="複製用戶 ID"
+                        title="複製用戶ID"
+                      />
                     </div>
-                  ))
-                ) : (
-                  <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-3">
-                    <p>尚無遊玩紀錄</p>
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    {
+                      label: "最高分數",
+                      value: stats?.highest_score?.toLocaleString() || 0,
+                    },
+                    {
+                      label: "遊玩次數",
+                      value: stats?.play_count?.toLocaleString() || 0,
+                    },
+                    { label: "加入日期", value: joinDate },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className={`card-primary flex flex-col items-center justify-center p-3 md:p-4`}
+                    >
+                      <GlowText className={`text-xl md:text-2xl font-black`}>
+                        {item.value}
+                      </GlowText>
+                      <span className="text-xs md:text-sm text-(--text-color-muted) mt-1">
+                        {item.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Records List */}
+                <div className="flex flex-col gap-3 min-h-0 flex-1">
+                  <div className="flex items-center justify-between px-1 shrink-0 border-b border-white/10 pb-2">
+                    <h3 className="text-base md:text-lg font-bold flex items-center gap-2 text-white/90">
+                      最近遊玩紀錄
+                    </h3>
+                    <span className="text-xs text-(--text-color-muted) bg-white/5 px-2 py-1 rounded-full">
+                      最近 10 筆
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-2 overflow-y-auto pr-1 custom-scrollbar">
+                    {orderedRecords.length > 0 ? (
+                      orderedRecords.map((record) => (
+                        <div
+                          key={record.id}
+                          className="card-primary flex items-center justify-between p-3 md:p-4"
+                        >
+                          <span className="text-xs md:text-sm text-(--text-color-muted) font-mono">
+                            {formatDate(
+                              "YYYY/MM/DD HH:mm:ss",
+                              record.created_at
+                            )}
+                          </span>
+                          <div className="flex items-baseline gap-1.5">
+                            <GlowText className="text-lg md:text-xl font-bold tabular-nums transition-transform">
+                              {record.score.toLocaleString()}
+                            </GlowText>
+                            <span className="text-xs text-(--text-color-muted)">
+                              分
+                            </span>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex flex-col items-center justify-center py-12 rounded-xl bg-white/5 border border-dashed border-white/10 text-(--text-color-muted) gap-3 h-full">
+                        <p>尚無遊玩紀錄</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </modal.Container>
