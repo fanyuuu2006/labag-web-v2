@@ -38,20 +38,22 @@ export const RankTableRow = memo(
           <RankBadge index={index} />
         </td>
         <td className={cn("text-[0.75em] font-bold p-2")}>
-          <button
-            className="max-w-[14ch] truncate block text-center m-auto"
+          <span
+            role="button"
+            tabIndex={0}
+            className="max-w-[14ch] truncate block text-center m-auto cursor-pointer"
             onClick={() => {
               modal.open(item.user_id);
             }}
           >
             {item.user_name || "未知玩家"}
-          </button>
+          </span>
         </td>
         <td className="p-2 text-center font-extrabold">
           <GlowText>{item.score.toLocaleString()}</GlowText>
         </td>
         <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
-          <div className="whitespace-pre-line leading-tight">
+          <div className="whitespace-pre-line font-mono leading-tight">
             {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)}
           </div>
         </td>
