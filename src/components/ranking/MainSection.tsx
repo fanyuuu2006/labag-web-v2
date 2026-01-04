@@ -65,14 +65,15 @@ export const MainSection = ({ items }: MainSectionProps) => {
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col items-center justify-center p-4">
+          <div className="flex flex-col items-center justify-center p-4 h-full overflow-hidden">
             <div className="card-secondary w-full max-h-full overflow-y-auto p-4">
               {rest.length === 0 && orderedItems.length <= 3 ? (
-                <div className="text-center p-8 text-white/30 italic">
-                  期待更多玩家加入...
+                <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
+                  <div className="text-4xl opacity-50">⏳</div>
+                  <div>期待更多玩家加入...</div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 pb-2">
                   {rest.map((item, i) => (
                     <RestRankCard
                       key={item.record_id}
