@@ -15,19 +15,19 @@ type RankTableRowProps = OverrideProps<
     index: number;
   }
 >;
-
+const RANK_CLASS: Record<number, string> = {
+  0: "bg-yellow-400/50 hover:bg-yellow-400/60", // 🥇
+  1: "bg-slate-300/50 hover:bg-slate-300/60", // 🥈
+  2: "bg-orange-400/50 hover:bg-orange-400/60", // 🥉
+};
 export const RankTableRow = memo(
   ({ item, className, index, ...props }: RankTableRowProps) => {
     const modal = useUserModal();
     return (
       <tr
         className={cn(
-          "transition-colors border border-white/5 hover:bg-white/10",
-          {
-            "bg-yellow-400/30 hover:bg-yellow-400/40": index === 0, // 🥇
-            "bg-slate-300/30 hover:bg-slate-300/40": index === 1, // 🥈
-            "bg-orange-400/30 hover:bg-orange-400/40": index === 2, // 🥉
-          },
+          "transition-colors border border-white/20 hover:bg-white/10",
+          RANK_CLASS[index] || "",
           className
         )}
         key={item.record_id}
