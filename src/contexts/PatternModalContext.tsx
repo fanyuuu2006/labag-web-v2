@@ -47,7 +47,7 @@ export const PatternModalProvider = ({
             <div className="flex flex-col sm:flex-row w-full gap-4 items-center">
               {/**左側 */}
               <div className="w-1/3 flex flex-col items-center gap-3">
-                <div className="w-full aspect-square rounded-md overflow-hidden">
+                <div className="card-primary w-full aspect-square rounded-md overflow-hidden">
                   <MyImage
                     src={`/images/patterns/${info.name}.jpg`}
                     alt={info.name}

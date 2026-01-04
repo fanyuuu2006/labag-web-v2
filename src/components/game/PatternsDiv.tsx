@@ -90,7 +90,10 @@ export const PatternsDiv = () => {
         </span>
       </div>
       {patterns.map((pattern, idx) => (
-        <div key={idx} className="aspect-3/4 text-[7vh] font-bold card">
+        <div
+          key={idx}
+          className="aspect-3/4 text-[7vh] font-bold card overflow-hidden"
+        >
           {pattern ? (
             <MyImage
               src={`/images/patterns/${pattern.name}.jpg`}
