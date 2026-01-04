@@ -22,7 +22,7 @@ export const RankTableRow = memo(
     return (
       <tr
         className={cn(
-          "transition-colors border border-white/25",
+          "transition-colors border border-white/5",
           {
             "bg-yellow-400/30": index === 0, // 🥇
             "bg-slate-300/30": index === 1, // 🥈
