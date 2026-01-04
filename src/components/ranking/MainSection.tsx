@@ -47,7 +47,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
         {/** 內容區域 */}
         <div
           className={
-            "text-sm sm:text-base md:text-lg lg:text-xl grid grid-cols-1 md:grid-cols-2 max-h-full"
+            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 max-h-full"
           }
         >
           {/* 前三名 */}
