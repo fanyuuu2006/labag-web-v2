@@ -14,11 +14,7 @@ export const AuthButton = ({ className, ...rest }: AuthButtonProps) => {
   };
 
   return (
-    <button
-      onClick={handleAuthClick}
-      className={cn("btn btn-secondary rounded-full px-6 py-2", className)}
-      {...rest}
-    >
+    <button onClick={handleAuthClick} className={cn(className)} {...rest}>
       {user ? "登出" : "登入"}
     </button>
   );

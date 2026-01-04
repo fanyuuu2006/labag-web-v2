@@ -8,7 +8,6 @@ import { Burger } from "./Burger";
 import { useState, useCallback } from "react";
 import { Collapse } from "fanyucomponents";
 import { useUser } from "@/contexts/UserContext";
-import { AuthButton } from "../AuthButton";
 
 // 判斷路由是否激活的輔助函式
 const isRouteActive = (
@@ -94,9 +93,6 @@ export const Header = () => {
           {routes.map((route) => (
             <NavLink key={route.href} route={route} pathname={pathname} />
           ))}
-          <div className="p-2 flex items-center justify-center">
-            <AuthButton className="text-[0.75em] font-bold" />
-          </div>
         </nav>
       </div>
       <Collapse
@@ -115,9 +111,6 @@ export const Header = () => {
               className="p-2"
             />
           ))}
-          <div className="p-2 flex items-center justify-center">
-            <AuthButton className="text-[0.75em] font-bold" />
-          </div>
         </div>
       </Collapse>
     </header>

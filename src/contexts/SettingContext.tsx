@@ -6,6 +6,8 @@ import { CloseOutlined } from "@ant-design/icons";
 import { createContext, useContext, useState, useMemo } from "react";
 import { useUserModal } from "./UserModalContext";
 import { useUser } from "./UserContext";
+import { AuthButton } from "@/components/AuthButton";
+import { cn } from "@/utils/className";
 
 type SettingOption<T> = {
   value: T;
@@ -92,7 +94,7 @@ export const SettingProvider = ({
               <ToggleSwitch id="sound" value={sound} setValue={setSound} />
             </div>
             {user && (
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-center">
                 <button
                   className="btn-secondary w-full rounded-xl p-1"
                   onClick={() => userModal.open(user.id)}
@@ -101,6 +103,14 @@ export const SettingProvider = ({
                 </button>
               </div>
             )}
+            <div className="flex items-center justify-center">
+              <AuthButton
+                className={cn("font-semibold w-full rounded-xl p-1", {
+                  "btn-primary": !user,
+                  "bg-red-500 text-white": !!user,
+                })}
+              />
+            </div>
           </div>
         </div>
       </modal.Container>
