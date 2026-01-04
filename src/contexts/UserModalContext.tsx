@@ -206,12 +206,20 @@ export const UserModalProvider = ({
                             <span className="text-[0.75em] opacity-70">
                               ID: {record.id}
                             </span>
-                            <span>
+                            <time
+                              dateTime={new Date(
+                                record.created_at
+                              ).toISOString()}
+                              title={formatDate(
+                                "YYYY/MM/DD HH:mm",
+                                record.created_at
+                              )}
+                            >
                               {formatDate(
                                 "YYYY/MM/DD\nHH:mm",
                                 record.created_at
                               )}
-                            </span>
+                            </time>
                           </div>
                           <div className="flex items-baseline gap-1.5">
                             <GlowText className="text-lg md:text-xl font-bold tabular-nums transition-transform">

@@ -68,9 +68,13 @@ export const PodiumItem = ({
         {/** 滑鼠懸停遮罩 */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
         {/** 日期 */}
-        <span className="absolute bottom-1 text-[0.5em] text-(--text-color-muted)">
+        <time
+          dateTime={new Date(item.created_at).toISOString()}
+          title={formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
+          className="absolute bottom-1 text-[0.5em] text-(--text-color-muted)"
+        >
           {formatDate("YYYY/MM/DD", item.created_at)}
-        </span>
+        </time>
       </div>
     </div>
   );
