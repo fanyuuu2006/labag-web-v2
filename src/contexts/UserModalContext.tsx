@@ -97,24 +97,24 @@ export const UserModalProvider = ({
     <userModalContext.Provider value={value}>
       {children}
       <modal.Container
-        className="bg-black/40 flex items-center justify-center p-6 z-51"
+        className="bg-black/40 flex items-center justify-center p-2 md:p-4 z-51"
         aria-labelledby="currUser-modal-title"
       >
         {id && (
-          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-5 p-5 md:p-8 max-h-[90vh] overflow-hidden">
+          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-3 p-4 md:p-6 max-h-[90vh] overflow-hidden">
             {/** Header */}
             <header className="flex items-center justify-between">
               <GlowText
                 as="h2"
                 id="currUser-modal-title"
-                className="text-2xl md:text-3xl font-extrabold tracking-wider"
+                className="text-lg md:text-xl font-extrabold tracking-wider"
               >
                 用戶資料
               </GlowText>
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--text-color-muted) p-2 rounded-full"
+                className="text-(--text-color-muted)"
                 onClick={modal.close}
               >
                 <CloseOutlined className="text-xl" />
@@ -131,8 +131,8 @@ export const UserModalProvider = ({
             ) : (
               <>
                 {/** User Info Section */}
-                <div className="flex items-center gap-5 md:gap-6 shrink-0">
-                  <div className="relative h-20 w-20 md:h-24 md:w-24 shrink-0 rounded-full overflow-hidden border-2 border-(--normal-text-color-secondary) shadow-[0_0_15px_rgba(74,174,255,0.3)]">
+                <div className="flex items-center gap-4 shrink-0">
+                  <div className="relative aspect-square w-auto h-16 md:h-16 shrink-0 rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
                     <MyImage
                       src={currUser?.avatar}
                       fallbackSrc={`/default-avatar.jpg`}
@@ -141,7 +141,7 @@ export const UserModalProvider = ({
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5 min-w-0 flex-1">
+                  <div className="flex flex-col gap-1 min-w-0 flex-1">
                     <GlowText
                       as="h3"
                       className="text-2xl md:text-3xl font-bold"
@@ -161,7 +161,7 @@ export const UserModalProvider = ({
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 md:gap-4">
                   {[
                     {
                       label: "最高分數",
@@ -175,12 +175,12 @@ export const UserModalProvider = ({
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className={`card-primary flex flex-col items-center justify-center p-3 md:p-4`}
+                      className={`card-primary text-base sm:text-lg md:text-xl lg:text-2xl flex flex-col items-center justify-center p-2 md:p-3 lg:p-4`}
                     >
-                      <GlowText className={`text-xl md:text-2xl font-black`}>
+                      <GlowText className={`font-extrabold`}>
                         {item.value}
                       </GlowText>
-                      <span className="text-xs md:text-sm text-(--text-color-muted) mt-1">
+                      <span className="text-[0.5em] text-(--text-color-muted)">
                         {item.label}
                       </span>
                     </div>
