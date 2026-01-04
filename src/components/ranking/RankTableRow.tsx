@@ -54,7 +54,7 @@ export const RankTableRow = memo(
         </td>
         <td className="p-2 text-center text-(--text-color-muted) text-[0.5em]">
           <div className="whitespace-pre-line font-mono leading-tight">
-            {formatDate("YYYY/MM/DD\nHH:mm:ss", item.created_at)}
+            {formatDate("YYYY/MM/DD\nHH:mm", item.created_at)}
           </div>
         </td>
       </tr>

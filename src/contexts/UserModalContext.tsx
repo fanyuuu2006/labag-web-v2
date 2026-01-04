@@ -142,10 +142,7 @@ export const UserModalProvider = ({
                     />
                   </div>
                   <div className="text-xl md:text-2xl flex flex-col gap-1 min-w-0 flex-1">
-                    <GlowText
-                      as="h3"
-                      className="font-bold"
-                    >
+                    <GlowText as="h3" className="font-bold">
                       {name}
                     </GlowText>
                     <div className="flex items-center gap-2 text-[0.5em] text-(--text-color-muted)">
@@ -205,12 +202,15 @@ export const UserModalProvider = ({
                           key={record.id}
                           className="card-primary flex items-center justify-between p-3 md:p-4 hover:brightness-125"
                         >
-                          <span className="text-xs md:text-sm text-(--text-color-muted) font-mono">
-                            {formatDate(
-                              "YYYY/MM/DD HH:mm:ss",
-                              record.created_at
-                            )}
-                          </span>
+                          <div className="text-xs md:text-sm text-(--text-color-muted) font-mono whitespace-pre-line flex flex-col">
+                            <span>
+                              {formatDate(
+                                "YYYY/MM/DD\nHH:mm",
+                                record.created_at
+                              )}
+                            </span>
+                              <span className="text-[0.75em]">ID: {record.id}</span>
+                          </div>
                           <div className="flex items-baseline gap-1.5">
                             <GlowText className="text-lg md:text-xl font-bold tabular-nums transition-transform">
                               {record.score.toLocaleString()}
