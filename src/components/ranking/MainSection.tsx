@@ -4,13 +4,12 @@ import { GlowText } from "../GlowText";
 import { useMemo } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { RankTableRow } from "./RankTableRow";
-import { cn } from "@/utils/className";
 
-export const MainSection = ({
-  items,
-}: {
+interface MainSectionProps {
   items: SupabaseRankingViewItem[] | null;
-}) => {
+}
+
+export const MainSection = ({ items }: MainSectionProps) => {
   const { user } = useUser();
 
   const orderedItems = useMemo(() => {
@@ -41,12 +40,20 @@ export const MainSection = ({
 
           <div className="w-full rounded-md bg-(--background-color) border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin">
             <table className="text-base sm:text-lg md:text-xl lg:text-2xl w-full table-auto border-collapse">
-              <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/50 z-10 backdrop-blur-md">
+              <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/60 z-10 backdrop-blur-md shadow-sm">
                 <tr>
-                  <th className="text-center p-2">#</th>
-                  <th className="text-center p-2">玩家名稱</th>
-                  <th className="text-center p-2">分數</th>
-                  <th className="text-center p-2">日期</th>
+                  <th className="text-center p-2 font-medium" scope="col">
+                    #
+                  </th>
+                  <th className="text-center p-2 font-medium" scope="col">
+                    玩家名稱
+                  </th>
+                  <th className="text-center p-2 font-medium" scope="col">
+                    分數
+                  </th>
+                  <th className="text-center p-2 font-medium" scope="col">
+                    日期
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -64,16 +71,15 @@ export const MainSection = ({
                     <RankTableRow
                       key={item.record_id}
                       item={item}
-                      className={cn("hover:backdrop-brightness-125", {})}
+                      className="hover:backdrop-brightness-125 transition-colors duration-200"
                       index={index}
                     />
                   ))
                 )}
               </tbody>
               {userRank && (
-                <tfoot className="border-t border-(--border-color) sticky bottom-0 z-10 backdrop-blur-md">
+                <tfoot className="border-t-2 border-(--border-color) sticky bottom-0 z-10 backdrop-blur-md bg-black/60">
                   <RankTableRow
-                    className="bg-black/50"
                     item={userRank}
                     index={userRankIndex}
                   />

@@ -37,7 +37,7 @@ export const RankTableRow = memo(
         <td className="p-2 text-center">
           <RankBadge index={index} />
         </td>
-        <td className={cn("text-[0.75em] p-2")}>
+        <td className={cn("text-[0.75em] font-bold p-2")}>
           <button
             className="max-w-[14ch] truncate block text-center m-auto"
             onClick={() => {
