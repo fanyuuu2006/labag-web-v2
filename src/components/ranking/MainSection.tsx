@@ -41,29 +41,29 @@ export const MainSection = ({ items }: MainSectionProps) => {
           </div>
 
           <div className="w-full rounded-md bg-(--background-color) border-2 border-(--border-color) overflow-y-auto flex-1 min-h-0 relative scrollbar-thin shadow-inner">
-            <table className="text-base sm:text-lg md:text-xl lg:text-2xl w-full table-fixed border-collapse">
+            <table className="text-base sm:text-lg md:text-xl lg:text-2xl w-full table-auto border-collapse">
               <thead className="text-[0.75em] text-(--text-color-muted) sticky top-0 bg-black/80 z-20 backdrop-blur-md shadow-md">
                 <tr>
                   <th
-                    className="text-center p-2 font-medium w-[15%]"
+                    className="text-center p-2 font-medium"
                     scope="col"
                   >
                     #
                   </th>
                   <th
-                    className="text-center p-2 font-medium w-[45%]"
+                    className="text-center p-2 font-medium"
                     scope="col"
                   >
                     玩家名稱
                   </th>
                   <th
-                    className="text-center p-2 font-medium w-[20%]"
+                    className="text-center p-2 font-medium"
                     scope="col"
                   >
                     分數
                   </th>
                   <th
-                    className="text-center p-2 font-medium w-[20%]"
+                    className="text-center p-2 font-medium"
                     scope="col"
                   >
                     日期

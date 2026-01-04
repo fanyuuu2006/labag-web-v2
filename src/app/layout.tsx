@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css";
 import { Header } from "@/components/Header/Header";
 import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
@@ -10,6 +9,7 @@ import { ModeModalProvider } from "@/contexts/ModeModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
 import { UserModalProvider } from "@/contexts/UserModalContext";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: site.url,

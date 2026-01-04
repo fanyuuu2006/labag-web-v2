@@ -101,7 +101,7 @@ export const UserModalProvider = ({
         aria-labelledby="currUser-modal-title"
       >
         {id && (
-          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-3 p-4 md:p-6 max-h-[90vh] overflow-hidden">
+          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-3 p-4 md:p-6 max-h-[85vh] overflow-hidden">
             {/** Header */}
             <header className="flex items-center justify-between">
               <GlowText
@@ -141,14 +141,14 @@ export const UserModalProvider = ({
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="flex flex-col gap-1 min-w-0 flex-1">
+                  <div className="text-xl md:text-2xl flex flex-col gap-1 min-w-0 flex-1">
                     <GlowText
                       as="h3"
-                      className="text-2xl md:text-3xl font-bold"
+                      className="font-bold"
                     >
                       {name}
                     </GlowText>
-                    <div className="flex items-center gap-2 text-sm text-(--text-color-muted)">
+                    <div className="flex items-center gap-2 text-[0.5em] text-(--text-color-muted)">
                       <span className="font-mono">ID: {id}</span>
                       <CopyButton
                         content={`${id}`}
