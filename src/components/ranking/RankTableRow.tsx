@@ -22,11 +22,11 @@ export const RankTableRow = memo(
     return (
       <tr
         className={cn(
-          "transition-colors border border-white/5",
+          "transition-colors border border-white/5 hover:bg-white/10",
           {
-            "bg-yellow-400/30": index === 0, // 🥇
-            "bg-slate-300/30": index === 1, // 🥈
-            "bg-orange-400/30": index === 2, // 🥉
+            "bg-yellow-400/30 hover:bg-yellow-400/40": index === 0, // 🥇
+            "bg-slate-300/30 hover:bg-slate-300/40": index === 1, // 🥈
+            "bg-orange-400/30 hover:bg-orange-400/40": index === 2, // 🥉
           },
           className
         )}

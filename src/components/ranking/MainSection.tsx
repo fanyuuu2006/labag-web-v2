@@ -85,7 +85,6 @@ export const MainSection = ({ items }: MainSectionProps) => {
                     <RankTableRow
                       key={item.record_id}
                       item={item}
-                      className="hover:backdrop-brightness-125 transition-colors duration-200"
                       index={index}
                     />
                   ))
