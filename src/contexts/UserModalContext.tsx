@@ -195,39 +195,42 @@ export const UserModalProvider = ({
                     </span>
                   </div>
 
-                  <div className="flex flex-col gap-2 overflow-y-auto pr-1 custom-scrollbar">
+                  <div className="flex flex-col gap-2 overflow-y-auto">
                     {orderedRecords.length > 0 ? (
                       orderedRecords.map((record) => (
                         <div
                           key={record.id}
-                          className="card-primary flex items-center justify-between p-3 md:p-4 hover:brightness-125"
+                          className="card-primary group relative flex items-center justify-between p-3 md:p-4 transition-all duration-300 hover:brightness-110"
                         >
-                          <div className="text-xs md:text-sm text-(--text-color-muted) font-mono whitespace-pre-line flex flex-col">
-                            <span className="text-[0.75em] opacity-70">
-                              ID: {record.id}
-                            </span>
+                          <div className="flex flex-col gap-0.5">
                             <time
                               dateTime={new Date(
                                 record.created_at
                               ).toISOString()}
+                              className="text-sm md:text-base font-bold text-white/90 tracking-wide"
                               title={formatDate(
                                 "YYYY/MM/DD HH:mm",
                                 record.created_at
                               )}
                             >
                               {formatDate(
-                                "YYYY/MM/DD\nHH:mm",
+                                "YYYY/MM/DD HH:mm",
                                 record.created_at
                               )}
                             </time>
-                          </div>
-                          <div className="flex items-baseline gap-1.5">
-                            <GlowText className="text-lg md:text-xl font-bold tabular-nums transition-transform">
-                              {record.score.toLocaleString()}
-                            </GlowText>
-                            <span className="text-xs text-(--text-color-muted)">
-                              分
+                            <span className="text-[10px] md:text-xs text-(--text-color-muted) font-mono">
+                              ID: {record.id}
                             </span>
+                          </div>
+                          <div className="flex flex-col items-end justify-center">
+                            <div className="flex items-baseline gap-1.5">
+                              <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight drop-shadow-lg">
+                                {record.score.toLocaleString()}
+                              </GlowText>
+                              <span className="text-xs font-medium text-(--text-color-muted) mb-1">
+                                分
+                              </span>
+                            </div>
                           </div>
                         </div>
                       ))

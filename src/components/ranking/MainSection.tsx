@@ -38,7 +38,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
         <div className="flex justify-center">
           <GlowText
             as="h2"
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wider"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-wider"
           >
             排行榜
           </GlowText>
@@ -65,7 +65,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col items-center justify-center p-4 h-full overflow-hidden">
+          <div className="flex flex-col items-center justify-center h-full overflow-hidden">
             <div className="card-secondary w-full max-h-full overflow-y-auto p-4">
               {rest.length === 0 && orderedItems.length <= 3 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
