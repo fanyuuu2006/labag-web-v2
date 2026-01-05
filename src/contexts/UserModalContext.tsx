@@ -14,7 +14,7 @@ import { MyImage } from "@/components/MyImage";
 import { formatDate } from "@/utils/date";
 import { recordsById, statsById, userById } from "@/utils/backend";
 import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
-import { statsLabels } from "@/libs/backend";
+import { statsData } from "@/libs/rankings";
 
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -162,11 +162,11 @@ export const UserModalProvider = ({
                 <div className="grid grid-cols-3 gap-2 md:gap-4">
                   {[
                     {
-                      label: statsLabels.highest_score,
+                      label: statsData.highest_score.label,
                       value: stats?.highest_score?.toLocaleString() || 0,
                     },
                     {
-                      label: statsLabels.play_count,
+                      label: statsData.play_count.label,
                       value: stats?.play_count?.toLocaleString() || 0,
                     },
                     { label: "加入日期", value: joinDate },

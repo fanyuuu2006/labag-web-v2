@@ -4,13 +4,15 @@ import { OverrideProps, DistributiveOmit } from "fanyucomponents";
 import { GlowText } from "../../GlowText";
 import { cn } from "@/utils/className";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { VALID_KEYS } from "@/libs/backend";
+import { statsData } from "@/libs/rankings";
 
 type RestRankCardProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLDivElement>, "children">,
   {
     item: SupabaseUserStatsViewItem;
     rank: number;
-    rankKey: keyof SupabaseUserStatsViewItem;
+    rankKey: (typeof VALID_KEYS)[number];
   }
 >;
 
@@ -36,10 +38,13 @@ export const RestRankCard = memo(
           {item.user_name}
         </span>
 
-        <div className="ms-auto flex flex-col items-end">
+        <div className="ms-auto flex items-center gap-1">
           <GlowText className="text-[1.25em] font-bold tabular-nums font-mono tracking-wider shrink-0">
             {item[rankKey]}
           </GlowText>
+          <span className="text-[0.75em] mt-1 text-(--text-color-muted)">
+            {statsData[rankKey].unit}
+          </span>
         </div>
       </div>
     );

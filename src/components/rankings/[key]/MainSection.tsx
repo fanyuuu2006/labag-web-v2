@@ -4,10 +4,11 @@ import { useMemo } from "react";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
-import { statsLabels } from "@/libs/backend";
+import { statsData } from "@/libs/rankings";
+import { VALID_KEYS } from "@/libs/backend";
 
 interface MainSectionProps {
-  rankKey: keyof SupabaseUserStatsViewItem;
+  rankKey: (typeof VALID_KEYS)[number];
   items: SupabaseUserStatsViewItem[] | null;
   fetchTime: string;
 }
@@ -32,7 +33,7 @@ export const MainSection = ({
             as="h1"
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-center"
           >
-            {statsLabels[rankKey as keyof typeof statsLabels]}
+            {statsData[rankKey].label}
           </GlowText>
         </div>
 

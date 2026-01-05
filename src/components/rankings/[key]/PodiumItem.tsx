@@ -4,6 +4,8 @@ import { cn } from "@/utils/className";
 import { GlowText } from "../../GlowText";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { statsData } from "@/libs/rankings";
+import { VALID_KEYS } from "@/libs/backend";
 
 const MEDALS = ["🥇", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
@@ -24,7 +26,7 @@ type PodiumItemProps = OverrideProps<
   {
     item: SupabaseUserStatsViewItem;
     index: number;
-    rankKey: keyof SupabaseUserStatsViewItem;
+    rankKey: (typeof VALID_KEYS)[number];
   }
 >;
 
@@ -58,9 +60,14 @@ export const PodiumItem = memo(
           >
             {item.user_name}
           </button>
-          <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
-            {item[rankKey]}
-          </GlowText>
+          <div className="flex items-center gap-1">
+            <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
+              {item[rankKey]}
+            </GlowText>
+            <span className="text-[0.75em] mt-1 text-(--text-color-muted)">
+              {statsData[rankKey].unit}
+            </span>
+          </div>
         </div>
         <div
           className={cn(

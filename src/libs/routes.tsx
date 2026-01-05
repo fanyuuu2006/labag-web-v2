@@ -1,5 +1,6 @@
 import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
-import { statsLabels, VALID_KEYS } from "./backend";
+import { VALID_KEYS } from "./backend";
+import { statsData } from "./rankings";
 
 type BaseRoute = {
   label: string;
@@ -22,7 +23,7 @@ export const routes: RootRoute[] = [
     href: "/rankings",
     icon: TrophyOutlined,
     subRoutes: VALID_KEYS.map((key) => ({
-      label: statsLabels[key],
+      label: statsData[key].label,
       href: `/${key}`,
     })),
   },

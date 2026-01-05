@@ -1,8 +1,9 @@
 "use client";
-import { statsLabels, VALID_KEYS } from "@/libs/backend";
+import { VALID_KEYS } from "@/libs/backend";
 import { GlowText } from "../GlowText";
 import Link from "next/link";
 import { TrophyOutlined, FireOutlined } from "@ant-design/icons";
+import { statsData } from "@/libs/rankings";
 
 const RANKING_ICONS: Record<string, React.ReactNode> = {
   highest_score: <TrophyOutlined className="text-2xl" />,
@@ -28,7 +29,7 @@ export const MainSection = () => {
               className="btn-primary flex items-center justify-center gap-3 px-8 py-4 rounded-full text-xl sm:text-2xl font-bold"
             >
               {RANKING_ICONS[key]}
-              {statsLabels[key]}
+              {statsData[key].label}
             </Link>
           ))}
 
