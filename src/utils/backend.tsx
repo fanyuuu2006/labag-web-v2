@@ -45,7 +45,7 @@ export const recordsById = (
 
 export const statsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${id}`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`
   );
 
 export const stats = () =>

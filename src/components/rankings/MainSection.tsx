@@ -53,8 +53,8 @@ export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col items-center justify-center h-full overflow-hidden">
-            <div className="card-secondary w-full max-h-full overflow-y-auto p-4">
+          <div className="flex flex-col h-full overflow-hidden p-4">
+            <div className="card-secondary w-full h-full overflow-y-auto p-4">
               {rest.length === 0 && orderedItems.length <= 3 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
