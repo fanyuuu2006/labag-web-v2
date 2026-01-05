@@ -13,6 +13,6 @@ export const VALID_KEYS = [
 ] satisfies readonly (keyof SupabaseUserStatsViewItem)[];
 
 export const statsLabels: Record<(typeof VALID_KEYS)[number], string> = {
-  play_count: "遊玩次數",
   highest_score: "最高分數",
+  play_count: "遊玩次數",
 };
