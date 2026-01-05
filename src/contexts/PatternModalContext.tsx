@@ -6,6 +6,7 @@ import { OverrideProps } from "fanyucomponents";
 import { getPatternInfo } from "@/utils/game";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
+import { CloseOutlined } from "@ant-design/icons";
 
 type PatternModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -41,97 +42,123 @@ export const PatternModalProvider = ({
   return (
     <patternModalContext.Provider value={value}>
       {children}
-      <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
+      <modal.Container
+        className="bg-black/40 flex items-center justify-center p-4 z-50"
+        aria-labelledby="pattern-modal-title"
+      >
         {info && (
-          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-6 flex flex-col gap-2  animate-pop">
-            <div className="flex flex-col sm:flex-row w-full gap-4 items-center">
-              {/**左側 */}
-              <div className="w-1/3 flex flex-col items-center gap-3">
-                <div className="card-primary w-full aspect-square rounded-md overflow-hidden">
+          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
+            {/* Header */}
+            <header className="flex items-center justify-between sticky top-0 z-10">
+              <GlowText
+                as="h2"
+                id="pattern-modal-title"
+                className="text-lg md:text-xl font-extrabold tracking-wider"
+              >
+                圖案資訊
+              </GlowText>
+              <button
+                type="button"
+                aria-label="關閉"
+                className="text-(--text-color-muted) hover:text-white transition-colors"
+                onClick={modal.close}
+              >
+                <CloseOutlined className="text-xl" />
+              </button>
+            </header>
+
+            <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6">
+              {/**左側 Image */}
+              <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
+                <div className="card-primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--text-color-secondary)">
                   <MyImage
                     src={`/images/patterns/${info.name}.jpg`}
                     alt={info.name}
-                    className="w-full h-full object-cover scale-105"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                {/**名稱 */}
                 <GlowText
                   as="h2"
-                  className="text-xl md:text-2xl lg:text-3xl font-extrabold"
+                  className="text-lg sm:text-2xl md:text-3xl font-black text-center"
                 >
                   {info.name}
                 </GlowText>
               </div>
 
-              {/**右側 */}
-              <div className="flex-1 w-full">
-                <div className="w-full flex flex-col gap-3">
-                  {/**機率進度條 */}
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-semibold">當前出現機率</div>
-                      <div className="text-sm font-bold text-(--text-color-primary)">
-                        {displayRate}%
-                      </div>
-                    </div>
-
-                    <div
-                      className="w-full h-2 bg-black/40 rounded-full overflow-hidden"
-                      role="progressbar"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={displayRate}
-                      title={`出現機率 ${displayRate}%`}
-                    >
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${Math.max(0, Math.min(100, displayRate))}%`,
-                          background: `linear-gradient(90deg, var(--text-color-primary), var(--text-color-secondary))`,
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <span className="text-xs text-(--text-color-muted)">
-                      得分 (計分方式請見普通模式說明)
+              {/**右側 Info */}
+              <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
+                {/**機率進度條 */}
+                <div className="card-primary p-3 sm:p-4 rounded-xl flex flex-col gap-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs sm:text-sm font-bold text-(--text-color-muted)">
+                      當前出現機率
                     </span>
-                    <div className="text-sm flex flex-col gap-1">
-                      {[
-                        {
-                          label: "三個相同",
-                          score: info.scores[0],
-                        },
-                        {
-                          label: "兩個相同",
-                          score: info.scores[1],
-                        },
-                        {
-                          label: "皆不同",
-                          score: info.scores[2],
-                        },
-                      ].map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center justify-between bg-black/20 rounded-full px-4 py-1"
-                        >
-                          <div>{item.label}</div>
-                          <div className="text-[1.2em] font-bold">
-                            {item.score}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    <GlowText className="text-base sm:text-lg font-bold">
+                      {displayRate}%
+                    </GlowText>
                   </div>
 
-                  <div className="flex justify-center sm:justify-end">
-                    <button
-                      onClick={modal.close}
-                      className="btn-secondary rounded-full px-4 py-2"
-                    >
-                      我知道了
-                    </button>
+                  <div
+                    className="w-full h-3 bg-black/40 rounded-full overflow-hidden border border-white/5"
+                    role="progressbar"
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={displayRate}
+                    title={`出現機率 ${displayRate}%`}
+                  >
+                    <div
+                      className="h-full rounded-full transition-all duration-1000 ease-out"
+                      style={{
+                        width: `${Math.max(0, Math.min(100, displayRate))}%`,
+                        background: `linear-gradient(90deg, var(--text-color-primary), var(--text-color-secondary))`,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Scores */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between px-1">
+                    <span className="text-sm font-bold text-(--text-color-muted)">
+                      得分規則
+                    </span>
+                    <span className="text-xs text-(--text-color-muted) opacity-70">
+                      (普通模式)
+                    </span>
+                  </div>
+
+                  <div className="grid gap-2">
+                    {[
+                      {
+                        label: "三個相同",
+                        score: info.scores[0],
+                      },
+                      {
+                        label: "兩個相同",
+                        score: info.scores[1],
+                      },
+                      {
+                        label: "皆不同",
+                        score: info.scores[2],
+                      },
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="card-primary flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 rounded-lg group hover:brightness-110 transition-all"
+                      >
+                        <span className="text-sm sm:text-base font-medium text-white/80">
+                          {item.label}
+                        </span>
+                        <div className="flex items-baseline gap-1">
+                          <GlowText className="text-lg sm:text-xl font-black tabular-nums">
+                            {item.score}
+                          </GlowText>
+                          <span className="text-[10px] sm:text-xs text-(--text-color-muted)">
+                            分
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
