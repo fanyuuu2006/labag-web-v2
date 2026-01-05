@@ -45,7 +45,13 @@ export const PodiumItem = ({
       {...rest}
     >
       <div className="flex flex-col items-center gap-1 mb-[0.75em]">
-        <span className="text-[2.5em] drop-shadow-lg">{MEDALS[index]}</span>
+        <span
+          className="text-[2.5em] drop-shadow-lg"
+          role="img"
+          aria-label={`Medal ${index + 1}`}
+        >
+          {MEDALS[index]}
+        </span>
         <span
           className="font-bold max-w-[14ch] truncate cursor-pointer hover:text-(--text-color-primary) transition-colors drop-shadow-md"
           onClick={() => modal.open(item.user_id)}
