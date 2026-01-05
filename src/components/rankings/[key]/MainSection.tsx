@@ -1,23 +1,23 @@
 "use client";
-import { GlowText } from "../GlowText";
+import { GlowText } from "../../GlowText";
 import { useMemo } from "react";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
 
 interface MainSectionProps {
+  rankKey: keyof SupabaseUserStatsViewItem;
   items: SupabaseUserStatsViewItem[] | null;
   fetchTime: string;
 }
 
-export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
-  const orderedItems = useMemo(() => {
-    if (!items) return [];
-    return [...items].sort((a, b) => b.highest_score - a.highest_score);
-  }, [items]);
-
-  const top3 = orderedItems.slice(0, 3);
-  const rest = orderedItems.slice(3);
+export const MainSection = ({
+  items,
+  fetchTime,
+  rankKey,
+}: MainSectionProps) => {
+  const top3 = useMemo(() => items?.slice(0, 3) || [], [items]);
+  const rest = useMemo(() => items?.slice(3) || [], [items]);
 
   return (
     <section className="h-full">
@@ -40,14 +40,19 @@ export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
         >
           {/* 前三名 */}
           <div className="flex flex-col items-center justify-center p-4">
-            {orderedItems.length === 0 ? (
+            {top3.length === 0 ? (
               <div className="flex-1 flex items-center justify-center text-white/50 italic text-xl">
                 暫無排行資料
               </div>
             ) : (
               <div className="w-full flex justify-center items-end gap-2 md:gap-4 lg:gap-6">
                 {top3.map((item, index) => (
-                  <PodiumItem key={index} index={index} item={item} />
+                  <PodiumItem
+                    key={index}
+                    index={index}
+                    item={item}
+                    rankKey={rankKey}
+                  />
                 ))}
               </div>
             )}
@@ -55,7 +60,7 @@ export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
           {/* 剩餘排行榜列表 */}
           <div className="flex flex-col h-full overflow-hidden p-4">
             <div className="card-secondary w-full h-full overflow-y-auto p-4">
-              {rest.length === 0 && orderedItems.length <= 3 ? (
+              {rest.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
                   <div>期待更多玩家加入...</div>
@@ -63,7 +68,12 @@ export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
               ) : (
                 <div className="flex flex-col gap-3 pb-2">
                   {rest.map((item, i) => (
-                    <RestRankCard key={item.user_id} rank={i + 4} item={item} />
+                    <RestRankCard
+                      key={item.user_id}
+                      rank={i + 4}
+                      item={item}
+                      rankKey={rankKey}
+                    />
                   ))}
                 </div>
               )}

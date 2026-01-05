@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { OverrideProps, DistributiveOmit } from "fanyucomponents";
-import { GlowText } from "../GlowText";
+import { GlowText } from "../../GlowText";
 import { cn } from "@/utils/className";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
 
@@ -10,11 +10,12 @@ type RestRankCardProps = OverrideProps<
   {
     item: SupabaseUserStatsViewItem;
     rank: number;
+    rankKey: keyof SupabaseUserStatsViewItem;
   }
 >;
 
 export const RestRankCard = memo(
-  ({ item, rank, className, ...rest }: RestRankCardProps) => {
+  ({ item, rank, rankKey, className, ...rest }: RestRankCardProps) => {
     const modal = useUserModal();
 
     return (
@@ -37,7 +38,7 @@ export const RestRankCard = memo(
 
         <div className="ms-auto flex flex-col items-end">
           <GlowText className="text-[1.25em] font-bold tabular-nums font-mono tracking-wider shrink-0">
-            {item.highest_score}
+            {item[rankKey]}
           </GlowText>
         </div>
       </div>

@@ -23,7 +23,7 @@ export const userById = (id: SupabaseUser["id"]) =>
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`
   );
 
-export const records = (queryParams?: Record<"count", string>) => {
+export const records = (queryParams?: { count?: `${number}` }) => {
   const param = new URLSearchParams(queryParams);
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseRecord[]>>(
@@ -52,3 +52,17 @@ export const stats = () =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats`
   );
+
+export const statsByKey = (
+  key: keyof SupabaseUserStatsViewItem,
+  queryParams?: {
+    ascending?: `${boolean}`;
+    count?: `${number}`;
+  }
+) => {
+  const param = new URLSearchParams(queryParams);
+  const query = param.toString();
+  return fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${key}${query ? `?${query}` : ""}`
+  );
+};

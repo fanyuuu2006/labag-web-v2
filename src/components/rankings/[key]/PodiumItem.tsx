@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { cn } from "@/utils/className";
-import { GlowText } from "../GlowText";
+import { GlowText } from "../../GlowText";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
 
@@ -24,11 +24,12 @@ type PodiumItemProps = OverrideProps<
   {
     item: SupabaseUserStatsViewItem;
     index: number;
+    rankKey: keyof SupabaseUserStatsViewItem;
   }
 >;
 
 export const PodiumItem = memo(
-  ({ item, index, className, ...rest }: PodiumItemProps) => {
+  ({ item, index, rankKey, className, ...rest }: PodiumItemProps) => {
     const modal = useUserModal();
 
     return (
@@ -58,7 +59,7 @@ export const PodiumItem = memo(
             {item.user_name}
           </button>
           <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
-            {item.highest_score}
+            {item[rankKey]}
           </GlowText>
         </div>
         <div
