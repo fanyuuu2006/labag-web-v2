@@ -6,7 +6,7 @@ type BaseRoute = {
   icon: React.ElementType;
   isActive?: (path: string) => boolean;
 };
-interface RootRoute extends BaseRoute {
+export interface RootRoute extends BaseRoute {
   subRoutes?: BaseRoute[];
 }
 export const routes: RootRoute[] = [

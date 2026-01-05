@@ -1,55 +1,14 @@
 "use client";
 import Link from "next/link";
 import { routes } from "@/libs/routes";
-import { usePathname } from "next/navigation";
-import { cn } from "@/utils/className";
 import { GlowText } from "../GlowText";
 import { Burger } from "./Burger";
 import { useState, useCallback } from "react";
 import { Collapse } from "fanyucomponents";
-
-// 判斷路由是否激活的輔助函式
-const isRouteActive = (
-  pathname: string,
-  href: string,
-  customActiveCheck?: (path: string) => boolean
-): boolean => {
-  if (customActiveCheck) return customActiveCheck(pathname);
-  return pathname.startsWith(href);
-};
-
-// 提取 NavLink 組件以減少重複代碼
-interface NavLinkProps {
-  route: (typeof routes)[number];
-  pathname: string;
-  onClick?: () => void;
-  className?: string;
-}
-
-const NavLink = ({ route, pathname, onClick, className }: NavLinkProps) => {
-  const isActive = isRouteActive(pathname, route.href, route.isActive);
-  const Icon = route.icon;
-
-  return (
-    <Link
-      href={route.href}
-      onClick={onClick}
-      className={cn(
-        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
-        {
-          "text-(--text-color-primary)": isActive,
-        },
-        className
-      )}
-    >
-      <Icon className="text-[0.75em]" />
-      <span>{route.label}</span>
-    </Link>
-  );
-};
+import { DesktopLink } from "./DesktopLink";
+import { MobileLink } from "./MobileLink";
 
 export const Header = () => {
-  const pathname = usePathname();
   const [menuShow, setMenuShow] = useState<boolean>(false);
 
   const handleMenuToggle = useCallback(() => {
@@ -85,7 +44,7 @@ export const Header = () => {
 
         <nav className="hidden lg:flex text-3xl items-center gap-2 md:gap-4">
           {routes.map((route) => (
-            <NavLink key={route.href} route={route} pathname={pathname} />
+            <DesktopLink key={route.href} route={route} className="px-2 py-1" />
           ))}
         </nav>
       </div>
@@ -97,13 +56,7 @@ export const Header = () => {
       >
         <div className="flex flex-col w-full text-2xl">
           {routes.map((route) => (
-            <NavLink
-              key={route.href}
-              route={route}
-              pathname={pathname}
-              onClick={closeMenu}
-              className="p-2"
-            />
+            <MobileLink key={route.href} route={route} />
           ))}
         </div>
       </Collapse>
