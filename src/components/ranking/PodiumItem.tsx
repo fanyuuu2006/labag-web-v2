@@ -52,9 +52,19 @@ export const PodiumItem = ({
         >
           {item.user_name}
         </span>
-        <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
-          {item.score}
-        </GlowText>
+        <div className="relative">
+          <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
+            {item.score}
+          </GlowText>
+          {/** 日期 */}
+          <time
+            dateTime={new Date(item.created_at).toISOString()}
+            title={formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
+            className="absolute top-full left-1/2 -translate-x-1/2 text-[0.5em] text-(--text-color-muted)"
+          >
+            {formatDate("(YYYY/MM/DD)", item.created_at)}
+          </time>
+        </div>
       </div>
       <div
         className={cn(
@@ -63,14 +73,6 @@ export const PodiumItem = ({
           COLOR_CLASSES[index]
         )}
       >
-        {/** 日期 */}
-        <time
-          dateTime={new Date(item.created_at).toISOString()}
-          title={formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
-          className="absolute top-1 text-[0.5em] text-(--text-color-muted)"
-        >
-          {formatDate("YYYY/MM/DD", item.created_at)}
-        </time>
         {/** 底部漸層遮罩 */}
         <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent pointer-events-none" />
         {/** 滑鼠懸停遮罩 */}
