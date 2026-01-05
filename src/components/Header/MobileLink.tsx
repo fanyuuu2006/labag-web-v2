@@ -14,7 +14,6 @@ type MobileLinkProps = OverrideProps<
 export const MobileLink = ({ route, className }: MobileLinkProps) => {
   const pathName = usePathname();
   const isActive = route.isActive?.(pathName) || pathName === route.href;
-  const Icon = route.icon;
 
   return (
     <Link
@@ -27,7 +26,7 @@ export const MobileLink = ({ route, className }: MobileLinkProps) => {
         className
       )}
     >
-      <Icon className="text-[0.75em]" />
+      {route.icon && <route.icon className="text-[0.75em]" />}
       <span>{route.label}</span>
     </Link>
   );
