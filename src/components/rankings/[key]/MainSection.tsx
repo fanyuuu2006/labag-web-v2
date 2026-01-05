@@ -22,14 +22,17 @@ export const MainSection = ({
 
   return (
     <section className="h-full">
-      <div className="container h-full grid grid-rows-[auto_1fr] gap-4">
+      <div className="container h-full grid grid-rows-[auto_1fr] gap-4 lg:gap-6">
         {/* 標題*/}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center">
+          <span className="text-white/50 text-sm md:text-base tracking-[0.2em] mb-1">
+            — 排行榜 —
+          </span>
           <GlowText
             as="h1"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-center"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-center"
           >
-            排行榜 - {statsLabels[rankKey as keyof typeof statsLabels]}
+            {statsLabels[rankKey as keyof typeof statsLabels]}
           </GlowText>
         </div>
 
