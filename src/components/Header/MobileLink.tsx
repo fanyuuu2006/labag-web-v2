@@ -13,9 +13,15 @@ type MobileLinkProps = OverrideProps<
   }
 >;
 
-export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
+export const MobileLink = ({
+  route,
+  className,
+  onClick,
+  ...rest
+}: MobileLinkProps) => {
   const pathName = usePathname();
-  const isActive = route.isActive?.(pathName) || pathName === route.href;
+  const isActive =
+    route.isActive?.(pathName) ?? pathName.startsWith(route.href);
   const hasSubRoute = route.subRoutes && route.subRoutes.length > 0;
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
 
@@ -23,10 +29,14 @@ export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
     setIsSubMenuOpen((prev) => !prev);
   }, []);
 
-  const handleLinkClick = useCallback(() => {
-    // 點擊連結時關閉選單
-    setIsSubMenuOpen(false);
-  }, []);
+  const handleLinkClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      // 點擊連結時關閉選單
+      setIsSubMenuOpen(false);
+      onClick?.(e);
+    },
+    [onClick]
+  );
 
   return (
     <div className="flex flex-col items-center">
@@ -40,6 +50,7 @@ export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
             },
             className
           )}
+          onClick={handleLinkClick}
           {...rest}
         >
           {route.icon && <route.icon className="text-[0.75em]" />}
@@ -49,7 +60,7 @@ export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
         {hasSubRoute && (
           <button
             onClick={handleToggleSubMenu}
-            className={cn("p-1")}
+            className={cn("p-1 text-(--text-color-muted)")}
             aria-label={isSubMenuOpen ? "關閉子選單" : "開啟子選單"}
             aria-expanded={isSubMenuOpen}
             aria-controls={`sub-menu-${route.href.replace("/", "")}`}
@@ -69,14 +80,14 @@ export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
           className="slide-collapse"
           id={`sub-menu-${route.href.replace("/", "")}`}
         >
-          <div className="flex flex-col text-sm bg-(--background-color-tertiary) border-b border-(--border-color)">
+          <div className="flex flex-col text-sm p-1">
             {route.subRoutes!.map((sub) => {
               return (
                 <Link
                   key={sub.href}
                   href={`${route.href}${sub.href}`}
                   onClick={handleLinkClick}
-                  className="px-8 py-3 text-(--text-color-muted) hover:text-(--text-color) hover:backdrop-brightness-(--brightness-light) transition-all duration-200"
+                  className="px-8 py-3 text-(--text-color-muted)"
                 >
                   {sub.label}
                 </Link>

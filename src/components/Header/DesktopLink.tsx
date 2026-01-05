@@ -11,10 +11,14 @@ type DesktopLinkProps = OverrideProps<
   }
 >;
 
-export const DesktopLink = ({ route, className, ...rest}: DesktopLinkProps) => {
+export const DesktopLink = ({
+  route,
+  className,
+  ...rest
+}: DesktopLinkProps) => {
   const pathName = usePathname();
   const isActive =
-    route.isActive?.(pathName) || pathName.startsWith(route.href);
+    route.isActive?.(pathName) ?? pathName.startsWith(route.href);
   const isSubActive = route.subRoutes?.some((sub) => pathName === sub.href);
 
   return (
@@ -35,14 +39,14 @@ export const DesktopLink = ({ route, className, ...rest}: DesktopLinkProps) => {
       </Link>
       {route.subRoutes && (
         <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block w-max z-50">
-          <div className="card-secondary flex flex-col overflow-hidden p-1 ">
+          <div className="text-[0.8em] card-secondary flex flex-col overflow-hidden p-1">
             {route.subRoutes.map((subRoute) => {
               return (
                 <Link
                   key={subRoute.href}
                   href={`${route.href}${subRoute.href}`}
                   className={cn(
-                    "px-4 py-2 text-nowrap flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)"
+                    "px-4 py-2 text-nowrap flex items-center justify-center gap-2 text-(--text-color-muted) hover:text-(--text-color-primary) transition-colors duration-300"
                   )}
                 >
                   {subRoute.icon && <subRoute.icon className="text-[0.75em]" />}
