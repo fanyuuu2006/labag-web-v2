@@ -58,23 +58,23 @@ export const PodiumItem = ({
       </div>
       <div
         className={cn(
-          "w-[7em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group",
+          "w-[7em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group  mask-[linear-gradient(to_top,transparent,black_25%)]",
           HEIGHT_CLASSES[index],
           COLOR_CLASSES[index]
         )}
       >
-        {/** 底部漸層遮罩 */}
-        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent pointer-events-none" />
-        {/** 滑鼠懸停遮罩 */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
         {/** 日期 */}
         <time
           dateTime={new Date(item.created_at).toISOString()}
           title={formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
-          className="absolute bottom-1 text-[0.5em] text-(--text-color-muted)"
+          className="absolute top-1 text-[0.5em] text-(--text-color-muted)"
         >
           {formatDate("YYYY/MM/DD", item.created_at)}
         </time>
+        {/** 底部漸層遮罩 */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent pointer-events-none" />
+        {/** 滑鼠懸停遮罩 */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
       </div>
     </div>
   );
