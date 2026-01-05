@@ -42,19 +42,21 @@ export const UserModalProvider = ({
   const value = useMemo(
     () => ({
       ...modal,
-      open: (id: SupabaseUser["id"]) => {
-        setCurrUser(null);
-        setStats(null);
-        setRecords(null);
-        setId(id);
+      open: (newId: SupabaseUser["id"]) => {
+        if (newId !== id) {
+          setCurrUser(null);
+          setStats(null);
+          setRecords(null);
+        }
+        setId(newId);
         modal.open();
       },
     }),
-    [modal]
+    [modal, id]
   );
 
   useEffect(() => {
-    if (!id) return;
+    if (!id || !modal.isOpen) return;
 
     const fetchData = async () => {
       setIsLoading(true);
@@ -76,7 +78,7 @@ export const UserModalProvider = ({
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, modal.isOpen]);
 
   const name = currUser?.name || (id ? `用戶 ${id}` : "載入中...");
   const joinDate = useMemo(() => {
