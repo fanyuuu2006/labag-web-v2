@@ -56,7 +56,7 @@ export const Header = () => {
       >
         <div className="flex flex-col w-full text-2xl">
           {routes.map((route) => (
-            <MobileLink key={route.href} route={route} />
+            <MobileLink key={route.href} route={route} className="py-2" />
           ))}
         </div>
       </Collapse>
