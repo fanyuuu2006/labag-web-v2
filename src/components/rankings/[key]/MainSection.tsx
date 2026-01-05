@@ -26,10 +26,10 @@ export const MainSection = ({
         {/* 標題*/}
         <div className="flex justify-center">
           <GlowText
-            as="h2"
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-wider"
+            as="h1"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-wider text-center"
           >
-            {statsLabels[rankKey as keyof typeof statsLabels]}排行榜
+            排行榜 - {statsLabels[rankKey as keyof typeof statsLabels]}
           </GlowText>
         </div>
 
