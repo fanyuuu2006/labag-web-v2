@@ -60,11 +60,11 @@ export const PodiumItem = memo(
           >
             {item.user_name}
           </button>
-          <div className="flex items-center gap-1">
+          <div className="flex items-end gap-1">
             <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
               {item[rankKey]}
             </GlowText>
-            <span className="text-[0.75em] mt-1 text-(--text-color-muted)">
+            <span className="text-[0.75em] mb-1 text-(--text-color-muted)">
               {statsData[rankKey].unit}
             </span>
           </div>

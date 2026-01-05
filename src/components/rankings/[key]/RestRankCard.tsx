@@ -38,11 +38,11 @@ export const RestRankCard = memo(
           {item.user_name}
         </span>
 
-        <div className="ms-auto flex items-center gap-1">
+        <div className="ms-auto flex items-end gap-1">
           <GlowText className="text-[1.25em] font-bold tabular-nums font-mono tracking-wider shrink-0">
             {item[rankKey]}
           </GlowText>
-          <span className="text-[0.75em] mt-1 text-(--text-color-muted)">
+          <span className="text-[0.75em] mb-1 text-(--text-color-muted)">
             {statsData[rankKey].unit}
           </span>
         </div>

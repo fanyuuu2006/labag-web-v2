@@ -42,17 +42,15 @@ export const UserModalProvider = ({
   const value = useMemo(
     () => ({
       ...modal,
-      open: (newId: SupabaseUser["id"]) => {
-        if (newId !== id) {
-          setCurrUser(null);
-          setStats(null);
-          setRecords(null);
-        }
-        setId(newId);
+      open: (id: SupabaseUser["id"]) => {
+        setCurrUser(null);
+        setStats(null);
+        setRecords(null);
+        setId(id);
         modal.open();
       },
     }),
-    [modal, id]
+    [modal]
   );
 
   useEffect(() => {
