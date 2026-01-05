@@ -8,8 +8,8 @@ export const ALLOW_USER_FIELDS = [
 ] satisfies readonly (keyof SupabaseUser)[];
 
 export const VALID_KEYS = [
-  "play_count",
   "highest_score",
+  "play_count",
 ] satisfies readonly (keyof SupabaseUserStatsViewItem)[];
 
 export const statsLabels: Record<(typeof VALID_KEYS)[number], string> = {

@@ -3,7 +3,7 @@ import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
 type BaseRoute = {
   label: string;
   href: string;
-  icon: React.ComponentType;
+  icon: React.ElementType;
   isActive?: (path: string) => boolean;
 };
 interface RootRoute extends BaseRoute {
