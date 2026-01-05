@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { SupabaseRankingViewItem } from "@/types/backend";
 import { cn } from "@/utils/className";
@@ -26,7 +27,8 @@ type PodiumItemProps = OverrideProps<
     index: number;
   }
 >;
-export const PodiumItem = ({
+
+export const PodiumItem = memo(({
   item,
   index,
   className,
@@ -48,16 +50,18 @@ export const PodiumItem = ({
         <span
           className="text-[2.5em] drop-shadow-lg"
           role="img"
-          aria-label={`Medal ${index + 1}`}
+            aria-label={`排行 ${index + 1} 獎牌`}
         >
           {MEDALS[index]}
         </span>
-        <span
-          className="font-bold max-w-[14ch] truncate cursor-pointer hover:text-(--text-color-primary) transition-colors drop-shadow-md"
+        <button
+          type="button"
+          className="font-bold max-w-[14ch] truncate cursor-pointer hover:text-(--text-color-primary) transition-colors"
           onClick={() => modal.open(item.user_id)}
+          title={`查看 ${item.user_name} 的資料`}
         >
           {item.user_name}
-        </span>
+        </button>
         <div className="relative">
           <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
             {item.score}
@@ -68,13 +72,13 @@ export const PodiumItem = ({
             title={formatDate("YYYY/MM/DD HH:mm:ss", item.created_at)}
             className="absolute top-full left-1/2 -translate-x-1/2 text-[0.5em] text-(--text-color-muted)"
           >
-            {formatDate("(YYYY/MM/DD)", item.created_at)}
+            {formatDate("YYYY/MM/DD", item.created_at)}
           </time>
         </div>
       </div>
       <div
         className={cn(
-          "w-[7em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group  mask-[linear-gradient(to_top,transparent,black_25%)]",
+          "w-[7em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
           HEIGHT_CLASSES[index],
           COLOR_CLASSES[index]
         )}
@@ -86,5 +90,5 @@ export const PodiumItem = ({
       </div>
     </div>
   );
-};
+});
 PodiumItem.displayName = "PodiumItem";

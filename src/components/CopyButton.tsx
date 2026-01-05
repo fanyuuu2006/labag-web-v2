@@ -1,5 +1,5 @@
+import { cn } from "@/utils/className";
 import { CheckOutlined, CopyOutlined } from "@ant-design/icons";
-import { Tooltip } from "antd";
 import { OverrideProps } from "fanyucomponents";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -14,6 +14,7 @@ export const CopyButton = ({
   content,
   onClick,
   children,
+  className,
   ...rest
 }: CopyButtonProps) => {
   const [copied, setCopied] = useState<boolean>(false);
@@ -62,7 +63,7 @@ export const CopyButton = ({
       }
     };
   }, [copied]);
-  
+
   const tooltipTitle = copied ? "已複製" : "點擊複製";
 
   const ariaLabel = tooltipTitle;
@@ -72,16 +73,17 @@ export const CopyButton = ({
   );
 
   return (
-    <Tooltip title={tooltipTitle}>
-      <button
-        disabled={copied}
-        aria-label={ariaLabel}
-        onClick={handleClick}
-        {...rest}
-      >
-        {children || icon}
-      </button>
-    </Tooltip>
+    <button
+      className={cn("tooltip", className)}
+      disabled={copied}
+      aria-label={ariaLabel}
+      onClick={handleClick}
+      data-tooltip={tooltipTitle}
+      data-copied={copied ? "true" : "false"}
+      {...rest}
+    >
+      {children || icon}
+    </button>
   );
 };
 
