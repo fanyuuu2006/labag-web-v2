@@ -3,7 +3,7 @@ import { SupabaseUserStatsViewItem } from "@/types/backend";
 import { statsByKey } from "@/utils/backend";
 import { formatDate } from "@/utils/date";
 
-export default async function Rankings({
+export default async function RankingsKey({
   params,
 }: PageProps<"/rankings/[key]">) {
   const { key } = await params;
