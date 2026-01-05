@@ -2,34 +2,41 @@
 import { statsLabels, VALID_KEYS } from "@/libs/backend";
 import { GlowText } from "../GlowText";
 import Link from "next/link";
+import { TrophyOutlined, FireOutlined } from "@ant-design/icons";
+
+const RANKING_ICONS: Record<string, React.ReactNode> = {
+  highest_score: <TrophyOutlined className="text-2xl" />,
+  play_count: <FireOutlined className="text-2xl" />,
+};
 
 export const MainSection = () => {
   return (
-    <section className="h-full">
-      <div className="container h-full flex flex-col items-center justify-center gap-8 px-4">
+    <section className="h-full flex flex-col items-center justify-center">
+      <div className="container flex flex-col items-center gap-10 px-4">
         <GlowText
           as="h2"
-          className="text-5xl sm:text-6xl md:text-8xl font-bold leading-tight tracking-tight text-center"
+          className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-wider text-center"
         >
           排行榜
         </GlowText>
 
-        <div className="flex flex-col gap-6 w-full max-w-md">
+        <div className="flex flex-col gap-4 w-full max-w-sm sm:max-w-md">
           {VALID_KEYS.map((key) => (
             <Link
               key={key}
               href={`/rankings/${key}`}
-              className="btn-primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center w-full transition-transform hover:scale-105"
+              className="btn-primary flex items-center justify-center gap-3 px-8 py-4 rounded-full text-xl sm:text-2xl font-bold transition-transform hover:scale-105 active:scale-95"
             >
+              {RANKING_ICONS[key]}
               {statsLabels[key]}
             </Link>
           ))}
 
-          <div className="h-4" />
+          <div className="h-2" />
 
           <Link
             href="/"
-            className="btn-secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center w-full transition-transform hover:scale-105"
+            className="btn-secondary px-8 py-4 rounded-full text-xl sm:text-2xl font-bold text-center transition-transform hover:scale-105 active:scale-95"
           >
             返回首頁
           </Link>
