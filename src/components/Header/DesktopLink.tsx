@@ -11,7 +11,7 @@ type DesktopLinkProps = OverrideProps<
   }
 >;
 
-export const DesktopLink = ({ route, className }: DesktopLinkProps) => {
+export const DesktopLink = ({ route, className, ...rest}: DesktopLinkProps) => {
   const pathName = usePathname();
   const isActive =
     route.isActive?.(pathName) || pathName.startsWith(route.href);
@@ -28,6 +28,7 @@ export const DesktopLink = ({ route, className }: DesktopLinkProps) => {
           },
           className
         )}
+        {...rest}
       >
         {route.icon && <route.icon className="text-[0.75em]" />}
         <span>{route.label}</span>

@@ -44,7 +44,7 @@ export const Header = () => {
 
         <nav className="hidden lg:flex text-3xl items-center gap-2 md:gap-4">
           {routes.map((route) => (
-            <DesktopLink key={route.href} route={route} className="px-2 py-1" />
+            <DesktopLink key={route.href} route={route} />
           ))}
         </nav>
       </div>
@@ -56,12 +56,7 @@ export const Header = () => {
       >
         <div className="flex flex-col w-full text-2xl">
           {routes.map((route) => (
-            <MobileLink
-              key={route.href}
-              onClick={closeMenu}
-              route={route}
-              className="py-2"
-            />
+            <MobileLink key={route.href} onClick={closeMenu} route={route} />
           ))}
         </div>
       </Collapse>

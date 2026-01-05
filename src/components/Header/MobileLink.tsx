@@ -1,8 +1,10 @@
 import { RootRoute } from "@/libs/routes";
 import { cn } from "@/utils/className";
-import { DistributiveOmit, OverrideProps } from "fanyucomponents";
+import { CaretLeftOutlined } from "@ant-design/icons";
+import { Collapse, DistributiveOmit, OverrideProps } from "fanyucomponents";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useCallback, useState } from "react";
 
 type MobileLinkProps = OverrideProps<
   DistributiveOmit<React.ComponentProps<typeof Link>, "href" | "children">,
@@ -11,23 +13,78 @@ type MobileLinkProps = OverrideProps<
   }
 >;
 
-export const MobileLink = ({ route, className }: MobileLinkProps) => {
+export const MobileLink = ({ route, className, ...rest }: MobileLinkProps) => {
   const pathName = usePathname();
   const isActive = route.isActive?.(pathName) || pathName === route.href;
+  const hasSubRoute = route.subRoutes && route.subRoutes.length > 0;
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+
+  const handleToggleSubMenu = useCallback(() => {
+    setIsSubMenuOpen((prev) => !prev);
+  }, []);
+
+  const handleLinkClick = useCallback(() => {
+    // 點擊連結時關閉選單
+    setIsSubMenuOpen(false);
+  }, []);
 
   return (
-    <Link
-      href={route.href}
-      className={cn(
-        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
-        {
-          "text-(--text-color-primary)": isActive,
-        },
-        className
+    <div className="flex flex-col items-center">
+      <div className="w-full flex items-center justify-between py-3 px-6 border-b border-(--border-color)">
+        <Link
+          href={route.href}
+          className={cn(
+            "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
+            {
+              "text-(--text-color-primary)": isActive,
+            },
+            className
+          )}
+          {...rest}
+        >
+          {route.icon && <route.icon className="text-[0.75em]" />}
+          <span>{route.label}</span>
+        </Link>
+
+        {hasSubRoute && (
+          <button
+            onClick={handleToggleSubMenu}
+            className={cn("p-1")}
+            aria-label={isSubMenuOpen ? "關閉子選單" : "開啟子選單"}
+            aria-expanded={isSubMenuOpen}
+            aria-controls={`sub-menu-${route.href.replace("/", "")}`}
+          >
+            <CaretLeftOutlined
+              className={cn("transition-transform duration-200", {
+                "-rotate-90": isSubMenuOpen,
+              })}
+            />
+          </button>
+        )}
+      </div>
+      {/* 子選單區域 */}
+      {hasSubRoute && (
+        <Collapse
+          state={isSubMenuOpen}
+          className="slide-collapse"
+          id={`sub-menu-${route.href.replace("/", "")}`}
+        >
+          <div className="flex flex-col text-sm bg-(--background-color-tertiary) border-b border-(--border-color)">
+            {route.subRoutes!.map((sub) => {
+              return (
+                <Link
+                  key={sub.href}
+                  href={`${route.href}${sub.href}`}
+                  onClick={handleLinkClick}
+                  className="px-8 py-3 text-(--text-color-muted) hover:text-(--text-color) hover:backdrop-brightness-(--brightness-light) transition-all duration-200"
+                >
+                  {sub.label}
+                </Link>
+              );
+            })}
+          </div>
+        </Collapse>
       )}
-    >
-      {route.icon && <route.icon className="text-[0.75em]" />}
-      <span>{route.label}</span>
-    </Link>
+    </div>
   );
 };
