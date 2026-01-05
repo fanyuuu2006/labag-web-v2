@@ -51,7 +51,7 @@ export const PodiumItem = memo(
           </span>
           <button
             type="button"
-            className="font-bold max-w-[14ch] truncate cursor-pointer hover:text-(--text-color-primary) transition-colors"
+            className="font-bold max-w-[14ch] truncate hover:text-(--text-color-primary)"
             onClick={() => modal.open(item.user_id)}
             title={`查看 ${item.user_name} 的資料`}
           >
