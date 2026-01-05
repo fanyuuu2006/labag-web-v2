@@ -1,7 +1,6 @@
 import {
   BackendResponse,
   SupabaseAllowFieldsUser,
-  SupabaseRankingViewItem,
   SupabaseRecord,
   SupabaseUser,
   SupabaseUserStatsViewItem,
@@ -46,10 +45,10 @@ export const recordsById = (
 
 export const statsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${id}`
   );
 
-export const ranking = () =>
-  fetcher<BackendResponse<SupabaseRankingViewItem[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/ranking`
+export const stats = () =>
+  fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats`
   );

@@ -14,7 +14,10 @@ export type SupabaseUser = {
   avatar?: string;
   provider_id?: string;
 };
-export type SupabaseAllowFieldsUser = Pick<SupabaseUser, (typeof ALLOW_USER_FIELDS)[number]>
+export type SupabaseAllowFieldsUser = Pick<
+  SupabaseUser,
+  (typeof ALLOW_USER_FIELDS)[number]
+>;
 
 export type SupabaseRecord = {
   id: number;
@@ -23,15 +26,9 @@ export type SupabaseRecord = {
   user_id: number;
 };
 
-export type SupabaseRankingViewItem = {
+export type SupabaseUserStatsViewItem = {
   user_id: SupabaseUser["id"];
   user_name: SupabaseUser["name"];
-  score: SupabaseRecord["score"];
-  record_id: SupabaseRecord["id"];
-  created_at: SupabaseRecord["created_at"];
+  play_count: number;
+  highest_score: number;
 };
-export type SupabaseUserStatsViewItem = {
-    user_id: SupabaseUser["id"];
-    play_count: number;
-    highest_score: number;
-}
