@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { statsLabels } from "@/libs/backend";
 
 interface MainSectionProps {
   rankKey: keyof SupabaseUserStatsViewItem;
@@ -28,7 +29,7 @@ export const MainSection = ({
             as="h2"
             className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold tracking-wider"
           >
-            排行榜
+            {statsLabels[rankKey as keyof typeof statsLabels]}排行榜
           </GlowText>
         </div>
 

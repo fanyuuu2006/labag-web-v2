@@ -1,12 +1,15 @@
 import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
 
-export const routes: {
+type BaseRoute = {
   label: string;
   href: string;
-  icon: React.ElementType;
+  icon: React.ComponentType;
   isActive?: (path: string) => boolean;
-  needsAuth?: boolean;
-}[] = [
+};
+interface RootRoute extends BaseRoute {
+  subRoutes?: BaseRoute[];
+}
+export const routes: RootRoute[] = [
   {
     label: "首頁",
     href: "/",
