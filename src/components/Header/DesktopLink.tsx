@@ -13,20 +13,45 @@ type DesktopLinkProps = OverrideProps<
 
 export const DesktopLink = ({ route, className }: DesktopLinkProps) => {
   const pathName = usePathname();
-  const isActive = route.isActive?.(pathName) || pathName === route.href;
+  const isActive =
+    route.isActive?.(pathName) || pathName.startsWith(route.href);
+  const isSubActive = route.subRoutes?.some((sub) => pathName === sub.href);
+
   return (
-    <Link
-      href={route.href}
-      className={cn(
-        "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
-        {
-          "text-(--text-color-primary)": isActive,
-        },
-        className
+    <div className="group relative flex items-center justify-center">
+      <Link
+        href={route.href}
+        className={cn(
+          "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
+          {
+            "text-(--text-color-primary)": isActive || isSubActive,
+          },
+          className
+        )}
+      >
+        {route.icon && <route.icon className="text-[0.75em]" />}
+        <span>{route.label}</span>
+      </Link>
+      {route.subRoutes && (
+        <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block w-max z-50">
+          <div className="card-secondary flex flex-col overflow-hidden p-1 ">
+            {route.subRoutes.map((subRoute) => {
+              return (
+                <Link
+                  key={subRoute.href}
+                  href={`${route.href}${subRoute.href}`}
+                  className={cn(
+                    "px-4 py-2 text-nowrap flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)"
+                  )}
+                >
+                  {subRoute.icon && <subRoute.icon className="text-[0.75em]" />}
+                  {subRoute.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       )}
-    >
-      {route.icon && <route.icon className="text-[0.75em]" />}
-      <span>{route.label}</span>
-    </Link>
+    </div>
   );
 };

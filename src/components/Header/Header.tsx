@@ -20,7 +20,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="w-full flex flex-col border-b border-(--border-color) bg-black/25 backdrop-blur-md transition-all">
+    <header className="relative z-50 w-full flex flex-col border-b border-(--border-color) bg-black/25 backdrop-blur-md transition-all">
       <div className="container flex items-center justify-between p-6">
         <Link href="/" onClick={closeMenu}>
           <GlowText
@@ -56,7 +56,12 @@ export const Header = () => {
       >
         <div className="flex flex-col w-full text-2xl">
           {routes.map((route) => (
-            <MobileLink key={route.href} route={route} className="py-2" />
+            <MobileLink
+              key={route.href}
+              onClick={closeMenu}
+              route={route}
+              className="py-2"
+            />
           ))}
         </div>
       </Collapse>
