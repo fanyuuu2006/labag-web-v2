@@ -3,23 +3,18 @@ import { GlowText } from "../GlowText";
 import { useMemo } from "react";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
-import { formatDate } from "@/utils/date";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
 
 interface MainSectionProps {
   items: SupabaseUserStatsViewItem[] | null;
+  fetchTime: string;
 }
 
-export const MainSection = ({ items }: MainSectionProps) => {
+export const MainSection = ({ items, fetchTime }: MainSectionProps) => {
   const orderedItems = useMemo(() => {
     if (!items) return [];
     return [...items].sort((a, b) => b.highest_score - a.highest_score);
   }, [items]);
-
-  const currTime = useMemo(() => {
-    const now = new Date();
-    return formatDate("YYYY/MM/DD HH:mm:ss", now);
-  }, []);
 
   const top3 = orderedItems.slice(0, 3);
   const rest = orderedItems.slice(3);
@@ -68,11 +63,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
               ) : (
                 <div className="flex flex-col gap-3 pb-2">
                   {rest.map((item, i) => (
-                    <RestRankCard
-                      key={item.user_id}
-                      rank={i + 4}
-                      item={item}
-                    />
+                    <RestRankCard key={item.user_id} rank={i + 4} item={item} />
                   ))}
                 </div>
               )}
@@ -83,7 +74,7 @@ export const MainSection = ({ items }: MainSectionProps) => {
         {/** 底部當前資料時間 */}
         <div className="fixed z-9999 bottom-4 left-1/2 -translate-x-1/2">
           <GlowText as="p" className="text-xs md:text-base opacity-70">
-            當前資料截至：{currTime}
+            當前資料截至：{fetchTime}
           </GlowText>
         </div>
       </div>
