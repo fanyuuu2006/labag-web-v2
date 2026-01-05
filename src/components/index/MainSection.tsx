@@ -31,7 +31,7 @@ export const MainSection = () => {
             開始遊戲
           </Link>
           <Link
-            href={"/ranking"}
+            href={"/rankings"}
             className="btn-secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
           >
             排行榜

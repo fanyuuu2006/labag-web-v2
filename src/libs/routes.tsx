@@ -15,7 +15,7 @@ export const routes: {
   },
   {
     label: "排行榜",
-    href: "/ranking",
+    href: "/rankings",
     icon: TrophyOutlined,
   },
 ];

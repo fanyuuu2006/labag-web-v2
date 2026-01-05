@@ -1,4 +1,4 @@
-import { MainSection } from "@/components/ranking/MainSection";
+import { MainSection } from "@/components/rankings/MainSection";
 import { stats } from "@/utils/backend";
 import { formatDate } from "@/utils/date";
 
