@@ -33,7 +33,7 @@ export const MainSection = ({
             as="h1"
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-center"
           >
-            {statsData[rankKey].label}
+            {statsData[rankKey]?.label ?? "排行榜"}
           </GlowText>
         </div>
 
