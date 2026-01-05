@@ -80,15 +80,16 @@ export const MobileLink = ({
           className="slide-collapse"
           id={`sub-menu-${route.href.replace("/", "")}`}
         >
-          <div className="flex flex-col text-sm p-1">
+          <div className="flex flex-col text-[0.8em] p-1">
             {route.subRoutes!.map((sub) => {
               return (
                 <Link
                   key={sub.href}
                   href={`${route.href}${sub.href}`}
                   onClick={handleLinkClick}
-                  className="px-8 py-3 text-(--text-color-muted)"
+                  className="px-8 py-3 text-(--text-color-muted) flex items-center justify-center gap-2"
                 >
+                  {sub.icon && <sub.icon className="text-[0.75em]" />}
                   {sub.label}
                 </Link>
               );
