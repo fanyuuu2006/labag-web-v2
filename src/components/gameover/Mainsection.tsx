@@ -5,7 +5,7 @@ import { GlowText } from "../GlowText";
 import { game } from "@/libs/game";
 import Link from "next/link";
 import { site } from "@/libs/site";
-import { DownloadRecordButton } from "./DownloadRecordButton";
+// import { DownloadRecordButton } from "./DownloadRecordButton";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -52,20 +52,19 @@ export const MainSection = () => {
             GAME OVER
           </h1>
 
-          <p className="text-base text-(--text-color-muted) mb-8 font-medium">
+          <p className="text-base text-(--text-color-muted) mb-4 font-medium">
             遊戲結束 — 你的最終分數
           </p>
 
           <div
-            className="mb-8 transform transition-transform hover:scale-105 duration-300"
-            role="status"
+            role='status'
             aria-live="polite"
           >
             <GlowText
               as="h2"
               onClick={handleShare}
               aria-label={`你的分數是 ${score}，點擊以分享`}
-              className="cursor-pointer text-6xl md:text-8xl font-black tracking-wider select-none"
+              className="cursor-pointer text-6xl md:text-8xl font-black font-mono select-none"
             >
               <span className="sr-only">你的分數：</span>
               {score.toLocaleString()}
@@ -94,13 +93,13 @@ export const MainSection = () => {
             >
               排行榜
             </Link>
-            <DownloadRecordButton
+            {/* <DownloadRecordButton
               className="btn-tertiary rounded-2xl py-3 px-8"
               aria-label="下載遊戲紀錄"
               title="下載遊戲紀錄"
             >
               下載紀錄
-            </DownloadRecordButton>
+            </DownloadRecordButton> */}
           </nav>
         </div>
       </div>
