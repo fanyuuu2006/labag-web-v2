@@ -52,7 +52,7 @@ export const PodiumItem = ({
         >
           {item.user_name}
         </span>
-        <GlowText className="text-[1.5em] font-mono font-black tracking-wider drop-shadow-md">
+        <GlowText className="text-[1.5em] font-mono font-black tabular-nums tracking-wider">
           {item.score}
         </GlowText>
       </div>

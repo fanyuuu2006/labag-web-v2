@@ -37,7 +37,7 @@ export const RestRankCard = memo(
         </span>
 
         <div className="ms-auto flex flex-col items-end">
-          <GlowText className="text-[1.25em] font-bold font-mono tracking-wider shrink-0">
+          <GlowText className="text-[1.25em] font-bold tabular-nums font-mono tracking-wider shrink-0">
             {item.score}
           </GlowText>
 

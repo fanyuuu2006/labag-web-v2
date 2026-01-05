@@ -2,7 +2,7 @@
 import { SupabaseRankingViewItem } from "@/types/backend";
 import { GlowText } from "../GlowText";
 import { useMemo } from "react";
-// import { useUser } from "@/contexts/UserContext";
+import { useUser } from "@/contexts/UserContext";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
 
@@ -11,22 +11,22 @@ interface MainSectionProps {
 }
 
 export const MainSection = ({ items }: MainSectionProps) => {
-//   const { user } = useUser();
+  const { user } = useUser();
 
   const orderedItems = useMemo(() => {
     if (!items) return [];
     return [...items].sort((a, b) => b.score - a.score);
   }, [items]);
 
-//   const { userRank, userRankIndex } = useMemo(() => {
-//     if (!user || orderedItems.length === 0)
-//       return { userRank: undefined, userRankIndex: -1 };
-//     const index = orderedItems.findIndex((item) => item.user_id === user.id);
-//     return {
-//       userRankIndex: index,
-//       userRank: index !== -1 ? orderedItems[index] : undefined,
-//     };
-//   }, [orderedItems, user]);
+  const { userRank, userRankIndex } = useMemo(() => {
+    if (!user || orderedItems.length === 0)
+      return { userRank: undefined, userRankIndex: -1 };
+    const index = orderedItems.findIndex((item) => item.user_id === user.id);
+    return {
+      userRankIndex: index,
+      userRank: index !== -1 ? orderedItems[index] : undefined,
+    };
+  }, [orderedItems, user]);
 
   const top3 = orderedItems.slice(0, 3);
   const rest = orderedItems.slice(3);
@@ -86,6 +86,19 @@ export const MainSection = ({ items }: MainSectionProps) => {
             </div>
           </div>
         </div>
+        
+        {/* 使用者排名顯示 */}
+        {userRank && userRankIndex! >= 0 && (
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2">
+            <GlowText
+              as="p"
+              className="text-sm md:text-base text-(--text-color-muted)"
+            >
+              你的排名：第 {userRankIndex + 1} 名，分數：
+              {userRank.score.toLocaleString()} 分
+            </GlowText>
+          </div>
+        )}
       </div>
     </section>
   );
