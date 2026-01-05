@@ -21,7 +21,7 @@ export const Header = () => {
 
   return (
     <header className="w-full flex flex-col border-b border-(--border-color) bg-black/25 backdrop-blur-md transition-all">
-      <div className="container flex items-center justify-between py-4 px-6">
+      <div className="container flex items-center justify-between p-6">
         <Link href="/" onClick={closeMenu}>
           <GlowText
             role="banner"
@@ -32,7 +32,7 @@ export const Header = () => {
           </GlowText>
         </Link>
 
-        <div className="text-2xl lg:hidden">
+        <div className="text-xl lg:hidden">
           <Burger
             checked={menuShow}
             onChange={handleMenuToggle}
