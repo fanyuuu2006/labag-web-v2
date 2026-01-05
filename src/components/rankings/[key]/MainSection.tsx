@@ -22,7 +22,7 @@ export const MainSection = ({
 
   return (
     <section className="h-full">
-      <div className="container h-full grid grid-rows-[auto_1fr]">
+      <div className="container h-full grid grid-rows-[auto_1fr] gap-4">
         {/* 標題*/}
         <div className="flex justify-center">
           <GlowText
@@ -36,11 +36,11 @@ export const MainSection = ({
         {/** 內容區域 */}
         <div
           className={
-            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 max-h-full"
+            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 grid-rows-[auto_1fr] lg:grid-rows-1 h-full overflow-hidden gap-4"
           }
         >
           {/* 前三名 */}
-          <div className="flex flex-col items-center justify-center p-4">
+          <div className="flex flex-col items-center justify-center">
             {top3.length === 0 ? (
               <div className="flex-1 flex items-center justify-center text-white/50 italic text-xl">
                 暫無排行資料
@@ -59,15 +59,15 @@ export const MainSection = ({
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col h-full overflow-hidden p-4">
-            <div className="card-secondary w-full h-full overflow-y-auto p-4">
+          <div className="flex flex-col h-full overflow-hidden">
+            <div className="card-secondary w-full h-full overflow-y-auto p-4 lg:p-6">
               {rest.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
                   <div>期待更多玩家加入...</div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-3 pb-2">
+                <div className="flex flex-col gap-3">
                   {rest.map((item, i) => (
                     <RestRankCard
                       key={item.user_id}
