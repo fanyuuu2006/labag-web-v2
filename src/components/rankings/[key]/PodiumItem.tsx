@@ -11,9 +11,9 @@ const MEDALS = ["🥇", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
 const HEIGHT_CLASSES = ["h-[8em]", "h-[6em]", "h-[4em]"];
 const COLOR_CLASSES = [
-  "bg-yellow-500/20 border-yellow-500/50 text-yellow-400 shadow-[0_0_20px_rgba(234,179,8,0.2)]",
-  "bg-slate-400/20 border-slate-400/50 text-slate-300 shadow-[0_0_20px_rgba(148,163,184,0.2)]",
-  "bg-orange-500/20 border-orange-500/50 text-orange-400 shadow-[0_0_20px_rgba(249,115,22,0.2)]",
+  "bg-yellow-500/40 border-yellow-300/50 text-yellow-200 shadow-[0_0_25px_rgba(234,179,8,0.6)] saturate-125",
+  "bg-slate-400/30 border-slate-300/50 text-slate-100 shadow-[0_0_25px_rgba(148,163,184,0.5)] saturate-125",
+  "bg-orange-500/40 border-orange-400/50 text-orange-200 shadow-[0_0_25px_rgba(249,115,22,0.6)] saturate-125",
 ];
 const SCALE_CLASSES = [
   "scale-100 z-10",
