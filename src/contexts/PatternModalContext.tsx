@@ -60,7 +60,7 @@ export const PatternModalProvider = ({
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--text-color-muted) hover:text-white transition-colors"
+                className="text-(--text-color-muted) hover:text-white"
                 onClick={modal.close}
               >
                 <CloseOutlined className="text-xl" />
@@ -123,7 +123,7 @@ export const PatternModalProvider = ({
                       得分規則
                     </span>
                     <span className="text-xs text-(--text-color-muted) opacity-70">
-                      (普通模式)
+                      (計分方式請見普通模式說明)
                     </span>
                   </div>
 
@@ -144,7 +144,7 @@ export const PatternModalProvider = ({
                     ].map((item, index) => (
                       <div
                         key={index}
-                        className="card-primary flex items-center justify-between px-3 py-2 sm:px-4 sm:py-3 rounded-lg group hover:brightness-110 transition-all"
+                        className="card-primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
                       >
                         <span className="text-sm sm:text-base font-medium text-white/80">
                           {item.label}
