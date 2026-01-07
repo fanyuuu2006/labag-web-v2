@@ -17,8 +17,8 @@ const COLOR_CLASSES = [
 ];
 const SCALE_CLASSES = [
   "scale-100 z-10",
-  "scale-90 z-9 mt-[2em]",
-  "scale-85 z-8 mt-[4em]",
+  "scale-90 z-9",
+  "scale-85 z-8",
 ];
 
 type PodiumItemProps = OverrideProps<
@@ -71,7 +71,7 @@ export const PodiumItem = memo(
         </div>
         <div
           className={cn(
-            "w-[7em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
+            "w-full rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
             HEIGHT_CLASSES[index],
             COLOR_CLASSES[index]
           )}

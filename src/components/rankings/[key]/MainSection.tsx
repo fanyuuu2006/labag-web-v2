@@ -23,7 +23,7 @@ export const MainSection = ({
 
   return (
     <section className="h-full">
-      <div className="container h-full grid grid-rows-[auto_1fr] gap-4 lg:gap-6">
+      <div className="container h-full grid grid-rows-[auto_1fr] overflow-y-hidden overflow-x-auto gap-4 lg:gap-6">
         {/* 標題*/}
         <div className="flex flex-col items-center justify-center">
           <span className="text-white/50 text-sm md:text-base tracking-[0.2em] mb-1">
@@ -40,7 +40,7 @@ export const MainSection = ({
         {/** 內容區域 */}
         <div
           className={
-            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 grid-rows-[auto_1fr] lg:grid-rows-1 h-full overflow-hidden gap-4"
+            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 gap-4"
           }
         >
           {/* 前三名 */}
