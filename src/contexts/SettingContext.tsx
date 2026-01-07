@@ -133,6 +133,7 @@ export const SettingProvider = ({
               />
             </div>
 
+            {/*此為分隔線 */}
             <div className="border-t-2 border-(--text-color-secondary)/30 w-full" />
 
             <div className="flex flex-col gap-3">
