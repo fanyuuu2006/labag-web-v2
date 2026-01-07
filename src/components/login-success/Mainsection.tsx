@@ -23,7 +23,7 @@ export const MainSection = () => {
       setTimeout(() => setMessage("驗證成功，正在取得使用者資料..."), 0);
     } else {
       console.error("未成功取得 Token");
-      setTimeout(() => setMessage("登入失敗，未取得 Token"), 0);
+      setTimeout(() => setMessage("登入失敗"), 0);
       setTimeout(() => {
         router.replace("/");
       }, 2000);
