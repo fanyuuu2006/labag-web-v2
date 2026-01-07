@@ -71,7 +71,7 @@ export const PodiumItem = memo(
         </div>
         <div
           className={cn(
-            "w-full rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
+            "min-w-[6em] w-full rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
             HEIGHT_CLASSES[index],
             COLOR_CLASSES[index]
           )}
