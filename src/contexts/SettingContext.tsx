@@ -2,7 +2,12 @@
 import { GlowText } from "@/components/GlowText";
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { useModal } from "@/hooks/useModal";
-import { CloseOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  CustomerServiceOutlined,
+  SoundOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { createContext, useContext, useState, useMemo } from "react";
 import { useUserModal } from "./UserModalContext";
 import { useUser } from "./UserContext";
@@ -21,6 +26,33 @@ interface SettingContextType {
 }
 
 const settingContext = createContext<SettingContextType | null>(null);
+
+const SettingItem = ({
+  id,
+  label,
+  icon: Icon,
+  value,
+  setValue,
+}: {
+  id: string;
+  label: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  value: boolean;
+  setValue: React.Dispatch<React.SetStateAction<boolean>>;
+}) => (
+  <div className="flex items-center justify-between p-2">
+    <div className="flex items-center gap-3">
+      {Icon && <Icon className="text-xl" />}
+      <label
+        htmlFor={id}
+        className="font-medium cursor-pointer select-none text-xl"
+      >
+        {label}
+      </label>
+    </div>
+    <ToggleSwitch id={id} value={value} setValue={setValue} />
+  </div>
+);
 
 export const SettingProvider = ({
   children,
@@ -55,61 +87,75 @@ export const SettingProvider = ({
           aria-modal="true"
           aria-labelledby="setting-title"
           aria-describedby="setting-desc"
-          className="animate-pop card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-4"
+          className="animate-pop card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-6"
         >
           <div
             id="setting-header"
-            className="text-2xl sm:text-3xl flex items-center justify-between"
+            className="flex items-center justify-between"
           >
             <GlowText
               as="h4"
               id="setting-title"
-              className="font-extrabold mb-2"
+              className="text-2xl sm:text-3xl font-extrabold"
             >
-              設定
+              遊戲設定
             </GlowText>
             <button
               id="settings-close"
               onClick={modal.close}
+              className="text-(--text-color-muted) hover:text-white transition-colors"
               aria-label="關閉設定選單"
               title="關閉設定"
             >
-              <CloseOutlined />
+              <CloseOutlined className="text-xl" />
             </button>
           </div>
+
           <p id="setting-desc" className="sr-only">
-            此選單可切換遊戲設定。按下 Esc 或按關閉按鈕可關閉。
+            此選單可切換遊戲設定與管理帳號。
           </p>
-          <div className="flex flex-col gap-3 text-xl md:text-2xl text-nowrap">
-            <div className="flex items-center justify-between">
-              <label htmlFor="music" className="font-medium text-neutral-200">
-                遊戲背景音樂
-              </label>
-              <ToggleSwitch id="music" value={music} setValue={setMusic} />
+
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <SettingItem
+                id="music"
+                label="背景音樂"
+                icon={CustomerServiceOutlined}
+                value={music}
+                setValue={setMusic}
+              />
+              <SettingItem
+                id="sound"
+                label="遊戲音效"
+                icon={SoundOutlined}
+                value={sound}
+                setValue={setSound}
+              />
             </div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="music" className="font-medium text-neutral-200">
-                遊戲音效
-              </label>
-              <ToggleSwitch id="sound" value={sound} setValue={setSound} />
-            </div>
-            {user && (
-              <div className="flex items-center justify-center">
+
+            <div className="border-t-2 border-(--text-color-secondary)/30 w-full" />
+
+            <div className="flex flex-col gap-3">
+              {user && (
                 <button
-                  className="btn-secondary w-full rounded-xl p-1"
+                  className="flex items-center justify-center gap-2 btn-secondary w-full rounded-xl py-2 font-medium"
                   onClick={() => userModal.open(user.id)}
                 >
+                  <UserOutlined />
                   開啟個人檔案
                 </button>
+              )}
+              <div className="flex items-center justify-center">
+                <AuthButton
+                  className={cn(
+                    "w-full rounded-xl py-2 font-semibold transition-all",
+                    {
+                      "btn-primary": !user,
+                      "bg-red-600 text-white": !!user,
+                    }
+                  )}
+                />
               </div>
-            )}
-            <div className="flex items-center justify-center">
-              <AuthButton
-                className={cn("font-semibold w-full rounded-xl p-1", {
-                  "btn-primary": !user,
-                  "bg-red-500 text-white": !!user,
-                })}
-              />
             </div>
           </div>
         </div>
