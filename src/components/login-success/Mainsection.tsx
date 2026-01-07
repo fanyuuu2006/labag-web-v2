@@ -43,11 +43,14 @@ export const MainSection = () => {
 
   return (
     <section className="h-full">
-      <div className="container">
-        <div className="w-full h-full flex flex-col items-center justify-center gap-8">
-          <GlowText className="text-3xl font-semibold">
+      <div className="container h-full flex flex-col items-center justify-center">
+        <div className="card p-10 md:p-14 text-center w-full max-w-2xl flex flex-col items-center justify-center gap-6">
+          <GlowText className="text-3xl md:text-5xl font-bold leading-normal">
             {displayMessage}
           </GlowText>
+          {!user && !message.includes("失敗") && (
+            <div className="w-12 h-12 rounded-full border-4 border-(--text-color-muted)/20 border-t-(--primary-color) animate-spin mt-4" />
+          )}
         </div>
       </div>
     </section>
