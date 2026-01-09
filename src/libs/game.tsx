@@ -186,7 +186,7 @@ export const description: Record<
               <>
                 模式期間處現任一`
                 {game.getMode("pikachu")?.variable.bindPattern.name}`
-                ，則額外增加 <K>+(當前已觸發皮卡丘充電次數)</K> 次可玩次數。
+                ，則額外增加 <K>+(當前已觸發皮卡丘充電次數 與 {game.getMode("pikachu")?.variable.bindPattern.bonusRounds}|取最大值)</K> 次可玩次數。
               </>
             ),
           },
