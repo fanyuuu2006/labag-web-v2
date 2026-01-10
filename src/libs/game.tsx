@@ -186,7 +186,7 @@ export const description: Record<
               <>
                 模式期間若出現任一「
                 {game.getMode("pikachu")?.variable.bindPattern.name}
-                」，則額外增加 <K>MAX(目前已觸發次數, {game.getMode("pikachu")?.variable.bonusRounds})</K> 次可玩次數。
+                」，則額外增加 <K>MIN(目前已觸發次數, {game.getMode("pikachu")?.variable.bonusRounds})</K> 次可玩次數。
               </>
             ),
           },
