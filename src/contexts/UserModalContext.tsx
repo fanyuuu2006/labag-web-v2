@@ -152,7 +152,6 @@ export const UserModalProvider = ({
                         content={`${id}`}
                         className="text-(--muted)"
                         aria-label="複製用戶 ID"
-                        title="複製用戶ID"
                       />
                     </div>
                   </div>
