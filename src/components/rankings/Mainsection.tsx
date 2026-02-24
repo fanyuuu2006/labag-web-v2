@@ -26,7 +26,7 @@ export const MainSection = () => {
             <Link
               key={key}
               href={`/rankings/${key}`}
-              className="btn-primary flex items-center justify-center gap-3 px-8 py-4 rounded-full text-xl sm:text-2xl font-bold"
+              className="btn primary flex items-center justify-center gap-3 px-8 py-4 rounded-full text-xl sm:text-2xl font-bold"
             >
               {RANKING_ICONS[key]}
               {statsData[key].label}
@@ -37,7 +37,7 @@ export const MainSection = () => {
 
           <Link
             href="/"
-            className="btn-secondary px-8 py-4 rounded-full text-xl sm:text-2xl font-bold text-center"
+            className="btn secondary px-8 py-4 rounded-full text-xl sm:text-2xl font-bold text-center"
           >
             返回首頁
           </Link>

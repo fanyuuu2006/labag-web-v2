@@ -25,14 +25,14 @@ export const RestRankCard = memo(
         className={cn("card-primary flex items-center p-4 gap-4", className)}
         {...rest}
       >
-        <span className="text-[1.25em] text-(--text-color-muted) font-mono font-semibold shrink-0">
+        <span className="text-[1.25em] text-(--muted) font-mono font-semibold shrink-0">
           #{rank}
         </span>
 
         <span
           role="button"
           tabIndex={0}
-          className="font-bold  max-w-[14ch] truncate cursor-pointer hover:text-(--text-color-primary) transition-colors"
+          className="font-bold  max-w-[14ch] truncate cursor-pointer hover:text-(--primary) transition-colors"
           onClick={() => modal.open(item.user_id)}
         >
           {item.user_name}
@@ -42,7 +42,7 @@ export const RestRankCard = memo(
           <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
             {item[rankKey].toLocaleString()}
           </GlowText>
-          <span className="text-[0.75em] mb-1 text-(--text-color-muted)">
+          <span className="text-[0.75em] mb-1 text-(--muted)">
             {statsData[rankKey].unit}
           </span>
         </div>

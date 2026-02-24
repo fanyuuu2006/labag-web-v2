@@ -54,7 +54,7 @@ export const PodiumItem = memo(
           </span>
           <button
             type="button"
-            className="font-bold max-w-[14ch] truncate hover:text-(--text-color-primary)"
+            className="font-bold max-w-[14ch] truncate hover:text-(--primary)"
             onClick={() => modal.open(item.user_id)}
             title={`查看 ${item.user_name} 的資料`}
           >
@@ -64,7 +64,7 @@ export const PodiumItem = memo(
             <GlowText className="text-[1.5em] font-mono font-black tabular-nums">
               {item[rankKey].toLocaleString()}
             </GlowText>
-            <span className="text-[0.75em] mb-1 text-(--text-color-muted)">
+            <span className="text-[0.75em] mb-1 text-(--muted)">
               {statsData[rankKey].unit}
             </span>
           </div>

@@ -48,11 +48,11 @@ export const MainSection = () => {
     <section className="h-full">
       <div className="container h-full flex flex-col items-center justify-center">
         <div className="card p-6 md:p-8 text-center w-full max-w-2xl">
-          <h1 className="text-(--text-color-primary) text-3xl md:text-5xl font-extrabold mb-2">
+          <h1 className="text-(--primary) text-3xl md:text-5xl font-extrabold mb-2">
             GAME OVER
           </h1>
 
-          <p className="text-base text-(--text-color-muted) mb-4 font-medium">
+          <p className="text-base text-(--muted) mb-4 font-medium">
             遊戲結束 — 你的最終分數
           </p>
 
@@ -69,7 +69,7 @@ export const MainSection = () => {
               <span className="sr-only">你的分數：</span>
               {score.toLocaleString()}
             </GlowText>
-            <p className="text-xs text-(--text-color-muted) mt-3">
+            <p className="text-xs text-(--muted) mt-3">
               (點擊分數分享)
             </p>
           </div>
@@ -79,7 +79,7 @@ export const MainSection = () => {
             className=" text-lg flex flex-col sm:flex-row gap-4 justify-center mt-8 w-full px-4"
           >
             <button
-              className="btn-primary font-bold rounded-2xl py-3 px-8"
+              className="btn primary font-bold rounded-2xl py-3 px-8"
               onClick={handleReplay}
               aria-label="再玩一次"
               title="再玩一次"
@@ -87,14 +87,14 @@ export const MainSection = () => {
               再玩一次
             </button>
             <Link
-              className="btn-secondary rounded-2xl py-3 px-8"
+              className="btn secondary rounded-2xl py-3 px-8"
               href={"/rankings"}
               title="查看排行榜"
             >
               排行榜
             </Link>
             {/* <DownloadRecordButton
-              className="btn-tertiary rounded-2xl py-3 px-8"
+              className="btn tertiary rounded-2xl py-3 px-8"
               aria-label="下載遊戲紀錄"
               title="下載遊戲紀錄"
             >

@@ -20,7 +20,7 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="relative z-50 w-full flex flex-col border-b border-(--border-color) bg-black/25 backdrop-blur-md transition-all">
+    <header className="relative z-50 w-full flex flex-col border-b border-(--border) bg-black/25 backdrop-blur-md transition-all">
       <div className="container flex items-center justify-between p-6">
         <Link href="/" onClick={closeMenu}>
           <GlowText

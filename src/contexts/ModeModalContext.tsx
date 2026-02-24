@@ -58,7 +58,7 @@ export const ModeModalProvider = ({
 
             <div className="flex w-full justify-center sm:justify-end">
               <button
-                className="btn-secondary px-4 py-2 rounded-full w-full sm:w-auto"
+                className="btn secondary px-4 py-2 rounded-full w-full sm:w-auto"
                 onClick={() => modal.close()}
               >
                 我知道了

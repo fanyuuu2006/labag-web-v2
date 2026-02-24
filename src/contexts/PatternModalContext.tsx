@@ -60,7 +60,7 @@ export const PatternModalProvider = ({
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--text-color-muted) hover:text-white"
+                className="text-(--muted) hover:text-white"
                 onClick={modal.close}
               >
                 <CloseOutlined className="text-xl" />
@@ -70,7 +70,7 @@ export const PatternModalProvider = ({
             <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6">
               {/**左側 Image */}
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
-                <div className="card-primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--text-color-secondary)">
+                <div className="card-primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--secondary)">
                   <MyImage
                     src={`/images/patterns/${info.name}.jpg`}
                     alt={info.name}
@@ -90,7 +90,7 @@ export const PatternModalProvider = ({
                 {/**機率進度條 */}
                 <div className="card-primary p-3 sm:p-4 rounded-xl flex flex-col gap-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-bold text-(--text-color-muted)">
+                    <span className="text-xs sm:text-sm font-bold text-(--muted)">
                       當前出現機率
                     </span>
                     <GlowText className="text-base sm:text-lg font-bold">
@@ -110,7 +110,7 @@ export const PatternModalProvider = ({
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
                         width: `${Math.max(0, Math.min(100, displayRate))}%`,
-                        background: `linear-gradient(90deg, var(--text-color-primary), var(--text-color-secondary))`,
+                        background: `linear-gradient(90deg, var(--primary), var(--secondary))`,
                       }}
                     />
                   </div>
@@ -119,10 +119,10 @@ export const PatternModalProvider = ({
                 {/* Scores */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between px-1">
-                    <span className="text-sm font-bold text-(--text-color-muted)">
+                    <span className="text-sm font-bold text-(--muted)">
                       得分規則
                     </span>
-                    <span className="text-xs text-(--text-color-muted) opacity-70">
+                    <span className="text-xs text-(--muted) opacity-70">
                       (計分方式請見普通模式說明)
                     </span>
                   </div>
@@ -153,7 +153,7 @@ export const PatternModalProvider = ({
                           <GlowText className="text-lg sm:text-xl font-black tabular-nums">
                             {item.score}
                           </GlowText>
-                          <span className="text-[10px] sm:text-xs text-(--text-color-muted)">
+                          <span className="text-[10px] sm:text-xs text-(--muted)">
                             分
                           </span>
                         </div>

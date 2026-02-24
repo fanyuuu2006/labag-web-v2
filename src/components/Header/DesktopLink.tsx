@@ -26,9 +26,9 @@ export const DesktopLink = ({
       <Link
         href={route.href}
         className={cn(
-          "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
+          "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--muted) transition-colors duration-300 hover:text-(--primary)",
           {
-            "text-(--text-color-primary)": isActive || isSubActive,
+            "text-(--primary)": isActive || isSubActive,
           },
           className
         )}
@@ -46,7 +46,7 @@ export const DesktopLink = ({
                   key={subRoute.href}
                   href={`${route.href}${subRoute.href}`}
                   className={cn(
-                    "px-4 py-2 text-nowrap flex items-center justify-center gap-2 text-(--text-color-muted) hover:text-(--text-color-primary) transition-colors duration-300"
+                    "px-4 py-2 text-nowrap flex items-center justify-center gap-2 text-(--muted) hover:text-(--primary) transition-colors duration-300"
                   )}
                 >
                   {subRoute.icon && <subRoute.icon className="text-[0.75em]" />}

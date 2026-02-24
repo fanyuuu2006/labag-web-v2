@@ -115,7 +115,7 @@ export const UserModalProvider = ({
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--text-color-muted)"
+                className="text-(--muted)"
                 onClick={modal.close}
               >
                 <CloseOutlined className="text-xl" />
@@ -124,8 +124,8 @@ export const UserModalProvider = ({
 
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20 gap-4 h-full">
-                <LoadingOutlined className="text-5xl text-(--normal-text-color-primary)" />
-                <p className="text-(--text-color-muted) animate-pulse tracking-widest">
+                <LoadingOutlined className="text-5xl text-(--normal-primary)" />
+                <p className="text-(--muted) animate-pulse tracking-widest">
                   資料讀取中...
                 </p>
               </div>
@@ -133,7 +133,7 @@ export const UserModalProvider = ({
               <>
                 {/** User Info Section */}
                 <div className="flex items-center gap-4 shrink-0">
-                  <div className="relative aspect-square w-auto h-16 md:h-16 shrink-0 rounded-full overflow-hidden border-2 border-(--text-color-secondary)">
+                  <div className="relative aspect-square w-auto h-16 md:h-16 shrink-0 rounded-full overflow-hidden border-2 border-(--secondary)">
                     <MyImage
                       src={currUser?.avatar}
                       fallbackSrc={`/default-avatar.jpg`}
@@ -146,11 +146,11 @@ export const UserModalProvider = ({
                     <GlowText as="h3" className="font-bold">
                       {name}
                     </GlowText>
-                    <div className="flex items-center gap-2 text-[0.5em] text-(--text-color-muted)">
+                    <div className="flex items-center gap-2 text-[0.5em] text-(--muted)">
                       <span className="font-mono">ID: {id}</span>
                       <CopyButton
                         content={`${id}`}
-                        className="text-(--text-color-muted)"
+                        className="text-(--muted)"
                         aria-label="複製用戶 ID"
                         title="複製用戶ID"
                       />
@@ -178,7 +178,7 @@ export const UserModalProvider = ({
                       <GlowText className={`font-extrabold`}>
                         {item.value}
                       </GlowText>
-                      <span className="text-[0.5em] text-(--text-color-muted)">
+                      <span className="text-[0.5em] text-(--muted)">
                         {item.label}
                       </span>
                     </div>
@@ -191,7 +191,7 @@ export const UserModalProvider = ({
                     <h3 className="font-bold flex items-center gap-2 text-white/90">
                       最近遊玩紀錄
                     </h3>
-                    <span className="text-[0.75em] text-(--text-color-muted) bg-white/5 px-2 py-1 rounded-full">
+                    <span className="text-[0.75em] text-(--muted) bg-white/5 px-2 py-1 rounded-full">
                       最近 10 筆
                     </span>
                   </div>
@@ -219,7 +219,7 @@ export const UserModalProvider = ({
                                 record.created_at
                               )}
                             </time>
-                            <span className="text-[10px] md:text-xs text-(--text-color-muted) font-mono">
+                            <span className="text-[10px] md:text-xs text-(--muted) font-mono">
                               ID: {record.id}
                             </span>
                           </div>
@@ -228,7 +228,7 @@ export const UserModalProvider = ({
                               <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight drop-shadow-lg">
                                 {record.score.toLocaleString()}
                               </GlowText>
-                              <span className="text-xs font-medium text-(--text-color-muted) mb-1">
+                              <span className="text-xs font-medium text-(--muted) mb-1">
                                 分
                               </span>
                             </div>

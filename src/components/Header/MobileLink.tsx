@@ -40,13 +40,13 @@ export const MobileLink = ({
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full flex items-center justify-between py-3 px-6 border-b border-(--border-color)">
+      <div className="w-full flex items-center justify-between py-3 px-6 border-b border-(--border)">
         <Link
           href={route.href}
           className={cn(
-            "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--text-color-muted) transition-colors duration-300 hover:text-(--text-color-primary)",
+            "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--muted) transition-colors duration-300 hover:text-(--primary)",
             {
-              "text-(--text-color-primary)": isActive,
+              "text-(--primary)": isActive,
             },
             className
           )}
@@ -60,7 +60,7 @@ export const MobileLink = ({
         {hasSubRoute && (
           <button
             onClick={handleToggleSubMenu}
-            className={cn("p-1 text-(--text-color-muted)")}
+            className={cn("p-1 text-(--muted)")}
             aria-label={isSubMenuOpen ? "關閉子選單" : "開啟子選單"}
             aria-expanded={isSubMenuOpen}
             aria-controls={`sub-menu-${route.href.replace("/", "")}`}
@@ -87,7 +87,7 @@ export const MobileLink = ({
                   key={sub.href}
                   href={`${route.href}${sub.href}`}
                   onClick={handleLinkClick}
-                  className="px-8 py-3 text-(--text-color-muted) flex items-center justify-center gap-2"
+                  className="px-8 py-3 text-(--muted) flex items-center justify-center gap-2"
                 >
                   {sub.icon && <sub.icon className="text-[0.75em]" />}
                   {sub.label}

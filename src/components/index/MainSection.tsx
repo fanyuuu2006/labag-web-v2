@@ -16,14 +16,14 @@ export const MainSection = () => {
         >
           {site.title}
         </GlowText>
-        <p className="text-base sm:text-xl md:text-2xl text-(--text-color-muted) max-w-xl md:max-w-2xl leading-relaxed">
+        <p className="text-base sm:text-xl md:text-2xl text-(--muted) max-w-xl md:max-w-2xl leading-relaxed">
           {site.description}
         </p>
 
         <div className="flex flex-co gap-4 sm:gap-6 mt-6 w-full justify-center items-center">
           <Link
             href={"/game"}
-            className="btn-primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
+            className="btn primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
             onClick={() => {
               game.init();
             }}
@@ -32,7 +32,7 @@ export const MainSection = () => {
           </Link>
           <Link
             href={"/rankings"}
-            className="btn-secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
+            className="btn secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
           >
             排行榜
           </Link>

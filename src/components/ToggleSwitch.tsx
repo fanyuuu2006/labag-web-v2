@@ -29,7 +29,7 @@ export const ToggleSwitch = ({
         className={cn(
           "h-[1.2em] w-[2.4em] flex items-center justify-center rounded-full cursor-pointer",
           "transition-colors duration-200",
-          "bg-(--background-color) peer-checked:bg-(--text-color-secondary) border border-black/20",
+          "bg-(--background-color) peer-checked:bg-(--secondary) border border-black/20",
           'before:content-[""] before:h-full before:aspect-square before:bg-white before:rounded-full before:border before:border-gray-300',
           "before:transition-transform before:duration-200 before:-translate-x-1/2 peer-checked:before:translate-x-1/2"
         )}

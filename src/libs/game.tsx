@@ -12,7 +12,7 @@ const Badge = ({
 }: React.HTMLAttributes<HTMLSpanElement>) => (
   <span
     className={cn(
-      "bg-(--background-color-primary) text-(--text-color-primary) py-1 px-2 rounded-lg font-semibold text-sm",
+      "bg-(--background-primary) text-(--primary) py-1 px-2 rounded-lg font-semibold text-sm",
       className
     )}
     {...rest}
@@ -21,7 +21,7 @@ const Badge = ({
 
 const K = ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
   <strong
-    className={cn("text-(--text-color-primary) font-extrabold", className)}
+    className={cn("text-(--primary) font-extrabold", className)}
     {...rest}
   />
 );

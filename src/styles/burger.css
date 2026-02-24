@@ -13,7 +13,7 @@
   width: 100%;
   height: 0.2rem;
   border-radius: 0.5rem;
-  background-color: var(--text-color);
+  background-color: var(--foreground);
   transition: 0.3s ease-in-out;
   transform-origin: right center;
 }

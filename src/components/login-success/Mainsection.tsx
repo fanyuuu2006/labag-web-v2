@@ -49,7 +49,7 @@ export const MainSection = () => {
             {displayMessage}
           </GlowText>
           {!user && !message.includes("失敗") && (
-            <div className="w-12 h-12 rounded-full border-4 border-(--text-color-muted)/20 border-t-(--primary-color) animate-spin mt-4" />
+            <div className="w-12 h-12 rounded-full border-4 border-(--text-color-muted)/20 border-t-(--primary) animate-spin mt-4" />
           )}
         </div>
       </div>

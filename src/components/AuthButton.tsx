@@ -3,7 +3,11 @@ import { cn } from "@/utils/className";
 import { useUser } from "@/contexts/UserContext";
 
 type AuthButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
-export const AuthButton = ({ className, ...rest }: AuthButtonProps) => {
+export const AuthButton = ({
+  className,
+  children,
+  ...rest
+}: AuthButtonProps) => {
   const { user, logOut, logIn } = useUser();
   const handleAuthClick = () => {
     if (user) {
@@ -15,7 +19,7 @@ export const AuthButton = ({ className, ...rest }: AuthButtonProps) => {
 
   return (
     <button onClick={handleAuthClick} className={cn(className)} {...rest}>
-      {user ? "登出" : "登入"}
+      {children || (user ? "登出" : "登入")}
     </button>
   );
 };

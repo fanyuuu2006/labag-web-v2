@@ -103,7 +103,7 @@ export const SettingProvider = ({
             <button
               id="settings-close"
               onClick={modal.close}
-              className="text-(--text-color-muted) hover:text-white transition-colors"
+              className="text-(--muted) hover:text-white transition-colors"
               aria-label="關閉設定選單"
               title="關閉設定"
             >
@@ -134,12 +134,12 @@ export const SettingProvider = ({
             </div>
 
             {/*此為分隔線 */}
-            <div className="border-t-2 border-(--text-color-secondary)/30 w-full" />
+            <div className="border-t-2 border-(--secondary)/30 w-full" />
 
             <div className="flex flex-col gap-3">
               {user && (
                 <button
-                  className="flex items-center justify-center gap-2 btn-secondary w-full rounded-xl py-2 font-medium"
+                  className="flex items-center justify-center gap-2 btn secondary w-full rounded-xl py-2 font-medium"
                   onClick={() => userModal.open(user.id)}
                 >
                   <UserOutlined />
@@ -149,9 +149,9 @@ export const SettingProvider = ({
               <div className="flex items-center justify-center">
                 <AuthButton
                   className={cn(
-                    "w-full rounded-xl py-2 font-semibold transition-all",
+                    "w-full btn rounded-xl py-2 font-semibold transition-all",
                     {
-                      "btn-primary": !user,
+                      "primary": !user,
                       "bg-red-600 text-white": !!user,
                     }
                   )}

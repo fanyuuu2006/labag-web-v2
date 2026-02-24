@@ -3,8 +3,8 @@
 /* ==== Base Layer ==== */
 @layer base {
   :root {
-    --text-color: #ffffff;
-    --text-color-muted: #aaaaaa;
+    --foreground: #ffffff;
+    --muted: #aaaaaa;
 
     /* === 效果參數 === */
     --shadow-base: 0 0 1rem rgba(0, 0, 0, 0.5);
@@ -30,13 +30,13 @@
     --move-y: 0.5rem;
 
     /* === Normal 主題變量 === */
-    --normal-background-color: #05132a;
-    --normal-background-color-primary: #003387;
-    --normal-background-color-secondary: #012051;
-    --normal-text-color-primary: #00ffff;
-    --normal-text-color-secondary: #4aaeff;
-    --normal-text-color-tertiary: #556df3;
-    --normal-border-color: #1c2b3ecc;
+    --normal-background: #05132a;
+    --normal-background-primary: #003387;
+    --normal-background-secondary: #012051;
+    --normal-primary: #00ffff;
+    --normal-secondary: #4aaeff;
+    --normal-tertiary: #556df3;
+    --normal-border: #1c2b3ecc;
     --normal-space-bg-top: #020617;
     --normal-space-bg-bottom: #0b1121;
     --normal-star-color: rgba(255, 255, 255, 0.9);
@@ -45,13 +45,13 @@
     --normal-horizon-glow: rgba(50, 120, 255, 0.4);
 
     /* === Superhhh 主題變量 === */
-    --superhhh-background-color: #110f12;
-    --superhhh-background-color-primary: #440087;
-    --superhhh-background-color-secondary: #220151;
-    --superhhh-text-color-primary: #ff00ff;
-    --superhhh-text-color-secondary: #d94aff;
-    --superhhh-text-color-tertiary: #b06eff;
-    --superhhh-border-color: #2a1c3ecc;
+    --superhhh-background: #110f12;
+    --superhhh-background-primary: #440087;
+    --superhhh-background-secondary: #220151;
+    --superhhh-primary: #ff00ff;
+    --superhhh-secondary: #d94aff;
+    --superhhh-tertiary: #b06eff;
+    --superhhh-border: #2a1c3ecc;
     --superhhh-space-bg-top: #1a052a;
     --superhhh-space-bg-bottom: #2d0b42;
     --superhhh-star-color: rgba(255, 230, 255, 0.9);
@@ -60,13 +60,13 @@
     --superhhh-horizon-glow: rgba(180, 50, 255, 0.4);
 
     /* === Greenwei 主題變量 === */
-    --greenwei-background-color: #052a15;
-    --greenwei-background-color-primary: #008739;
-    --greenwei-background-color-secondary: #015122;
-    --greenwei-text-color-primary: #00ff66;
-    --greenwei-text-color-secondary: #4aff99;
-    --greenwei-text-color-tertiary: #6effaa;
-    --greenwei-border-color: #1c3e2acc;
+    --greenwei-background: #052a15;
+    --greenwei-background-primary: #008739;
+    --greenwei-background-secondary: #015122;
+    --greenwei-primary: #00ff66;
+    --greenwei-secondary: #4aff99;
+    --greenwei-tertiary: #6effaa;
+    --greenwei-border: #1c3e2acc;
     --greenwei-space-bg-top: #051a0d;
     --greenwei-space-bg-bottom: #0b2d16;
     --greenwei-star-color: rgba(230, 255, 230, 0.9);
@@ -75,13 +75,13 @@
     --greenwei-horizon-glow: rgba(50, 255, 120, 0.4);
 
     /* === Pikachu 主題變量 === */
-    --pikachu-background-color: #2a2605;
-    --pikachu-background-color-primary: #877800;
-    --pikachu-background-color-secondary: #514801;
-    --pikachu-text-color-primary: #ffff00;
-    --pikachu-text-color-secondary: #ffcc4a;
-    --pikachu-text-color-tertiary: #ffaa6e;
-    --pikachu-border-color: #3e3a1ccc;
+    --pikachu-background: #2a2605;
+    --pikachu-background-primary: #877800;
+    --pikachu-background-secondary: #514801;
+    --pikachu-primary: #ffff00;
+    --pikachu-secondary: #ffcc4a;
+    --pikachu-tertiary: #ffaa6e;
+    --pikachu-border: #3e3a1ccc;
     --pikachu-space-bg-top: #1a1805;
     --pikachu-space-bg-bottom: #2d290b;
     --pikachu-star-color: rgba(255, 255, 200, 0.9);
@@ -107,13 +107,13 @@
     height: 100%;
   }
   * [data-theme="normal"] {
-    --background-color: var(--normal-background-color);
-    --background-color-primary: var(--normal-background-color-primary);
-    --background-color-secondary: var(--normal-background-color-secondary);
-    --text-color-primary: var(--normal-text-color-primary);
-    --text-color-secondary: var(--normal-text-color-secondary);
-    --text-color-tertiary: var(--normal-text-color-tertiary);
-    --border-color: var(--normal-border-color);
+    --background: var(--normal-background);
+    --background-primary: var(--normal-background-primary);
+    --background-secondary: var(--normal-background-secondary);
+    --primary: var(--normal-primary);
+    --secondary: var(--normal-secondary);
+    --tertiary: var(--normal-tertiary);
+    --border: var(--normal-border);
     --space-bg-top: var(--normal-space-bg-top);
     --space-bg-bottom: var(--normal-space-bg-bottom);
     --star-color: var(--normal-star-color);
@@ -122,13 +122,13 @@
     --horizon-glow: var(--normal-horizon-glow);
   }
   * [data-theme="superhhh"] {
-    --background-color: var(--superhhh-background-color);
-    --background-color-primary: var(--superhhh-background-color-primary);
-    --background-color-secondary: var(--superhhh-background-color-secondary);
-    --text-color-primary: var(--superhhh-text-color-primary);
-    --text-color-secondary: var(--superhhh-text-color-secondary);
-    --text-color-tertiary: var(--superhhh-text-color-tertiary);
-    --border-color: var(--superhhh-border-color);
+    --background: var(--superhhh-background);
+    --background-primary: var(--superhhh-background-primary);
+    --background-secondary: var(--superhhh-background-secondary);
+    --primary: var(--superhhh-primary);
+    --secondary: var(--superhhh-secondary);
+    --tertiary: var(--superhhh-tertiary);
+    --border: var(--superhhh-border);
     --space-bg-top: var(--superhhh-space-bg-top);
     --space-bg-bottom: var(--superhhh-space-bg-bottom);
     --star-color: var(--superhhh-star-color);
@@ -137,13 +137,13 @@
     --horizon-glow: var(--superhhh-horizon-glow);
   }
   * [data-theme="greenwei"] {
-    --background-color: var(--greenwei-background-color);
-    --background-color-primary: var(--greenwei-background-color-primary);
-    --background-color-secondary: var(--greenwei-background-color-secondary);
-    --text-color-primary: var(--greenwei-text-color-primary);
-    --text-color-secondary: var(--greenwei-text-color-secondary);
-    --text-color-tertiary: var(--greenwei-text-color-tertiary);
-    --border-color: var(--greenwei-border-color);
+    --background: var(--greenwei-background);
+    --background-primary: var(--greenwei-background-primary);
+    --background-secondary: var(--greenwei-background-secondary);
+    --primary: var(--greenwei-primary);
+    --secondary: var(--greenwei-secondary);
+    --tertiary: var(--greenwei-tertiary);
+    --border: var(--greenwei-border);
     --space-bg-top: var(--greenwei-space-bg-top);
     --space-bg-bottom: var(--greenwei-space-bg-bottom);
     --star-color: var(--greenwei-star-color);
@@ -152,13 +152,13 @@
     --horizon-glow: var(--greenwei-horizon-glow);
   }
   * [data-theme="pikachu"] {
-    --background-color: var(--pikachu-background-color);
-    --background-color-primary: var(--pikachu-background-color-primary);
-    --background-color-secondary: var(--pikachu-background-color-secondary);
-    --text-color-primary: var(--pikachu-text-color-primary);
-    --text-color-secondary: var(--pikachu-text-color-secondary);
-    --text-color-tertiary: var(--pikachu-text-color-tertiary);
-    --border-color: var(--pikachu-border-color);
+    --background: var(--pikachu-background);
+    --background-primary: var(--pikachu-background-primary);
+    --background-secondary: var(--pikachu-background-secondary);
+    --primary: var(--pikachu-primary);
+    --secondary: var(--pikachu-secondary);
+    --tertiary: var(--pikachu-tertiary);
+    --border: var(--pikachu-border);
     --space-bg-top: var(--pikachu-space-bg-top);
     --space-bg-bottom: var(--pikachu-space-bg-bottom);
     --star-color: var(--pikachu-star-color);
@@ -171,19 +171,27 @@
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100vh;
-    color: var(--text-color);
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-      Arial, sans-serif;
+    color: var(--foreground);
+    font-family:
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    transition: background var(--transition-normal) var(--transition-timing),
+    transition:
+      background var(--transition-normal) var(--transition-timing),
       color var(--transition-normal) var(--transition-timing);
 
     /* 基礎背景：深空漸層 + 底部地平線光暈 */
     background: 
-      /* 底部強烈藍光 (地平線) */ radial-gradient(
+      /* 底部強烈藍光 (地平線) */
+      radial-gradient(
         ellipse 80% 30% at 50% 100%,
         var(--horizon-glow),
         transparent 70%
@@ -203,11 +211,8 @@
     height: 100%;
     pointer-events: none;
     z-index: -2;
-    background-image: radial-gradient(
-        1px 1px at 10% 10%,
-        var(--star-color),
-        transparent
-      ),
+    background-image:
+      radial-gradient(1px 1px at 10% 10%, var(--star-color), transparent),
       radial-gradient(1px 1px at 20% 30%, var(--star-color), transparent),
       radial-gradient(2px 2px at 30% 60%, var(--star-color), transparent),
       radial-gradient(1px 1px at 40% 80%, var(--star-color), transparent),
@@ -221,7 +226,8 @@
       radial-gradient(1px 1px at 25% 75%, var(--star-color), transparent);
     background-size: 500px 500px;
     opacity: 0.8;
-    transition: background var(--transition-normal) var(--transition-timing),
+    transition:
+      background var(--transition-normal) var(--transition-timing),
       color var(--transition-normal) var(--transition-timing);
   }
 
@@ -235,14 +241,12 @@
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    background: radial-gradient(
-        circle at 20% 50%,
-        var(--nebula-cyan),
-        transparent 60%
-      ),
+    background:
+      radial-gradient(circle at 20% 50%, var(--nebula-cyan), transparent 60%),
       radial-gradient(circle at 80% 30%, var(--nebula-purple), transparent 60%);
     filter: blur(80px);
-    transition: background var(--transition-normal) var(--transition-timing),
+    transition:
+      background var(--transition-normal) var(--transition-timing),
       color var(--transition-normal) var(--transition-timing);
 
     animation: nebula-flow 20s ease-in-out infinite alternate;
@@ -261,10 +265,7 @@
 
   /* === 按鈕系統 === */
   button,
-  .btn,
-  .btn-primary,
-  .btn-secondary,
-  .btn-tertiary {
+  .btn {
     cursor: pointer;
     border: none;
     text-decoration: none;
@@ -274,29 +275,20 @@
 
   /* 整合 active 狀態 */
   button:active,
-  .btn:active,
-  .btn-primary:active,
-  .btn-secondary:active,
-  .btn-tertiary:active {
+  .btn:active {
     transform: scale(0.95);
     transition-duration: var(--transition-fast);
   }
 
   button:hover,
-  .btn:hover,
-  .btn-primary:hover,
-  .btn-secondary:hover,
-  .btn-tertiary:hover {
+  .btn:hover {
     text-decoration: none !important;
     transform: translateY(-2px);
   }
 
   /* 禁用狀態 */
   button:disabled,
-  .btn:disabled,
-  .btn-primary:disabled,
-  .btn-secondary:disabled,
-  .btn-tertiary:disabled {
+  .btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     filter: grayscale(0.5);
@@ -305,36 +297,32 @@
   }
 
   .btn {
-    background: var(--background-color-primary);
-    border: 2px solid var(--border-color);
-    color: var(--text-color);
+    background: var(--background-primary);
+    border: 2px solid var(--border);
+    color: var(--foreground);
   }
 
-  .btn-primary {
-    background: linear-gradient(
-      135deg,
-      var(--text-color-primary),
-      var(--text-color-secondary)
-    );
+  .btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     box-shadow: var(--shadow-base);
-    color: var(--background-color-primary);
+    color: var(--background-primary);
     border: none;
     font-weight: 700;
   }
-  .btn-secondary {
-    background: var(--background-color-primary);
-    color: var(--text-color-primary);
-    border: 2px solid var(--text-color-primary);
+  .btn.secondary {
+    background: var(--background-primary);
+    color: var(--primary);
+    border: 2px solid var(--primary);
   }
 
-  .btn-secondary:hover {
-    background: var(--text-color-primary);
-    color: var(--background-color-primary);
+  .btn.secondary:hover {
+    background: var(--primary);
+    color: var(--background-primary);
   }
-  .btn-tertiary {
-    background: var(--background-color-secondary);
-    border: 2px solid var(--text-color-secondary);
-    color: var(--text-color-secondary);
+  .btn.tertiary {
+    background: var(--background-secondary);
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
     box-shadow: none;
   }
 
@@ -356,8 +344,8 @@
 
   /* === 卡片系統 === */
   .card {
-    background: var(--background-color-secondary);
-    border: 2px solid var(--text-color-secondary);
+    background: var(--background-secondary);
+    border: 2px solid var(--secondary);
     border-radius: var(--border-radius-md);
     transition: all var(--transition-normal) var(--transition-timing);
   }
@@ -369,11 +357,7 @@
     transition: all var(--transition-normal) var(--transition-timing);
   }
   .card-primary:hover {
-    border-color: color-mix(
-      in oklab,
-      var(--text-color-secondary) 30%,
-      transparent
-    );
+    border-color: color-mix(in oklab, var(--secondary) 30%, transparent);
   }
   .card-secondary {
     background: rgba(0, 0, 0, 0.2);
@@ -383,14 +367,14 @@
   }
 
   .card:hover {
-    border-color: var(--text-color-primary);
+    border-color: var(--primary);
   }
 
   a.card:hover,
   a.card-primary:hover,
   a.card-secondary:hover {
     transform: translateY(calc(-1 * var(--move-y)));
-    border-color: var(--text-color-primary);
+    border-color: var(--primary);
     text-decoration: none;
   }
 
@@ -420,19 +404,19 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--border-color);
+    background: var(--border);
     border-radius: 4px;
     transition: background var(--transition-normal) ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color-muted);
+    background: var(--muted);
   }
 
   /* 針對 Firefox 的滾動條樣式 */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--border-color) transparent;
+    scrollbar-color: var(--border) transparent;
   }
 }
 
@@ -464,7 +448,7 @@
 
   .tooltip::before {
     content: attr(data-tooltip);
-    color: var(--text-color);
+    color: var(--foreground);
     width: max-content;
     max-width: 200px;
     background: rgba(0, 0, 0, 0.7);
@@ -570,11 +554,7 @@
     transform: translateX(-50%);
     width: 0;
     height: var(--line-height);
-    background: linear-gradient(
-      135deg,
-      var(--text-color-primary),
-      var(--text-color-secondary)
-    );
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
     border-radius: var(--border-radius-md);
     transition: width var(--transition-normal) var(--transition-timing);
   }

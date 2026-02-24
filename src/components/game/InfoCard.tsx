@@ -23,7 +23,7 @@ const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
   return (
     <>
       <button
-        className="btn-primary text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
+        className="btn primary text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
         aria-label={`mode-${mode}`}
         onClick={() => modal.open(mode)}
         data-theme={mode}
@@ -93,7 +93,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
       <GlowText
         as="h2"
         className="text-base sm:text-lg md:text-2xl font-bold mb-1"
-        style={{ color: "var(--text-color-primary)" }}
+        style={{ color: "var(--primary)" }}
       >
         遊戲資訊
       </GlowText>
@@ -103,7 +103,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <dt
               className="text-xs sm:text-sm md:text-base"
-              style={{ color: "var(--text-color-muted)" }}
+              style={{ color: "var(--muted)" }}
             >
               剩餘次數
             </dt>
@@ -115,7 +115,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
             <dt
               className="text-xs sm:text-sm md:text-base"
-              style={{ color: "var(--text-color-muted)" }}
+              style={{ color: "var(--muted)" }}
             >
               目前分數
             </dt>
@@ -136,10 +136,10 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           <div className="flex flex-col gap-1">
             <dt
               className="text-sm md:text-base flex flex-wrap items-center"
-              style={{ color: "var(--text-color-muted)" }}
+              style={{ color: "var(--muted)" }}
             >
               當前模式
-              <span className="ms-1 text-[0.7em] text-(--text-color-muted)">
+              <span className="ms-1 text-[0.7em] text-(--muted)">
                 (點擊模式以查看說明)
               </span>
             </dt>
@@ -155,8 +155,8 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               )}
             </dd>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
-            <dt className="text-xs sm:text-sm md:text-base text-(--greenwei-text-color-secondary)">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3" data-theme="greenwei">
+            <dt className="text-xs sm:text-sm md:text-base text-(--secondary)">
               <button
                 onClick={() =>
                   patternModal.open(
@@ -170,7 +170,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
             </dt>
             <dd
               className="text-base md:text-xl font-bold"
-              style={{ color: "var(--greenwei-text-color-primary)" }}
+              style={{ color: "var(--primary)" }}
             >
               {info.gssCount}
             </dd>
@@ -188,13 +188,13 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                   className="flex items-center justify-between gap-3 py-2 px-3 bg-white/5 rounded-md border border-white/6"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-(--text-color-primary)" />
-                    <span className="text-xs sm:text-sm text-(--text-color-muted)">
+                    <span className="w-2 h-2 rounded-full bg-(--primary)" />
+                    <span className="text-xs sm:text-sm text-(--muted)">
                       {description[mode].name} 次數
                     </span>
                   </div>
 
-                  <span className="text-sm sm:text-base font-bold text-(--text-color-primary)">
+                  <span className="text-sm sm:text-base font-bold text-(--primary)">
                     {info.times[mode]}
                   </span>
                 </div>
