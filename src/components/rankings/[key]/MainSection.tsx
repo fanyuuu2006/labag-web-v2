@@ -31,7 +31,7 @@ export const MainSection = ({
           </span>
           <GlowText
             as="h1"
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-wider text-center"
+            className="text-4xl md:text-5xl font-bold tracking-wider text-center"
           >
             {statsData[rankKey]?.label ?? "排行榜"}
           </GlowText>
@@ -40,7 +40,7 @@ export const MainSection = ({
         {/** 內容區域 */}
         <div
           className={
-            "text-base sm:text-lg md:text-xl lg:text-2xl grid grid-cols-1 lg:grid-cols-2 gap-4"
+            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-4"
           }
         >
           {/* 前三名 */}

@@ -5,6 +5,7 @@ import { useModal } from "@/hooks/useModal";
 import {
   CloseOutlined,
   CustomerServiceOutlined,
+  LoadingOutlined,
   SoundOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -63,7 +64,7 @@ export const SettingProvider = ({
   const [music, setMusic] = useState<boolean>(true);
   const [sound, setSound] = useState<boolean>(true);
   const userModal = useUserModal();
-  const { user } = useUser();
+  const { user, loading, } = useUser();
   const value = useMemo(
     () => ({
       modal,
@@ -137,26 +138,34 @@ export const SettingProvider = ({
             <div className="border-t-2 border-(--secondary)/30 w-full" />
 
             <div className="flex flex-col gap-3">
-              {user && (
-                <button
-                  className="flex items-center justify-center gap-2 btn secondary w-full rounded-xl py-2 font-medium"
-                  onClick={() => userModal.open(user.id)}
-                >
-                  <UserOutlined />
-                  開啟個人檔案
-                </button>
-              )}
-              <div className="flex items-center justify-center">
-                <AuthButton
-                  className={cn(
-                    "w-full btn rounded-xl py-2 font-semibold transition-all",
-                    {
-                      "primary": !user,
-                      "bg-red-600 text-white": !!user,
-                    }
+              {loading ? (
+                <div className="flex justify-center p-4">
+                  <LoadingOutlined className="text-4xl" />
+                </div>
+              ) : (
+                <>
+                  {user && (
+                    <button
+                      className="flex items-center justify-center gap-2 btn secondary w-full rounded-xl py-2 font-medium"
+                      onClick={() => userModal.open(user.id)}
+                    >
+                      <UserOutlined />
+                      開啟個人檔案
+                    </button>
                   )}
-                />
-              </div>
+                  <div className="flex items-center justify-center">
+                    <AuthButton
+                      className={cn(
+                        "w-full btn rounded-xl py-2 font-semibold transition-all",
+                        {
+                          "primary": !user,
+                          "bg-red-600 text-white": !!user,
+                        }
+                      )}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
