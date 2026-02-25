@@ -15,6 +15,9 @@ import { formatDate } from "@/utils/date";
 import { recordsById, statsById, userById } from "@/utils/backend";
 import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
 import { statsData } from "@/libs/rankings";
+import { FormatDate } from "@/components/FormatDate";
+
+const RECORD_COUNT = 10;
 
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -33,7 +36,7 @@ export const UserModalProvider = ({
   const modal = useModal({});
   const [id, setId] = useState<SupabaseUser["id"] | null>(null);
   const [currUser, setCurrUser] = useState<SupabaseAllowFieldsUser | null>(
-    null
+    null,
   );
   const [stats, setStats] = useState<SupabaseUserStatsViewItem | null>(null);
   const [records, setRecords] = useState<SupabaseRecord[] | null>(null);
@@ -52,7 +55,7 @@ export const UserModalProvider = ({
         modal.open();
       },
     }),
-    [modal, id]
+    [modal, id],
   );
 
   useEffect(() => {
@@ -65,7 +68,7 @@ export const UserModalProvider = ({
           userById(id),
           statsById(id),
           recordsById(id, {
-            count: "10",
+            count: `${RECORD_COUNT}`,
           }),
         ]);
         setCurrUser(userRes.data);
@@ -90,7 +93,7 @@ export const UserModalProvider = ({
     if (!records) return [];
     // ISO 8601 字串可以直接比較，比 new Date() 更快
     return [...records].sort((a, b) =>
-      b.created_at.localeCompare(a.created_at)
+      b.created_at.localeCompare(a.created_at),
     );
   }, [records]);
 
@@ -191,7 +194,7 @@ export const UserModalProvider = ({
                       最近遊玩紀錄
                     </h3>
                     <span className="text-[0.75em] text-(--muted) bg-white/5 px-2 py-1 rounded-full">
-                      最近 10 筆
+                      最近 {RECORD_COUNT} 筆
                     </span>
                   </div>
 
@@ -203,21 +206,13 @@ export const UserModalProvider = ({
                           className="card-primary group relative flex items-center justify-between p-3 md:p-4 transition-all duration-300 hover:brightness-110"
                         >
                           <div className="flex flex-col gap-0.5">
-                            <time
-                              dateTime={new Date(
-                                record.created_at
-                              ).toISOString()}
+                            <FormatDate
+                              title={true}
+                              date={[record.created_at]}
                               className="text-sm md:text-base font-bold text-white/90 tracking-wide"
-                              title={formatDate(
-                                "YYYY/MM/DD HH:mm",
-                                record.created_at
-                              )}
                             >
-                              {formatDate(
-                                "YYYY/MM/DD HH:mm",
-                                record.created_at
-                              )}
-                            </time>
+                              YYYY/MM/DD HH:mm
+                            </FormatDate>
                             <span className="text-[10px] md:text-xs text-(--muted) font-mono">
                               ID: {record.id}
                             </span>
