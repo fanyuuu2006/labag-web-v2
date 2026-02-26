@@ -4,8 +4,12 @@ import { game } from "@/libs/game";
 import { site } from "@/libs/site";
 import Link from "next/link";
 import { GlowText } from "../GlowText";
+import { useUser } from "@/contexts/UserContext";
+import { useUserModal } from "@/contexts/UserModalContext";
 
 export const MainSection = () => {
+  const { user, loading } = useUser();
+  const modal = useUserModal();
 
   return (
     <section className="h-full">
@@ -37,6 +41,26 @@ export const MainSection = () => {
             排行榜
           </Link>
         </div>
+        {/* 使用者歡迎訊息 */}
+        {!loading && (
+          <div className="fixed z-9999 bottom-4 left-1/2 -translate-x-1/2">
+            {user ? (
+              <div className="text-xs md:text-base flex items-center gap-2">
+                <GlowText>歡迎回來</GlowText>
+                <button
+                  className="text-(--primary)"
+                  onClick={() => modal.open(user.id)}
+                >
+                  {user.name}
+                </button>
+              </div>
+            ) : (
+              <span className="text-xs md:text-base font-semibold text-(--muted)">
+                請登入以享有更多功能
+              </span>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
