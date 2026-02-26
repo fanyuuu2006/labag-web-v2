@@ -6,6 +6,7 @@ import Link from "next/link";
 import { GlowText } from "../GlowText";
 import { useUser } from "@/contexts/UserContext";
 import { useUserModal } from "@/contexts/UserModalContext";
+import { AuthButton } from "../AuthButton";
 
 export const MainSection = () => {
   const { user, loading } = useUser();
@@ -55,9 +56,10 @@ export const MainSection = () => {
                 </button>
               </div>
             ) : (
-              <span className="text-xs md:text-base font-semibold text-(--muted)">
-                請登入以享有更多功能
-              </span>
+              <div className="text-xs md:text-base flex items-center gap-2">
+                <GlowText>登入以享有更多體驗</GlowText>
+                <AuthButton className="text-(--primary)">立即登入</AuthButton>
+              </div>
             )}
           </div>
         )}
