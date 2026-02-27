@@ -45,24 +45,27 @@ export const MainSection = () => {
 
         {!loading && (
           <div className="mt-12">
-            {user ? (
-              <div
-                className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors cursor-pointer"
-                onClick={() => modal.open(user.id)}
-              >
-                <span className="text-white/40">歡迎回來</span>
-                <span className="font-medium text-(--primary)">
-                  {user.name}
-                </span>
-              </div>
-            ) : (
-              <div className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors">
-                <span className="text-white/40">尚未登入?</span>
-                <AuthButton className="font-medium text-(--primary) hover:text-(--foreground) transition-colors">
-                  立即登入
-                </AuthButton>
-              </div>
-            )}
+            <div className="card-secondary text-sm md:text-base flex items-center gap-3 px-6 py-2 rounded-full">
+              {user ? (
+                <>
+                  <span className="text-white/40">歡迎回來</span>
+                  <button
+                    className="font-medium text-(--primary)"
+                    onClick={() => modal.open(user.id)}
+                    aria-label={`打開使用者 ${user.name} 的資訊`}
+                  >
+                    {user.name}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span className="text-white/40">尚未登入?</span>
+                  <AuthButton className="font-medium text-(--primary)">
+                    立即登入
+                  </AuthButton>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>
