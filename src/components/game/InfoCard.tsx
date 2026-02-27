@@ -23,7 +23,7 @@ const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
   return (
     <>
       <button
-        className="btn primary text-xs sm:text-sm md:text-base font-extrabold mr-2 mb-2 rounded-full py-1 px-3 inline-flex items-center"
+        className="btn primary text-xs sm:text-sm md:text-base font-extrabold rounded-full py-1 px-3 flex items-center"
         aria-label={`mode-${mode}`}
         onClick={() => modal.open(mode)}
         data-theme={mode}
@@ -85,7 +85,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
   return (
     <div
       className={cn(
-        "bg-black/40 rounded-md p-4 lg:p-6 flex flex-col gap-2 sm:gap-3 items-start shadow-md",
+        "bg-black/40 rounded-md p-5 sm:p-6 flex flex-col gap-3 sm:gap-4 items-start shadow-md",
         className
       )}
       {...rest}
@@ -98,9 +98,9 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
         遊戲資訊
       </GlowText>
 
-      <div className="flex flex-col gap-2 w-full">
-        <dl className="grid grid-cols-2 gap-2 lg:gap-3 w-full">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+      <div className="flex flex-col gap-3 w-full">
+        <dl className="grid grid-cols-2 gap-3 lg:gap-4 w-full">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
             <dt
               className="text-xs sm:text-sm md:text-base"
               style={{ color: "var(--muted)" }}
@@ -139,11 +139,11 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               style={{ color: "var(--muted)" }}
             >
               當前模式
-              <span className="ms-1 text-[0.7em] text-(--muted)">
+              <span className="ml-1 text-[0.7em]" style={{ color: "var(--muted)" }}>
                 (點擊模式以查看說明)
               </span>
             </dt>
-            <dd className="flex items-center flex-wrap">
+            <dd className="flex items-center flex-wrap gap-2">
               {info.currentModes.length > 0 ? (
                 info.currentModes.map((mode, idx) => (
                   <ModeBadge key={idx} mode={mode} />
@@ -155,8 +155,8 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               )}
             </dd>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3" data-theme="greenwei">
-            <dt className="text-xs sm:text-sm md:text-base text-(--secondary)">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2" data-theme="greenwei">
+            <dt className="text-xs sm:text-sm md:text-base" style={{ color: "var(--secondary)" }}>
               <button
                 onClick={() =>
                   patternModal.open(
@@ -177,7 +177,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
           </div>
         </dl>
 
-        <div className="flex flex-col gap-2 w-full mt-2">
+        <div className="flex flex-col gap-3 w-full mt-3">
           {info.currentModes
             .filter((mode) => mode !== "normal")
             .map((mode) => {
@@ -185,16 +185,16 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                 <div
                   key={mode}
                   data-theme={mode}
-                  className="flex items-center justify-between gap-3 py-2 px-3 bg-white/5 rounded-md border border-white/6"
+                  className="card-primary flex items-center justify-between gap-3 py-2 px-3 rounded-md"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-(--primary)" />
-                    <span className="text-xs sm:text-sm text-(--muted)">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--primary)" }} />
+                    <span className="text-xs sm:text-sm" style={{ color: "var(--muted)" }}>
                       {description[mode].name} 次數
                     </span>
                   </div>
 
-                  <span className="text-sm sm:text-base font-bold text-(--primary)">
+                  <span className="text-sm sm:text-base font-bold" style={{ color: "var(--primary)" }}>
                     {info.times[mode]}
                   </span>
                 </div>
