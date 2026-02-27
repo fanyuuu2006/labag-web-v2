@@ -323,18 +323,6 @@
     box-shadow: var(--shadow-base);
   }
 
-  .btn.tertiary {
-    background: var(--background);
-    color: var(--muted);
-    border: 2px solid var(--border);
-    box-shadow: none;
-  }
-
-  .btn.tertiary:hover {
-    border-color: var(--tertiary);
-    color: var(--tertiary);
-  }
-
   /* === 容器系統 === */
   .container {
     position: relative;
