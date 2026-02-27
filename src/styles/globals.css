@@ -312,19 +312,21 @@
     font-weight: 700;
   }
   .btn.secondary {
-    background: var(--background-primary);
-    color: var(--primary);
-    border: 2px solid var(--primary);
+    background: var(--background-secondary);
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
   }
 
   .btn.secondary:hover {
-    background: var(--primary);
-    color: var(--background-primary);
+    background: var(--secondary);
+    color: var(--background-secondary);
+    box-shadow: var(--shadow-base);
   }
+
   .btn.tertiary {
-    background: var(--background-secondary);
-    border: 2px solid var(--secondary);
-    color: var(--secondary);
+    background: var(--background);
+    color: var(--muted);
+    border: 2px solid var(--border);
     box-shadow: none;
   }
 
