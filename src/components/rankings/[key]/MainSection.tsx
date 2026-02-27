@@ -40,11 +40,11 @@ export const MainSection = ({
         {/** 內容區域 */}
         <div
           className={
-            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-4"
+            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-4 h-full"
           }
         >
           {/* 前三名 */}
-          <div className="sticky top-0 flex flex-col items-center justify-center">
+          <div className="sticky top-0 h-full flex flex-col items-center justify-center">
             {top3.length === 0 ? (
               <div className="flex-1 flex items-center justify-center text-white/50 italic text-xl">
                 暫無排行資料
@@ -63,8 +63,8 @@ export const MainSection = ({
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col overflow-hidden">
-            <div className="card-secondary w-full overflow-y-auto p-4 lg:p-6">
+          <div className="flex flex-col h-full overflow-hidden">
+            <div className="card-secondary w-full flex-1 overflow-y-auto p-4 lg:p-6">
               {rest.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
