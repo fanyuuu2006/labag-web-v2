@@ -42,11 +42,14 @@ export const MainSection = () => {
             排行榜
           </Link>
         </div>
-        
+
         {!loading && (
           <div className="mt-12">
             {user ? (
-              <div className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors cursor-pointer" onClick={() => modal.open(user.id)}>
+              <div
+                className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors cursor-pointer"
+                onClick={() => modal.open(user.id)}
+              >
                 <span className="text-white/40">歡迎回來</span>
                 <span className="font-medium text-(--primary)">
                   {user.name}
