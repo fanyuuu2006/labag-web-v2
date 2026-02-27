@@ -57,7 +57,7 @@ export const MainSection = () => {
               </div>
             ) : (
               <div className="text-xs md:text-base flex items-center gap-2">
-                <GlowText>尚未登入</GlowText>
+                <GlowText>尚未登入?</GlowText>
                 <AuthButton className="text-(--primary)">立即登入</AuthButton>
               </div>
             )}
