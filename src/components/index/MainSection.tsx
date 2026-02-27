@@ -42,23 +42,22 @@ export const MainSection = () => {
             排行榜
           </Link>
         </div>
-        {/* 使用者歡迎訊息 */}
+        
         {!loading && (
-          <div className="fixed z-9999 bottom-4 left-1/2 -translate-x-1/2">
+          <div className="mt-12">
             {user ? (
-              <div className="text-xs md:text-base flex items-center gap-2">
-                <GlowText>歡迎回來</GlowText>
-                <button
-                  className="text-(--primary)"
-                  onClick={() => modal.open(user.id)}
-                >
+              <div className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors cursor-pointer" onClick={() => modal.open(user.id)}>
+                <span className="text-white/40">歡迎回來</span>
+                <span className="font-medium text-(--primary)">
                   {user.name}
-                </button>
+                </span>
               </div>
             ) : (
-              <div className="text-xs md:text-base flex items-center gap-2">
-                <GlowText>尚未登入?</GlowText>
-                <AuthButton className="text-(--primary)">立即登入</AuthButton>
+              <div className="text-sm md:text-base flex items-center gap-3 bg-black/20 backdrop-blur-sm px-6 py-2 rounded-full border border-white/5 hover:bg-black/30 transition-colors">
+                <span className="text-white/40">尚未登入?</span>
+                <AuthButton className="font-medium text-(--primary) hover:text-(--foreground) transition-colors">
+                  立即登入
+                </AuthButton>
               </div>
             )}
           </div>
