@@ -26,7 +26,7 @@ export const MainSection = () => {
           {site.description}
         </p>
 
-        <div className="flex flex-co gap-4 sm:gap-6 mt-6 w-full justify-center items-center">
+        <div className="flex gap-4 sm:gap-6 mt-6 justify-center items-center">
           <Link
             href={"/game"}
             className="btn primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
@@ -43,49 +43,50 @@ export const MainSection = () => {
             排行榜
           </Link>
         </div>
-
-        {/* 使用者登入資訊 */}
-        {!loading && (
-          <div>
-            <div className="card-secondary text-sm md:text-base flex items-center gap-3 px-4 py-2 rounded-full">
-              {user ? (
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    {user.avatar ? (
-                      <MyImage
-                        src={user.avatar}
-                        alt={user.name}
-                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-1 ring-white/5"
-                      />
-                    ) : (
-                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-white/5 text-(--muted) font-medium ring-1 ring-white/5">
-                        {(user.name && user.name.charAt(0)) || "U"}
-                      </div>
-                    )}
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-(--primary) rounded-full ring-1 ring-white/30" />
-                  </div>
-
-                  <div className="flex flex-col items-start leading-tight">
-                    <span className="text-(--muted) text-xs">歡迎回來</span>
-                    <button
-                      className="font-medium text-(--primary) hover:underline"
-                      onClick={() => modal.open(user.id)}
-                      aria-label={`打開使用者 ${user.name} 的資訊`}
-                    >
-                      {user.name}
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center gap-3">
-                  <span className="text-(--muted)">尚未登入?</span>
-                  <AuthButton className="font-medium text-(--primary)">立即登入</AuthButton>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* 使用者登入資訊（固定底部） */}
+      {!loading && (
+        <div className="fixed bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+          <div className="card-secondary text-sm md:text-base inline-flex items-center gap-3 px-4 py-2 rounded-full shadow-lg">
+            {user ? (
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  {user.avatar ? (
+                    <MyImage
+                      src={user.avatar}
+                      alt={user.name}
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-1 ring-white/5"
+                    />
+                  ) : (
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-white/5 text-(--muted) font-medium ring-1 ring-white/5">
+                      {(user.name && user.name.charAt(0)) || "U"}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col items-start leading-tight">
+                  <span className="text-(--muted) text-xs">歡迎回來</span>
+                  <button
+                    className="font-medium text-(--primary) hover:underline"
+                    onClick={() => modal.open(user.id)}
+                    aria-label={`打開使用者 ${user.name} 的資訊`}
+                  >
+                    {user.name}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-(--muted)">尚未登入?</span>
+                <AuthButton className="font-medium text-(--primary)">
+                  立即登入
+                </AuthButton>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
