@@ -43,27 +43,26 @@ export const MainSection = () => {
           </Link>
         </div>
 
+        {/* 使用者資訊區域 */}
         {!loading && (
           <div className="mt-12">
             <div className="card-secondary text-sm md:text-base flex items-center gap-3 px-6 py-2 rounded-full">
+              <span className="text-(--muted)">
+                {user ? "歡迎回來" : "尚未登入?"}
+              </span>
+
               {user ? (
-                <>
-                  <span className="text-(--muted)">歡迎回來</span>
-                  <button
-                    className="font-medium text-(--primary)"
-                    onClick={() => modal.open(user.id)}
-                    aria-label={`打開使用者 ${user.name} 的資訊`}
-                  >
-                    {user.name}
-                  </button>
-                </>
+                <button
+                  className="font-medium text-(--primary)"
+                  onClick={() => modal.open(user.id)}
+                  aria-label={`打開使用者 ${user.name} 的資訊`}
+                >
+                  {user.name}
+                </button>
               ) : (
-                <>
-                  <span className="text-(--muted)">尚未登入?</span>
-                  <AuthButton className="font-medium text-(--primary)">
-                    立即登入
-                  </AuthButton>
-                </>
+                <AuthButton className="font-medium text-(--primary)">
+                  立即登入
+                </AuthButton>
               )}
             </div>
           </div>
