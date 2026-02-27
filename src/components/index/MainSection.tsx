@@ -48,7 +48,7 @@ export const MainSection = () => {
             <div className="card-secondary text-sm md:text-base flex items-center gap-3 px-6 py-2 rounded-full">
               {user ? (
                 <>
-                  <span className="text-white/40">歡迎回來</span>
+                  <span className="text-(--muted)">歡迎回來</span>
                   <button
                     className="font-medium text-(--primary)"
                     onClick={() => modal.open(user.id)}
@@ -59,7 +59,7 @@ export const MainSection = () => {
                 </>
               ) : (
                 <>
-                  <span className="text-white/40">尚未登入?</span>
+                  <span className="text-(--muted)">尚未登入?</span>
                   <AuthButton className="font-medium text-(--primary)">
                     立即登入
                   </AuthButton>
