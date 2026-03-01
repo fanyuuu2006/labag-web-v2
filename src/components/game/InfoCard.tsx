@@ -55,13 +55,16 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
 
     const handleRoundEnd = (g: typeof game) => {
       setTimeout(() => {
-        const times = g.modes.reduce((acc, mode) => {
-          acc[mode.name as ModeName] =
-            mode.name === "normal"
-              ? g.times - g.played
-              : mode.variable.times || 0;
-          return acc;
-        }, {} as Record<ModeName, number>);
+        const times = g.modes.reduce(
+          (acc, mode) => {
+            acc[mode.name as ModeName] =
+              mode.name === "normal"
+                ? g.times - g.played
+                : mode.variable.times || 0;
+            return acc;
+          },
+          {} as Record<ModeName, number>,
+        );
         setInfo({
           times: times,
           score: g.score,
@@ -86,7 +89,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
     <div
       className={cn(
         "card secondary rounded-xl p-5 sm:p-6 flex flex-col gap-3 sm:gap-4 items-start",
-        className
+        className,
       )}
       {...rest}
     >
@@ -139,7 +142,10 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               style={{ color: "var(--muted)" }}
             >
               當前模式
-              <span className="ml-1 text-[0.7em]" style={{ color: "var(--muted)" }}>
+              <span
+                className="ml-1 text-[0.7em]"
+                style={{ color: "var(--muted)" }}
+              >
                 (點擊模式以查看說明)
               </span>
             </dt>
@@ -155,12 +161,18 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               )}
             </dd>
           </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2" data-theme="greenwei">
-            <dt className="text-xs sm:text-sm md:text-base" style={{ color: "var(--secondary)" }}>
+          <div
+            className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2"
+            data-theme="greenwei"
+          >
+            <dt
+              className="text-xs sm:text-sm md:text-base"
+              style={{ color: "var(--secondary)" }}
+            >
               <button
                 onClick={() =>
                   patternModal.open(
-                    game.getMode("greenwei")?.variable.bindPattern
+                    game.getMode("greenwei")?.variable.bindPattern,
                   )
                 }
               >
@@ -185,16 +197,20 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                 <div
                   key={mode}
                   data-theme={mode}
-                  className="card-primary flex items-center justify-between gap-3 py-2 px-3 rounded-md"
+                  className="card primary flex items-center justify-between gap-3 py-2 px-3 rounded-md"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: "var(--primary)" }} />
-                    <span className="text-xs sm:text-sm" style={{ color: "var(--muted)" }}>
+                    <span className="w-2 h-2 rounded-full bg-(--primary)" />
+                    <span
+                      className="text-xs sm:text-sm text-(--muted)"
+                    >
                       {description[mode].name} 次數
                     </span>
                   </div>
 
-                  <span className="text-sm sm:text-base font-bold" style={{ color: "var(--primary)" }}>
+                  <span
+                    className="text-sm sm:text-base font-bold text-(--primary) tabular-nums"
+                  >
                     {info.times[mode]}
                   </span>
                 </div>
