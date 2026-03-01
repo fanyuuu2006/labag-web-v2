@@ -45,10 +45,10 @@ export const MainSection = () => {
         </div>
       </div>
 
-      {/* 使用者登入資訊（固定底部） */}
+      {/* 使用者登入資訊 */}
       {!loading && (
-        <div className="fixed bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-          <div className="card-secondary text-sm md:text-base inline-flex items-center gap-3 px-4 py-2 rounded-full shadow-lg">
+        <div className="fixed bottom-6 left-6 z-40">
+          <div className="card-primary text-sm md:text-base flex items-center gap-3 px-3 py-2 rounded-full">
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="relative">
@@ -56,10 +56,10 @@ export const MainSection = () => {
                     <MyImage
                       src={user.avatar}
                       alt={user.name}
-                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover ring-1 ring-white/5"
+                      className="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover ring-1 ring-white/5"
                     />
                   ) : (
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-white/5 text-(--muted) font-medium ring-1 ring-white/5">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center bg-white/5 text-(--muted) font-medium ring-1 ring-white/5">
                       {(user.name && user.name.charAt(0)) || "U"}
                     </div>
                   )}
