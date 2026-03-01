@@ -279,7 +279,6 @@
     transform: scale(0.95);
     transition-duration: var(--transition-fast);
     filter: brightness(0.9);
-
   }
 
   button:hover,
@@ -347,17 +346,14 @@
     transition: all var(--transition-normal) var(--transition-timing);
   }
 
-  .card-primary {
+  .card.primary {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius-md);
     backdrop-filter: blur(0.25rem);
     transition: all var(--transition-normal) var(--transition-timing);
   }
-  .card-primary:hover {
-    border-color: color-mix(in oklab, var(--secondary) 30%, transparent);
-  }
-  .card-secondary {
+  .card.secondary {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--border-radius-md);
@@ -368,10 +364,14 @@
   .card:hover {
     border-color: var(--primary);
   }
+  .card.primary:hover {
+    border-color: color-mix(in oklab, var(--secondary) 30%, transparent);
+  }
+  .card.secondary:hover {
+    border-color: color-mix(in oklab, var(--primary) 30%, transparent);
+  }
 
-  a.card:hover,
-  a.card-primary:hover,
-  a.card-secondary:hover {
+  a.card:hover {
     transform: translateY(calc(-1 * var(--move-y)));
     border-color: var(--primary);
     text-decoration: none;

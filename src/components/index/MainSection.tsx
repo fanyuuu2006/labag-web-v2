@@ -48,7 +48,7 @@ export const MainSection = () => {
       {/* 使用者登入資訊 */}
       {!loading && (
         <div className="fixed bottom-6 left-6 z-40">
-          <div className="card-primary text-sm md:text-base flex items-center gap-3 px-4 py-2 rounded-full">
+          <div className="card primary text-sm md:text-base flex items-center gap-3 px-4 py-2 rounded-full">
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="relative">

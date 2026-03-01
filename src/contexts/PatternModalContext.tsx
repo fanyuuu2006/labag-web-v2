@@ -70,7 +70,7 @@ export const PatternModalProvider = ({
             <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6">
               {/**左側 Image */}
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
-                <div className="card-primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--secondary)">
+                <div className="card primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--secondary)">
                   <MyImage
                     src={`/images/patterns/${info.name}.jpg`}
                     alt={info.name}
@@ -88,7 +88,7 @@ export const PatternModalProvider = ({
               {/**右側 Info */}
               <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
                 {/**機率進度條 */}
-                <div className="card-primary p-3 sm:p-4 rounded-xl flex flex-col gap-1">
+                <div className="card primary p-3 sm:p-4 rounded-xl flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs sm:text-sm font-bold text-(--muted)">
                       當前出現機率
@@ -144,7 +144,7 @@ export const PatternModalProvider = ({
                     ].map((item, index) => (
                       <div
                         key={index}
-                        className="card-primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
+                        className="card primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
                       >
                         <span className="text-sm sm:text-base font-medium text-white/80">
                           {item.label}

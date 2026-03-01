@@ -64,7 +64,7 @@ export const MainSection = ({
           </div>
           {/* 剩餘排行榜列表 */}
           <div className="flex flex-col h-full overflow-hidden">
-            <div className="card-secondary w-full flex-1 overflow-y-auto p-4 lg:p-6">
+            <div className="card secondary w-full flex-1 overflow-y-auto p-4 lg:p-6">
               {rest.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>

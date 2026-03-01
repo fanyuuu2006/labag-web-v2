@@ -22,7 +22,7 @@ export const RestRankCard = memo(
 
     return (
       <div
-        className={cn("card-primary flex items-center p-4 gap-4", className)}
+        className={cn("card primary flex items-center p-4 gap-4", className)}
         {...rest}
       >
         <span className="text-[1.25em] text-(--muted) font-mono font-semibold shrink-0">
