@@ -203,7 +203,7 @@ export const UserModalProvider = ({
                       orderedRecords.map((record) => (
                         <div
                           key={record.id}
-                          className="card-primary group relative flex items-center justify-between p-3 md:p-4 transition-all duration-300 hover:brightness-110"
+                          className="card-primary group relative flex items-center justify-between p-3 md:p-4"
                         >
                           <div className="flex flex-col gap-0.5">
                             <FormatDate
