@@ -159,7 +159,7 @@ export const SettingProvider = ({
                         "w-full btn rounded-xl py-2 font-semibold transition-all",
                         {
                           primary: !user,
-                          "bg-red-600 text-white": !!user,
+                          "bg-red-500 text-white": !!user,
                         },
                       )}
                     />
