@@ -26,7 +26,8 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
     >
       {user ? (
         <button
-         aria-label="用戶資訊"
+          aria-label="查看用戶資訊"
+          title={`查看用戶資訊: ${user.name}`}
           className="flex items-center gap-3 px-1.5 py-1 rounded-full"
           onClick={() => userModal.open(user.id)}
         >
@@ -40,7 +41,10 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
 
           <div className="flex flex-col items-start leading-tight min-w-0 max-w-30 sm:max-w-37.5">
             <span className="text-(--muted) text-xs">歡迎回來</span>
-            <span className="font-medium text-(--primary) text-left truncate w-full">
+            <span
+              className="font-medium text-(--primary) text-left truncate w-full"
+              title={user.name}
+            >
               {user.name}
             </span>
           </div>
@@ -58,9 +62,10 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
 
       <button
         onClick={modal.open}
-        accessKey='s'
+        accessKey="s"
         className="btn flex items-center justify-center p-2 rounded-full hover:rotate-90 text-xl"
-        aria-label="打開設定"
+        aria-label="打開設定 (Alt + S)"
+        title="設定 (Alt + S)"
       >
         <SettingOutlined />
       </button>
