@@ -45,8 +45,7 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
           </div>
         </button>
       ) : (
-        <div className="flex items-center gap-3 pl-4">
-          <span className="text-(--muted) whitespace-nowrap">尚未登入?</span>
+        <div className="flex items-center p-2">
           <AuthButton className="font-medium text-(--primary) whitespace-nowrap">
             立即登入
           </AuthButton>
