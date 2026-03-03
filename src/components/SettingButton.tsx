@@ -19,14 +19,14 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
   return (
     <div
       className={cn(
-        "card primary text-base flex items-center gap-2 px-2 py-1 rounded-full",
+        "card primary text-base flex items-center gap-2 py-1 px-1.5 rounded-full",
         className,
       )}
       {...rest}
     >
       {user ? (
         <button
-          className="flex items-center gap-2 p-1"
+          className="flex items-center gap-3 px-1.5 py-1 rounded-full"
           onClick={() => userModal.open(user.id)}
         >
           <span className="flex relative rounded-full">
@@ -45,22 +45,23 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
           </div>
         </button>
       ) : (
-        <div className="flex items-center p-2">
+        <div className="flex items-center px-3">
           <AuthButton className="font-medium text-(--primary) whitespace-nowrap">
             立即登入
           </AuthButton>
         </div>
       )}
-      {/* 分隔線 */}
-      <div className="border-l-2 border-(--border) h-8" />
 
-        <button
-          onClick={modal.open}
-          className="btn rounded-full flex items-center justify-center p-2.5 sm:p-3 hover:rotate-90 text-xl md:text-2xl lg:text-3xl"
-          aria-label="打開設定"
-        >
-          <SettingOutlined />
-        </button>
+      {/* 分隔線 */}
+      <div className="w-px h-8 bg-(--border)" />
+
+      <button
+        onClick={modal.open}
+        className="btn flex items-center justify-center p-2 rounded-full hover:rotate-90 text-xl md:text-2xl lg:text-3xl"
+        aria-label="打開設定"
+      >
+        <SettingOutlined />
+      </button>
     </div>
   );
 };
