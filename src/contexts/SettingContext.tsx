@@ -51,7 +51,7 @@ const SettingItem = ({
         {label}
       </label>
     </div>
-    <ToggleSwitch id={id} value={value} setValue={setValue} />
+    <ToggleSwitch className="text-2xl" id={id} value={value} setValue={setValue} />
   </div>
 );
 
