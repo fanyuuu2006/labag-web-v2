@@ -88,7 +88,7 @@ export default function RootLayout({
                     <link rel="manifest" href="/manifest.json" />
                     <Header />
                     <main>{children}</main>
-                    <SettingButton className="fixed bottom-4 right-4 z-49 text-xl md:text-2xl lg:text-3xl" />
+                    <SettingButton className="fixed bottom-4 right-4 z-49" />
                   </SettingProvider>
                 </ModeModalProvider>
               </PatternModalProvider>
