@@ -21,7 +21,7 @@ type SettingOption<T> = {
 };
 
 interface SettingContextType {
-  modal: ReturnType<typeof useModal>;
+  modal: Omit<ReturnType<typeof useModal>, "Container">;
   music: SettingOption<boolean>;
   sound: SettingOption<boolean>;
 }
@@ -60,11 +60,11 @@ export const SettingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const modal = useModal({});
+  const { Container, ...modal } = useModal({});
   const [music, setMusic] = useState<boolean>(true);
   const [sound, setSound] = useState<boolean>(true);
   const userModal = useUserModal();
-  const { user, loading, } = useUser();
+  const { user, loading } = useUser();
   const value = useMemo(
     () => ({
       modal,
@@ -77,12 +77,12 @@ export const SettingProvider = ({
         set: setSound,
       },
     }),
-    [modal, music, sound]
+    [modal, music, sound],
   );
   return (
     <settingContext.Provider value={value}>
       {children}
-      <modal.Container className="bg-black/40 flex items-center justify-center p-6 z-50">
+      <Container className="bg-black/40 flex items-center justify-center p-6 z-50">
         <div
           role="dialog"
           aria-modal="true"
@@ -158,9 +158,9 @@ export const SettingProvider = ({
                       className={cn(
                         "w-full btn rounded-xl py-2 font-semibold transition-all",
                         {
-                          "primary": !user,
+                          primary: !user,
                           "bg-red-600 text-white": !!user,
-                        }
+                        },
                       )}
                     />
                   </div>
@@ -169,7 +169,7 @@ export const SettingProvider = ({
             </div>
           </div>
         </div>
-      </modal.Container>
+      </Container>
     </settingContext.Provider>
   );
 };
