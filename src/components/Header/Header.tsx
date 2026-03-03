@@ -7,8 +7,10 @@ import { useState, useCallback } from "react";
 import { Collapse } from "fanyucomponents";
 import { DesktopLink } from "./DesktopLink";
 import { MobileLink } from "./MobileLink";
+import { cn } from "@/utils/className";
 
-export const Header = () => {
+type HeaderProps = React.HTMLAttributes<HTMLElement>;
+export const Header = ({ className, ...rest }: HeaderProps) => {
   const [menuShow, setMenuShow] = useState<boolean>(false);
 
   const handleMenuToggle = useCallback(() => {
@@ -20,7 +22,13 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="relative z-50 w-full flex flex-col border-b border-(--border) bg-black/25 backdrop-blur-md transition-all">
+    <header
+      className={cn(
+        "flex flex-col border-b border-(--border) bg-black/25 backdrop-blur-md transition-all",
+        className,
+      )}
+      {...rest}
+    >
       <div className="container flex items-center justify-between p-6">
         <Link href="/" onClick={closeMenu}>
           <GlowText

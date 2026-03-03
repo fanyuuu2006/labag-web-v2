@@ -86,7 +86,7 @@ export default function RootLayout({
                   <SettingProvider>
                     <link rel="icon" href="/favicon.ico" />
                     <link rel="manifest" href="/manifest.json" />
-                    <Header />
+                    <Header className="sticky top-0 z-50" />
                     <main>{children}</main>
                     <SettingButton className="fixed bottom-4 right-4 z-49" />
                   </SettingProvider>
