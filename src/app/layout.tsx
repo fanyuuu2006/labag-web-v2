@@ -21,10 +21,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 
   authors: [
-    { name: "范余" },
-    { name: "范余振富" },
-    { name: "飯魚" },
-    { name: "飯魚正負" },
+    { name: "范余", url: "https://github.com/fanyuuu2006" },
+    { name: "范余振富", url: "https://github.com/fanyuuu2006" },
+    { name: "飯魚", url: "https://github.com/fanyuuu2006" },
+    { name: "飯魚正負", url: "https://github.com/fanyuuu2006" },
   ],
   keywords: [
     "啦八機",
