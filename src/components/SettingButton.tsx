@@ -37,9 +37,9 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
             />
           </span>
 
-          <div className="flex flex-col items-start leading-tight">
+          <div className="flex flex-col items-start leading-tight min-w-0 max-w-30 sm:max-w-37.5">
             <span className="text-(--muted) text-xs">歡迎回來</span>
-            <span className="font-medium text-(--primary) text-left">
+            <span className="font-medium text-(--primary) text-left truncate w-full">
               {user.name}
             </span>
           </div>
