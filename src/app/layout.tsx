@@ -15,10 +15,11 @@ import { DownloadOutlined } from "@ant-design/icons";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
-  title: site.title,
+  title: { default: site.title, template: `%s | ${site.title}` },
   description: site.description,
   icons: {
     icon: "/favicon.ico",
+    apple: "/icons/icon-192x192.png",
   },
   manifest: "/manifest.json",
 
@@ -57,19 +58,37 @@ export const metadata: Metadata = {
     description: "只需動動手指就能在無聊時候打發時間的小遊戲",
     url: "https://labag.vercel.app",
     siteName: "啦八機 LaBaG",
-    locale: "zh-TW",
+    locale: "zh_TW",
+    type: "website",
     images: [
       {
-        url: "/favicon.ico", // 分享時顯示的圖片
-        width: 600,
-        height: 600,
+        url: "/icons/icon-512x512.png",
+        width: 512,
+        height: 512,
         alt: "LaBaG Logo",
       },
     ],
-    type: "website",
   },
 
-  robots: "index, follow",
+  twitter: {
+    card: "summary",
+    title: "啦八機 LaBaG",
+    description: "只需動動手指就能在無聊時候打發時間的小遊戲",
+    images: ["/icons/icon-512x512.png"],
+  },
+
+  alternates: {
+    canonical: "/",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -86,8 +105,6 @@ export default function RootLayout({
               <PatternModalProvider>
                 <ModeModalProvider>
                   <SettingProvider>
-                    <link rel="icon" href="/favicon.ico" />
-                    <link rel="manifest" href="/manifest.json" />
                     <Header className="sticky top-0 z-50" />
                     <main>{children}</main>
                     <SettingButton className="fixed bottom-4 right-4 z-49" />

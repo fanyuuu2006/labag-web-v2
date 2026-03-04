@@ -1,4 +1,4 @@
-import { RootRoute } from "@/libs/routes";
+import { RootRoute } from "@/libs/site";
 import { cn } from "@/utils/className";
 import { CaretLeftOutlined } from "@ant-design/icons";
 import { Collapse, DistributiveOmit, OverrideProps } from "fanyucomponents";

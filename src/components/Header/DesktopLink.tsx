@@ -1,4 +1,4 @@
-import { RootRoute } from "@/libs/routes";
+import { RootRoute } from "@/libs/site";
 import { cn } from "@/utils/className";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import Link from "next/link";

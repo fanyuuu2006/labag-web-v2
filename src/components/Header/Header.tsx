@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { routes } from "@/libs/routes";
 import { GlowText } from "../GlowText";
 import { Burger } from "./Burger";
 import { useState, useCallback } from "react";
@@ -8,6 +7,7 @@ import { Collapse } from "fanyucomponents";
 import { DesktopLink } from "./DesktopLink";
 import { MobileLink } from "./MobileLink";
 import { cn } from "@/utils/className";
+import { routes } from "@/libs/site";
 
 type HeaderProps = React.HTMLAttributes<HTMLElement>;
 export const Header = ({ className, ...rest }: HeaderProps) => {
