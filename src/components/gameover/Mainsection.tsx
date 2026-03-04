@@ -5,6 +5,7 @@ import { GlowText } from "../GlowText";
 import { game } from "@/libs/game";
 import Link from "next/link";
 import { site } from "@/libs/site";
+import { DownloadRecordButton } from "./DownloadRecordButton";
 // import { DownloadRecordButton } from "./DownloadRecordButton";
 
 export const MainSection = () => {
@@ -56,10 +57,7 @@ export const MainSection = () => {
             遊戲結束 — 你的最終分數
           </p>
 
-          <div
-            role='status'
-            aria-live="polite"
-          >
+          <div role="status" aria-live="polite">
             <GlowText
               as="h2"
               onClick={handleShare}
@@ -69,9 +67,7 @@ export const MainSection = () => {
               <span className="sr-only">你的分數：</span>
               {score.toLocaleString()}
             </GlowText>
-            <p className="text-xs text-(--muted) mt-3">
-              (點擊分數分享)
-            </p>
+            <p className="text-xs text-(--muted) mt-3">(點擊分數分享)</p>
           </div>
 
           <nav
@@ -93,13 +89,13 @@ export const MainSection = () => {
             >
               排行榜
             </Link>
-            {/* <DownloadRecordButton
+            <DownloadRecordButton
               className="btn tertiary rounded-2xl py-3 px-8"
               aria-label="下載遊戲紀錄"
               title="下載遊戲紀錄"
             >
               下載紀錄
-            </DownloadRecordButton> */}
+            </DownloadRecordButton>
           </nav>
         </div>
       </div>
