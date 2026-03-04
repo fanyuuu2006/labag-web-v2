@@ -10,6 +10,8 @@ import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
 import { UserModalProvider } from "@/contexts/UserModalContext";
 import "@/styles/globals.css";
+import { InstallPWAButton } from "@/components/InstallPWAButton";
+import { DownloadOutlined } from "@ant-design/icons";
 
 export const metadata: Metadata = {
   metadataBase: site.url,
@@ -89,6 +91,9 @@ export default function RootLayout({
                     <Header className="sticky top-0 z-50" />
                     <main>{children}</main>
                     <SettingButton className="fixed bottom-4 right-4 z-49" />
+                    <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
+                      <DownloadOutlined className="text-xl" />
+                    </InstallPWAButton>
                   </SettingProvider>
                 </ModeModalProvider>
               </PatternModalProvider>
