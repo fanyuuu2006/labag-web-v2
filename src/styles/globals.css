@@ -31,8 +31,8 @@
 
     /* === Normal 主題變量 === */
     --normal-background: #05132a;
-    --normal-background-primary: #003387;
-    --normal-background-secondary: #012051;
+    --normal-primary-background: #003387;
+    --normal-secondary-background: #012051;
     --normal-primary: #00ffff;
     --normal-secondary: #4aaeff;
     --normal-tertiary: #556df3;
@@ -46,8 +46,8 @@
 
     /* === Superhhh 主題變量 === */
     --superhhh-background: #110f12;
-    --superhhh-background-primary: #440087;
-    --superhhh-background-secondary: #220151;
+    --superhhh-primary-background: #440087;
+    --superhhh-secondary-background: #220151;
     --superhhh-primary: #ff00ff;
     --superhhh-secondary: #d94aff;
     --superhhh-tertiary: #b06eff;
@@ -61,8 +61,8 @@
 
     /* === Greenwei 主題變量 === */
     --greenwei-background: #052a15;
-    --greenwei-background-primary: #008739;
-    --greenwei-background-secondary: #015122;
+    --greenwei-primary-background: #008739;
+    --greenwei-secondary-background: #015122;
     --greenwei-primary: #00ff66;
     --greenwei-secondary: #4aff99;
     --greenwei-tertiary: #6effaa;
@@ -76,8 +76,8 @@
 
     /* === Pikachu 主題變量 === */
     --pikachu-background: #2a2605;
-    --pikachu-background-primary: #877800;
-    --pikachu-background-secondary: #514801;
+    --pikachu-primary-background: #877800;
+    --pikachu-secondary-background: #514801;
     --pikachu-primary: #ffff00;
     --pikachu-secondary: #ffcc4a;
     --pikachu-tertiary: #ffaa6e;
@@ -108,8 +108,8 @@
   }
   * [data-theme="normal"] {
     --background: var(--normal-background);
-    --background-primary: var(--normal-background-primary);
-    --background-secondary: var(--normal-background-secondary);
+    --primary-background: var(--normal-primary-background);
+    --secondary-background: var(--normal-secondary-background);
     --primary: var(--normal-primary);
     --secondary: var(--normal-secondary);
     --tertiary: var(--normal-tertiary);
@@ -123,8 +123,8 @@
   }
   * [data-theme="superhhh"] {
     --background: var(--superhhh-background);
-    --background-primary: var(--superhhh-background-primary);
-    --background-secondary: var(--superhhh-background-secondary);
+    --primary-background: var(--superhhh-primary-background);
+    --secondary-background: var(--superhhh-secondary-background);
     --primary: var(--superhhh-primary);
     --secondary: var(--superhhh-secondary);
     --tertiary: var(--superhhh-tertiary);
@@ -138,8 +138,8 @@
   }
   * [data-theme="greenwei"] {
     --background: var(--greenwei-background);
-    --background-primary: var(--greenwei-background-primary);
-    --background-secondary: var(--greenwei-background-secondary);
+    --primary-background: var(--greenwei-primary-background);
+    --secondary-background: var(--greenwei-secondary-background);
     --primary: var(--greenwei-primary);
     --secondary: var(--greenwei-secondary);
     --tertiary: var(--greenwei-tertiary);
@@ -153,8 +153,8 @@
   }
   * [data-theme="pikachu"] {
     --background: var(--pikachu-background);
-    --background-primary: var(--pikachu-background-primary);
-    --background-secondary: var(--pikachu-background-secondary);
+    --primary-background: var(--pikachu-primary-background);
+    --secondary-background: var(--pikachu-secondary-background);
     --primary: var(--pikachu-primary);
     --secondary: var(--pikachu-secondary);
     --tertiary: var(--pikachu-tertiary);
@@ -298,7 +298,7 @@
   }
 
   .btn {
-    background: var(--background-primary);
+    background: var(--primary-background);
     border: 2px solid var(--border);
     color: var(--foreground);
   }
@@ -306,19 +306,19 @@
   .btn.primary {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     box-shadow: var(--shadow-base);
-    color: var(--background-primary);
+    color: var(--primary-background);
     border: none;
     font-weight: 700;
   }
   .btn.secondary {
-    background: var(--background-secondary);
+    background: var(--secondary-background);
     color: var(--secondary);
     border: 2px solid var(--secondary);
   }
 
   .btn.secondary:hover {
     background: var(--secondary);
-    color: var(--background-secondary);
+    color: var(--secondary-background);
     box-shadow: var(--shadow-base);
   }
 
@@ -340,7 +340,7 @@
 
   /* === 卡片系統 === */
   .card {
-    background: var(--background-secondary);
+    background: var(--secondary-background);
     border: 2px solid var(--secondary);
     border-radius: var(--border-radius-md);
     transition: all var(--transition-normal) var(--transition-timing);

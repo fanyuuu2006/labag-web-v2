@@ -12,8 +12,8 @@ const Badge = ({
 }: React.HTMLAttributes<HTMLSpanElement>) => (
   <span
     className={cn(
-      "bg-(--background-primary) text-(--primary) py-1 px-2 rounded-lg font-semibold text-sm",
-      className
+      "bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold text-sm",
+      className,
     )}
     {...rest}
   />
@@ -186,7 +186,12 @@ export const description: Record<
               <>
                 模式期間若出現任一「
                 {game.getMode("pikachu")?.variable.bindPattern.name}
-                」，則額外增加 <K>MIN(目前已觸發次數, {game.getMode("pikachu")?.variable.bonusRounds})</K> 次可玩次數。
+                」，則額外增加{" "}
+                <K>
+                  MIN(目前已觸發次數,{" "}
+                  {game.getMode("pikachu")?.variable.bonusRounds})
+                </K>{" "}
+                次可玩次數。
               </>
             ),
           },
