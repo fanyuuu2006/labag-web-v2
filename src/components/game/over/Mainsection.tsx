@@ -5,8 +5,6 @@ import { GlowText } from "../../GlowText";
 import { game } from "@/libs/game";
 import Link from "next/link";
 import { site } from "@/libs/site";
-import { DownloadRecordButton } from "./DownloadRecordButton";
-// import { DownloadRecordButton } from "./DownloadRecordButton";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -48,7 +46,7 @@ export const MainSection = () => {
   return (
     <section className="h-full">
       <div className="container h-full flex flex-col items-center justify-center">
-        <div className="card p-6 md:p-8 text-center w-full max-w-2xl">
+        <div className="card rounded-2xl p-6 md:p-8 text-center w-full max-w-2xl">
           <h1 className="text-(--primary) text-3xl md:text-5xl font-extrabold mb-2">
             GAME OVER
           </h1>
@@ -89,13 +87,13 @@ export const MainSection = () => {
             >
               排行榜
             </Link>
-            <DownloadRecordButton
+            {/* <DownloadRecordButton
               className="btn tertiary rounded-2xl py-3 px-8"
               aria-label="下載遊戲紀錄"
               title="下載遊戲紀錄"
             >
               下載紀錄
-            </DownloadRecordButton>
+            </DownloadRecordButton> */}
           </nav>
         </div>
       </div>

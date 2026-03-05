@@ -82,13 +82,13 @@ export const SettingProvider = ({
   return (
     <settingContext.Provider value={value}>
       {children}
-      <Container className="bg-black/40 flex items-center justify-center p-6 z-50">
+      <Container className="bg-black/40 flex items-center justify-center p-4 z-50">
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="setting-title"
           aria-describedby="setting-desc"
-          className="animate-pop card w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-6"
+          className="animate-pop card rounded-2xl w-full max-w-md sm:max-w-lg p-5 sm:p-6 flex flex-col gap-6"
         >
           <div
             id="setting-header"
