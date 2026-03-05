@@ -39,10 +39,10 @@ export const ModeModalProvider = ({
       {children}
       <modal.Container
         data-theme={mode}
-        className="bg-black/40 flex items-center justify-center p-6 z-50"
+        className="bg-black/40 flex items-center justify-center p-4 z-50"
       >
         {mode ? (
-          <div className="w-full max-w-xs sm:max-w-md md:max-w-lg card flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop">
+          <div className="w-full max-w-xs sm:max-w-md md:max-w-lg card rounded-2xl flex flex-col items-center p-4 sm:p-6 gap-4 animate-pop">
             <GlowText
               as="h3"
               className="text-2xl sm:text-3xl font-extrabold underline-spread"

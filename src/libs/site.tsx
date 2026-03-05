@@ -1,4 +1,4 @@
-import { HomeOutlined, TrophyOutlined } from "@ant-design/icons";
+import { BookOutlined, HomeOutlined, TrophyOutlined } from "@ant-design/icons";
 import { VALID_KEYS } from "./backend";
 import { statsData } from "./rankings";
 
@@ -32,5 +32,10 @@ export const routes: RootRoute[] = [
       label: statsData[key].label,
       href: `/${key}`,
     })),
+  },
+  {
+    label: "關於",
+    href: "/about",
+    icon: BookOutlined,
   },
 ];

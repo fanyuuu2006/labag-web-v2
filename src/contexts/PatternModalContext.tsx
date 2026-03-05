@@ -47,7 +47,7 @@ export const PatternModalProvider = ({
         aria-labelledby="pattern-modal-title"
       >
         {info && (
-          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
+          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
             {/* Header */}
             <header className="flex items-center justify-between sticky top-0 z-10">
               <GlowText

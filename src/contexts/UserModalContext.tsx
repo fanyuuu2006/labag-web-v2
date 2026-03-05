@@ -101,11 +101,11 @@ export const UserModalProvider = ({
     <userModalContext.Provider value={value}>
       {children}
       <modal.Container
-        className="bg-black/40 flex items-center justify-center p-2 md:p-4 z-51"
+        className="bg-black/40 flex items-center justify-center p-4 z-51"
         aria-labelledby="currUser-modal-title"
       >
         {id && (
-          <div className="animate-pop card w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-[85vh] overflow-hidden">
+          <div className="animate-pop card rounded-2xl w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-[85vh] overflow-hidden">
             {/** Header */}
             <header className="flex items-center justify-between">
               <GlowText
