@@ -22,8 +22,8 @@ export const MainSection = ({
   const rest = useMemo(() => items?.slice(3) || [], [items]);
 
   return (
-    <section className="h-full">
-      <div className="container h-full grid grid-rows-[auto_1fr] overflow-y-hidden overflow-x-auto gap-4 lg:gap-6">
+    <section>
+      <div className="container grid grid-rows-[auto_1fr] overflow-y-hidden overflow-x-auto gap-4 lg:gap-6">
         {/* 標題*/}
         <div className="flex flex-col items-center justify-center">
           <span className="text-white/50 text-sm md:text-base tracking-[0.2em] mb-1">
