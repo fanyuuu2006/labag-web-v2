@@ -12,7 +12,10 @@ import {
   UserOutlined,
   GithubOutlined,
   LinkOutlined,
+  InstagramOutlined,
+  YoutubeOutlined,
 } from "@ant-design/icons";
+import { OutsideLink } from "fanyucomponents";
 
 const TIMELINE_EVENTS = [
   {
@@ -20,7 +23,7 @@ const TIMELINE_EVENTS = [
     date: "6 月 22 日",
     title: "第一代啦八機誕生",
     description:
-      "治平高中商務二孝的那個本壘板 🍚🐟 正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。",
+      "治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。",
   },
   {
     year: "2023-2024",
@@ -34,7 +37,7 @@ const TIMELINE_EVENTS = [
     date: "8 月",
     title: "接觸程式設計",
     description:
-      "🍚🐟 高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏上程式學習之路。",
+      "飯魚高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏上程式學習之路。",
   },
   {
     year: "2025",
@@ -73,9 +76,9 @@ const TECH_STACK = [
 ];
 
 const AUTHOR_INFO = {
-  name: "🍚🐟 (FanYu)",
+  name: "飯魚 FanYu (范余振富)",
   description:
-    "一位熱愛程式開發的大學生，致力於創造有趣且實用的網頁應用。從 MIT App Inventor 到 Next.js，不斷探索新技術的可能性。",
+    "就讀於國立臺灣科技大學資訊管理系，一位熱愛程式開發的學生開發者。從 Minecraft 紅石機關啟蒙邏輯思維，高中接觸 App Inventor 後踏入程式領域。目前專注於學習前端與後端技術，熟練使用 Next.js、React、TypeScript 等現代網頁技術。",
   links: [
     {
       name: "GitHub",
@@ -87,11 +90,21 @@ const AUTHOR_INFO = {
       href: "https://fanyu.vercel.app/",
       icon: LinkOutlined,
     },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/fan._.yuuu",
+      icon: InstagramOutlined,
+    },
+    {
+      name: "YouTube",
+      href: "https://www.youtube.com/@fan_yuuu",
+      icon: YoutubeOutlined,
+    },
   ],
 };
 
 const BACKGROUND_STORY =
-  "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者 🍚🐟 從零開始學習程式的過程。";
+  "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者飯魚從零開始學習程式的過程。";
 
 export const MainSection = () => {
   return (
@@ -128,16 +141,14 @@ export const MainSection = () => {
                 </p>
                 <div className="flex gap-4">
                   {AUTHOR_INFO.links.map((link) => (
-                    <a
+                    <OutsideLink
                       key={link.name}
                       href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
+                      className="card primary rounded-full px-3 py-1 flex items-center gap-2"
                     >
                       <link.icon className="text-xl" />
                       <span>{link.name}</span>
-                    </a>
+                    </OutsideLink>
                   ))}
                 </div>
               </div>
