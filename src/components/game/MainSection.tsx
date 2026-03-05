@@ -20,7 +20,7 @@ export const MainSection = () => {
         if (sound.value) {
           playAudio(`/audios/ding.mp3`);
         }
-        router.replace("/gameover");
+        router.replace("/game/over");
       }, 3500);
     };
 
