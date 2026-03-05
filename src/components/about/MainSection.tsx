@@ -2,6 +2,9 @@
 
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
+import { description } from "@/libs/game";
+import { useModeModal } from "@/contexts/ModeModalContext";
+import { ModeName } from "labag";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -14,6 +17,7 @@ import {
   LinkOutlined,
   InstagramOutlined,
   YoutubeOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 
@@ -105,6 +109,25 @@ const AUTHOR_INFO = {
 
 const BACKGROUND_STORY =
   "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者飯魚從零開始學習程式的過程。";
+
+const ModeCard = ({
+  modeKey,
+  modeData,
+}: {
+  modeKey: ModeName;
+  modeData: { name: string };
+}) => {
+  const modal = useModeModal();
+  return (
+    <button
+      onClick={() => modal.open(modeKey)}
+      className="btn secondary w-full py-8 text-xl sm:text-2xl font-bold rounded-2xl"
+      data-theme={modeKey}
+    >
+      {modeData.name}
+    </button>
+  );
+};
 
 export const MainSection = () => {
   return (
@@ -233,6 +256,30 @@ export const MainSection = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* 遊戲模式介紹 */}
+        <div className="space-y-8">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
+              <AppstoreOutlined className="text-(--primary)" />
+              <span>遊戲模式介紹</span>
+            </h2>
+            <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
+              {site.title} 擁有多種獨特的遊玩模式，每個模式都有其特殊的觸發條件與計分規則。
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {(
+              Object.entries(description) as [
+                ModeName,
+                (typeof description)[ModeName],
+              ][]
+            ).map(([key, mode]) => (
+              <ModeCard key={key} modeKey={key} modeData={mode} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
