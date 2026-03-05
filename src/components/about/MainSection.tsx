@@ -9,6 +9,9 @@ import {
   RocketOutlined,
   CodeOutlined,
   HistoryOutlined,
+  UserOutlined,
+  GithubOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 
 const TIMELINE_EVENTS = [
@@ -64,30 +67,31 @@ const TECH_STACK = [
   "Next.js",
   "TypeScript",
   "Tailwind CSS",
-  "Ant Design",
+  "Supabase",
+  "Express",
   "Vercel",
 ];
 
 export const MainSection = () => {
   return (
-    <section className="min-h-full py-12 md:py-20 px-4">
-      <div className="container mx-auto space-y-24 md:space-y-32">
+    <section className="min-h-full py-12 px-4">
+      <div className="container mx-auto space-y-24 lg:space-y-32">
         {/* 頁首 */}
         <div className="text-center space-y-6">
           <GlowText
             as="h1"
-            className="text-4xl md:text-6xl font-bold tracking-tight"
+            className="text-4xl lg:text-6xl font-bold tracking-tight"
           >
             關於 {site.title}
           </GlowText>
-          <p className="text-lg md:text-xl text-(--muted) max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg lg:text-xl text-(--muted) max-w-2xl mx-auto leading-relaxed">
             {site.description}
           </p>
         </div>
 
-        {/* 發展歷程 (Timeline) */}
-        <div className="grid lg:grid-cols-12 gap-12 items-start relative">
-          <div className="lg:col-span-5 space-y-8 lg:sticky lg:top-24">
+        {/* 發展歷程 */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start relative">
+          <div className="space-y-8 lg:sticky lg:top-24">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold flex items-center gap-3">
                 <RocketOutlined className="text-(--primary)" />
@@ -115,39 +119,64 @@ export const MainSection = () => {
                 ))}
               </div>
             </div>
+
+            {/* 作者介紹 */}
+            <div className="space-y-4 pt-4 border-t border-(--border)">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <UserOutlined className="text-(--primary)" />
+                <span>關於作者</span>
+              </h3>
+              <div className="space-y-3">
+                <p className="text-(--muted) text-lg leading-relaxed">
+                  🍚🐟 (FanYu)
+                </p>
+                <div className="flex gap-4">
+                  <a
+                    href="https://github.com/fanyuuu2006"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
+                  >
+                    <GithubOutlined className="text-xl" />
+                    <span>GitHub</span>
+                  </a>
+                  <a
+                    href="https://fanyu.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
+                  >
+                    <LinkOutlined className="text-xl" />
+                    <span>Website</span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="lg:col-span-7 relative pl-8 lg:pl-0 border-l border-(--border)/30 lg:border-none">
-             {/* Timeline Line (Desktop Only) */}
-            <div className="hidden lg:block absolute left-4 top-4 bottom-4 w-0.5 bg-[linear-gradient(to_bottom,var(--primary),var(--secondary),transparent)] opacity-50 md:left-8"></div>
-            
-            {/* Mobile Timeline Line */}
-            <div className="block lg:hidden absolute left-0 top-0 bottom-0 w-0.5 bg-[linear-gradient(to_bottom,var(--primary),var(--secondary),transparent)] opacity-50"></div>
+          <div className="relative">
+            {/* 時間軸線 */}
+            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-(--border) opacity-50 lg:left-8 lg:top-4 lg:bottom-4"></div>
 
             <div className="space-y-12">
               {TIMELINE_EVENTS.map((event, idx) => (
-                <div key={idx} className="relative lg:pl-20 group">
-                  {/* Timeline Dot */}
-                  <div className="hidden lg:block absolute left-2.75 top-1.5 w-3 h-3 rounded-full bg-(--primary) shadow-[0_0_10px_var(--primary)] md:left-6.75 ring-4 ring-(--background)"></div>
-                  
-                  {/* Mobile Dot */}
-                  <div className="block lg:hidden absolute -left-1.25 top-1.5 w-2.5 h-2.5 rounded-full bg-(--primary) shadow-[0_0_10px_var(--primary)] ring-2 ring-(--background)"></div>
+                <div key={idx} className="relative pl-12 lg:pl-20 group">
+                  {/* 時間軸圓點 */}
+                  <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75 ring-4 ring-(--background)"></div>
 
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3 text-sm font-mono text-(--primary) opacity-80">
+                    <div className="flex items-center gap-3 text-sm font-mono text-(--muted)">
                       <HistoryOutlined />
-                      <span>{event.year}</span>
-                      <span className="w-1 h-1 bg-current rounded-full"></span>
-                      <span>{event.date}</span>
+                      <span>{event.year} - {event.date}</span>
                     </div>
-                    <div className="card secondary p-6 space-y-2 relative overflow-hidden group-hover:border-(--primary)/card transition-[border-color] duration-(--transition-normal)">
+                    <article className="card secondary p-4 space-y-2">
                       <h3 className="text-xl font-bold text-(--foreground)">
                         {event.title}
                       </h3>
                       <p className="text-(--muted) leading-relaxed">
                         {event.description}
                       </p>
-                    </div>
+                    </article>
                   </div>
                 </div>
               ))}
@@ -156,7 +185,7 @@ export const MainSection = () => {
         </div>
 
         {/* 特色區塊 */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6">
           {FEATURES.map((feat) => (
             <div
               key={feat.title}
