@@ -43,7 +43,8 @@ export const MainSection = () => {
   return (
     <section className="min-h-full py-12 md:py-20 px-4">
       <div className="container mx-auto space-y-16 md:space-y-24">
-        {/* Header Section */}
+
+        {/* 頁首 */}
         <div className="text-center space-y-4">
           <GlowText
             as="h1"
@@ -56,7 +57,7 @@ export const MainSection = () => {
           </p>
         </div>
 
-        {/* Background Story */}
+        {/* 背景故事 */}
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
@@ -77,7 +78,7 @@ export const MainSection = () => {
           </div>
         </div>
 
-        {/* Features Grid */}
+        {/* 特色區塊 */}
         <div className="grid md:grid-cols-3 gap-6">
           {FEATURES.map((feat) => (
             <div
@@ -95,7 +96,7 @@ export const MainSection = () => {
           ))}
         </div>
 
-        {/* Tech Stack & Developer */}
+        {/* 技術棧與聯繫方式 */}
         <div className="card secondary p-8 md:p-12 text-center space-y-8">
           <div className="space-y-6">
             <h2 className="text-2xl font-bold">技術棧</h2>
