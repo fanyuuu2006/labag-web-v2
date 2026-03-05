@@ -170,7 +170,6 @@ export const MainSection = () => {
         {/* 發展歷程 */}
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           <div className="space-y-8 lg:sticky lg:top-24">
-            作者介紹
             <div className="space-y-4">
               <h2 className="text-3xl font-bold flex items-center gap-3">
                 <UserOutlined className="text-(--primary)" />
