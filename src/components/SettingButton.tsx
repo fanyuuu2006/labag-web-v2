@@ -18,14 +18,14 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
       onClick={modal.open}
       accessKey="s"
       className={cn(
-        "btn flex items-center justify-center p-2 rounded-full text-xl",
+        "card primary flex items-center justify-center p-2 rounded-full text-2xl",
         className,
       )}
       aria-label="打開設定 (Alt + S)"
       title="設定 (Alt + S)"
       {...rest}
     >
-      {!user || loading ? (
+      {!user ? (
         <SettingOutlined />
       ) : (
         <MyImage
@@ -33,7 +33,7 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
           fallbackSrc={`/default-avatar.jpg`}
           alt={`${user.name} 的頭像`}
           title={`${user.name} 的頭像`}
-          className="w-[1em] object-cover rounded-full"
+          className="w-[1em] object-cover rounded-full border border-(--secondary)"
         />
       )}
     </button>
