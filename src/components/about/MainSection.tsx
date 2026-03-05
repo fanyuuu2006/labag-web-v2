@@ -12,33 +12,6 @@ import {
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 import Link from "next/link";
-import { cn } from "@/utils/className";
-
-const TechBadge = ({ children }: { children: React.ReactNode }) => (
-  <span className="px-3 py-1 bg-white/5 rounded-full text-sm text-(--muted) border border-(--border) hover:bg-white/10 transition-colors">
-    {children}
-  </span>
-);
-
-const FeatureCard = ({
-  icon: Icon,
-  title,
-  description,
-}: {
-  icon: any;
-  title: string;
-  description: string;
-}) => (
-  <div className="card secondary p-6 flex flex-col items-start gap-4 hover:-translate-y-1 transition-all duration-300">
-    <div className="w-12 h-12 rounded-full bg-linear-to-br from-(--primary)/20 to-(--secondary)/20 flex items-center justify-center text-(--primary)">
-      <Icon className="text-2xl" />
-    </div>
-    <div>
-      <h3 className="text-xl font-bold mb-2 ml-1">{title}</h3>
-      <p className="text-(--muted) leading-relaxed">{description}</p>
-    </div>
-  </div>
-);
 
 export const MainSection = () => {
   return (
@@ -53,7 +26,7 @@ export const MainSection = () => {
             關於 {site.title}
           </GlowText>
           <p className="text-xl md:text-2xl text-(--muted) max-w-2xl mx-auto font-light">
-            探索無聊時光的最佳解藥，簡單卻令人上癮的點擊遊戲。
+            {site.description}
           </p>
         </div>
 
@@ -87,21 +60,41 @@ export const MainSection = () => {
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <FeatureCard
-            icon={ThunderboltOutlined}
-            title="極速體驗"
-            description="採用 Next.js App Router 架構，頁面切換流暢無比，即開即玩，無需等待。"
-          />
-          <FeatureCard
-            icon={CloudServerOutlined}
-            title="PWA 支援"
-            description="支援漸進式網頁應用 (PWA)，可安裝至桌面或手機，離線也能隨時開啟。"
-          />
-          <FeatureCard
-            icon={GlobalOutlined}
-            title="全球排行"
-            description="與全世界的玩家一較高下，挑戰最高分數，在排行榜上留下你的名字。"
-          />
+          {[
+            {
+              title: "極速體驗",
+              description:
+                "採用 Next.js App Router 架構，頁面切換流暢無比，即開即玩，無需等待。",
+              icon: ThunderboltOutlined,
+            },
+            {
+              title: "PWA 支援",
+              description:
+                "支援漸進式網頁應用 (PWA)，可安裝至桌面或手機，離線也能隨時開啟。",
+              icon: CloudServerOutlined,
+            },
+            {
+              title: "全球排行",
+              description:
+                "與全世界的玩家一較高下，挑戰最高分數，在排行榜上留下你的名字。",
+              icon: GlobalOutlined,
+            },
+          ].map((feat) => (
+            <div
+              key={feat.title}
+              className="card secondary p-6 flex flex-col items-start gap-4"
+            >
+              <div className="card primary p-3 rounded-full flex items-center justify-center text-(--primary)">
+                <feat.icon className="text-2xl" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-2 ml-1">{feat.title}</h3>
+                <p className="text-(--muted) leading-relaxed">
+                  {feat.description}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Tech Stack & Developer */}
@@ -109,12 +102,20 @@ export const MainSection = () => {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">技術棧</h2>
             <div className="flex flex-wrap justify-center gap-3">
-              <TechBadge>Next.js 15</TechBadge>
-              <TechBadge>React 19</TechBadge>
-              <TechBadge>TypeScript</TechBadge>
-              <TechBadge>Tailwind CSS 4</TechBadge>
-              <TechBadge>Framer Motion</TechBadge>
-              <TechBadge>PWA</TechBadge>
+              {[
+                "Next.js 15",
+                "React 19",
+                "TypeScript",
+                "Tailwind CSS 4",
+                "PWA",
+              ].map((tech) => (
+                <span
+                  key={tech}
+                  className="card primary rounded-full px-3 py-1 flex items-center justify-center"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
 
