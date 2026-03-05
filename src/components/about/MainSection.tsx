@@ -13,6 +13,14 @@ import {
 import { OutsideLink } from "fanyucomponents";
 import Link from "next/link";
 
+const BACKGROUND_STORY = `2023 年 6 月 22 日，治平高中商務二孝的那個本壘板 🍚🐟 正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，想無聊做個小遊戲，運用以前玩 Minecraft 做紅石機關的邏輯、從手機相簿裡面隨便找的幾張圖片，以及網路上隨便抓的垃 X 音效與音樂，於是第一代啦八機誕生了。
+
+後續陸續新增了 超級阿禾模式 (SuperHHH)、綠光阿瑋模式 (GreenWei)、皮卡丘充電模式 (PiKaChu) 等模式。
+
+2024 年 8 月，🍚🐟 已經高中畢業，即將進入大學，去買了人生第一台電腦，為了學習 Python，於是一邊透過用 Python 還原啦八機，一邊學習相關知識。
+
+2025 年 2 月，🍚🐟 開始接觸前端技術，決定使用 Next.js 重構啦八機，藉由網頁應用呈現更豐富的互動體驗，同時學習現代前端開發的最佳實踐。`;
+
 export const MainSection = () => {
   return (
     <section className="min-h-full py-12 md:py-20 px-4">
@@ -30,25 +38,18 @@ export const MainSection = () => {
           </p>
         </div>
 
-        {/* Origin Story */}
+        {/* Background Story */}
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className="space-y-6 order-2 md:order-1">
             <h2 className="text-3xl font-bold flex items-center gap-3">
               <RocketOutlined className="text-(--primary)" />
-              <span>起源故事</span>
+              <span>創作背景</span>
             </h2>
-            <div className="space-y-4 text-(--muted) leading-relaxed text-lg">
-              <p>
-                這一切始於一個簡單的想法：
-                <span className="text-(--foreground) font-medium">
-                  「如何在最無聊的時候，找到最純粹的快樂？」
-                </span>
-              </p>
-              <p>
-                {site.title}{" "}
-                最初只是一個小小的實驗專案，隨著時間推移，我們加入了更多有趣的模式、排行榜系統以及現代化的介面設計，讓這款遊戲成為了打發時間的最佳夥伴。
-              </p>
-            </div>
+            <article className="flex flex-col items-start gap-2 text-lg">
+              {BACKGROUND_STORY.split("\n").map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
+            </article>
           </div>
           <div className="card primary h-64 md:h-80 flex items-center justify-center p-8 overflow-hidden order-1 md:order-2 group relative">
             <div className="absolute inset-0 bg-[url('/images/patterns/pop/bg.svg')] opacity-10 bg-repeat animate-pulse"></div>
