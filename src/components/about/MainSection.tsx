@@ -170,7 +170,7 @@ export const MainSection = () => {
         {/* 發展歷程 */}
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           <div className="space-y-8 lg:sticky lg:top-24">
-            {/* 作者介紹 */}
+            作者介紹
             <div className="space-y-4">
               <h2 className="text-3xl font-bold flex items-center gap-3">
                 <UserOutlined className="text-(--primary)" />
@@ -183,7 +183,7 @@ export const MainSection = () => {
                 <p className="text-(--muted) leading-relaxed">
                   {AUTHOR_INFO.description}
                 </p>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   {AUTHOR_INFO.links.map((link) => (
                     <OutsideLink
                       key={link.name}
@@ -229,13 +229,13 @@ export const MainSection = () => {
 
           <div className="relative">
             {/* 時間軸線 */}
-            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-(--border) opacity-50 lg:left-8 lg:top-4 lg:bottom-4"></div>
+            <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-(--border) lg:left-8 lg:top-4 lg:bottom-4"></div>
 
             <div className="space-y-12">
               {TIMELINE_EVENTS.map((event, idx) => (
                 <div key={idx} className="relative pl-12 lg:pl-20 group">
                   {/* 時間軸圓點 */}
-                  <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75 ring-4 ring-(--background)"></div>
+                  <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75"></div>
 
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-sm font-mono text-(--muted)">
@@ -245,7 +245,7 @@ export const MainSection = () => {
                       </span>
                     </div>
                     <article className="card secondary p-4 space-y-2">
-                      <h3 className="text-xl font-bold text-(--foreground)">
+                      <h3 className="text-xl font-bold">
                         {event.title}
                       </h3>
                       <p className="text-(--muted) leading-relaxed">
