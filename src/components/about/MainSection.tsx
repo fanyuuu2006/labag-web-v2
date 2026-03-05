@@ -72,6 +72,27 @@ const TECH_STACK = [
   "Vercel",
 ];
 
+const AUTHOR_INFO = {
+  name: "🍚🐟 (FanYu)",
+  description:
+    "一位熱愛程式開發的大學生，致力於創造有趣且實用的網頁應用。從 MIT App Inventor 到 Next.js，不斷探索新技術的可能性。",
+  links: [
+    {
+      name: "GitHub",
+      href: "https://github.com/fanyuuu2006",
+      icon: GithubOutlined,
+    },
+    {
+      name: "Website",
+      href: "https://fanyu.vercel.app/",
+      icon: LinkOutlined,
+    },
+  ],
+};
+
+const BACKGROUND_STORY =
+  "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者 🍚🐟 從零開始學習程式的過程。";
+
 export const MainSection = () => {
   return (
     <section className="min-h-full py-12 px-4">
@@ -100,30 +121,24 @@ export const MainSection = () => {
               </h2>
               <div className="space-y-3">
                 <p className="text-(--muted) text-lg leading-relaxed">
-                  🍚🐟 (FanYu)
+                  {AUTHOR_INFO.name}
                 </p>
                 <p className="text-(--muted) leading-relaxed">
-                  一位熱愛程式開發的大學生，致力於創造有趣且實用的網頁應用。從 MIT App Inventor 到 Next.js，不斷探索新技術的可能性。
+                  {AUTHOR_INFO.description}
                 </p>
                 <div className="flex gap-4">
-                  <a
-                    href="https://github.com/fanyuuu2006"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
-                  >
-                    <GithubOutlined className="text-xl" />
-                    <span>GitHub</span>
-                  </a>
-                  <a
-                    href="https://fanyu.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
-                  >
-                    <LinkOutlined className="text-xl" />
-                    <span>Website</span>
-                  </a>
+                  {AUTHOR_INFO.links.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-(--muted) hover:text-(--foreground) transition-colors"
+                    >
+                      <link.icon className="text-xl" />
+                      <span>{link.name}</span>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -134,20 +149,20 @@ export const MainSection = () => {
                 <span>創作背景</span>
               </h3>
               <p className="text-(--muted) text-lg leading-relaxed">
-                這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者 🍚🐟 從零開始學習程式的過程。
+                {BACKGROUND_STORY}
               </p>
             </div>
-            
+
             {/* 技術棧展示 */}
             <div className="space-y-4 pt-4 border-t border-(--border)">
               <h3 className="text-xl font-bold flex items-center gap-2">
-                <CodeOutlined className="text-(--secondary)" /> 
+                <CodeOutlined className="text-(--secondary)" />
                 <span>技術與工具</span>
               </h3>
               <div className="flex flex-wrap gap-2">
                 {TECH_STACK.map((tech) => (
-                  <span 
-                    key={tech} 
+                  <span
+                    key={tech}
                     className="card primary px-3 py-1 rounded-full text-sm font-medium "
                   >
                     {tech}
@@ -170,7 +185,9 @@ export const MainSection = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-sm font-mono text-(--muted)">
                       <HistoryOutlined />
-                      <span>{event.year} - {event.date}</span>
+                      <span>
+                        {event.year} - {event.date}
+                      </span>
                     </div>
                     <article className="card secondary p-4 space-y-2">
                       <h3 className="text-xl font-bold text-(--foreground)">
@@ -199,7 +216,9 @@ export const MainSection = () => {
               </div>
               <div className="space-y-3">
                 <h3 className="text-xl font-bold">{feat.title}</h3>
-                <p className="text-(--muted) leading-relaxed">{feat.description}</p>
+                <p className="text-(--muted) leading-relaxed">
+                  {feat.description}
+                </p>
               </div>
             </div>
           ))}
