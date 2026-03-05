@@ -4,7 +4,9 @@ import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { description } from "@/libs/game";
 import { useModeModal } from "@/contexts/ModeModalContext";
-import { ModeName } from "labag";
+import { ModeName, patterns, Pattern } from "labag";
+import { usePatternModal } from "@/contexts/PatternModalContext";
+import { MyImage } from "@/components/MyImage";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -125,6 +127,25 @@ const ModeCard = ({
       data-theme={modeKey}
     >
       {modeData.name}
+    </button>
+  );
+};
+
+const PatternCard = ({ pattern }: { pattern: Pattern }) => {
+  const modal = usePatternModal();
+  return (
+    <button
+      onClick={() => modal.open(pattern)}
+      className="btn secondary p-3 sm:p-4 h-full flex flex-col items-center gap-3 rounded-xl"
+    >
+      <div className="w-full aspect-square rounded-lg overflow-hidden relative">
+        <MyImage
+          src={`/images/patterns/${pattern.name}.jpg`}
+          alt={pattern.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <span className="font-bold text-sm sm:text-base">{pattern.name}</span>
     </button>
   );
 };
@@ -278,6 +299,25 @@ export const MainSection = () => {
               ][]
             ).map(([key, mode]) => (
               <ModeCard key={key} modeKey={key} modeData={mode} />
+            ))}
+          </div>
+        </div>
+
+        {/* 遊戲圖案一覽 */}
+        <div className="space-y-8 pb-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
+              <AppstoreOutlined className="text-(--primary)" />
+              <span>遊戲圖案一覽</span>
+            </h2>
+            <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
+              點擊圖案可查看詳細計分資訊與出現機率。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {patterns.map((pattern) => (
+              <PatternCard key={pattern.name} pattern={pattern} />
             ))}
           </div>
         </div>

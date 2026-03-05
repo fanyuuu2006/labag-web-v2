@@ -6,7 +6,6 @@ import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 import { DetailItem } from "@/components/DetailItem";
 import { description } from "@/libs/game";
-
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
