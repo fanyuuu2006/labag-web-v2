@@ -3,15 +3,11 @@
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import {
-  GithubOutlined,
   ThunderboltOutlined,
   GlobalOutlined,
   CloudServerOutlined,
   RocketOutlined,
-  PlayCircleOutlined,
 } from "@ant-design/icons";
-import { OutsideLink } from "fanyucomponents";
-import Link from "next/link";
 
 const BACKGROUND_STORY = `2023 年 6 月 22 日，治平高中商務二孝的那個本壘板 🍚🐟 正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，想無聊做個小遊戲，運用以前玩 Minecraft 做紅石機關的邏輯、從手機相簿裡面隨便找的幾張圖片，以及網路上隨便抓的垃 X 音效與音樂，於是第一代啦八機誕生了。
 
@@ -43,7 +39,6 @@ export const MainSection = () => {
   return (
     <section className="min-h-full py-12 md:py-20 px-4">
       <div className="container mx-auto space-y-16 md:space-y-24">
-
         {/* 頁首 */}
         <div className="text-center space-y-4">
           <GlowText
@@ -94,55 +89,6 @@ export const MainSection = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* 技術棧與聯繫方式 */}
-        <div className="card secondary p-8 md:p-12 text-center space-y-8">
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold">技術棧</h2>
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                "Next.js 15",
-                "React 19",
-                "TypeScript",
-                "Tailwind CSS 4",
-                "PWA",
-              ].map((tech) => (
-                <span
-                  key={tech}
-                  className="card primary px-4 py-2 rounded-full text-sm font-medium"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="border-t border-(--border) w-1/2 mx-auto" />
-
-          <div className="space-y-6">
-            <p className="text-(--muted)">
-              由 <span className="text-(--foreground) font-bold">Fanyu</span>{" "}
-              獨立開發與維護
-            </p>
-            <div className="flex justify-center gap-4">
-              <OutsideLink
-                href="https://github.com/fanyuuu2006/labag-web-v2"
-                className="btn secondary flex items-center gap-2 px-6 py-3 rounded-full font-bold"
-                title="GitHub Repo"
-              >
-                <GithubOutlined className="text-xl" />
-                <span>GitHub</span>
-              </OutsideLink>
-              <Link
-                href="/game"
-                className="btn primary flex items-center gap-2 px-6 py-3 rounded-full font-bold"
-              >
-                <PlayCircleOutlined className="text-xl" />
-                <span>開始遊戲</span>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </section>
