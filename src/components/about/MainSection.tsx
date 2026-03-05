@@ -92,43 +92,18 @@ export const MainSection = () => {
         {/* 發展歷程 */}
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           <div className="space-y-8 lg:sticky lg:top-24">
+            {/* 作者介紹 */}
             <div className="space-y-4">
               <h2 className="text-3xl font-bold flex items-center gap-3">
-                <RocketOutlined className="text-(--primary)" />
-                <span>創作背景</span>
-              </h2>
-              <p className="text-(--muted) text-lg leading-relaxed">
-                這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者 🍚🐟 從零開始學習程式的過程。
-              </p>
-            </div>
-            
-            {/* 技術棧展示 */}
-            <div className="space-y-4 pt-4 border-t border-(--border)">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <CodeOutlined className="text-(--secondary)" /> 
-                <span>技術與工具</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {TECH_STACK.map((tech) => (
-                  <span 
-                    key={tech} 
-                    className="card primary px-3 py-1 rounded-full text-sm font-medium "
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 作者介紹 */}
-            <div className="space-y-4 pt-4 border-t border-(--border)">
-              <h3 className="text-xl font-bold flex items-center gap-2">
                 <UserOutlined className="text-(--primary)" />
                 <span>關於作者</span>
-              </h3>
+              </h2>
               <div className="space-y-3">
                 <p className="text-(--muted) text-lg leading-relaxed">
                   🍚🐟 (FanYu)
+                </p>
+                <p className="text-(--muted) leading-relaxed">
+                  一位熱愛程式開發的大學生，致力於創造有趣且實用的網頁應用。從 MIT App Inventor 到 Next.js，不斷探索新技術的可能性。
                 </p>
                 <div className="flex gap-4">
                   <a
@@ -150,6 +125,34 @@ export const MainSection = () => {
                     <span>Website</span>
                   </a>
                 </div>
+              </div>
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-(--border)">
+              <h3 className="text-xl font-bold flex items-center gap-3">
+                <RocketOutlined className="text-(--primary)" />
+                <span>創作背景</span>
+              </h3>
+              <p className="text-(--muted) text-lg leading-relaxed">
+                這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者 🍚🐟 從零開始學習程式的過程。
+              </p>
+            </div>
+            
+            {/* 技術棧展示 */}
+            <div className="space-y-4 pt-4 border-t border-(--border)">
+              <h3 className="text-xl font-bold flex items-center gap-2">
+                <CodeOutlined className="text-(--secondary)" /> 
+                <span>技術與工具</span>
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {TECH_STACK.map((tech) => (
+                  <span 
+                    key={tech} 
+                    className="card primary px-3 py-1 rounded-full text-sm font-medium "
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

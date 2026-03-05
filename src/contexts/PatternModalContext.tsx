@@ -88,7 +88,7 @@ export const PatternModalProvider = ({
               {/**右側 Info */}
               <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
                 {/**機率進度條 */}
-                <div className="card primary p-3 sm:p-4 rounded-xl flex flex-col gap-1">
+                <div className="p-2 flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs sm:text-sm font-bold text-(--muted)">
                       當前出現機率
