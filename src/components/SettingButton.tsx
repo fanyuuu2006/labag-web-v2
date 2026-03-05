@@ -18,7 +18,7 @@ export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
       onClick={modal.open}
       accessKey="s"
       className={cn(
-        "card primary flex items-center justify-center p-2 rounded-full text-2xl",
+        "btn secondary flex items-center justify-center p-2 rounded-full text-2xl",
         className,
       )}
       aria-label="打開設定 (Alt + S)"

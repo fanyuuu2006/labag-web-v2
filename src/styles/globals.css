@@ -367,7 +367,7 @@
     border-color: color-mix(in oklab, var(--secondary) 30%, transparent);
   }
   .card.secondary:hover {
-    border-color: color-mix(in oklab, var(--secondary) 18%, transparent);
+    border-color: color-mix(in oklab, var(--secondary) 30%, transparent);
   }
 
   a.card:hover {

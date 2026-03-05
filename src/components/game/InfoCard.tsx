@@ -150,15 +150,10 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
               </span>
             </dt>
             <dd className="flex items-center flex-wrap gap-2">
-              {info.currentModes.length > 0 ? (
+              {info.currentModes.length > 0 &&
                 info.currentModes.map((mode, idx) => (
                   <ModeBadge key={idx} mode={mode} />
-                ))
-              ) : (
-                <span className="text-xs sm:text-sm md:text-base font-semibold">
-                  無
-                </span>
-              )}
+                ))}
             </dd>
           </div>
           <div
@@ -201,16 +196,12 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                 >
                   <div className="flex items-center gap-3">
                     <span className="w-2 h-2 rounded-full bg-(--primary)" />
-                    <span
-                      className="text-xs sm:text-sm text-(--muted)"
-                    >
+                    <span className="text-xs sm:text-sm text-(--muted)">
                       {description[mode].name} 次數
                     </span>
                   </div>
 
-                  <span
-                    className="text-sm sm:text-base font-bold text-(--primary) tabular-nums"
-                  >
+                  <span className="text-sm sm:text-base font-bold text-(--primary) tabular-nums">
                     {info.times[mode]}
                   </span>
                 </div>
