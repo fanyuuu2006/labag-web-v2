@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
-import { GlowText } from "../GlowText";
+import { GlowText } from "../../GlowText";
 import { game } from "@/libs/game";
 import Link from "next/link";
 import { site } from "@/libs/site";
