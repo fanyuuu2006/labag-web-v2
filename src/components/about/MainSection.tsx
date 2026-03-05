@@ -2,51 +2,144 @@
 
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
-import { GithubOutlined } from "@ant-design/icons";
+import {
+  GithubOutlined,
+  ThunderboltOutlined,
+  GlobalOutlined,
+  CloudServerOutlined,
+  RocketOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
+import Link from "next/link";
+import { cn } from "@/utils/className";
+
+const TechBadge = ({ children }: { children: React.ReactNode }) => (
+  <span className="px-3 py-1 bg-white/5 rounded-full text-sm text-(--muted) border border-(--border) hover:bg-white/10 transition-colors">
+    {children}
+  </span>
+);
+
+const FeatureCard = ({
+  icon: Icon,
+  title,
+  description,
+}: {
+  icon: any;
+  title: string;
+  description: string;
+}) => (
+  <div className="card secondary p-6 flex flex-col items-start gap-4 hover:-translate-y-1 transition-all duration-300">
+    <div className="w-12 h-12 rounded-full bg-linear-to-br from-(--primary)/20 to-(--secondary)/20 flex items-center justify-center text-(--primary)">
+      <Icon className="text-2xl" />
+    </div>
+    <div>
+      <h3 className="text-xl font-bold mb-2 ml-1">{title}</h3>
+      <p className="text-(--muted) leading-relaxed">{description}</p>
+    </div>
+  </div>
+);
 
 export const MainSection = () => {
   return (
-    <section className="flex flex-col items-center justify-center p-6 md:p-12 gap-8 min-h-[calc(100vh-80px)]">
-      <div className="max-w-4xl w-full flex flex-col gap-8 text-center animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <GlowText
-          as="h1"
-          className="text-4xl md:text-6xl font-bold tracking-wider"
-        >
-          關於 {site.title}
-        </GlowText>
+    <section className="min-h-full py-12 md:py-20 px-4">
+      <div className="container mx-auto max-w-6xl space-y-20">
+        {/* Header Section */}
+        <div className="text-center space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <GlowText
+            as="h1"
+            className="text-5xl md:text-7xl font-bold tracking-tight inline-block"
+          >
+            關於 {site.title}
+          </GlowText>
+          <p className="text-xl md:text-2xl text-(--muted) max-w-2xl mx-auto font-light">
+            探索無聊時光的最佳解藥，簡單卻令人上癮的點擊遊戲。
+          </p>
+        </div>
 
-        <div className="bg-black/20 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 shadow-xl text-left space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-white mb-2">網站介紹</h2>
-            <p className="text-lg md:text-xl text-gray-200 leading-relaxed font-light">
-              {site.description}
-              。這是一個專為消磨時間設計的簡單網頁遊戲，結合了現代化的介面設計與流暢的操作體驗。
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-white mb-2">關於專案</h2>
-            <p className="text-gray-300 leading-relaxed">
-              本專案是一個開源項目，旨在探索 Next.js 與現代前端技術的應用。
-              無論您是在通勤途中，還是工作間隙，都可以隨時打開享受片刻輕鬆。
-            </p>
-          </div>
-
-          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <span className="text-sm text-gray-400">
-                © {new Date().getFullYear()} Fanyu. Developed with ❤️
-              </span>
+        {/* Origin Story */}
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="space-y-6 order-2 md:order-1">
+            <h2 className="text-3xl font-bold flex items-center gap-3">
+              <RocketOutlined className="text-(--primary)" />
+              <span>起源故事</span>
+            </h2>
+            <div className="space-y-4 text-(--muted) leading-relaxed text-lg">
+              <p>
+                這一切始於一個簡單的想法：
+                <span className="text-(--foreground) font-medium">
+                  「如何在最無聊的時候，找到最純粹的快樂？」
+                </span>
+              </p>
+              <p>
+                {site.title}{" "}
+                最初只是一個小小的實驗專案，隨著時間推移，我們加入了更多有趣的模式、排行榜系統以及現代化的介面設計，讓這款遊戲成為了打發時間的最佳夥伴。
+              </p>
             </div>
+          </div>
+          <div className="card primary h-64 md:h-80 flex items-center justify-center p-8 overflow-hidden order-1 md:order-2 group relative">
+            <div className="absolute inset-0 bg-[url('/images/patterns/pop/bg.svg')] opacity-10 bg-repeat animate-pulse"></div>
+            <GlowText className="text-8xl md:text-9xl font-black opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-700 select-none">
+              ?
+            </GlowText>
+          </div>
+        </div>
 
-            <OutsideLink
-              href="https://github.com/fanyuuu2006/labag-web-v2"
-              className="card primary rounded-full flex items-center gap-2 px-5 py-2.5"
-            >
-              <GithubOutlined className="text-xl" />
-              <span>GitHub</span>
-            </OutsideLink>
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <FeatureCard
+            icon={ThunderboltOutlined}
+            title="極速體驗"
+            description="採用 Next.js App Router 架構，頁面切換流暢無比，即開即玩，無需等待。"
+          />
+          <FeatureCard
+            icon={CloudServerOutlined}
+            title="PWA 支援"
+            description="支援漸進式網頁應用 (PWA)，可安裝至桌面或手機，離線也能隨時開啟。"
+          />
+          <FeatureCard
+            icon={GlobalOutlined}
+            title="全球排行"
+            description="與全世界的玩家一較高下，挑戰最高分數，在排行榜上留下你的名字。"
+          />
+        </div>
+
+        {/* Tech Stack & Developer */}
+        <div className="card secondary p-8 md:p-12 text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">技術棧</h2>
+            <div className="flex flex-wrap justify-center gap-3">
+              <TechBadge>Next.js 15</TechBadge>
+              <TechBadge>React 19</TechBadge>
+              <TechBadge>TypeScript</TechBadge>
+              <TechBadge>Tailwind CSS 4</TechBadge>
+              <TechBadge>Framer Motion</TechBadge>
+              <TechBadge>PWA</TechBadge>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-(--border)">
+            <p className="text-(--muted) mb-6">
+              由 <span className="text-(--foreground) font-bold">Fanyu</span>{" "}
+              獨立開發與維護，感謝所有遊玩本遊戲的玩家。
+            </p>
+            <div className="flex justify-center gap-4">
+              <OutsideLink
+                href="https://github.com/fanyuuu2006/labag-web-v2"
+                className="btn secondary flex items-center gap-2 px-6 py-3 rounded-full font-medium"
+                title="GitHub Repo"
+              >
+                <GithubOutlined className="text-xl" />
+                <span>GitHub</span>
+              </OutsideLink>
+              <Link
+                href="/game"
+                className="btn primary flex items-center gap-2 px-6 py-3 rounded-full font-bold shadow-lg"
+              >
+                <PlayCircleOutlined className="text-xl" />
+                <span>馬上開始</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
