@@ -104,13 +104,15 @@ export default function RootLayout({
     <html lang="en">
       <UserProvider>
         <ModesProvider>
-          <Body>
+          <Body className="flex min-h-screen flex-col">
             <UserModalProvider>
               <PatternModalProvider>
                 <ModeModalProvider>
                   <SettingProvider>
                     <Header className="sticky top-0 z-50" />
-                    <main>{children}</main>
+                    <main className="h-full w-full overflow-y-auto">
+                      {children}
+                    </main>
                     <SettingButton className="fixed bottom-4 right-4 z-49" />
                     <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
                       <DownloadOutlined className="text-xl" />
