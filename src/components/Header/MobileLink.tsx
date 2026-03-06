@@ -39,12 +39,12 @@ export const MobileLink = ({
   );
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-full flex items-center justify-between py-3 px-6 border-b border-(--border)">
+    <div className="flex flex-col w-full">
+      <div className="relative flex w-full items-center justify-center border-b border-(--border) py-4">
         <Link
           href={route.href}
           className={cn(
-            "text-nowrap font-semibold flex items-center justify-center gap-2 text-(--muted) transition-colors duration-300 hover:text-(--primary)",
+            "flex items-center gap-2 text-nowrap font-semibold text-(--muted) transition-colors duration-300 hover:text-(--primary)",
             {
               "text-(--primary)": isActive,
             },
@@ -56,38 +56,43 @@ export const MobileLink = ({
           {route.icon && <route.icon className="text-[0.75em]" />}
           <span>{route.label}</span>
         </Link>
-
         {hasSubRoute && (
           <button
             onClick={handleToggleSubMenu}
-            className={cn("p-1 text-(--muted)")}
+            className="absolute right-4 p-2 text-(--muted) transition-colors duration-300 hover:text-(--primary)"
             aria-label={isSubMenuOpen ? "關閉子選單" : "開啟子選單"}
             aria-expanded={isSubMenuOpen}
             aria-controls={`sub-menu-${route.href.replace("/", "")}`}
           >
             <CaretLeftOutlined
-              className={cn("transition-transform duration-200", {
+              className={cn("transition-transform duration-300", {
                 "-rotate-90": isSubMenuOpen,
               })}
             />
           </button>
         )}
       </div>
-      {/* 子選單區域 */}
+
       {hasSubRoute && (
         <Collapse
           state={isSubMenuOpen}
           className="slide-collapse"
           id={`sub-menu-${route.href.replace("/", "")}`}
         >
-          <div className="flex flex-col text-[0.8em] p-1">
+          <div className="flex flex-col bg-black/20 border-b border-(--border)">
             {route.subRoutes!.map((sub) => {
+              const isSubActive = pathName === `${route.href}${sub.href}`;
               return (
                 <Link
                   key={sub.href}
                   href={`${route.href}${sub.href}`}
                   onClick={handleLinkClick}
-                  className="px-8 py-3 text-(--muted) flex items-center justify-center gap-2"
+                  className={cn(
+                    "flex items-center justify-center gap-2 py-3 text-[0.9em] text-(--muted) transition-colors duration-300 hover:text-(--primary)",
+                    {
+                      "text-(--primary)": isSubActive,
+                    }
+                  )}
                 >
                   {sub.icon && <sub.icon className="text-[0.75em]" />}
                   {sub.label}
