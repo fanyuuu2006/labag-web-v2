@@ -1,8 +1,31 @@
 import { MainSection } from "@/components/rankings/[key]/MainSection";
 import { VALID_KEYS } from "@/libs/backend";
+import { statsData } from "@/libs/rankings";
 import { SupabaseUserStatsViewItem } from "@/types/backend";
 import { statsByKey } from "@/utils/backend";
 import { formatDate } from "@/utils/date";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/rankings/[key]">): Promise<Metadata> {
+  const { key } = await params;
+  const label =
+    statsData[key as (typeof VALID_KEYS)[number]]?.label || "排行榜";
+
+  return {
+    title: label,
+    description: `查看${label}的最新排名`,
+    openGraph: {
+      title: label,
+      description: `查看${label}的最新排名`,
+      url: `/rankings/${key}`,
+    },
+    alternates: {
+      canonical: `/rankings/${key}`,
+    },
+  };
+}
 
 export default async function RankingsKey({
   params,

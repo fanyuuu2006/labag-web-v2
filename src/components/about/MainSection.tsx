@@ -283,7 +283,7 @@ export const MainSection = () => {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
               <AppstoreOutlined className="text-(--primary)" />
-              <span>遊戲模式介紹</span>
+              <span>模式介紹</span>
             </h2>
             <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
               {site.title} 擁有多種獨特的遊玩模式，每個模式都有其特殊的觸發條件與計分規則。
@@ -307,7 +307,7 @@ export const MainSection = () => {
           <div className="text-center space-y-4">
             <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
               <AppstoreOutlined className="text-(--primary)" />
-              <span>遊戲圖案一覽</span>
+              <span>圖案一覽</span>
             </h2>
             <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
               點擊圖案可查看詳細計分資訊與出現機率。

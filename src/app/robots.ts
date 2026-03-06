@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/login-success", "/gameover"],
+      disallow: ["/login-success", "/game/over"],
     },
     sitemap: `${site.url.origin}/sitemap.xml`,
   };
