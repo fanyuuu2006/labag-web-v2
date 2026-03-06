@@ -3,10 +3,7 @@
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { modeDescriptions } from "@/components/gameModeDescriptions";
-import { useModeModal } from "@/contexts/ModeModalContext";
-import { ModeName, patterns, Pattern } from "labag";
-import { usePatternModal } from "@/contexts/PatternModalContext";
-import { MyImage } from "@/components/MyImage";
+import { ModeName, patterns } from "labag";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -22,6 +19,8 @@ import {
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
+import { ModeCard } from "./ModeCard";
+import { PatternCard } from "./PatternCard";
 
 const TIMELINE_EVENTS = [
   {
@@ -111,44 +110,6 @@ const AUTHOR_INFO = {
 
 const BACKGROUND_STORY =
   "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者飯魚從零開始學習程式的過程。";
-
-const ModeCard = ({
-  modeKey,
-  modeData,
-}: {
-  modeKey: ModeName;
-  modeData: { name: string };
-}) => {
-  const modal = useModeModal();
-  return (
-    <button
-      onClick={() => modal.open(modeKey)}
-      className="btn secondary w-full py-8 text-xl sm:text-2xl font-bold rounded-2xl"
-      data-theme={modeKey}
-    >
-      {modeData.name}
-    </button>
-  );
-};
-
-const PatternCard = ({ pattern }: { pattern: Pattern }) => {
-  const modal = usePatternModal();
-  return (
-    <button
-      onClick={() => modal.open(pattern)}
-      className="btn secondary p-3 sm:p-4 h-full flex flex-col items-center gap-3 rounded-xl"
-    >
-      <div className="w-full aspect-square rounded-lg overflow-hidden relative">
-        <MyImage
-          src={`/images/patterns/${pattern.name}.jpg`}
-          alt={pattern.name}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <span className="font-bold text-sm sm:text-base">{pattern.name}</span>
-    </button>
-  );
-};
 
 const CONTENTS: ContentDivProps[] = [
   {
