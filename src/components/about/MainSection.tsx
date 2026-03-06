@@ -171,14 +171,14 @@ export const MainSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           <div className="space-y-8 lg:sticky lg:top-24">
             <div className="space-y-4">
-              <h2 className="text-3xl font-bold flex items-center gap-3">
+              <h2 className="text-xl font-bold flex items-center gap-3">
                 <UserOutlined className="text-(--primary)" />
                 <span>關於作者</span>
               </h2>
               <div className="space-y-3">
-                <p className="text-(--muted) text-lg leading-relaxed">
+                <h4 className="text-2xl lg:text-3xl font-bold">
                   {AUTHOR_INFO.name}
-                </p>
+                </h4>
                 <p className="text-(--muted) leading-relaxed">
                   {AUTHOR_INFO.description}
                 </p>

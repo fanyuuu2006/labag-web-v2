@@ -274,6 +274,11 @@ export const description: Record<
           },
           {
             content: "狀態期間的高分圖案機率大幅提升。",
+            sub: [
+              {
+                content: <>...</>,
+              },
+            ],
           },
         ],
       },
