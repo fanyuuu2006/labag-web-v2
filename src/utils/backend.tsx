@@ -15,42 +15,42 @@ export const userMe = (token: string) =>
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
 
 export const userById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseAllowFieldsUser>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`,
   );
 
 export const records = (queryParams?: { count?: `${number}` }) => {
   const param = new URLSearchParams(queryParams);
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseRecord[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records${query ? `?${query}` : ""}`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records${query ? `?${query}` : ""}`,
   );
 };
 export const recordsById = (
   id: SupabaseUser["id"],
-  queryParams?: Record<"count", string>
+  queryParams?: Record<"count", string>,
 ) => {
   const param = new URLSearchParams(queryParams);
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseRecord[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records${
       query ? `?${query}` : ""
-    }`
+    }`,
   );
 };
 
 export const statsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`,
   );
 
 export const stats = () =>
   fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats`,
   );
 
 export const statsByKey = (
@@ -58,11 +58,23 @@ export const statsByKey = (
   queryParams?: {
     ascending?: `${boolean}`;
     count?: `${number}`;
-  }
+  },
 ) => {
   const param = new URLSearchParams(queryParams);
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${key}${query ? `?${query}` : ""}`
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${key}${query ? `?${query}` : ""}`,
   );
 };
+
+export const refreshAccessToken = (refreshToken: string) =>
+  fetcher<BackendResponse<{ access_token: string; refreshToken: string }>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/refresh/`,
+    {
+      method: "POST",
+      body: JSON.stringify({ refresh_token: refreshToken }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );

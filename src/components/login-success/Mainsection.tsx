@@ -2,7 +2,11 @@
 import { useRouter } from "next/navigation";
 import { GlowText } from "../GlowText";
 import { useEffect, useState } from "react";
-import { LOCAL_STORAGE_KEY, useUser } from "@/contexts/UserContext";
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  useUser,
+} from "@/contexts/UserContext";
 
 export const MainSection = () => {
   const router = useRouter();
@@ -12,13 +16,16 @@ export const MainSection = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
     // 從 URL 取得 token
-    const token = new URLSearchParams(window.location.search).get("token");
+    const searchParams = new URLSearchParams(window.location.search);
+    const accessToken = searchParams.get("accessToken");
+    const refreshToken = searchParams.get("refreshToken");
 
     // 一些登入之後的邏輯
 
-    if (token) {
+    if (accessToken && refreshToken) {
       // 儲存 token 到 localStorage
-      localStorage.setItem(LOCAL_STORAGE_KEY, token);
+      localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
       refresh();
       // 使用 setTimeout 避免在 useEffect 中同步更新 state 導致的警告
       setTimeout(() => {

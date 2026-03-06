@@ -12,7 +12,7 @@ import {
 } from "react";
 import { game, recorder } from "@/libs/game";
 import { fetcher } from "@/utils/fetcher";
-import { userMe } from "@/utils/backend";
+import { userMe, refreshAccessToken } from "@/utils/backend";
 import { useRouter } from "next/navigation";
 
 interface UserContextType {
@@ -23,7 +23,8 @@ interface UserContextType {
   logOut: () => void;
 }
 
-export const LOCAL_STORAGE_KEY = "authToken";
+export const ACCESS_TOKEN_KEY = "AT";
+export const REFRESH_TOKEN_KEY = "RT";
 
 const userContext = createContext<UserContextType | null>(null);
 
@@ -34,25 +35,55 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const logIn = useCallback((signBy: SignBy) => {
     window.location.href = `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/${signBy}/`;
   }, []);
+
+  
+    const clearAuth = () => {
+      localStorage.removeItem(ACCESS_TOKEN_KEY);
+      localStorage.removeItem(REFRESH_TOKEN_KEY);
+      setUser(null);
+    };
+
   const logOut = useCallback(() => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    clearAuth();
     router.replace("/");
-    setUser(null);
   }, [router]);
-  const refresh = useCallback(() => {
-    const token = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+  const refresh = useCallback(async () => {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (!token) return;
     setLoading(true);
-    userMe(token)
-      .then((data) => {
-        setUser(data.data);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+
+
+    try {
+      const { data } = await userMe(token);
+      if (data) {
+        setUser(data);
+      } else {
+        const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+        if (!refreshToken) {
+          clearAuth();
+          return;
+        }
+        const { data: refreshData } = await refreshAccessToken(refreshToken);
+        if (refreshData) {
+          const { access_token, refreshToken: newRefreshToken } = refreshData;
+          localStorage.setItem(ACCESS_TOKEN_KEY, access_token);
+          localStorage.setItem(REFRESH_TOKEN_KEY, newRefreshToken);
+          const { data: newData } = await userMe(access_token);
+          if (newData) {
+            setUser(newData);
+          } else {
+            clearAuth();
+          }
+        } else {
+          clearAuth();
+        }
+      }
+    } catch {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const value = useMemo(
@@ -63,11 +94,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       logOut,
       refresh,
     }),
-    [user, loading, logIn, logOut, refresh]
+    [user, loading, logIn, logOut, refresh],
   );
 
   useEffect(() => {
-    if (user || !localStorage.getItem(LOCAL_STORAGE_KEY)) return;
+    if (user || !localStorage.getItem(ACCESS_TOKEN_KEY)) return;
     const fetchUser = async () => {
       refresh();
     };
@@ -84,11 +115,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${
-              localStorage.getItem(LOCAL_STORAGE_KEY) || ""
+              localStorage.getItem(ACCESS_TOKEN_KEY) || ""
             }`,
           },
           body: JSON.stringify(recorder.getRecord()),
-        }
+        },
       )
         .then((res) => {
           console.log("上傳分數成功", res);
