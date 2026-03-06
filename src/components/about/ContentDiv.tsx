@@ -2,7 +2,7 @@ import { cn } from "@/utils/className";
 import { AppstoreOutlined } from "@ant-design/icons";
 import { OverrideProps } from "fanyucomponents";
 
-type ContentDivProps = OverrideProps<
+export type ContentDivProps = OverrideProps<
   React.HTMLAttributes<HTMLDivElement>,
   {
     title: string;

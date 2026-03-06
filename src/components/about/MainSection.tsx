@@ -21,7 +21,7 @@ import {
   YoutubeOutlined,
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
-import { ContentDiv } from "./ContentDiv";
+import { ContentDiv, ContentDivProps } from "./ContentDiv";
 
 const TIMELINE_EVENTS = [
   {
@@ -150,6 +150,60 @@ const PatternCard = ({ pattern }: { pattern: Pattern }) => {
   );
 };
 
+const CONTENTS: ContentDivProps[] = [
+  {
+    title: "網站特色",
+    description: `啦八機網頁版採用現代前端技術打造，提供流暢的使用體驗和豐富的功能。以下是一些主要特色：`,
+    children: (
+      <div className="grid lg:grid-cols-3 gap-6">
+        {FEATURES.map((feat) => (
+          <div
+            key={feat.title}
+            className="card secondary p-8 flex flex-col gap-6 text-center items-center"
+          >
+            <div className="text-5xl text-(--primary) opacity-80">
+              <feat.icon />
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold">{feat.title}</h3>
+              <p className="text-(--muted) leading-relaxed">
+                {feat.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    ),
+  },
+  {
+    title: "模式介紹",
+    description: `啦八機擁有多種獨特的遊玩模式，每個模式都有其特殊的觸發條件與計分規則\n點擊各模式卡片可查看詳細介紹`,
+    children: (
+      <div className="grid md:grid-cols-2 gap-6">
+        {(
+          Object.entries(modeDescriptions) as [
+            ModeName,
+            (typeof modeDescriptions)[ModeName],
+          ][]
+        ).map(([key, mode]) => (
+          <ModeCard key={key} modeKey={key} modeData={mode} />
+        ))}
+      </div>
+    ),
+  },
+  {
+    title: "圖案一覽",
+    description: "點擊圖案可查看詳細計分資訊與出現機率",
+    children: (
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {patterns.map((pattern) => (
+          <PatternCard key={pattern.name} pattern={pattern} />
+        ))}
+      </div>
+    ),
+  },
+];
+
 export const MainSection = () => {
   return (
     <section className="min-h-full py-12 px-4">
@@ -255,60 +309,9 @@ export const MainSection = () => {
             </div>
           </div>
         </div>
-
-        {/* 特色區塊 */}
-        <ContentDiv
-          title="網站特色"
-          description={`啦八機網頁版採用現代前端技術打造\n提供流暢的使用體驗和豐富的功能`}
-        >
-          <div className="grid lg:grid-cols-3 gap-6">
-            {FEATURES.map((feat) => (
-              <div
-                key={feat.title}
-                className="card secondary p-8 flex flex-col gap-6 text-center items-center"
-              >
-                <div className="text-5xl text-(--primary) opacity-80">
-                  <feat.icon />
-                </div>
-                <div className="space-y-3">
-                  <h3 className="text-xl font-bold">{feat.title}</h3>
-                  <p className="text-(--muted) leading-relaxed">
-                    {feat.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ContentDiv>
-
-        {/* 遊戲模式介紹 */}
-        <ContentDiv
-          title="模式介紹"
-          description={`啦八機擁有多種獨特的遊玩模式\n點擊各模式卡片可查看詳細介紹`}
-        >
-          <div className="grid md:grid-cols-2 gap-6">
-            {(
-              Object.entries(modeDescriptions) as [
-                ModeName,
-                (typeof modeDescriptions)[ModeName],
-              ][]
-            ).map(([key, mode]) => (
-              <ModeCard key={key} modeKey={key} modeData={mode} />
-            ))}
-          </div>
-        </ContentDiv>
-
-        {/* 遊戲圖案一覽 */}
-        <ContentDiv
-          title="圖案一覽"
-          description="點擊圖案可查看詳細計分資訊與出現機率"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {patterns.map((pattern) => (
-              <PatternCard key={pattern.name} pattern={pattern} />
-            ))}
-          </div>
-        </ContentDiv>
+        {CONTENTS.map((content, idx) => (
+          <ContentDiv key={idx} {...content} />
+        ))}
       </div>
     </section>
   );
