@@ -301,14 +301,25 @@ export const modeDescriptions: Record<
               {
                 content: (
                   <div className="flex flex-col gap-1">
-                    {Object.entries(game.getMode("superhhh")?.rates || {}).map(
-                      (r, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <Highlight>{r[0]}</Highlight>
-                          <span>{r[1]}%</span>
-                        </div>
-                      ),
-                    )}
+                    {Object.entries(game.getMode("superhhh")?.rates || {})
+                      .sort(([, a], [, b]) => b - a)
+                      .map(([pattern, rate]) => {
+                        const isPositive = rate > 0;
+                        return (
+                          <div key={pattern} className="flex items-center gap-1.5">
+                            <span className="capitalize">{pattern}</span>
+                            <span
+                              className={cn("font-mono", {
+                                "text-green-400": isPositive,
+                                "text-red-400": !isPositive,
+                              })}
+                            >
+                              {isPositive && "+"}
+                              {rate}%
+                            </span>
+                          </div>
+                        );
+                      })}
                   </div>
                 ),
               },
