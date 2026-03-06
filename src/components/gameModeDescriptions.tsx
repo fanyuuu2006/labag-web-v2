@@ -17,7 +17,10 @@ const Badge = ({
   />
 );
 
-const Highlight = ({ className, ...rest }: React.HTMLAttributes<HTMLElement>) => (
+const Highlight = ({
+  className,
+  ...rest
+}: React.HTMLAttributes<HTMLElement>) => (
   <strong
     className={cn("text-(--primary) font-extrabold", className)}
     {...rest}
@@ -59,8 +62,8 @@ export const modeDescriptions: Record<
           {
             content: (
               <>
-                兩個相同：獲得中等分 + 另一圖案的最低分，除以 <Highlight>1.4</Highlight>{" "}
-                後取整。
+                兩個相同：獲得中等分 + 另一圖案的最低分，除以{" "}
+                <Highlight>1.4</Highlight> 後取整。
               </>
             ),
           },
@@ -95,7 +98,8 @@ export const modeDescriptions: Record<
           {
             content: (
               <>
-                機率： <Highlight>{game.getMode("greenwei")?.variable.rate}</Highlight>
+                機率：{" "}
+                <Highlight>{game.getMode("greenwei")?.variable.rate}</Highlight>
                 %；累積次數達{" "}
                 <Highlight>
                   {game.getMode("greenwei")?.variable.requiredBindPatternCount}
@@ -117,10 +121,15 @@ export const modeDescriptions: Record<
           {
             content: (
               <>
-                啟動獲得 <Highlight>+{game.getMode("greenwei")?.variable.bonusTimes}</Highlight>{" "}
+                啟動獲得{" "}
+                <Highlight>
+                  +{game.getMode("greenwei")?.variable.bonusTimes}
+                </Highlight>{" "}
                 回合；期間同時出現全
                 {game.getMode("greenwei")?.variable.bindPattern.name}再
-                <Highlight>+{game.getMode("greenwei")?.variable.extendTimes}</Highlight>
+                <Highlight>
+                  +{game.getMode("greenwei")?.variable.extendTimes}
+                </Highlight>
               </>
             ),
           },
@@ -137,8 +146,14 @@ export const modeDescriptions: Record<
             content: (
               <>
                 獲得分數提升{" "}
-                <Highlight>{(game.getMode("greenwei")?.variable.mutiplier ?? 1) - 1}</Highlight> 倍
-                (乘以<Highlight>{game.getMode("greenwei")?.variable.mutiplier}</Highlight>)
+                <Highlight>
+                  {(game.getMode("greenwei")?.variable.mutiplier ?? 1) - 1}
+                </Highlight>{" "}
+                倍 (乘以
+                <Highlight>
+                  {game.getMode("greenwei")?.variable.mutiplier}
+                </Highlight>
+                )
               </>
             ),
           },
@@ -174,7 +189,10 @@ export const modeDescriptions: Record<
           {
             content: (
               <>
-                每次觸發 <Highlight>+{game.getMode("pikachu")?.variable.bonusRounds}</Highlight>{" "}
+                每次觸發{" "}
+                <Highlight>
+                  +{game.getMode("pikachu")?.variable.bonusRounds}
+                </Highlight>{" "}
                 次可玩次數。
               </>
             ),
@@ -226,9 +244,13 @@ export const modeDescriptions: Record<
           {
             content: (
               <>
-                機率： <Highlight>{game.getMode("superhhh")?.variable.rate}</Highlight>
+                機率：{" "}
+                <Highlight>{game.getMode("superhhh")?.variable.rate}</Highlight>
                 %；初次啟動獲得{" "}
-                <Highlight>{game.getMode("superhhh")?.variable.bonusTimes}</Highlight> 回合。
+                <Highlight>
+                  {game.getMode("superhhh")?.variable.bonusTimes}
+                </Highlight>{" "}
+                回合。
               </>
             ),
           },
@@ -247,7 +269,10 @@ export const modeDescriptions: Record<
               <>
                 若回合期間時三格皆為 `
                 {game.getMode("superhhh")?.variable.bindPattern.name}`，額外{" "}
-                <Highlight>+{game.getMode("superhhh")?.variable.extendTimes}</Highlight> 回合。
+                <Highlight>
+                  +{game.getMode("superhhh")?.variable.extendTimes}
+                </Highlight>{" "}
+                回合。
               </>
             ),
           },
@@ -274,7 +299,18 @@ export const modeDescriptions: Record<
             content: "狀態期間的高分圖案機率大幅提升。",
             sub: [
               {
-                content: <>...</>,
+                content: (
+                  <div className="flex flex-col gap-1">
+                    {Object.entries(game.getMode("superhhh")?.rates || {}).map(
+                      (r, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <Highlight>{r[0]}</Highlight>
+                          <span>{r[1]}%</span>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                ),
               },
             ],
           },
