@@ -14,18 +14,18 @@ export const PatternCard = ({ pattern }: { pattern: Pattern }) => {
       data-theme={isTheme ? pattern.name : undefined}
       onClick={() => modal.open(pattern)}
       className={cn(
-        "card group flex flex-col items-center h-full w-full p-2 sm:p-3 rounded-xl",
+        "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl",
       )}
     >
-      <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-2 sm:mb-3">
+      <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
         <MyImage
           src={`/images/patterns/${pattern.name}.jpg`}
           alt={pattern.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover"
         />
       </div>
 
-      <span className="font-bold text-sm sm:text-base capitalize transition-colors group-hover:text-(--primary)">
+      <span className="font-bold text-lg capitalize">
         {pattern.name}
       </span>
     </button>
