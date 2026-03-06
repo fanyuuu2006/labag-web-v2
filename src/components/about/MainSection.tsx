@@ -28,7 +28,6 @@ import { ModeCard } from "./ModeCard";
 import { PatternCard } from "./PatternCard";
 import { LeftContentProps, LeftContent } from "./LeftContent";
 
-
 const TIMELINE_EVENTS = [
   {
     year: "2023",
@@ -76,6 +75,11 @@ const FEATURES = [
     description: "挑戰最高分數，在排行榜上留下你的名字。",
     icon: GlobalOutlined,
   },
+  {
+    title: "隱私政策",
+    description: "我們僅收集您的遊戲分數、遊玩時間與暱稱用於排行榜顯示，不會收集您的個人隱私資訊",
+    icon: SafetyCertificateOutlined,
+  }
 ] as const;
 
 const TECH_STACK = [
@@ -134,12 +138,15 @@ const FAQ_ITEMS = [
   {
     q: "遊戲的圖案和模式是怎麼設計的？",
     a: "素材大多隨性取材自作者的手機相簿，包含許多生活照；其中最具特色的「阿禾」，則是致敬作者的高中班導師。",
-    
   },
   {
     q: "如何安裝到手機桌面？",
     a: "iOS 用戶請使用 Safari 點擊「分享」按鈕並選擇「加入主畫面」；Android 用戶可透過瀏覽器選單點擊「安裝應用程式」或「加到主畫面」。",
     icon: MobileOutlined,
+  },
+  {
+    q: "遊戲的計分規則是什麼？",
+    a: "每個圖案都有不同的分數與出現機率，詳情請點擊「圖案一覽」中的各圖案卡片查看。",
   },
 ] as const;
 
@@ -150,20 +157,12 @@ const EXTRA_PATTERNS = modeList
 
 const DISPLAY_PATTERNS = [...patterns, ...EXTRA_PATTERNS];
 
-const PRIVACY_ITEMS = [
-  {
-    title: "資料收集",
-    content: "我們僅收集您的遊戲分數、遊玩時間與暱稱用於排行榜顯示，不會收集您的個人隱私資訊。",
-    icon: CloudServerOutlined,
-  },
-] as const;
-
 const CONTENTS: ContentDivProps[] = [
   {
     icon: StarOutlined,
     title: "網站特色",
     children: (
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {FEATURES.map((feat) => (
           <div
             key={feat.title}
@@ -224,26 +223,6 @@ const CONTENTS: ContentDivProps[] = [
             </h3>
             <p className="font-light leading-relaxed pl-7 border-l-2 border-(--border)">
               {item.a}
-            </p>
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  {
-    title: "隱私權與聲明",
-    description: "關於您的資料使用與隱私保護",
-    icon: SafetyCertificateOutlined,
-    children: (
-      <div className="grid md:grid-cols-1 gap-6">
-        {PRIVACY_ITEMS.map((item) => (
-          <div key={item.title} className="card secondary p-6 space-y-3">
-             <div className="text-3xl text-(--primary)">
-               <item.icon />
-             </div>
-            <h3 className="text-xl font-bold">{item.title}</h3>
-            <p className="text-(--muted) leading-relaxed text-sm">
-              {item.content}
             </p>
           </div>
         ))}
