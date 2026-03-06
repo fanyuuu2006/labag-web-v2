@@ -1,13 +1,15 @@
 "use client";
 
-import { Pattern } from "labag";
+import { modeList, Pattern } from "labag";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { MyImage } from "@/components/MyImage";
 
 export const PatternCard = ({ pattern }: { pattern: Pattern }) => {
   const modal = usePatternModal();
+  const isTheme = modeList.some((m) => m.variable.pattern === pattern);
   return (
     <button
+      data-theme={isTheme ? pattern.name : undefined}
       onClick={() => modal.open(pattern)}
       className="btn secondary p-3 sm:p-4 h-full flex flex-col items-center gap-3 rounded-xl"
     >
