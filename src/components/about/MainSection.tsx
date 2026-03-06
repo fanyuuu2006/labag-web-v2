@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { modeDescriptions } from "@/components/gameModeDescriptions";
@@ -24,6 +25,10 @@ import { ContentDiv, ContentDivProps } from "./ContentDiv";
 import { ModeCard } from "./ModeCard";
 import { PatternCard } from "./PatternCard";
 
+// ============================================================================
+// Constants & Static Data
+// ============================================================================
+
 const TIMELINE_EVENTS = [
   {
     year: "2023",
@@ -44,7 +49,7 @@ const TIMELINE_EVENTS = [
     date: "8 月",
     title: "接觸程式設計",
     description:
-      "飯魚高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏上程式學習之路。",
+      "飯魚高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏入程式學習之路。",
   },
   {
     year: "2025",
@@ -53,7 +58,7 @@ const TIMELINE_EVENTS = [
     description:
       "開始接觸前端技術，決定使用 Next.js 重構啦八機，藉由網頁應用呈現更豐富的互動體驗，同時學習現代前端開發最佳實踐。",
   },
-];
+] as const;
 
 const FEATURES = [
   {
@@ -71,7 +76,7 @@ const FEATURES = [
     description: "挑戰最高分數，在排行榜上留下你的名字。",
     icon: GlobalOutlined,
   },
-];
+] as const;
 
 const TECH_STACK = [
   "Next.js",
@@ -80,7 +85,7 @@ const TECH_STACK = [
   "Supabase",
   "Express",
   "Vercel",
-];
+] as const;
 
 const AUTHOR_INFO = {
   name: "飯魚 FanYu (范余振富)",
@@ -108,7 +113,7 @@ const AUTHOR_INFO = {
       icon: YoutubeOutlined,
     },
   ],
-};
+} as const;
 
 const BACKGROUND_STORY =
   "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者飯魚從零開始學習程式的過程。";
@@ -130,7 +135,14 @@ const FAQ_ITEMS = [
     q: "遊戲的圖案和模式是怎麼設計的？",
     a: "素材大多隨性取材自作者的手機相簿，包含許多生活照；其中最具特色的「阿禾」，則是致敬作者的高中班導師。",
   },
-];
+] as const;
+
+// 預先計算所有圖案列表，避免每次 Render 重新計算
+const EXTRA_PATTERNS = modeList
+  .map((m) => m.variable.pattern)
+  .filter((p): p is NonNullable<typeof p> => !!p);
+
+const DISPLAY_PATTERNS = [...patterns, ...EXTRA_PATTERNS];
 
 const CONTENTS: ContentDivProps[] = [
   {
@@ -179,10 +191,7 @@ const CONTENTS: ContentDivProps[] = [
     description: "點擊圖案可查看詳細計分資訊與出現機率",
     children: (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {[
-          ...patterns,
-          ...modeList.map((m) => m.variable.pattern).filter(Boolean),
-        ].map((pattern) => (
+        {DISPLAY_PATTERNS.map((pattern) => (
           <PatternCard key={pattern.name} pattern={pattern} />
         ))}
       </div>
@@ -194,8 +203,8 @@ const CONTENTS: ContentDivProps[] = [
     icon: QuestionCircleOutlined,
     children: (
       <div className="grid md:grid-cols-2 gap-6">
-        {FAQ_ITEMS.map((item, idx) => (
-          <div key={idx} className="card secondary p-6 space-y-3">
+        {FAQ_ITEMS.map((item) => (
+          <div key={item.q} className="card secondary p-6 space-y-3">
             <h3 className="text-lg font-bold flex items-start gap-2">
               <span className="text-(--primary) font-mono text-xl">Q.</span>
               {item.q}
@@ -210,12 +219,16 @@ const CONTENTS: ContentDivProps[] = [
   },
 ];
 
-export const MainSection = () => {
+// ============================================================================
+// Main Component
+// ============================================================================
+
+export const MainSection = memo(() => {
   return (
     <section className="min-h-full py-12 px-4">
       <div className="container mx-auto space-y-24 lg:space-y-32">
-        {/* 頁首 */}
-        <div className="text-center space-y-6">
+        {/* 頁首 Header */}
+        <header className="text-center space-y-6">
           <GlowText
             as="h1"
             className="text-4xl lg:text-6xl font-bold tracking-tight"
@@ -225,9 +238,9 @@ export const MainSection = () => {
           <p className="text-lg lg:text-xl text-(--muted) max-w-2xl mx-auto leading-relaxed">
             {site.description}
           </p>
-        </div>
+        </header>
 
-        {/* 發展歷程 */}
+        {/* 發展歷程 Timeline & Author */}
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           <div className="space-y-8 lg:sticky lg:top-24">
             <div className="space-y-4">
@@ -277,7 +290,7 @@ export const MainSection = () => {
                 {TECH_STACK.map((tech) => (
                   <span
                     key={tech}
-                    className="card primary px-3 py-1 rounded-full text-sm font-medium "
+                    className="card primary px-3 py-1 rounded-full text-sm font-medium"
                   >
                     {tech}
                   </span>
@@ -291,8 +304,8 @@ export const MainSection = () => {
             <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-(--border) lg:left-8 lg:top-4 lg:bottom-4"></div>
 
             <div className="space-y-12">
-              {TIMELINE_EVENTS.map((event, idx) => (
-                <div key={idx} className="relative pl-12 lg:pl-20 group">
+              {TIMELINE_EVENTS.map((event) => (
+                <div key={event.title} className="relative pl-12 lg:pl-20 group">
                   {/* 時間軸圓點 */}
                   <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75"></div>
 
@@ -315,10 +328,13 @@ export const MainSection = () => {
             </div>
           </div>
         </div>
+
         {CONTENTS.map((content, idx) => (
           <ContentDiv key={idx} {...content} />
         ))}
       </div>
     </section>
   );
-};
+});
+
+MainSection.displayName = "MainSection";
