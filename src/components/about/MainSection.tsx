@@ -3,7 +3,7 @@
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { modeDescriptions } from "@/components/gameModeDescriptions";
-import { ModeName, patterns } from "labag";
+import { modeList, ModeName, patterns } from "labag";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -16,6 +16,8 @@ import {
   LinkOutlined,
   InstagramOutlined,
   YoutubeOutlined,
+  QuestionCircleOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
@@ -111,8 +113,28 @@ const AUTHOR_INFO = {
 const BACKGROUND_STORY =
   "這是一個始於無聊、終於熱愛的故事。從高中時期的隨手塗鴉，到大學時期的認真重構，啦八機見證了作者飯魚從零開始學習程式的過程。";
 
+const FAQ_ITEMS = [
+  {
+    q: "為什麼叫「啦八機」？",
+    a: "名稱取自「拉霸機」的諧音，同時也隱藏了一個小玩笑：倒過來念就是「雞巴啦」XD，這正是命名的趣味由來。",
+  },
+  {
+    q: "遊戲支援哪些平台？",
+    a: "本遊戲採響應式設計 (RWD)，電腦、平板與手機皆可遊玩。推薦手機用戶使用 Chrome 或 Safari，並將網頁「加入主畫面」，即可享有如同 App 般的沈浸式體驗。",
+  },
+  {
+    q: "發現 Bug 或有建議？",
+    a: "歡迎透過 Instagram 私訊作者，或至 GitHub 提交 Issue。您的回饋與建議，是遊戲持續進步的最大動力！",
+  },
+  {
+    q: "遊戲的圖案和模式是怎麼設計的？",
+    a: "素材大多隨性取材自作者的手機相簿，包含許多生活照；其中最具特色的「阿禾」，則是致敬作者的高中班導師。",
+  },
+];
+
 const CONTENTS: ContentDivProps[] = [
   {
+    icon: StarOutlined,
     title: "網站特色",
     description: `啦八機網頁版採用現代前端技術打造，提供流暢的使用體驗和豐富的功能。以下是一些主要特色：`,
     children: (
@@ -157,8 +179,31 @@ const CONTENTS: ContentDivProps[] = [
     description: "點擊圖案可查看詳細計分資訊與出現機率",
     children: (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {patterns.map((pattern) => (
+        {[
+          ...patterns,
+          ...modeList.map((m) => m.variable.pattern).filter(Boolean),
+        ].map((pattern) => (
           <PatternCard key={pattern.name} pattern={pattern} />
+        ))}
+      </div>
+    ),
+  },
+  {
+    title: "常見問題",
+    description: "這裡整理了一些關於啦八機的常見疑問",
+    icon: QuestionCircleOutlined,
+    children: (
+      <div className="grid md:grid-cols-2 gap-6">
+        {FAQ_ITEMS.map((item, idx) => (
+          <div key={idx} className="card secondary p-6 space-y-3">
+            <h3 className="text-lg font-bold flex items-start gap-2">
+              <span className="text-(--primary) font-mono text-xl">Q.</span>
+              {item.q}
+            </h3>
+            <p className="text-(--muted) leading-relaxed pl-7 border-l-2 border-(--border)">
+              {item.a}
+            </p>
+          </div>
         ))}
       </div>
     ),
@@ -197,14 +242,14 @@ export const MainSection = () => {
                 <p className="text-(--muted) leading-relaxed">
                   {AUTHOR_INFO.description}
                 </p>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-2">
                   {AUTHOR_INFO.links.map((link) => (
                     <OutsideLink
                       key={link.name}
                       href={link.href}
-                      className="card primary rounded-full px-3 py-1 flex items-center gap-2"
+                      className="card primary rounded-full px-3 py-1 flex items-center gap-2 text-sm"
                     >
-                      <link.icon className="text-xl" />
+                      <link.icon />
                       <span>{link.name}</span>
                     </OutsideLink>
                   ))}
