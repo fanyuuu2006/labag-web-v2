@@ -19,9 +19,9 @@ import {
   LinkOutlined,
   InstagramOutlined,
   YoutubeOutlined,
-  AppstoreOutlined,
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
+import { ContentDiv } from "./ContentDiv";
 
 const TIMELINE_EVENTS = [
   {
@@ -244,9 +244,7 @@ export const MainSection = () => {
                       </span>
                     </div>
                     <article className="card secondary p-4 space-y-2">
-                      <h3 className="text-xl font-bold">
-                        {event.title}
-                      </h3>
+                      <h3 className="text-xl font-bold">{event.title}</h3>
                       <p className="text-(--muted) leading-relaxed">
                         {event.description}
                       </p>
@@ -259,37 +257,35 @@ export const MainSection = () => {
         </div>
 
         {/* 特色區塊 */}
-        <div className="grid lg:grid-cols-3 gap-6">
-          {FEATURES.map((feat) => (
-            <div
-              key={feat.title}
-              className="card secondary p-8 flex flex-col gap-6 text-center items-center"
-            >
-              <div className="text-5xl text-(--primary) opacity-80">
-                <feat.icon />
+        <ContentDiv
+          title="網站特色"
+          description={`啦八機網頁版採用現代前端技術打造\n提供流暢的使用體驗和豐富的功能`}
+        >
+          <div className="grid lg:grid-cols-3 gap-6">
+            {FEATURES.map((feat) => (
+              <div
+                key={feat.title}
+                className="card secondary p-8 flex flex-col gap-6 text-center items-center"
+              >
+                <div className="text-5xl text-(--primary) opacity-80">
+                  <feat.icon />
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-bold">{feat.title}</h3>
+                  <p className="text-(--muted) leading-relaxed">
+                    {feat.description}
+                  </p>
+                </div>
               </div>
-              <div className="space-y-3">
-                <h3 className="text-xl font-bold">{feat.title}</h3>
-                <p className="text-(--muted) leading-relaxed">
-                  {feat.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ContentDiv>
 
         {/* 遊戲模式介紹 */}
-        <div className="space-y-8">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
-              <AppstoreOutlined className="text-(--primary)" />
-              <span>模式介紹</span>
-            </h2>
-            <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
-              {site.title} 擁有多種獨特的遊玩模式，每個模式都有其特殊的觸發條件與計分規則。
-            </p>
-          </div>
-
+        <ContentDiv
+          title="模式介紹"
+          description={`啦八機擁有多種獨特的遊玩模式\n點擊各模式卡片可查看詳細介紹`}
+        >
           <div className="grid md:grid-cols-2 gap-6">
             {(
               Object.entries(modeDescriptions) as [
@@ -300,26 +296,19 @@ export const MainSection = () => {
               <ModeCard key={key} modeKey={key} modeData={mode} />
             ))}
           </div>
-        </div>
+        </ContentDiv>
 
         {/* 遊戲圖案一覽 */}
-        <div className="space-y-8 pb-12">
-          <div className="text-center space-y-4">
-            <h2 className="text-3xl font-bold flex items-center justify-center gap-3">
-              <AppstoreOutlined className="text-(--primary)" />
-              <span>圖案一覽</span>
-            </h2>
-            <p className="text-(--muted) leading-relaxed max-w-2xl mx-auto">
-              點擊圖案可查看詳細計分資訊與出現機率。
-            </p>
-          </div>
-
+        <ContentDiv
+          title="圖案一覽"
+          description="點擊圖案可查看詳細計分資訊與出現機率"
+        >
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {patterns.map((pattern) => (
               <PatternCard key={pattern.name} pattern={pattern} />
             ))}
           </div>
-        </div>
+        </ContentDiv>
       </div>
     </section>
   );
