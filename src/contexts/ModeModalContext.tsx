@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 import { DetailItem } from "@/components/DetailItem";
-import { description } from "@/libs/game";
+import { modeDescriptions } from "@/components/gameModeDescriptions";
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -46,11 +46,11 @@ export const ModeModalProvider = ({
               as="h3"
               className="text-2xl sm:text-3xl font-extrabold underline-spread"
             >
-              {description[mode].name}
+              {modeDescriptions[mode].name}
             </GlowText>
 
             <div className="p-2">
-              {description[mode].details.map((detail, index) => (
+              {modeDescriptions[mode].details.map((detail, index) => (
                 <DetailItem key={index} detail={detail} />
               ))}
             </div>

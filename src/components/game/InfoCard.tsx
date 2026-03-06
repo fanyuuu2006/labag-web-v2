@@ -4,7 +4,7 @@ import { cn } from "@/utils/className";
 import { game } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
-import { description } from "../../libs/game";
+import { modeDescriptions } from "@/components/gameModeDescriptions";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { useModeModal } from "@/contexts/ModeModalContext";
 
@@ -197,7 +197,7 @@ export const InfoCard = memo(({ className, ...rest }: InfoCardProps) => {
                   <div className="flex items-center gap-3">
                     <span className="w-2 h-2 rounded-full bg-(--primary)" />
                     <span className="text-xs sm:text-sm text-(--muted)">
-                      {description[mode].name} 次數
+                      {modeDescriptions[mode].name} 次數
                     </span>
                   </div>
 

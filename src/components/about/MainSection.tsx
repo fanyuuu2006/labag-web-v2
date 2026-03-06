@@ -2,7 +2,7 @@
 
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
-import { description } from "@/libs/game";
+import { modeDescriptions } from "@/components/gameModeDescriptions";
 import { useModeModal } from "@/contexts/ModeModalContext";
 import { ModeName, patterns, Pattern } from "labag";
 import { usePatternModal } from "@/contexts/PatternModalContext";
@@ -292,9 +292,9 @@ export const MainSection = () => {
 
           <div className="grid md:grid-cols-2 gap-6">
             {(
-              Object.entries(description) as [
+              Object.entries(modeDescriptions) as [
                 ModeName,
-                (typeof description)[ModeName],
+                (typeof modeDescriptions)[ModeName],
               ][]
             ).map(([key, mode]) => (
               <ModeCard key={key} modeKey={key} modeData={mode} />
