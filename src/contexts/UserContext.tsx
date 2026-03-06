@@ -66,10 +66,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
         const { data: refreshData } = await refreshAccessToken(refreshToken);
         if (refreshData) {
-          const { access_token, refreshToken: newRefreshToken } = refreshData;
-          localStorage.setItem(ACCESS_TOKEN_KEY, access_token);
+          const { accessToken: newAccesstoken, refreshToken: newRefreshToken } = refreshData;
+          localStorage.setItem(ACCESS_TOKEN_KEY, newAccesstoken);
           localStorage.setItem(REFRESH_TOKEN_KEY, newRefreshToken);
-          const { data: newData } = await userMe(access_token);
+          const { data: newData } = await userMe(newAccesstoken);
           if (newData) {
             setUser(newData);
           } else {

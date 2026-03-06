@@ -68,11 +68,11 @@ export const statsByKey = (
 };
 
 export const refreshAccessToken = (refreshToken: string) =>
-  fetcher<BackendResponse<{ access_token: string; refreshToken: string }>>(
+  fetcher<BackendResponse<{ accessToken: string; refreshToken: string }>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/auth/refresh/`,
     {
       method: "POST",
-      body: JSON.stringify({ refresh_token: refreshToken }),
+      body: JSON.stringify({ refreshToken: refreshToken }),
       headers: {
         "Content-Type": "application/json",
       },
