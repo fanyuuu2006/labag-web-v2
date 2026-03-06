@@ -24,6 +24,7 @@ import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
 import { ModeCard } from "./ModeCard";
 import { PatternCard } from "./PatternCard";
+import { LeftContentProps, LeftContent } from "./LeftContent";
 
 // ============================================================================
 // Constants & Static Data
@@ -219,9 +220,55 @@ const CONTENTS: ContentDivProps[] = [
   },
 ];
 
-// ============================================================================
-// Main Component
-// ============================================================================
+const LEFT_CONTENTS: LeftContentProps[] = [
+  {
+    title: "關於作者",
+    icon: UserOutlined,
+    children: (
+      <div className="space-y-3">
+        <h4 className="text-2xl lg:text-3xl font-bold">{AUTHOR_INFO.name}</h4>
+        <p className="text-(--muted) leading-relaxed">
+          {AUTHOR_INFO.description}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {AUTHOR_INFO.links.map((link) => (
+            <OutsideLink
+              key={link.name}
+              href={link.href}
+              className="card primary rounded-full px-3 py-1 flex items-center gap-2 text-sm"
+            >
+              <link.icon />
+              <span>{link.name}</span>
+            </OutsideLink>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
+    title: "創作背景",
+    icon: RocketOutlined,
+    children: (
+      <p className="text-(--muted) leading-relaxed">{BACKGROUND_STORY}</p>
+    ),
+  },
+  {
+    title: "技術與工具",
+    icon: CodeOutlined,
+    children: (
+      <div className="flex flex-wrap gap-2">
+        {TECH_STACK.map((tech) => (
+          <span
+            key={tech}
+            className="card primary px-3 py-1 rounded-full text-sm font-medium"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
+    ),
+  },
+];
 
 export const MainSection = memo(() => {
   return (
@@ -240,63 +287,13 @@ export const MainSection = memo(() => {
           </p>
         </header>
 
-        {/* 發展歷程 Timeline & Author */}
+        {/* 內容區域 */}
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
-          <div className="space-y-8 lg:sticky lg:top-24">
-            <div className="space-y-4">
-              <h2 className="text-xl font-bold flex items-center gap-3">
-                <UserOutlined className="text-(--primary)" />
-                <span>關於作者</span>
-              </h2>
-              <div className="space-y-3">
-                <h4 className="text-2xl lg:text-3xl font-bold">
-                  {AUTHOR_INFO.name}
-                </h4>
-                <p className="text-(--muted) leading-relaxed">
-                  {AUTHOR_INFO.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {AUTHOR_INFO.links.map((link) => (
-                    <OutsideLink
-                      key={link.name}
-                      href={link.href}
-                      className="card primary rounded-full px-3 py-1 flex items-center gap-2 text-sm"
-                    >
-                      <link.icon />
-                      <span>{link.name}</span>
-                    </OutsideLink>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4 pt-4 border-t border-(--border)">
-              <h3 className="text-xl font-bold flex items-center gap-3">
-                <RocketOutlined className="text-(--primary)" />
-                <span>創作背景</span>
-              </h3>
-              <p className="text-(--muted) text-lg leading-relaxed">
-                {BACKGROUND_STORY}
-              </p>
-            </div>
-
-            {/* 技術棧展示 */}
-            <div className="space-y-4 pt-4 border-t border-(--border)">
-              <h3 className="text-xl font-bold flex items-center gap-2">
-                <CodeOutlined className="text-(--secondary)" />
-                <span>技術與工具</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {TECH_STACK.map((tech) => (
-                  <span
-                    key={tech}
-                    className="card primary px-3 py-1 rounded-full text-sm font-medium"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {/* 左側 */}
+          <div className="flex flex-col gap-4 divide-y divide-(--border) lg:sticky lg:top-24">
+            {LEFT_CONTENTS.map((content, idx) => (
+              <LeftContent key={idx} {...content} />
+            ))}
           </div>
 
           <div className="relative">
@@ -305,7 +302,10 @@ export const MainSection = memo(() => {
 
             <div className="space-y-12">
               {TIMELINE_EVENTS.map((event) => (
-                <div key={event.title} className="relative pl-12 lg:pl-20 group">
+                <div
+                  key={event.title}
+                  className="relative pl-12 lg:pl-20 group"
+                >
                   {/* 時間軸圓點 */}
                   <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75"></div>
 
