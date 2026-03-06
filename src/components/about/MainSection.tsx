@@ -149,7 +149,6 @@ const CONTENTS: ContentDivProps[] = [
   {
     icon: StarOutlined,
     title: "網站特色",
-    description: `啦八機網頁版採用現代前端技術打造，提供流暢的使用體驗和豐富的功能。以下是一些主要特色：`,
     children: (
       <div className="grid lg:grid-cols-3 gap-6">
         {FEATURES.map((feat) => (
@@ -157,7 +156,7 @@ const CONTENTS: ContentDivProps[] = [
             key={feat.title}
             className="card secondary p-8 flex flex-col gap-6 text-center items-center"
           >
-            <div className="text-5xl text-(--primary) opacity-80">
+            <div className="text-5xl text-(--primary)">
               <feat.icon />
             </div>
             <div className="space-y-3">
@@ -205,12 +204,12 @@ const CONTENTS: ContentDivProps[] = [
     children: (
       <div className="grid md:grid-cols-2 gap-6">
         {FAQ_ITEMS.map((item) => (
-          <div key={item.q} className="card secondary p-6 space-y-3">
+          <div key={item.q} className="card primary p-6 space-y-3">
             <h3 className="text-lg font-bold flex items-start gap-2">
               <span className="text-(--primary) font-mono text-xl">Q.</span>
               {item.q}
             </h3>
-            <p className="text-(--muted) leading-relaxed pl-7 border-l-2 border-(--border)">
+            <p className="font-light leading-relaxed pl-7 border-l-2 border-(--border)">
               {item.a}
             </p>
           </div>
@@ -235,7 +234,7 @@ const LEFT_CONTENTS: LeftContentProps[] = [
             <OutsideLink
               key={link.name}
               href={link.href}
-              className="card primary rounded-full px-3 py-1 flex items-center gap-2 text-sm"
+              className="card primary rounded-full px-3 py-1 flex items-center gap-1 text-sm"
             >
               <link.icon />
               <span>{link.name}</span>

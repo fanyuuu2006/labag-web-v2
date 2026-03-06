@@ -19,7 +19,7 @@ export const LeftContent = ({
 }: LeftContentProps) => {
   return (
     <div
-      className={cn("flex flex-col gap-4 p-4", className)}
+      className={cn("flex flex-col gap-4 py-4", className)}
       {...rest}
     >
       <h3 className="text-xl font-bold flex items-center gap-3">
