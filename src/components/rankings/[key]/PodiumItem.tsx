@@ -71,15 +71,13 @@ export const PodiumItem = memo(
         </div>
         <div
           className={cn(
-            "min-w-[6em] w-full rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group mask-[linear-gradient(to_top,transparent,black_25%)]",
+            "w-[6.5em] md:w-[8em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group",
             HEIGHT_CLASSES[index],
             COLOR_CLASSES[index]
           )}
         >
           {/** 底部漸層遮罩 */}
-          <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent pointer-events-none" />
-          {/** 滑鼠懸停遮罩 */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent pointer-events-none" />
         </div>
       </div>
     );
