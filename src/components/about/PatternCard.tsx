@@ -11,7 +11,7 @@ export const PatternCard = ({ pattern }: { pattern: Pattern }) => {
 
   return (
     <button
-      data-theme={isTheme ? pattern.name : undefined}
+      data-theme={isTheme ? pattern.name : 'normal'}
       onClick={() => modal.open(pattern)}
       className={cn(
         "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl",

@@ -32,7 +32,7 @@ const TIMELINE_EVENTS = [
   {
     year: "2023",
     date: "6 月 22 日",
-    title: "第一代啦八機誕生",
+    title: "初代啦八機誕生",
     description:
       "治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。",
   },
@@ -57,6 +57,13 @@ const TIMELINE_EVENTS = [
     description:
       "開始接觸前端技術，決定使用 Next.js 重構啦八機，藉由網頁應用呈現更豐富的互動體驗，同時學習現代前端開發最佳實踐。",
   },
+  {
+    year: "2025",
+    date: "至今",
+    title: "持續優化與更新",
+    description:
+      "不斷優化遊戲性能與使用者體驗，並根據玩家反饋持續更新內容，讓啦八機成為一個充滿樂趣與挑戰的遊戲。",
+  },
 ] as const;
 
 const FEATURES = [
@@ -79,7 +86,7 @@ const FEATURES = [
     title: "隱私保障",
     description: "僅收集分數、遊玩時間與暱稱作排行顯示，絕不蒐集個人隱私。",
     icon: SafetyCertificateOutlined,
-  }
+  },
 ] as const;
 
 const TECH_STACK = [
