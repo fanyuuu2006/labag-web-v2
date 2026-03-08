@@ -62,22 +62,22 @@ const TIMELINE_EVENTS = [
 const FEATURES = [
   {
     title: "極速體驗",
-    description: "採用 Next.js App Router 架構，流暢無比。",
+    description: "基於 Next.js 架構，享受極致流暢、無延遲的遊玩體驗。",
     icon: ThunderboltOutlined,
   },
   {
     title: "PWA 支援",
-    description: "支援漸進式網頁應用，離線也能隨時開啟。",
+    description: "支援安裝至桌面，免下載即可享受如原生 App 般的順暢體驗。",
     icon: CloudServerOutlined,
   },
   {
     title: "全球排行",
-    description: "挑戰最高分數，在排行榜上留下你的名字。",
+    description: "不斷突破自我紀錄，與全球玩家一較高下，在排行榜留下名字。",
     icon: GlobalOutlined,
   },
   {
-    title: "隱私政策",
-    description: "我們僅收集您的遊戲分數、遊玩時間與暱稱用於排行榜顯示，不會收集您的個人隱私資訊",
+    title: "隱私保障",
+    description: "僅收集分數、遊玩時間與暱稱作排行顯示，絕不蒐集個人隱私。",
     icon: SafetyCertificateOutlined,
   }
 ] as const;
