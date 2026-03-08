@@ -53,7 +53,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     if (!token) return;
     setLoading(true);
 
-
     try {
       const { data } = await userMe(token);
       if (data) {
@@ -66,7 +65,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
         const { data: refreshData } = await refreshAccessToken(refreshToken);
         if (refreshData) {
-          const { accessToken: newAccesstoken, refreshToken: newRefreshToken } = refreshData;
+          const { accessToken: newAccesstoken, refreshToken: newRefreshToken } =
+            refreshData;
           localStorage.setItem(ACCESS_TOKEN_KEY, newAccesstoken);
           localStorage.setItem(REFRESH_TOKEN_KEY, newRefreshToken);
           const { data: newData } = await userMe(newAccesstoken);
@@ -85,6 +85,31 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    // 設置一個定時器，每 10 分鐘嘗試更新 token
+    const interval = setInterval(() => {
+      const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+      if (!refreshToken) return;
+      
+      refreshAccessToken(refreshToken)
+        .then((res) => {
+          if (res.data) {
+            localStorage.setItem(ACCESS_TOKEN_KEY, res.data.accessToken);
+            localStorage.setItem(REFRESH_TOKEN_KEY, res.data.refreshToken);
+          } else {
+            clearAuth();
+            router.replace("/");
+          }
+        })
+        .catch(() => {
+          clearAuth();
+          router.replace("/");
+        });
+    }, 10 * 60 * 1000); // 10 minutes
+
+    return () => clearInterval(interval);
+  }, [router]);
 
   const value = useMemo(
     () => ({
