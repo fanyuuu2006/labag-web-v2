@@ -86,31 +86,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  useEffect(() => {
-    // 設置一個定時器，每 10 分鐘嘗試更新 token
-    const interval = setInterval(() => {
-      const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
-      if (!refreshToken) return;
-      
-      refreshAccessToken(refreshToken)
-        .then((res) => {
-          if (res.data) {
-            localStorage.setItem(ACCESS_TOKEN_KEY, res.data.accessToken);
-            localStorage.setItem(REFRESH_TOKEN_KEY, res.data.refreshToken);
-          } else {
-            clearAuth();
-            router.replace("/");
-          }
-        })
-        .catch(() => {
-          clearAuth();
-          router.replace("/");
-        });
-    }, 10 * 60 * 1000); // 10 minutes
-
-    return () => clearInterval(interval);
-  }, [router]);
-
   const value = useMemo(
     () => ({
       user,
