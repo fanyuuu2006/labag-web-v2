@@ -22,31 +22,27 @@ export const MainSection = ({
   const rest = useMemo(() => items?.slice(3) || [], [items]);
 
   return (
-    <section>
-      <div className="container grid grid-rows-[auto_1fr] gap-4 lg:gap-6">
+    <section className="h-full flex flex-col items-center py-8">
+      <div className="container flex flex-col gap-8 lg:gap-12 px-4">
         {/* 標題*/}
         <div className="flex flex-col items-center justify-center">
-          <span className="text-white/50 text-sm md:text-base tracking-[0.2em] mb-1">
+          <span className="text-(--muted) text-sm md:text-base tracking-[0.2em] mb-2 uppercase">
             — 排行榜 —
           </span>
           <GlowText
             as="h1"
-            className="text-4xl md:text-5xl font-bold tracking-wider text-center"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-wider text-center"
           >
             {statsData[rankKey]?.label ?? "排行榜"}
           </GlowText>
         </div>
 
         {/** 內容區域 */}
-        <div
-          className={
-            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-24"
-          }
-        >
-          {/* 前三名 */}
+        <div className="w-full text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-24">
+           {/* 前三名 */}
           <div className="lg:sticky lg:top-24 self-start w-full flex flex-col items-center justify-center z-10">
             {top3.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center text-white/50 italic text-xl">
+              <div className="flex-1 flex items-center justify-center text-(--muted) italic text-xl min-h-[50vh]">
                 暫無排行資料
               </div>
             ) : (
@@ -64,9 +60,9 @@ export const MainSection = ({
           </div>
           {/* 剩餘排行榜列表 */}
           <div className="flex flex-col">
-            <div className="card secondary w-full p-4 lg:p-6">
+            <div className="card secondary w-full p-4 lg:p-6 mb-8">
               {rest.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
+                <div className="h-64 flex flex-col items-center justify-center text-(--muted) italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
                   <div>期待更多玩家加入...</div>
                 </div>
@@ -87,8 +83,8 @@ export const MainSection = ({
         </div>
 
         {/** 底部當前資料時間 */}
-        <div className="fixed z-9999 bottom-4 left-1/2 -translate-x-1/2">
-          <GlowText as="p" className="text-xs md:text-base opacity-70">
+        <div className="fixed z-50 bottom-4 left-1/2 -translate-x-1/2 pointer-events-none">
+          <GlowText as="p" className="text-xs md:text-base text-(--muted)">
             當前資料截至：{fetchTime}
           </GlowText>
         </div>
