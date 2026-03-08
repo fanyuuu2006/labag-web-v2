@@ -23,7 +23,7 @@ export const MainSection = ({
 
   return (
     <section>
-      <div className="container grid grid-rows-[auto_1fr] overflow-y-hidden overflow-x-auto gap-4 lg:gap-6">
+      <div className="container grid grid-rows-[auto_1fr] gap-4 lg:gap-6">
         {/* 標題*/}
         <div className="flex flex-col items-center justify-center">
           <span className="text-white/50 text-sm md:text-base tracking-[0.2em] mb-1">
@@ -40,11 +40,11 @@ export const MainSection = ({
         {/** 內容區域 */}
         <div
           className={
-            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-4 h-full"
+            "text-base sm:text-lg md:text-xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-24"
           }
         >
           {/* 前三名 */}
-          <div className="sticky top-0 h-full flex flex-col items-center justify-center">
+          <div className="lg:sticky lg:top-24 self-start w-full flex flex-col items-center justify-center z-10">
             {top3.length === 0 ? (
               <div className="flex-1 flex items-center justify-center text-white/50 italic text-xl">
                 暫無排行資料
@@ -63,8 +63,8 @@ export const MainSection = ({
             )}
           </div>
           {/* 剩餘排行榜列表 */}
-          <div className="flex flex-col h-full overflow-hidden">
-            <div className="card secondary w-full flex-1 overflow-y-auto p-4 lg:p-6">
+          <div className="flex flex-col">
+            <div className="card secondary w-full p-4 lg:p-6">
               {rest.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-white/30 italic gap-3">
                   <div className="text-4xl opacity-50">⏳</div>
@@ -74,7 +74,7 @@ export const MainSection = ({
                 <div className="flex flex-col gap-3">
                   {rest.map((item, i) => (
                     <RestRankCard
-                      key={item.user_id}
+                      key={`${i}-${item.user_id}`}
                       rank={i + 4}
                       item={item}
                       rankKey={rankKey}

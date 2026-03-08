@@ -9,7 +9,7 @@ import { VALID_KEYS } from "@/libs/backend";
 
 const MEDALS = ["🥇", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
-const HEIGHT_CLASSES = ["h-[8em]", "h-[6em]", "h-[4em]"];
+const HEIGHT_CLASSES = ["h-[10em]", "h-[8em]", "h-[6em]"];
 const COLOR_CLASSES = [
   "bg-yellow-500/40 border-yellow-300/50 text-yellow-200 shadow-[0_0_25px_rgba(234,179,8,0.6)] saturate-125",
   "bg-slate-400/30 border-slate-300/50 text-slate-100 shadow-[0_0_25px_rgba(148,163,184,0.5)] saturate-125",
