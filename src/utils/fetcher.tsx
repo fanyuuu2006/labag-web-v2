@@ -9,8 +9,12 @@ export async function fetcher<T>(
 ): Promise<T> {
   let res = await fetch(...args);
 
-  // 如果遇到 401 錯誤，嘗試使用 refresh token 換取新的 access token
-  if (res.status === 401 && typeof window !== "undefined") {
+  // 判斷當前請求是否本身就是 Refresh Token API 
+  // (避免外部直接呼叫 refreshToken API 時若 401 觸發自己攔截自己的無窮迴圈)
+  const isRefreshApi = typeof args[0] === 'string' && args[0].includes('/v1/auth/refresh');
+
+  // 如果遇到 401 錯誤，且不是 refresh API 自身，就嘗試使用 refresh token 換取新的 access token
+  if (res.status === 401 && !isRefreshApi && typeof window !== "undefined") {
     const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
     
     if (refreshToken) {
