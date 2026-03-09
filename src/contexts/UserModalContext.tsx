@@ -231,7 +231,9 @@ export const UserModalProvider = ({
                     </span>
                   </div>
 
-                  <div className="flex flex-col gap-2 overflow-y-auto">
+                  <div className="flex flex-col gap-2 overflow-y-auto" style={{
+                    scrollbarWidth: 'none'
+                  }}>
                     {orderedRecords.length > 0 ? (
                       orderedRecords.map((record) => (
                         <div
