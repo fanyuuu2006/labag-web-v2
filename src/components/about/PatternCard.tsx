@@ -1,13 +1,13 @@
 "use client";
 
-import { modeList, Pattern } from "labag";
+import { modes, Pattern } from "labag";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { MyImage } from "@/components/MyImage";
 import { cn } from "@/utils/className";
 
 export const PatternCard = ({ pattern }: { pattern: Pattern }) => {
   const modal = usePatternModal();
-  const isTheme = modeList.some((m) => m.variable.pattern === pattern);
+  const isTheme = modes.some((m) => m.variable.pattern === pattern);
 
   return (
     <button

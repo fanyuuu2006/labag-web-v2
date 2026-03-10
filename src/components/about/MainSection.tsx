@@ -4,7 +4,7 @@ import { memo } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { modeDescriptions } from "@/components/gameModeDescriptions";
-import { modeList, ModeName, patterns } from "labag";
+import { modes, ModeName, patterns } from "labag";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -158,7 +158,7 @@ const FAQ_ITEMS = [
 ] as const;
 
 // 預先計算所有圖案列表，避免每次 Render 重新計算
-const EXTRA_PATTERNS = modeList
+const EXTRA_PATTERNS = modes
   .map((m) => m.variable.pattern)
   .filter((p): p is NonNullable<typeof p> => !!p);
 

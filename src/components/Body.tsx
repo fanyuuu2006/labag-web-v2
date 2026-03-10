@@ -7,6 +7,8 @@ export const Body = forwardRef<
   React.HTMLAttributes<HTMLBodyElement>
 >(({ ...props }, ref) => {
   const { modes } = useModes();
-  return <body data-theme={modes[0].name} ref={ref} {...props} />;
+  // 有非normal模式时，使用第一个非normal模式的pattern作为主题，否则使用normal模式的pattern
+  const theme = modes.find((m) => m.name !== "normal")?.name || "normal";
+  return <body data-theme={theme} ref={ref} {...props} />;
 });
 Body.displayName = "Body";
