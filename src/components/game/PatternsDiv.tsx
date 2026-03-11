@@ -115,7 +115,7 @@ export const PatternsDiv = () => {
               aria-label={`開啟圖案 ${pattern.name} 詳情`}
               tabIndex={0}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   handlePatternClick(pattern);
                 }
