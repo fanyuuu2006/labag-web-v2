@@ -4,8 +4,9 @@ import { ModeName } from "labag";
 import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
-import { DetailItem } from "@/components/DetailItem";
-import { modeDescriptions } from "@/components/gameModeDescriptions";
+
+import { MyMarkDown } from "@/components/MyMarkDown";
+import { game, modeDescriptions } from "@/libs/game";
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -22,6 +23,7 @@ export const ModeModalProvider = ({
 }) => {
   const [mode, setMode] = useState<ModeName | null>(null);
   const modal = useModal({});
+
   const value = useMemo(
     () => ({
       ...modal,
@@ -30,8 +32,23 @@ export const ModeModalProvider = ({
         setMode(mn);
       },
     }),
-    [modal]
+    [modal],
   );
+
+  const variables = useMemo(() => {
+    const getVar = (name: ModeName) => game.getMode(name)?.variable;
+    const greenweiVar = getVar("greenwei");
+    const pikachuVar = getVar("pikachu");
+    const superhhhVar = getVar("superhhh");
+    const normalVar = getVar("normal");
+
+    return {
+      greenweiVar,
+      pikachuVar,
+      superhhhVar,
+      normalVar,
+    };
+  }, []);
 
   return (
     <modeModalContext.Provider value={value}>
@@ -50,9 +67,9 @@ export const ModeModalProvider = ({
             </GlowText>
 
             <div className="p-2">
-              {modeDescriptions[mode].details.map((detail, index) => (
-                <DetailItem key={index} detail={detail} />
-              ))}
+              <MyMarkDown variables={variables}>
+                {modeDescriptions[mode].detail}
+              </MyMarkDown>
             </div>
 
             <div className="flex w-full justify-center sm:justify-end">
