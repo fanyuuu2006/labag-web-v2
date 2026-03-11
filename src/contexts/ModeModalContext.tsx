@@ -66,8 +66,17 @@ export const ModeModalProvider = ({
               {modeDescriptions[mode].name}
             </GlowText>
 
-            <div className="w-full p-2">
-              <MyMarkDown variables={variables}>
+            <div className="w-full p-2 shrink-0">
+              <MyMarkDown
+                components={{
+                  strong: ({  ...rest }) => (
+                    <strong className="bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold" {...rest}/>
+                  ),
+                  li: ({ ...rest }) => <li className="not-last:mb-4" {...rest}/>,
+                  
+                }}
+                variables={variables}
+              >
                 {modeDescriptions[mode].detail}
               </MyMarkDown>
             </div>
