@@ -66,7 +66,7 @@ export const ModeModalProvider = ({
               {modeDescriptions[mode].name}
             </GlowText>
 
-            <div className="p-2">
+            <div className="w-full p-2">
               <MyMarkDown variables={variables}>
                 {modeDescriptions[mode].detail}
               </MyMarkDown>

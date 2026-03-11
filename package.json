@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.0",
+    "@tailwindcss/typography": "^0.5.19",
     "antd": "^6.1.1",
     "clsx": "^2.1.1",
     "fanyucomponents": "^2.11.2",
@@ -18,6 +19,8 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-markdown": "^10.1.0",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

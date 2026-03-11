@@ -1,7 +1,8 @@
 import { OverrideProps } from "fanyucomponents";
-import React, { useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
-
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 type MyMarkDownProps = OverrideProps<
   React.ComponentPropsWithoutRef<typeof ReactMarkdown>,
   {
@@ -35,26 +36,40 @@ const flattenVariables = (
   );
 };
 
-export const MyMarkDown = ({
-  variables,
-  children,
-  ...rest
-}: MyMarkDownProps) => {
-  const processedChildren = useMemo(() => {
-    if (!variables || typeof children !== "string") return children;
+export const MyMarkDown = memo(
+  ({ variables, children, remarkPlugins, ...rest }: MyMarkDownProps) => {
+    const processedChildren = useMemo(() => {
+      if (!variables || typeof children !== "string") return children;
 
-    const flatVariables = flattenVariables(variables);
-    let result = children;
+      const flatVariables = flattenVariables(variables);
+      let result = children;
 
-    for (const [key, value] of Object.entries(flatVariables)) {
-      // 替換 $key$ 為對應的值
-      // 使用 replaceAll 或者 regex replace
-      // 此處 regex 需要跳脫特殊字元
-      const regex = new RegExp(`\\$${key.replace(/\./g, "\\.")}\\$`, "g");
-      result = result.replace(regex, value);
-    }
-    return result;
-  }, [children, variables]);
+      for (const [key, value] of Object.entries(flatVariables)) {
+        // 替換 $key$ 為對應的值
+        // 使用 replaceAll 或者 regex replace
+        // 此處 regex 需要跳脫特殊字元
+        const regex = new RegExp(`\\$${key.replace(/\./g, "\\.")}\\$`, "g");
+        result = result.replace(regex, value);
+      }
+      return result;
+    }, [children, variables]);
 
-  return <ReactMarkdown {...rest}>{processedChildren}</ReactMarkdown>;
-};
+    return (
+      <ReactMarkdown
+        // components={{
+        //     p: ({...rest})=> <p className={'mb-4'} {...rest} />
+
+        // }}
+        remarkPlugins={[
+          remarkGfm,
+          remarkBreaks,
+          ...(remarkPlugins ? remarkPlugins : []),
+        ]}
+        {...rest}
+      >
+        {processedChildren}
+      </ReactMarkdown>
+    );
+  },
+);
+MyMarkDown.displayName = "MyMarkDown";
