@@ -1,12 +1,13 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MyImage } from "../MyImage";
-import { game } from "@/libs/game";
+import { game, modeDescriptions } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
 import { playAudio } from "@/utils/audio";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { useSetting } from "@/contexts/SettingContext";
+import { useModeModal } from "@/contexts/ModeModalContext";
 
 export const PatternsDiv = () => {
   const { sound } = useSetting();
@@ -15,14 +16,20 @@ export const PatternsDiv = () => {
     null,
     null,
   ]);
-  const patternModal = usePatternModal();
+  const pm = usePatternModal();
+  const mm = useModeModal();
   const patternsRef = useRef<(Pattern | null)[]>([null, null, null]);
 
   const handlePatternClick = useCallback(
     (pattern: Pattern) => {
-      patternModal.open(pattern);
+      const isTheme = pattern.name in modeDescriptions;
+      if (isTheme) {
+        mm.open(pattern.name as keyof typeof modeDescriptions);
+      } else {
+        pm.open(pattern);
+      }
     },
-    [patternModal]
+    [mm, pm],
   );
 
   useEffect(() => {
@@ -35,16 +42,19 @@ export const PatternsDiv = () => {
       g.patterns.forEach((p, index) => {
         const name = p?.name;
         if (name) {
-          const id = setTimeout(() => {
-            setPatterns((prev) => {
-              const next = [...prev];
-              next[index] = p;
-              return next;
-            });
-            if (sound.value) {
-              playAudio(`/audios/ding.mp3`, { volume: 0.5 });
-            }
-          }, (index + 1) * 500);
+          const id = setTimeout(
+            () => {
+              setPatterns((prev) => {
+                const next = [...prev];
+                next[index] = p;
+                return next;
+              });
+              if (sound.value) {
+                playAudio(`/audios/ding.mp3`, { volume: 0.5 });
+              }
+            },
+            (index + 1) * 500,
+          );
           timers.push(id);
         }
       });

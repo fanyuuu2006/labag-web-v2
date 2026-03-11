@@ -1,21 +1,22 @@
 "use client";
 
-import { ModeName, modes, Pattern } from "labag";
+import { Pattern } from "labag";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { MyImage } from "@/components/MyImage";
 import { cn } from "@/utils/className";
 import { useModeModal } from "@/contexts/ModeModalContext";
 import { useCallback } from "react";
+import { modeDescriptions } from "@/libs/game";
 
 export const PatternCard = ({ pattern }: { pattern: Pattern }) => {
-  const isTheme = modes.some((m) => m.variable.pattern === pattern);
-
+  
   const pm = usePatternModal();
   const mm = useModeModal();
+  const isTheme = pattern.name in modeDescriptions;
 
   const handleClick = useCallback(() => {
     if (isTheme) {
-      mm.open(pattern.name as ModeName);
+      mm.open(pattern.name as keyof typeof modeDescriptions);
     } else {
       pm.open(pattern);
     }
