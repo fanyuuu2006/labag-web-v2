@@ -193,15 +193,28 @@ const parseInline = (
   return tokens;
 };
 
+/**
+ * 列表項目結構介面
+ * 用於暫存解析出的列表資訊，支援後續的巢狀結構重建
+ */
 type ListItem = {
+  /** 列表項目的縮排層級 (字元數)，用於判斷巢狀關係 */
   indent: number;
+  /** 列表類型：有序 (ol) 或無序 (ul) */
   type: "ul" | "ol";
+  /** 列表項目的內容文字 */
   content: string;
+  /** 原始索引值，用於生成唯一的 React key */
   originalIndex: number;
 };
 
 /**
- * 遞迴渲染列表 (支援巢狀)
+ * 遞迴渲染列表 (支援巢狀結構)
+ * 將扁平的 ListItem 陣列轉換為巢狀的 HTML 列表結構 (ul/ol list)
+ *
+ * @param items 當前層級及其子層級的列表項目陣列
+ * @param components 自定義元件對照表
+ * @returns 渲染後的 ReactNode ( Fragment 包含 ul/ol )
  */
 const renderList = (
   items: ListItem[],
@@ -210,6 +223,7 @@ const renderList = (
   if (items.length === 0) return null;
 
   const nodes: React.ReactNode[] = [];
+  // 基準縮排：以群組中第一個項目的縮排為準，當作當前層級
   const baseIndent = items[0].indent;
 
   let currentGroupType = items[0].type;
@@ -220,6 +234,7 @@ const renderList = (
     const item = items[i];
 
     if (item.indent === baseIndent) {
+      // 若同層級但類型改變 (例如從 ul 變 ol)，先將之前的群組渲染出來
       if (item.type !== currentGroupType) {
         if (currentGroupItems.length > 0) {
           const ListTag =
@@ -239,10 +254,12 @@ const renderList = (
             </ListTag>,
           );
         }
+        // 重置群組
         currentGroupItems = [];
         currentGroupType = item.type;
       }
 
+      // 尋找此項目的子項目 (縮排大於基準縮排的所有後續項目)
       const childrenItems: ListItem[] = [];
       let j = i + 1;
       while (j < items.length) {
@@ -254,12 +271,14 @@ const renderList = (
         }
       }
 
+      // 遞迴渲染子項目
       const childNodes =
         childrenItems.length > 0
           ? renderList(childrenItems, components)
           : null;
       const LiTag = components?.li || "li";
 
+      // 組合當前項目及其子列表
       currentGroupItems.push(
         <LiTag key={`li-${item.originalIndex}`} role="listitem">
           {parseInline(item.content, components)}
@@ -267,12 +286,15 @@ const renderList = (
         </LiTag>,
       );
 
+      // 跳過已處理的子項目
       i = j;
     } else {
+      // 防禦性程式碼：遇到底層縮排不一致的項目 (通常是 orphaned children)，跳過以防無窮迴圈
       i++;
     }
   }
 
+  // 渲染迴圈結束後剩餘的最後一個群組
   if (currentGroupItems.length > 0) {
     const ListTag =
       currentGroupType === "ol"
@@ -358,6 +380,7 @@ const parseBlocks = (
       const listItems: ListItem[] = [];
       const baseIndent = listMatch[1].length;
 
+      // 向後尋找所有屬於此列表區塊的項目 (包含巢狀子項目)
       let j = i;
       while (j < lines.length) {
         const nextLine = lines[j];
@@ -366,7 +389,7 @@ const parseBlocks = (
         // 如果下一行是列表項
         if (nextMatch) {
           const indent = nextMatch[1].length;
-          // 若縮排比當前 block 起始縮排還少，代表列表結束
+          // 若縮排比當前 block 起始縮排還少，代表此列表區塊結束 (回到了更上層的內容)
           if (indent < baseIndent) break;
 
           const type = /^\d+\./.test(nextMatch[2]) ? "ol" : "ul";
@@ -374,16 +397,18 @@ const parseBlocks = (
             indent,
             type,
             content: nextMatch[3],
-            originalIndex: keyCounter++,
+            originalIndex: keyCounter++, // 生成全域唯一 key
           });
           j++;
         } else {
+          // 若不是列表項，且不符合縮排規則，視為列表結束
           break;
         }
       }
       
-      i = j - 1;
+      i = j - 1; // 更新外層迴圈 index 到最後一個列表項
 
+      // 將收集到的列表項目交給 renderList 遞迴渲染
       blocks.push(
          <React.Fragment key={`list-block-${keyCounter++}`}>
             {renderList(listItems, components)}

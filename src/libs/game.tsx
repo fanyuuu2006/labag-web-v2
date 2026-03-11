@@ -22,6 +22,8 @@ export const modeDescriptions: Record<
   - 皆不同 取三者最低分的加總除以 \`$normalVar.allDifferentDivisor$\` 後取整。
 
 **結束條件** 當可玩次數用盡，顯示最終成績。
+
+**備註** 遊戲過程中可獲得特殊模式，詳見其他模式說明。
 `,
   },
   greenwei: {
