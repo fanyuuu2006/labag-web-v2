@@ -288,7 +288,7 @@ const parseBlocks = (
       blocks.push(
         <ListTag
           key={`list-${keyCounter++}`}
-          className={isOrdered ? "list-decimal ml-5" : "list-disc ml-5"}
+          className={isOrdered ? "list-decimal ml-[1.25em]" : "list-disc ml-[1.25em]"}
         >
           {listItems}
         </ListTag>,
