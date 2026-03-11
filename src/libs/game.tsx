@@ -22,7 +22,7 @@ export const modeDescriptions: Record<
   - 皆不同：取三者最低分的加總除以 $normalVar.allDifferentDivisor$ 後取整。
 
 - **結束條件**：當可玩次數用盡，顯示最終成績。
-    `,
+`,
   },
   greenwei: {
     name: "綠光阿瑋模式",
@@ -36,7 +36,7 @@ export const modeDescriptions: Record<
 - **效果**：獲得分數提升 (乘以 $greenweiVar.mutiplier$)。
 
 - **結束**：綠光阿瑋次數歸零時自動退出模式。
-    `,
+`,
   },
   pikachu: {
     name: "皮卡丘充電",
@@ -48,7 +48,7 @@ export const modeDescriptions: Record<
   - 模式期間若出現任一「$pikachuVar.bindPattern.name$」，則額外增加 MIN(目前已觸發次數, $pikachuVar.bonusRounds$) 次可玩次數。
 
 - **結束**：當額外次數用盡且該輪未再出現 「$pikachuVar.bindPattern.name$」 時結束遊戲。
-    `,
+`,
   },
   superhhh: {
     name: "超級阿禾模式",
@@ -62,8 +62,8 @@ export const modeDescriptions: Record<
 - **效果**：
   - 觸發當下三格皆為 「$superhhhVar.bindPattern.name$」 時，獲得額外加分 (當前總分的一半)。
   - 狀態期間的高分圖案機率大幅提升，低分圖案機率大幅下降。
-  
+
 - **結束**：超級阿禾次數歸零後自動退出模式。
-    `,
+`,
   },
 };
