@@ -7,6 +7,7 @@ import { GlowText } from "@/components/GlowText";
 
 import { game, modeDescriptions } from "@/libs/game";
 import { MyMarkDown } from "@/components/MyMarkDown";
+import { cn } from "@/utils/className";
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -69,11 +70,14 @@ export const ModeModalProvider = ({
             <div className="w-full p-2 shrink-0">
               <MyMarkDown
                 components={{
-                  strong: ({ ...rest }) => (
+                  strong: ({className,  ...rest }) => (
                     <strong
-                      className="bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold"
+                      className={cn("bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold", className)}
                       {...rest}
                     />
+                  ),
+                  code: ({ className, ...rest }) => (
+                    <code className={cn("text-(--primary)", className)} {...rest} />
                   ),
                 }}
                 variables={variables}
