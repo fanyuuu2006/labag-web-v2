@@ -51,7 +51,7 @@ const SuperHHHRates = () => {
   const rates = game.getMode("superhhh")?.rates || {};
   return (
     <div className="flex flex-col gap-1">
-      {Object.entries(rates)
+      {Object.entries(rates as Record<string, number>)
         .sort(([, a], [, b]) => b - a)
         .map(([pattern, rate]) => {
           const isPositive = rate > 0;
