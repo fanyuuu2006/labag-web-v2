@@ -5,8 +5,8 @@ import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 
-import { MyMarkDown } from "@/components/MyMarkDown";
 import { game, modeDescriptions } from "@/libs/game";
+import { MyMarkDown } from "@/components/MyMarkDown";
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -69,11 +69,12 @@ export const ModeModalProvider = ({
             <div className="w-full p-2 shrink-0">
               <MyMarkDown
                 components={{
-                  strong: ({  ...rest }) => (
-                    <strong className="bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold" {...rest}/>
+                  strong: ({ ...rest }) => (
+                    <strong
+                      className="bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold"
+                      {...rest}
+                    />
                   ),
-                  li: ({ ...rest }) => <li className="not-last:mb-4" {...rest}/>,
-                  
                 }}
                 variables={variables}
               >
