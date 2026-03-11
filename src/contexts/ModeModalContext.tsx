@@ -1,6 +1,6 @@
 "use client";
 import { useModal } from "@/hooks/useModal";
-import { ModeName } from "labag";
+import { ModeName, patterns, Pattern } from "labag";
 import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
@@ -8,6 +8,7 @@ import { GlowText } from "@/components/GlowText";
 import { game, modeDescriptions } from "@/libs/game";
 import { MyMarkDown } from "@/components/MyMarkDown";
 import { cn } from "@/utils/className";
+import { usePatternModal } from "./PatternModalContext";
 type ModeModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -16,6 +17,37 @@ type ModeModalContextType = OverrideProps<
 >;
 
 const modeModalContext = createContext<ModeModalContextType | null>(null);
+
+const MyCode = ({
+  className,
+  children,
+  ...rest
+}: React.HTMLAttributes<HTMLElement>) => {
+  const pm = usePatternModal();
+  const pattern = patterns.find((p) => p.name === String(children)) as Pattern;
+  const isPattern = Boolean(pattern);
+  return (
+    <code
+      onClick={
+        isPattern
+          ? () => {
+              pm.open(pattern);
+            }
+          : undefined
+      }
+      className={cn(
+        "text-(--primary)",
+        {
+          "cursor-pointer": isPattern,
+        },
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </code>
+  );
+};
 
 export const ModeModalProvider = ({
   children,
@@ -70,15 +102,16 @@ export const ModeModalProvider = ({
             <div className="w-full p-2 shrink-0">
               <MyMarkDown
                 components={{
-                  strong: ({className,  ...rest }) => (
+                  strong: ({ className, ...rest }) => (
                     <strong
-                      className={cn("bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold", className)}
+                      className={cn(
+                        "bg-(--primary-background) text-(--primary) py-1 px-2 rounded-lg font-semibold",
+                        className,
+                      )}
                       {...rest}
                     />
                   ),
-                  code: ({ className, ...rest }) => (
-                    <code className={cn("text-(--primary)", className)} {...rest} />
-                  ),
+                  code: MyCode,
                 }}
                 variables={variables}
               >
