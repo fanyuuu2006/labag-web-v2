@@ -3,7 +3,6 @@
 import { memo } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
-import { modeDescriptions } from "@/components/gameModeDescriptions";
 import { modes, ModeName, patterns } from "labag";
 import {
   ThunderboltOutlined,
@@ -27,6 +26,7 @@ import { ContentDiv, ContentDivProps } from "./ContentDiv";
 import { ModeCard } from "./ModeCard";
 import { PatternCard } from "./PatternCard";
 import { LeftContentProps, LeftContent } from "./LeftContent";
+import { modeDescriptions } from "@/libs/game";
 
 const TIMELINE_EVENTS = [
   {

@@ -1,10 +1,9 @@
 "use client";
 import React, { memo, useEffect, useState } from "react";
 import { cn } from "@/utils/className";
-import { game } from "@/libs/game";
+import { game, modeDescriptions } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
-import { modeDescriptions } from "@/components/gameModeDescriptions";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { useModeModal } from "@/contexts/ModeModalContext";
 
