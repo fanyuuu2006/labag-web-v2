@@ -193,6 +193,106 @@ const parseInline = (
   return tokens;
 };
 
+type ListItem = {
+  indent: number;
+  type: "ul" | "ol";
+  content: string;
+  originalIndex: number;
+};
+
+/**
+ * 遞迴渲染列表 (支援巢狀)
+ */
+const renderList = (
+  items: ListItem[],
+  components: MyMarkDownProps["components"],
+): React.ReactNode => {
+  if (items.length === 0) return null;
+
+  const nodes: React.ReactNode[] = [];
+  const baseIndent = items[0].indent;
+
+  let currentGroupType = items[0].type;
+  let currentGroupItems: React.ReactNode[] = [];
+
+  let i = 0;
+  while (i < items.length) {
+    const item = items[i];
+
+    if (item.indent === baseIndent) {
+      if (item.type !== currentGroupType) {
+        if (currentGroupItems.length > 0) {
+          const ListTag =
+            currentGroupType === "ol"
+              ? components?.ol || "ol"
+              : components?.ul || "ul";
+          nodes.push(
+            <ListTag
+              key={`list-group-${items[i - 1]?.originalIndex ?? i}`}
+              className={
+                currentGroupType === "ol"
+                  ? "list-decimal ml-5"
+                  : "list-disc ml-5"
+              }
+            >
+              {currentGroupItems}
+            </ListTag>,
+          );
+        }
+        currentGroupItems = [];
+        currentGroupType = item.type;
+      }
+
+      const childrenItems: ListItem[] = [];
+      let j = i + 1;
+      while (j < items.length) {
+        if (items[j].indent > baseIndent) {
+          childrenItems.push(items[j]);
+          j++;
+        } else {
+          break;
+        }
+      }
+
+      const childNodes =
+        childrenItems.length > 0
+          ? renderList(childrenItems, components)
+          : null;
+      const LiTag = components?.li || "li";
+
+      currentGroupItems.push(
+        <LiTag key={`li-${item.originalIndex}`} role="listitem">
+          {parseInline(item.content, components)}
+          {childNodes}
+        </LiTag>,
+      );
+
+      i = j;
+    } else {
+      i++;
+    }
+  }
+
+  if (currentGroupItems.length > 0) {
+    const ListTag =
+      currentGroupType === "ol"
+        ? components?.ol || "ol"
+        : components?.ul || "ul";
+    nodes.push(
+      <ListTag
+        key={`list-group-end-${items[items.length - 1].originalIndex}`}
+        className={
+          currentGroupType === "ol" ? "list-decimal ml-5" : "list-disc ml-5"
+        }
+      >
+        {currentGroupItems}
+      </ListTag>,
+    );
+  }
+
+  return <>{nodes}</>;
+};
+
 /**
  * 解析區塊 Markdown 元素 (Block Elements)
  * 支援：程式碼區塊, 標題, 列表 (有序/無序), 引用區塊, 水平線, 空行, 段落
@@ -252,46 +352,42 @@ const parseBlocks = (
       continue;
     }
 
-    // 3. List 列表 (-, *, 1.) - 支援自動合併連續的列表項目並包裹 ul/ol
+    // 3. List 列表 (-, *, 1.) - 支援巢狀列表
     const listMatch = line.match(/^(\s*)([-*]|\d+\.)\s+(.*)$/);
     if (listMatch) {
-      const isOrdered = /^\d+\./.test(listMatch[2]);
-      const ListTag = isOrdered
-        ? components?.ol || "ol"
-        : components?.ul || "ul";
-      const LiTag = components?.li || "li";
+      const listItems: ListItem[] = [];
+      const baseIndent = listMatch[1].length;
 
-      const listItems: React.ReactNode[] = [];
-
-      // 向後尋找並收集所有連續的同類型列表項
       let j = i;
       while (j < lines.length) {
         const nextLine = lines[j];
         const nextMatch = nextLine.match(/^(\s*)([-*]|\d+\.)\s+(.*)$/);
 
-        if (!nextMatch) break;
+        // 如果下一行是列表項
+        if (nextMatch) {
+          const indent = nextMatch[1].length;
+          // 若縮排比當前 block 起始縮排還少，代表列表結束
+          if (indent < baseIndent) break;
 
-        // 檢查列表類型是否一致 (ordered vs unordered)
-        const nextIsOrdered = /^\d+\./.test(nextMatch[2]);
-        if (nextIsOrdered !== isOrdered) break;
-
-        const content = parseInline(nextMatch[3], components);
-        listItems.push(
-          <LiTag key={`li-${keyCounter++}-${j}`} role="listitem">
-            {content}
-          </LiTag>,
-        );
-        j++;
+          const type = /^\d+\./.test(nextMatch[2]) ? "ol" : "ul";
+          listItems.push({
+            indent,
+            type,
+            content: nextMatch[3],
+            originalIndex: keyCounter++,
+          });
+          j++;
+        } else {
+          break;
+        }
       }
-      i = j - 1; // 更新外層迴圈 index 到最後一個列表項
+      
+      i = j - 1;
 
       blocks.push(
-        <ListTag
-          key={`list-${keyCounter++}`}
-          className={isOrdered ? "list-decimal ml-[1.25em]" : "list-disc ml-[1.25em]"}
-        >
-          {listItems}
-        </ListTag>,
+         <React.Fragment key={`list-block-${keyCounter++}`}>
+            {renderList(listItems, components)}
+         </React.Fragment>
       );
       continue;
     }
@@ -317,7 +413,7 @@ const parseBlocks = (
     if (line.trim() === "") {
       const BlankLineTag = components?.blankline || "div";
       blocks.push(
-        <BlankLineTag key={`blank-${keyCounter++}`} className="h-[1em]" />,
+        <BlankLineTag key={`blank-${keyCounter++}`} className="h-[1.5em]" />,
       );
       continue;
     }
