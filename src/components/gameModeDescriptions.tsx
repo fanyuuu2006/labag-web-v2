@@ -45,6 +45,7 @@ const getVar = (name: ModeName) => game.getMode(name)?.variable;
 const greenweiVar = getVar("greenwei");
 const pikachuVar = getVar("pikachu");
 const superhhhVar = getVar("superhhh");
+const normalVar = getVar("normal");
 
 const SuperHHHRates = () => {
   const rates = game.getMode("superhhh")?.rates || {};
@@ -98,11 +99,18 @@ export const modeDescriptions: Record<
             content: (
               <>
                 兩個相同：獲得中等分 + 另一圖案的最低分，除以{" "}
-                <Highlight>1.4</Highlight> 後取整。
+                <Highlight>{normalVar?.twoMatchDivisor}</Highlight> 後取整。
               </>
             ),
           },
-          { content: "皆不同：取三者最低分的平均值（取整）。" },
+          {
+            content: (
+              <>
+                皆不同：取三者最低分的加總除以{" "}
+                <Highlight>{normalVar?.allDifferentDivisor}</Highlight> 後取整。
+              </>
+            ),
+          },
         ],
       },
       {
@@ -127,7 +135,9 @@ export const modeDescriptions: Record<
               <>
                 機率： <Highlight>{greenweiVar?.rate}</Highlight>
                 %；累積次數達{" "}
-                <Highlight>{greenweiVar?.requiredBindPatternCount}</Highlight>{" "}
+                <Highlight>
+                  {greenweiVar?.requiredBindPatternCount}
+                </Highlight>{" "}
                 時自動觸發。
               </>
             ),
@@ -160,8 +170,8 @@ export const modeDescriptions: Record<
             content: (
               <>
                 獲得分數提升{" "}
-                <Highlight>{(greenweiVar?.mutiplier ?? 1) - 1}</Highlight>{" "}
-                倍 (乘以
+                <Highlight>{(greenweiVar?.mutiplier ?? 1) - 1}</Highlight> 倍
+                (乘以
                 <Highlight>{greenweiVar?.mutiplier}</Highlight>)
               </>
             ),
@@ -231,7 +241,9 @@ export const modeDescriptions: Record<
             content: (
               <>
                 機率： <Highlight>{superhhhVar?.rate}</Highlight>
-                %；初次啟動獲得 <Highlight>{superhhhVar?.bonusTimes}</Highlight>{" "}
+                %；初次啟動獲得 <Highlight>
+                  {superhhhVar?.bonusTimes}
+                </Highlight>{" "}
                 回合。
               </>
             ),
