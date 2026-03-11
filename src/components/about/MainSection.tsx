@@ -33,8 +33,18 @@ const TIMELINE_EVENTS = [
     year: "2023",
     date: "6 月 22 日",
     title: "初代啦八機誕生",
-    description:
-      "治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的 MIT App Inventor 2 的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。",
+    description: (
+      <>
+        治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的
+        <OutsideLink
+          href="https://appinventor.mit.edu/"
+          className="text-(--primary) underline underline-offset-4"
+        >
+          MIT App Inventor 2
+        </OutsideLink>{" "}
+        的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。,
+      </>
+    ),
   },
   {
     year: "2023-2024",
