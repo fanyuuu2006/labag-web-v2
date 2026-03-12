@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import React, { memo } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
 import { modes, ModeName, patterns } from "labag";
@@ -28,6 +28,11 @@ import { modeDescriptions } from "@/libs/game";
 import { ModeModalButton } from "@/components/ModeModalButton";
 import { PatternModalButton } from "@/components/PatternModalButton";
 import { MyImage } from "@/components/MyImage";
+
+type ComponentCombination<T extends React.ElementType = React.ElementType> = [
+  T,
+  React.ComponentProps<T>,
+];
 
 const TIMELINE_EVENTS = [
   {
@@ -230,38 +235,40 @@ const CONTENTS: ContentDivProps[] = [
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {DISPLAY_PATTERNS.map((pattern) => {
           const isTheme = pattern.name in modeDescriptions;
-          const commonProps = {
-            className:
-              "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl",
-            "data-theme": isTheme ? pattern.name : "normal",
-            children: (
-              <>
-                <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-                  <MyImage
-                    src={`/images/patterns/${pattern.name}.jpg`}
-                    alt={pattern.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="font-bold text-lg capitalize">
-                  {pattern.name}
-                </span>
-              </>
-            ),
-          };
+          const [Tag, props]: ComponentCombination = isTheme
+            ? [
+                ModeModalButton,
+                {
+                  modeName: pattern.name,
+                },
+              ]
+            : [
+                PatternModalButton,
+                {
+                  pattern,
+                },
+              ];
+          return (
+            <Tag
+              key={pattern.name}
+              className={
+                "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl"
+              }
+              {...props}
+              data-theme={isTheme ? pattern.name : "normal"}
+            >
+              <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
+                <MyImage
+                  src={`/images/patterns/${pattern.name}.jpg`}
+                  alt={pattern.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-          return isTheme ? (
-            <ModeModalButton
-              key={pattern.name}
-              {...commonProps}
-              modeName={pattern.name as ModeName}
-            />
-          ) : (
-            <PatternModalButton
-              key={pattern.name}
-              {...commonProps}
-              pattern={pattern}
-            />
+              <span className="font-bold text-lg capitalize">
+                {pattern.name}
+              </span>
+            </Tag>
           );
         })}
       </div>
