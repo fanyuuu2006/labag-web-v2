@@ -15,15 +15,16 @@ export const MusicAudio = ({
     const audio = audioRef.current;
     if (!audio) return;
 
-    const modeName = modes?.[0]?.name;
-    if (!modeName) {
+
+  const theme = modes.find((m) => m.name !== "normal")?.name || "normal";
+    if (!theme) {
       audio.pause();
       audio.removeAttribute("src");
       delete audio.dataset.src;
       return;
     }
 
-    const src = `/audios/bgm/${modeName}.mp3`;
+    const src = `/audios/bgm/${theme}.mp3`;
     if (audio.dataset.src === src) return; // 若相同來源，跳過
 
     audio.dataset.src = src; // 紀錄目前來源
