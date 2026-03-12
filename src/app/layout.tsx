@@ -9,9 +9,9 @@ import { ModeModalProvider } from "@/contexts/ModeModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
 import { UserModalProvider } from "@/contexts/UserModalContext";
-import "@/styles/globals.css";
 import { InstallPWAButton } from "@/components/InstallPWAButton";
 import { DownloadOutlined } from "@ant-design/icons";
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: site.url,

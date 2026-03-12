@@ -1,3 +1,4 @@
+"use client";
 import { useModes } from "@/contexts/ModesContext";
 import { useSetting } from "@/contexts/SettingContext";
 import { useRef, useEffect } from "react";
@@ -10,7 +11,6 @@ export const MusicAudio = ({
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // 更新音檔來源（只在 mode 變更時更新），並在 isPlaying 時嘗試播放
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;

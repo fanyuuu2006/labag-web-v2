@@ -11,7 +11,7 @@ import { useSetting } from "@/contexts/SettingContext";
 
 export const MainSection = () => {
   const router = useRouter();
-  const {sound} = useSetting();
+  const { sound } = useSetting();
   useEffect(() => {
     let timeoutId: number | null = null;
 
@@ -36,7 +36,7 @@ export const MainSection = () => {
     recorder.init();
     return () => {
       recorder.dispose();
-    }
+    };
   }, []);
 
   return (
@@ -50,8 +50,7 @@ export const MainSection = () => {
           <PlayButton className="w-3/4" />
         </aside>
       </div>
-      <MusicAudio loop preload='auto' />
-      
+      <MusicAudio loop preload="auto" />
     </section>
   );
 };
