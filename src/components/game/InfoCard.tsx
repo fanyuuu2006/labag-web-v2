@@ -5,7 +5,7 @@ import { game, modeDescriptions } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { ModeName } from "labag";
 import { usePatternModal } from "@/contexts/PatternModalContext";
-import { useModeModal } from "@/contexts/ModeModalContext";
+import { ModeModalButton } from "../ModeModalButton";
 
 type InfoCardProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -18,18 +18,15 @@ type InfoState = {
 };
 
 const ModeBadge = memo(({ mode }: { mode: ModeName }) => {
-  const modal = useModeModal();
   return (
-    <>
-      <button
-        className="btn primary text-xs sm:text-sm md:text-base font-extrabold rounded-full py-1 px-3 flex items-center"
-        aria-label={`mode-${mode}`}
-        onClick={() => modal.open(mode)}
-        data-theme={mode}
-      >
-        {mode}
-      </button>
-    </>
+    <ModeModalButton
+      className="btn primary text-xs sm:text-sm md:text-base font-extrabold rounded-full py-1 px-3 flex items-center"
+      aria-label={`mode-${mode}`}
+      data-theme={mode}
+      modeName={mode}
+    >
+      {mode}
+    </ModeModalButton>
   );
 });
 ModeBadge.displayName = "ModeBadge";

@@ -23,10 +23,11 @@ import {
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
-import { ModeCard } from "./ModeCard";
-import { PatternCard } from "./PatternCard";
 import { LeftContentProps, LeftContent } from "./LeftContent";
 import { modeDescriptions } from "@/libs/game";
+import { ModeModalButton } from "@/components/ModeModalButton";
+import { PatternModalButton } from "@/components/PatternModalButton";
+import { MyImage } from "@/components/MyImage";
 
 const TIMELINE_EVENTS = [
   {
@@ -209,8 +210,15 @@ const CONTENTS: ContentDivProps[] = [
             ModeName,
             (typeof modeDescriptions)[ModeName],
           ][]
-        ).map(([key, mode]) => (
-          <ModeCard key={key} modeKey={key} modeData={mode} />
+        ).map(([modeName, modeData]) => (
+          <ModeModalButton
+            key={modeName}
+            className="btn secondary w-full py-8 text-xl sm:text-2xl font-bold rounded-2xl"
+            modeName={modeName}
+            data-theme={modeName}
+          >
+            {modeData.name}
+          </ModeModalButton>
         ))}
       </div>
     ),
@@ -220,9 +228,42 @@ const CONTENTS: ContentDivProps[] = [
     description: "點擊圖案可查看詳細計分資訊與出現機率",
     children: (
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {DISPLAY_PATTERNS.map((pattern) => (
-          <PatternCard key={pattern.name} pattern={pattern} />
-        ))}
+        {DISPLAY_PATTERNS.map((pattern) => {
+          const isTheme = pattern.name in modeDescriptions;
+          const commonProps = {
+            className:
+              "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl",
+            "data-theme": isTheme ? pattern.name : "normal",
+            children: (
+              <>
+                <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
+                  <MyImage
+                    src={`/images/patterns/${pattern.name}.jpg`}
+                    alt={pattern.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="font-bold text-lg capitalize">
+                  {pattern.name}
+                </span>
+              </>
+            ),
+          };
+
+          return isTheme ? (
+            <ModeModalButton
+              key={pattern.name}
+              {...commonProps}
+              modeName={pattern.name as ModeName}
+            />
+          ) : (
+            <PatternModalButton
+              key={pattern.name}
+              {...commonProps}
+              pattern={pattern}
+            />
+          );
+        })}
       </div>
     ),
   },
