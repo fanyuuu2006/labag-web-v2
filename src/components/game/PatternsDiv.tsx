@@ -10,7 +10,7 @@ import { useSetting } from "@/contexts/SettingContext";
 import { useModeModal } from "@/contexts/ModeModalContext";
 
 export const PatternsDiv = () => {
-  const { sound } = useSetting();
+  const { settings } = useSetting();
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
     null,
@@ -49,7 +49,7 @@ export const PatternsDiv = () => {
                 next[index] = p;
                 return next;
               });
-              if (sound.value) {
+              if (settings.sound) {
                 playAudio(`/audios/ding.mp3`, { volume: 0.5 });
               }
             },
@@ -73,7 +73,7 @@ export const PatternsDiv = () => {
         const id = setTimeout(() => {
           setPatterns([...g.patterns]);
           diffNames.forEach((name) => {
-            if (sound.value) {
+            if (settings.sound) {
               playAudio(`/audios/on/${name}.mp3`);
             }
           });
@@ -90,7 +90,7 @@ export const PatternsDiv = () => {
       game.removeEventListener("roundEnd", updatePatterns);
       timers.forEach((t) => clearTimeout(t));
     };
-  }, [sound.value]);
+  }, [settings.sound]);
 
   return (
     <div className="mb-2 grid grid-cols-3 w-full gap-1 md:max-w-2xl relative">

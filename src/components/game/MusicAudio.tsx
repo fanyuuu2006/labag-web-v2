@@ -7,7 +7,7 @@ type MusicAudioProps = React.AudioHTMLAttributes<HTMLAudioElement>;
 export const MusicAudio = ({
   ...rest
 }: MusicAudioProps) => {
-  const { music } = useSetting();
+  const { settings } = useSetting();
   const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -30,17 +30,17 @@ export const MusicAudio = ({
     audio.dataset.src = src; // 紀錄目前來源
     audio.src = src;
     // 若當前為播放狀態，嘗試播放（瀏覽器若無使用者互動會拒絕，這裡以 catch 處理）
-    if (music.value) {
+    if (settings.music) {
       audio.play().catch((err) => console.warn("music play blocked:", err));
     }
-  }, [modes, music.value]);
+  }, [modes, settings.music]);
 
   // 播放 / 暫停 控制
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (music.value) {
+    if (settings.music) {
       audio.play().catch((err) => console.warn("music play blocked:", err));
     } else {
       audio.pause();
@@ -50,7 +50,7 @@ export const MusicAudio = ({
     return () => {
       audio.pause();
     };
-  }, [music.value]);
+  }, [settings.music]);
 
   return (
     <audio

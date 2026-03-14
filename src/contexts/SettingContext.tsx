@@ -15,23 +15,36 @@ import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
 
-const STORAGE_KEYS = {
-  MUSIC: "labag-settings-music",
-  SOUND: "labag-settings-sound",
-};
+// Configuration for settings
+// 這裡可以輕鬆擴充新的設定選項，設定的key與localStorage儲存的key相關
+const SETTINGS_CONFIG = [
+  {
+    key: "music",
+    label: "背景音樂",
+    icon: CustomerServiceOutlined,
+    defaultValue: true,
+  },
+  {
+    key: "sound",
+    label: "遊戲音效",
+    icon: SoundOutlined,
+    defaultValue: true,
+  },
+] as const;
 
-type SettingOption<T> = {
-  value: T;
-  set: React.Dispatch<React.SetStateAction<T>>;
-};
+export type SettingKey = (typeof SETTINGS_CONFIG)[number]["key"];
+
+export type Settings = Record<SettingKey, boolean>;
 
 interface SettingContextType {
   modal: Omit<ReturnType<typeof useModal>, "Container">;
-  music: SettingOption<boolean>;
-  sound: SettingOption<boolean>;
+  settings: Settings;
+  setSetting: (key: SettingKey, value: React.SetStateAction<boolean>) => void;
 }
 
 const settingContext = createContext<SettingContextType | null>(null);
+
+const STORAGE_KEY_PREFIX = "labag-settings-";
 
 const SettingItem = ({
   id,
@@ -71,53 +84,65 @@ export const SettingProvider = ({
   children: React.ReactNode;
 }) => {
   const { Container, ...modal } = useModal({});
-  const [music, setMusic] = useState<boolean>(true);
-  const [sound, setSound] = useState<boolean>(true);
+  
+  const [settings, setSettings] = useState<Settings>(() => {
+    return SETTINGS_CONFIG.reduce((acc, config) => {
+      acc[config.key] = config.defaultValue;
+      return acc;
+    }, {} as Settings);
+  });
+
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // 組件掛載時從 localStorage 讀取設定
+  // 載入設定值，僅在初始時執行一次
   useEffect(() => {
-    const storedMusic = localStorage.getItem(STORAGE_KEYS.MUSIC);
-    const storedSound = localStorage.getItem(STORAGE_KEYS.SOUND);
+    const newSettings = { ...settings };
+    let hasChanges = false;
 
-    if (storedMusic !== null) {
-      setTimeout(() => setMusic(storedMusic === "true"), 0);
+    SETTINGS_CONFIG.forEach((config) => {
+      const storedValue = localStorage.getItem(STORAGE_KEY_PREFIX + config.key);
+      if (storedValue !== null) {
+        newSettings[config.key] = storedValue === "true";
+        hasChanges = true;
+      }
+    });
+
+    if (hasChanges) {
+        setSettings(newSettings);
     }
-    if (storedSound !== null) {
-      setTimeout(() => setSound(storedSound === "true"), 0);
-    }
-    setTimeout(() => setIsLoaded(true), 0);
+    setIsLoaded(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 當設定變更且已載入完成後，將設定儲存至 localStorage
+  // Sync to localStorage
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(STORAGE_KEYS.MUSIC, String(music));
-    }
-  }, [music, isLoaded]);
+    if (!isLoaded) return;
+    
+    SETTINGS_CONFIG.forEach((config) => {
+       localStorage.setItem(STORAGE_KEY_PREFIX + config.key, String(settings[config.key]));
+    });
+  }, [settings, isLoaded]);
 
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem(STORAGE_KEYS.SOUND, String(sound));
-    }
-  }, [sound, isLoaded]);
+  const updateSetting = (key: SettingKey, value: React.SetStateAction<boolean>) => {
+    setSettings((prev) => {
+        const currentVal = prev[key];
+        const nextVal = typeof value === 'function' ? (value as (prev: boolean) => boolean)(currentVal) : value;
+        return { ...prev, [key]: nextVal };
+    });
+  };
 
   const userModal = useUserModal();
   const { user, loading } = useUser();
+  
   const value = useMemo(
     () => ({
       modal,
-      music: {
-        value: music,
-        set: setMusic,
-      },
-      sound: {
-        value: sound,
-        set: setSound,
-      },
+      settings,
+      setSetting: updateSetting,
     }),
-    [modal, music, sound],
+    [modal, settings],
   );
+
   return (
     <settingContext.Provider value={value}>
       {children}
@@ -157,25 +182,21 @@ export const SettingProvider = ({
 
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
-              <SettingItem
-                id="music"
-                label="背景音樂"
-                icon={CustomerServiceOutlined}
-                value={music}
-                setValue={setMusic}
-              />
-              <SettingItem
-                id="sound"
-                label="遊戲音效"
-                icon={SoundOutlined}
-                value={sound}
-                setValue={setSound}
-              />
+              {SETTINGS_CONFIG.map((config) => (
+                <SettingItem
+                  key={config.key}
+                  id={config.key}
+                  label={config.label}
+                  icon={config.icon}
+                  value={settings[config.key]}
+                  setValue={(val) => updateSetting(config.key as SettingKey, val)}
+                />
+              ))}
             </div>
 
             {/*此為分隔線 */}
             <div className="border-t-2 border-(--secondary)/30 w-full" />
-
+             
             <div className="flex flex-col gap-3">
               {loading ? (
                 <div className="flex justify-center p-4">

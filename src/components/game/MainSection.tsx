@@ -11,13 +11,13 @@ import { useSetting } from "@/contexts/SettingContext";
 
 export const MainSection = () => {
   const router = useRouter();
-  const { sound } = useSetting();
+  const { settings } = useSetting();
   useEffect(() => {
     let timeoutId: number | null = null;
 
     const handleGameOver = () => {
       timeoutId = window.setTimeout(() => {
-        if (sound.value) {
+        if (settings.sound) {
           playAudio(`/audios/ding.mp3`);
         }
         router.replace("/game/over");
@@ -30,7 +30,7 @@ export const MainSection = () => {
       if (timeoutId) clearTimeout(timeoutId);
       game.removeEventListener("gameOver", handleGameOver);
     };
-  }, [router, sound.value]);
+  }, [router, settings.sound]);
 
   useEffect(() => {
     recorder.init();
