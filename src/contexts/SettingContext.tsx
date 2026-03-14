@@ -9,11 +9,16 @@ import {
   SoundOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { createContext, useContext, useState, useMemo } from "react";
+import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { useUserModal } from "./UserModalContext";
 import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
+
+const STORAGE_KEYS = {
+  MUSIC: "labag-settings-music",
+  SOUND: "labag-settings-sound",
+};
 
 type SettingOption<T> = {
   value: T;
@@ -51,7 +56,12 @@ const SettingItem = ({
         {label}
       </label>
     </div>
-    <ToggleSwitch className="text-2xl" id={id} value={value} setValue={setValue} />
+    <ToggleSwitch
+      className="text-2xl"
+      id={id}
+      value={value}
+      setValue={setValue}
+    />
   </div>
 );
 
@@ -63,6 +73,35 @@ export const SettingProvider = ({
   const { Container, ...modal } = useModal({});
   const [music, setMusic] = useState<boolean>(true);
   const [sound, setSound] = useState<boolean>(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // 組件掛載時從 localStorage 讀取設定
+  useEffect(() => {
+    const storedMusic = localStorage.getItem(STORAGE_KEYS.MUSIC);
+    const storedSound = localStorage.getItem(STORAGE_KEYS.SOUND);
+
+    if (storedMusic !== null) {
+      setTimeout(() => setMusic(storedMusic === "true"), 0);
+    }
+    if (storedSound !== null) {
+      setTimeout(() => setSound(storedSound === "true"), 0);
+    }
+    setTimeout(() => setIsLoaded(true), 0);
+  }, []);
+
+  // 當設定變更且已載入完成後，將設定儲存至 localStorage
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem(STORAGE_KEYS.MUSIC, String(music));
+    }
+  }, [music, isLoaded]);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem(STORAGE_KEYS.SOUND, String(sound));
+    }
+  }, [sound, isLoaded]);
+
   const userModal = useUserModal();
   const { user, loading } = useUser();
   const value = useMemo(
