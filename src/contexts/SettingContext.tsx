@@ -91,23 +91,10 @@ const SettingItem = memo(
     value: Settings[SettingKey];
     setValue: React.Dispatch<React.SetStateAction<Settings[SettingKey]>>;
   }) => {
-    const commonHeader = (
-      <div className="flex items-center gap-3">
-        {config.icon && <config.icon className="text-xl" />}
-        <label
-          htmlFor={config.key}
-          className="font-medium cursor-pointer select-none text-xl"
-        >
-          {config.label}
-        </label>
-      </div>
-    );
-
-    switch (config.type) {
-      case "boolean":
-        return (
-          <div className="flex items-center justify-between p-2">
-            {commonHeader}
+    const renderInput = () => {
+      switch (config.type) {
+        case "boolean":
+          return (
             <ToggleSwitch
               className="text-2xl"
               id={config.key}
@@ -116,12 +103,9 @@ const SettingItem = memo(
                 setValue as React.Dispatch<React.SetStateAction<boolean>>
               }
             />
-          </div>
-        );
-      case "select":
-        return (
-          <div className="flex items-center justify-between p-2">
-            {commonHeader}
+          );
+        case "select":
+          return (
             <Selector
               id={config.key}
               options={config.options.map((option) => ({
@@ -133,11 +117,29 @@ const SettingItem = memo(
                 setValue(e.target.value as (typeof config.options)[number])
               }
             />
-          </div>
-        );
-      default:
-        return null;
-    }
+          );
+        default:
+          return null;
+      }
+    };
+
+    const input = renderInput();
+    if (!input) return null;
+
+    return (
+      <div className="flex items-center justify-between p-2">
+        <div className="flex items-center gap-3">
+          <config.icon className="text-xl" />
+          <label
+            htmlFor={config.key}
+            className="font-medium cursor-pointer select-none text-xl"
+          >
+            {config.label}
+          </label>
+        </div>
+        {input}
+      </div>
+    );
   },
 );
 
