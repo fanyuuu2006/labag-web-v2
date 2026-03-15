@@ -15,6 +15,13 @@ import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
 
+type SettingConfig<K extends string = string, O = unknown> = {
+  key: K;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  type?: "boolean" | "select"; // 預留未來擴充其他類型的設定
+  options: readonly O[];
+};
 
 // 這裡可以輕鬆擴充新的設定選項，設定的key與localStorage儲存的key相關
 const SETTINGS_CONFIG = [
@@ -22,19 +29,21 @@ const SETTINGS_CONFIG = [
     key: "music",
     label: "背景音樂",
     icon: CustomerServiceOutlined,
-    defaultValue: true,
+    options: [true, false],
   },
   {
     key: "sound",
     label: "遊戲音效",
     icon: SoundOutlined,
-    defaultValue: true,
+    options: [true, false],
   },
-] as const;
+] as const satisfies readonly SettingConfig<string, unknown>[];
 
 export type SettingKey = (typeof SETTINGS_CONFIG)[number]["key"];
 
-export type Settings = Record<SettingKey, boolean>;
+export type Settings = {
+  [K in SettingKey]: (typeof SETTINGS_CONFIG)[number]["options"][number];
+};
 
 interface SettingContextType {
   modal: Omit<ReturnType<typeof useModal>, "Container">;
@@ -84,10 +93,10 @@ export const SettingProvider = ({
   children: React.ReactNode;
 }) => {
   const { Container, ...modal } = useModal({});
-  
+
   const [settings, setSettings] = useState<Settings>(() => {
     return SETTINGS_CONFIG.reduce((acc, config) => {
-      acc[config.key] = config.defaultValue;
+      acc[config.key] = config.options[0] as boolean; // 預設值為 options 的第一個選項
       return acc;
     }, {} as Settings);
   });
@@ -108,7 +117,7 @@ export const SettingProvider = ({
     });
 
     if (hasChanges) {
-        setSettings(newSettings);
+      setSettings(newSettings);
     }
     setIsLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,23 +126,32 @@ export const SettingProvider = ({
   // Sync to localStorage
   useEffect(() => {
     if (!isLoaded) return;
-    
+
     SETTINGS_CONFIG.forEach((config) => {
-       localStorage.setItem(STORAGE_KEY_PREFIX + config.key, String(settings[config.key]));
+      localStorage.setItem(
+        STORAGE_KEY_PREFIX + config.key,
+        String(settings[config.key]),
+      );
     });
   }, [settings, isLoaded]);
 
-  const updateSetting = (key: SettingKey, value: React.SetStateAction<boolean>) => {
+  const updateSetting = (
+    key: SettingKey,
+    value: React.SetStateAction<boolean>,
+  ) => {
     setSettings((prev) => {
-        const currentVal = prev[key];
-        const nextVal = typeof value === 'function' ? (value as (prev: boolean) => boolean)(currentVal) : value;
-        return { ...prev, [key]: nextVal };
+      const currentVal = prev[key];
+      const nextVal =
+        typeof value === "function"
+          ? (value as (prev: boolean) => boolean)(currentVal)
+          : value;
+      return { ...prev, [key]: nextVal };
     });
   };
 
   const userModal = useUserModal();
   const { user, loading } = useUser();
-  
+
   const value = useMemo(
     () => ({
       modal,
@@ -189,14 +207,16 @@ export const SettingProvider = ({
                   label={config.label}
                   icon={config.icon}
                   value={settings[config.key]}
-                  setValue={(val) => updateSetting(config.key as SettingKey, val)}
+                  setValue={(val) =>
+                    updateSetting(config.key as SettingKey, val)
+                  }
                 />
               ))}
             </div>
 
             {/*此為分隔線 */}
             <div className="border-t-2 border-(--secondary)/30 w-full" />
-             
+
             <div className="flex flex-col gap-3">
               {loading ? (
                 <div className="flex justify-center p-4">
