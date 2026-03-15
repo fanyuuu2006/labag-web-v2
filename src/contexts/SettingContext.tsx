@@ -6,6 +6,7 @@ import {
   CloseOutlined,
   CustomerServiceOutlined,
   LoadingOutlined,
+  SkinOutlined,
   SoundOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -15,13 +16,14 @@ import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
 
-type SettingConfig<K extends string = string, O = unknown> = {
-  key: K;
+type SettingConfig = {
+  key: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  type?: "boolean" | "select"; // 預留未來擴充其他類型的設定
-  options: readonly O[];
-};
+} & (
+  | { type: "boolean"; options: readonly boolean[] }
+  | { type: "select"; options: readonly string[] }
+);
 
 // 這裡可以輕鬆擴充新的設定選項，設定的key與localStorage儲存的key相關
 const SETTINGS_CONFIG = [
@@ -29,26 +31,41 @@ const SETTINGS_CONFIG = [
     key: "music",
     label: "背景音樂",
     icon: CustomerServiceOutlined,
+    type: "boolean",
     options: [true, false],
   },
   {
     key: "sound",
     label: "遊戲音效",
     icon: SoundOutlined,
+    type: "boolean",
     options: [true, false],
   },
-] as const satisfies readonly SettingConfig<string, unknown>[];
+  {
+    key: "theme",
+    label: "主題",
+    icon: SkinOutlined,
+    type: "select",
+    options: ["normal", "superhhh", "greenwei", "pikachu"],
+  },
+] as const satisfies readonly SettingConfig[];
 
 export type SettingKey = (typeof SETTINGS_CONFIG)[number]["key"];
 
 export type Settings = {
-  [K in SettingKey]: (typeof SETTINGS_CONFIG)[number]["options"][number];
+  [K in SettingKey]: Extract<
+    (typeof SETTINGS_CONFIG)[number],
+    { key: K }
+  >["options"][number];
 };
 
 interface SettingContextType {
   modal: Omit<ReturnType<typeof useModal>, "Container">;
   settings: Settings;
-  setSetting: (key: SettingKey, value: React.SetStateAction<boolean>) => void;
+  setSetting: <K extends SettingKey>(
+    key: K,
+    value: React.SetStateAction<Settings[K]>,
+  ) => void;
 }
 
 const settingContext = createContext<SettingContextType | null>(null);
@@ -56,36 +73,66 @@ const settingContext = createContext<SettingContextType | null>(null);
 const STORAGE_KEY_PREFIX = "labag-settings-";
 
 const SettingItem = ({
-  id,
-  label,
-  icon: Icon,
+  config,
   value,
   setValue,
 }: {
-  id: string;
-  label: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  value: boolean;
-  setValue: React.Dispatch<React.SetStateAction<boolean>>;
-}) => (
-  <div className="flex items-center justify-between p-2">
+  config: (typeof SETTINGS_CONFIG)[number];
+  value: Settings[SettingKey];
+  setValue: (value: Settings[SettingKey]) => void;
+}) => {
+  const commonHeader = (
     <div className="flex items-center gap-3">
-      {Icon && <Icon className="text-xl" />}
+      {config.icon && <config.icon className="text-xl" />}
       <label
-        htmlFor={id}
+        htmlFor={config.key}
         className="font-medium cursor-pointer select-none text-xl"
       >
-        {label}
+        {config.label}
       </label>
     </div>
-    <ToggleSwitch
-      className="text-2xl"
-      id={id}
-      value={value}
-      setValue={setValue}
-    />
-  </div>
-);
+  );
+
+  const renderContent = () => {
+    switch (config.type) {
+      case "boolean":
+        return (
+          <ToggleSwitch
+            className="text-2xl"
+            id={config.key}
+            value={value as boolean}
+            setValue={setValue as React.Dispatch<React.SetStateAction<boolean>>}
+          />
+        );
+      case "select":
+        return (
+          <select
+            id={config.key}
+            value={String(value)}
+            onChange={(e) =>
+              setValue(e.target.value as (typeof config.options)[number])
+            }
+            className="bg-(--background) border border-(--secondary) rounded-lg p-2 text-(--foreground) focus:outline-hidden focus:ring-2 focus:ring-(--primary)"
+          >
+            {config.options.map((option) => (
+              <option key={String(option)} value={String(option)}>
+                {String(option)}
+              </option>
+            ))}
+          </select>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-between p-2">
+      {commonHeader}
+      {renderContent()}
+    </div>
+  );
+};
 
 export const SettingProvider = ({
   children,
@@ -95,32 +142,42 @@ export const SettingProvider = ({
   const { Container, ...modal } = useModal({});
 
   const [settings, setSettings] = useState<Settings>(() => {
-    return SETTINGS_CONFIG.reduce((acc, config) => {
-      acc[config.key] = config.options[0] as boolean; // 預設值為 options 的第一個選項
-      return acc;
-    }, {} as Settings);
+    return Object.fromEntries(
+      SETTINGS_CONFIG.map((config) => [config.key, config.options[0]]),
+    ) as Settings;
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
 
   // 載入設定值，僅在初始時執行一次
   useEffect(() => {
-    const newSettings = { ...settings };
-    let hasChanges = false;
+    const changes: Partial<Settings> = {};
 
-    SETTINGS_CONFIG.forEach((config) => {
+    for (const config of SETTINGS_CONFIG) {
       const storedValue = localStorage.getItem(STORAGE_KEY_PREFIX + config.key);
       if (storedValue !== null) {
-        newSettings[config.key] = storedValue === "true";
-        hasChanges = true;
+        switch (config.type) {
+          case "boolean":
+            changes[config.key] = storedValue === "true";
+            break;
+          case "select":
+            if (
+              config.options.includes(
+                storedValue as (typeof config.options)[number],
+              )
+            ) {
+              changes[config.key] =
+                storedValue as (typeof config.options)[number];
+            }
+            break;
+        }
       }
-    });
-
-    if (hasChanges) {
-      setSettings(newSettings);
     }
-    setIsLoaded(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    if (Object.keys(changes).length > 0) {
+      setTimeout(() => setSettings((prev) => ({ ...prev, ...changes })), 0);
+    }
+    setTimeout(() => setIsLoaded(true), 0);
   }, []);
 
   // Sync to localStorage
@@ -135,19 +192,20 @@ export const SettingProvider = ({
     });
   }, [settings, isLoaded]);
 
-  const updateSetting = (
-    key: SettingKey,
-    value: React.SetStateAction<boolean>,
+  const updateSetting = <K extends SettingKey>(
+    key: K,
+    value: React.SetStateAction<Settings[K]>,
   ) => {
     setSettings((prev) => {
       const currentVal = prev[key];
       const nextVal =
         typeof value === "function"
-          ? (value as (prev: boolean) => boolean)(currentVal)
+          ? (value as (prev: Settings[K]) => Settings[K])(currentVal)
           : value;
       return { ...prev, [key]: nextVal };
     });
   };
+  // ... existing code ...
 
   const userModal = useUserModal();
   const { user, loading } = useUser();
@@ -203,13 +261,9 @@ export const SettingProvider = ({
               {SETTINGS_CONFIG.map((config) => (
                 <SettingItem
                   key={config.key}
-                  id={config.key}
-                  label={config.label}
-                  icon={config.icon}
+                  config={config}
                   value={settings[config.key]}
-                  setValue={(val) =>
-                    updateSetting(config.key as SettingKey, val)
-                  }
+                  setValue={(val) => updateSetting(config.key, val)}
                 />
               ))}
             </div>
