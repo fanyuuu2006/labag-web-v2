@@ -180,7 +180,6 @@ export const SettingProvider = ({
     setTimeout(() => setIsLoaded(true), 0);
   }, []);
 
-  // Sync to localStorage
   useEffect(() => {
     if (!isLoaded) return;
 
@@ -205,8 +204,6 @@ export const SettingProvider = ({
       return { ...prev, [key]: nextVal };
     });
   };
-  // ... existing code ...
-
   const userModal = useUserModal();
   const { user, loading } = useUser();
 
