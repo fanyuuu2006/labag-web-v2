@@ -100,10 +100,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <UserProvider>
-        <UserModalProvider>
-          <SettingProvider>
-            <Body className="flex min-h-screen flex-col">
+      <Body className="flex min-h-screen flex-col">
+        <UserProvider>
+          <UserModalProvider>
+            <SettingProvider>
               <PatternModalProvider>
                 <Header className="sticky top-0 z-50" />
                 <main className="h-full w-full overflow-y-auto">
@@ -114,10 +114,10 @@ export default function RootLayout({
                   <DownloadOutlined className="text-xl" />
                 </InstallPWAButton>
               </PatternModalProvider>
-            </Body>
-          </SettingProvider>
-        </UserModalProvider>
-      </UserProvider>
+            </SettingProvider>
+          </UserModalProvider>
+        </UserProvider>
+      </Body>
     </html>
   );
 }

@@ -11,7 +11,7 @@ import { getPatternInfo } from "@/utils/game";
 type PatternModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
-    open: (pattern: Pattern) => void;
+    open: (id: Pattern["id"]) => void;
   }
 >;
 
@@ -23,19 +23,25 @@ export const PatternModalProvider = ({
   children: React.ReactNode;
 }) => {
   const modal = useModal({});
-  const [info, setInfo] = useState<ReturnType<typeof getPatternInfo> | null>(
-    null
-  );
+  const [info, setInfo] = useState<Awaited<
+    ReturnType<typeof getPatternInfo>
+  > | null>(null);
 
   const displayRate = Number(Number(info?.rate ?? 0).toFixed(1));
+
   const value = useMemo(
     () => ({
       ...modal,
-      open: (id: Pattern['id']) => {
-        modal.open();
+      open: async (id: Pattern["id"]) => {
+        const data = await getPatternInfo(id);
+        if (data) {
+          setInfo(data);
+          modal.open();
+        }
       },
+      // Keep synchronous open for compatibility if needed, but signature changed to id
     }),
-    [modal]
+    [modal],
   );
 
   return (
@@ -71,8 +77,8 @@ export const PatternModalProvider = ({
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
                 <div className="card primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--secondary)">
                   <MyImage
-                    src={`/images/patterns/${info.name}.jpg`}
-                    alt={info.name}
+                    src={info.image}
+                    alt={info.id}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -80,7 +86,7 @@ export const PatternModalProvider = ({
                   as="h2"
                   className="text-lg sm:text-2xl md:text-3xl font-black text-center capitalize"
                 >
-                  {info.name}
+                  {info.id}
                 </GlowText>
               </div>
 
@@ -127,30 +133,18 @@ export const PatternModalProvider = ({
                   </div>
 
                   <div className="grid gap-2">
-                    {[
-                      {
-                        label: "三個相同",
-                        score: info.scores[0],
-                      },
-                      {
-                        label: "兩個相同",
-                        score: info.scores[1],
-                      },
-                    ].map((item, index) => (
+                    {info.payouts.map((item, index) => (
                       <div
                         key={index}
                         className="card primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
                       >
                         <span className="text-sm sm:text-base font-medium text-white/80">
-                          {item.label}
+                          {item.match_count}個相同
                         </span>
                         <div className="flex items-baseline gap-1">
                           <GlowText className="text-lg sm:text-xl font-black tabular-nums">
-                            {item.score}
+                            {item.reward}
                           </GlowText>
-                          <span className="text-[10px] sm:text-xs text-(--muted)">
-                            分
-                          </span>
                         </div>
                       </div>
                     ))}
