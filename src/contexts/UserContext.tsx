@@ -1,6 +1,6 @@
 "use client";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
-import { BackendResponse, SupabaseRecord, SupabaseUser } from "@/types/backend";
+import { SupabaseUser } from "@/types/backend";
 import { SignBy } from "../types/backend";
 import {
   createContext,
@@ -10,8 +10,6 @@ import {
   useCallback,
   useEffect,
 } from "react";
-import { game, recorder } from "@/libs/game";
-import { fetcher } from "@/utils/fetcher";
 import { userMe, refreshAccessToken } from "@/utils/backend";
 import { useRouter } from "next/navigation";
 
@@ -104,35 +102,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     };
     fetchUser();
   }, [refresh, user]);
-
-  useEffect(() => {
-    if (!user) return;
-    const handleGameOver = () => {
-      fetcher<BackendResponse<SupabaseRecord>>(
-        `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              localStorage.getItem(ACCESS_TOKEN_KEY) || ""
-            }`,
-          },
-          body: JSON.stringify(recorder.getRecord()),
-        },
-      )
-        .then((res) => {
-          console.log("上傳分數成功", res);
-        })
-        .catch((err) => {
-          console.error("上傳分數失敗", err);
-        });
-    };
-    game.addEventListener("gameOver", handleGameOver);
-    return () => {
-      game.removeEventListener("gameOver", handleGameOver);
-    };
-  }, [user]);
 
   return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };

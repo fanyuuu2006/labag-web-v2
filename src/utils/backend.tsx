@@ -1,16 +1,17 @@
 import {
   BackendResponse,
   SupabaseAllowFieldsUser,
-  SupabaseRecord,
   SupabaseUser,
-  SupabaseUserStatsViewItem,
+  SupabaseStatsView,
+  SupabaseSpin,
 } from "@/types/backend";
 import { fetcher } from "./fetcher";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
+import { Pattern, Payout } from "labag";
 
 export const userMe = (token: string) =>
   fetcher<BackendResponse<SupabaseUser>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/me`,
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/me`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,41 +21,21 @@ export const userMe = (token: string) =>
 
 export const userById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseAllowFieldsUser>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}`,
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}`,
   );
 
-export const records = (queryParams?: { count?: `${number}` }) => {
-  const param = new URLSearchParams(queryParams);
-  const query = param.toString();
-  return fetcher<BackendResponse<SupabaseRecord[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/records${query ? `?${query}` : ""}`,
+export const spinsByUserId = (id: SupabaseUser["id"]) =>
+  fetcher<BackendResponse<SupabaseSpin[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins/${id}`,
   );
-};
-export const recordsById = (
-  id: SupabaseUser["id"],
-  queryParams?: Record<"count", string>,
-) => {
-  const param = new URLSearchParams(queryParams);
-  const query = param.toString();
-  return fetcher<BackendResponse<SupabaseRecord[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/records${
-      query ? `?${query}` : ""
-    }`,
-  );
-};
 
 export const statsById = (id: SupabaseUser["id"]) =>
-  fetcher<BackendResponse<SupabaseUserStatsViewItem>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/users/${id}/stats`,
-  );
-
-export const stats = () =>
-  fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats`,
+  fetcher<BackendResponse<SupabaseStatsView>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}/stats`,
   );
 
 export const statsByKey = (
-  key: keyof SupabaseUserStatsViewItem,
+  key: keyof SupabaseStatsView,
   queryParams?: {
     ascending?: `${boolean}`;
     count?: `${number}`;
@@ -62,8 +43,8 @@ export const statsByKey = (
 ) => {
   const param = new URLSearchParams(queryParams);
   const query = param.toString();
-  return fetcher<BackendResponse<SupabaseUserStatsViewItem[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/data/stats/${key}${query ? `?${query}` : ""}`,
+  return fetcher<BackendResponse<SupabaseStatsView[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/stats/${key}${query ? `?${query}` : ""}`,
   );
 };
 
@@ -78,3 +59,27 @@ export const refreshAccessToken = (refreshToken: string) =>
       },
     },
   );
+
+export const patterns = async () => {
+  return fetcher<BackendResponse<Pattern[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns`,
+  );
+};
+
+export const payouts = async () => {
+  return fetcher<BackendResponse<Payout[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/payouts`,
+  );
+};
+
+export const patternById = async (id: Pattern["id"]) => {
+  return fetcher<BackendResponse<Pattern>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns/${id}`,
+  );
+};
+
+export const payoutsByPatternId = async (id: Pattern["id"]) => {
+  return fetcher<BackendResponse<number[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns/${id}/payouts`,
+  );
+};

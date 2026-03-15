@@ -1,6 +1,4 @@
 "use client";
-
-import { game } from "@/libs/game";
 import { site } from "@/libs/site";
 import Link from "next/link";
 import { GlowText } from "../GlowText";
@@ -23,9 +21,6 @@ export const MainSection = () => {
           <Link
             href={"/game"}
             className="btn primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
-            onClick={() => {
-              game.init();
-            }}
           >
             開始遊戲
           </Link>

@@ -7,6 +7,6 @@ export const statsData: Record<
     unit: string;
   }
 > = {
-  highest_score: { label: "最高紀錄", unit: "分" },
+  user_coins: { label: "總金幣數", unit: "枚" },
   play_count: { label: "遊玩次數", unit: "次" },
 };

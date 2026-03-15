@@ -1,13 +1,11 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MyImage } from "../MyImage";
-import { game, modeDescriptions } from "@/libs/game";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
 import { playAudio } from "@/utils/audio";
 import { usePatternModal } from "@/contexts/PatternModalContext";
 import { useSetting } from "@/contexts/SettingContext";
-import { useModeModal } from "@/contexts/ModeModalContext";
 
 export const PatternsDiv = () => {
   const { settings } = useSetting();
@@ -17,19 +15,13 @@ export const PatternsDiv = () => {
     null,
   ]);
   const pm = usePatternModal();
-  const mm = useModeModal();
   const patternsRef = useRef<(Pattern | null)[]>([null, null, null]);
 
   const handlePatternClick = useCallback(
     (pattern: Pattern) => {
-      const isTheme = pattern.name in modeDescriptions;
-      if (isTheme) {
-        mm.open(pattern.name as keyof typeof modeDescriptions);
-      } else {
         pm.open(pattern);
-      }
     },
-    [mm, pm],
+    [pm],
   );
 
   useEffect(() => {

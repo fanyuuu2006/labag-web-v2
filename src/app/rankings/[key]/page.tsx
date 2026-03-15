@@ -1,7 +1,7 @@
 import { MainSection } from "@/components/rankings/[key]/MainSection";
 import { VALID_KEYS } from "@/libs/backend";
 import { statsData } from "@/libs/rankings";
-import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { SupabaseStatsView } from "@/types/backend";
 import { statsByKey } from "@/utils/backend";
 import { formatDate } from "@/utils/date";
 import type { Metadata } from "next";
@@ -31,7 +31,7 @@ export default async function RankingsKey({
   params,
 }: PageProps<"/rankings/[key]">) {
   const { key } = await params;
-  const items = await statsByKey(key as keyof SupabaseUserStatsViewItem, {
+  const items = await statsByKey(key as keyof SupabaseStatsView, {
     count: "100",
   }).then((res) => res.data);
   const fetchTime = formatDate("YYYY/MM/DD HH:mm:ss", new Date());

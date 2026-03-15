@@ -3,10 +3,10 @@ import { useModal } from "@/hooks/useModal";
 import { Pattern } from "labag";
 import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
-import { getPatternInfo } from "@/utils/game";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
 import { CloseOutlined } from "@ant-design/icons";
+import { getPatternInfo } from "@/utils/game";
 
 type PatternModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -31,8 +31,7 @@ export const PatternModalProvider = ({
   const value = useMemo(
     () => ({
       ...modal,
-      open: (p: Pattern) => {
-        setInfo(getPatternInfo(p));
+      open: (id: Pattern['id']) => {
         modal.open();
       },
     }),
@@ -136,10 +135,6 @@ export const PatternModalProvider = ({
                       {
                         label: "兩個相同",
                         score: info.scores[1],
-                      },
-                      {
-                        label: "皆不同",
-                        score: info.scores[2],
                       },
                     ].map((item, index) => (
                       <div

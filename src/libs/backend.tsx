@@ -1,4 +1,4 @@
-import { SupabaseUser, SupabaseUserStatsViewItem } from "@/types/backend";
+import { SupabaseUser, SupabaseStatsView } from "@/types/backend";
 
 export const ALLOW_USER_FIELDS = [
   "id",
@@ -8,6 +8,6 @@ export const ALLOW_USER_FIELDS = [
 ] satisfies readonly (keyof SupabaseUser)[];
 
 export const VALID_KEYS = [
-  "highest_score",
+  'user_coins',
   "play_count",
-] satisfies readonly (keyof SupabaseUserStatsViewItem)[];
+] satisfies readonly (keyof SupabaseStatsView)[];

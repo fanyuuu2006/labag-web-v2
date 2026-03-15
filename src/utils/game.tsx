@@ -1,34 +1,37 @@
-import { game } from "@/libs/game";
-import { Pattern } from "labag";
+import { Pattern, Payout } from "labag";
+import { patterns, payouts } from "./backend";
 
-export const getPatternInfo = (
-  pattern: Pattern
-): {
-  name: string;
-  scores: number[];
-  rate: number;
-} => {
-  const { ranges } = game.getCurrentConfig();
 
-  if (ranges.length === 0) {
-    return { name: pattern.name, scores: pattern.scores, rate: 0 };
+export const getPatternInfo = async (
+  id: Pattern["id"],
+): Promise<
+  (Pattern & {
+    payouts: Payout[];
+    rate: number;
+  }) | null
+> => {
+  const { data: patternsData } = await patterns();
+  const { data: payoutData } = await payouts();
+
+  if (!patternsData || !payoutData) {
+    return null;
   }
 
-  const index = ranges.findIndex((r) => r.pattern.name === pattern.name);
-
-  if (index === -1) {
-    return { name: pattern.name, scores: pattern.scores, rate: 0 };
+  const pattern = patternsData.find((p) => p.id === id);
+  if (!pattern) {
+    return null;
   }
 
-  const prevThreshold = ranges[index - 1]?.threshold ?? 0;
-  const currentThreshold = ranges[index].threshold;
-  const totalThreshold = ranges.at(-1)!.threshold;
-
-  const rate = Math.round((currentThreshold - prevThreshold) / totalThreshold * 100);
+  const patternPayouts = payoutData.filter((p) => p.pattern_id === id);
+  const totalWeight = patternsData.reduce(
+    (sum, pattern) => sum + pattern.weight,
+    0,
+  );
+  const rate = totalWeight > 0 ? (pattern.weight / totalWeight) * 100 : 0;
 
   return {
-    name: pattern.name,
-    scores: pattern.scores,
+    ...pattern,
+    payouts: patternPayouts,
     rate,
   };
 };

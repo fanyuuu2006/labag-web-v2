@@ -4,15 +4,15 @@ import { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { OverrideProps } from "fanyucomponents";
 import {
   SupabaseAllowFieldsUser,
-  SupabaseRecord,
+  SupabaseSpin,
+  SupabaseStatsView,
   SupabaseUser,
-  SupabaseUserStatsViewItem,
 } from "@/types/backend";
 import { CopyButton } from "@/components/CopyButton";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
 import { formatDate } from "@/utils/date";
-import { recordsById, statsById, userById } from "@/utils/backend";
+import { spinsByUserId, statsById, userById } from "@/utils/backend";
 import { CloseOutlined } from "@ant-design/icons";
 import { statsData } from "@/libs/rankings";
 import { FormatDate } from "@/components/FormatDate";
@@ -38,8 +38,8 @@ export const UserModalProvider = ({
   const [currUser, setCurrUser] = useState<SupabaseAllowFieldsUser | null>(
     null,
   );
-  const [stats, setStats] = useState<SupabaseUserStatsViewItem | null>(null);
-  const [records, setRecords] = useState<SupabaseRecord[] | null>(null);
+  const [stats, setStats] = useState<SupabaseStatsView | null>(null);
+  const [spins, setSpins] = useState<SupabaseSpin[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const value = useMemo(
@@ -49,7 +49,7 @@ export const UserModalProvider = ({
         if (newId !== id) {
           setCurrUser(null);
           setStats(null);
-          setRecords(null);
+          setSpins(null);
         }
         setId(newId);
         modal.open();
@@ -67,13 +67,11 @@ export const UserModalProvider = ({
         const [userRes, statsRes, recordRes] = await Promise.all([
           userById(id),
           statsById(id),
-          recordsById(id, {
-            count: `${RECORD_COUNT}`,
-          }),
+          spinsByUserId(id),
         ]);
         setCurrUser(userRes.data);
         setStats(statsRes.data);
-        setRecords(recordRes.data);
+        setSpins(recordRes.data);
       } catch (error) {
         console.error("獲取用戶資料失敗:", error);
       } finally {
@@ -89,13 +87,13 @@ export const UserModalProvider = ({
     return formatDate("YYYY/MM/DD", currUser.created_at);
   }, [currUser]);
 
-  const orderedRecords = useMemo(() => {
-    if (!records) return [];
+  const orderedSpins = useMemo(() => {
+    if (!spins) return [];
     // ISO 8601 字串可以直接比較，比 new Date() 更快
-    return [...records].sort((a, b) =>
+    return [...spins].sort((a, b) =>
       b.created_at.localeCompare(a.created_at),
     );
-  }, [records]);
+  }, [spins]);
 
   return (
     <userModalContext.Provider value={value}>
@@ -197,8 +195,8 @@ export const UserModalProvider = ({
                 <div className="grid grid-cols-3 gap-2 md:gap-4">
                   {[
                     {
-                      label: statsData.highest_score.label,
-                      value: stats?.highest_score?.toLocaleString() || 0,
+                      label: statsData.user_coins.label,
+                      value: stats?.user_coins?.toLocaleString() || 0,
                     },
                     {
                       label: statsData.play_count.label,
@@ -234,28 +232,28 @@ export const UserModalProvider = ({
                   <div className="flex flex-col gap-2 overflow-y-auto" style={{
                     scrollbarWidth: 'none'
                   }}>
-                    {orderedRecords.length > 0 ? (
-                      orderedRecords.map((record) => (
+                    {orderedSpins.length > 0 ? (
+                      orderedSpins.map((spin) => (
                         <div
-                          key={record.id}
+                          key={spin.id}
                           className="card primary group relative flex items-center justify-between p-3 md:p-4"
                         >
                           <div className="flex flex-col gap-0.5">
                             <FormatDate
                               title={true}
-                              date={[record.created_at]}
+                              date={[spin.created_at]}
                               className="text-sm md:text-base font-bold text-white/90 tracking-wide"
                             >
                               YYYY/MM/DD HH:mm
                             </FormatDate>
                             <span className="text-[10px] md:text-xs text-(--muted) font-mono">
-                              ID: {record.id}
+                              ID: {spin.id}
                             </span>
                           </div>
                           <div className="flex flex-col items-end justify-center">
                             <div className="flex items-baseline gap-1.5">
                               <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight drop-shadow-lg">
-                                {record.score.toLocaleString()}
+                                {spin.reward.toLocaleString()}
                               </GlowText>
                               <span className="text-xs font-medium text-(--muted) mb-1">
                                 分

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header/Header";
-import { ModesProvider } from "@/contexts/ModesContext";
 import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
 import { SettingProvider } from "@/contexts/SettingContext";
 import { PatternModalProvider } from "@/contexts/PatternModalContext";
-import { ModeModalProvider } from "@/contexts/ModeModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
 import { UserModalProvider } from "@/contexts/UserModalContext";
@@ -103,26 +101,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <ModesProvider>
-          <Body className="flex min-h-screen flex-col">
-            <UserModalProvider>
+        <UserModalProvider>
+          <SettingProvider>
+            <Body className="flex min-h-screen flex-col">
               <PatternModalProvider>
-                <ModeModalProvider>
-                  <SettingProvider>
-                    <Header className="sticky top-0 z-50" />
-                    <main className="h-full w-full overflow-y-auto">
-                      {children}
-                    </main>
-                    <SettingButton className="fixed bottom-4 right-4 z-49" />
-                    <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
-                      <DownloadOutlined className="text-xl" />
-                    </InstallPWAButton>
-                  </SettingProvider>
-                </ModeModalProvider>
+                <Header className="sticky top-0 z-50" />
+                <main className="h-full w-full overflow-y-auto">
+                  {children}
+                </main>
+                <SettingButton className="fixed bottom-4 right-4 z-49" />
+                <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
+                  <DownloadOutlined className="text-xl" />
+                </InstallPWAButton>
               </PatternModalProvider>
-            </UserModalProvider>
-          </Body>
-        </ModesProvider>
+            </Body>
+          </SettingProvider>
+        </UserModalProvider>
       </UserProvider>
     </html>
   );

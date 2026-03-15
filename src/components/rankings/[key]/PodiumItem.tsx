@@ -3,7 +3,7 @@ import { useUserModal } from "@/contexts/UserModalContext";
 import { cn } from "@/utils/className";
 import { GlowText } from "../../GlowText";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
-import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
 
@@ -24,7 +24,7 @@ const SCALE_CLASSES = [
 type PodiumItemProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLDivElement>, "children">,
   {
-    item: SupabaseUserStatsViewItem;
+    item: SupabaseStatsView;
     index: number;
     rankKey: (typeof VALID_KEYS)[number];
   }

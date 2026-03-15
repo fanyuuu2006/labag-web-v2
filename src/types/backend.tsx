@@ -1,4 +1,5 @@
 import { ALLOW_USER_FIELDS } from "@/libs/backend";
+import { Pattern } from "labag";
 
 export type SignBy = "google";
 
@@ -19,17 +20,19 @@ export type SupabaseAllowFieldsUser = Pick<
   (typeof ALLOW_USER_FIELDS)[number]
 >;
 
-export type SupabaseRecord = {
-  id: number;
+export type SupabaseSpin = {
+  id: number; // primary key
   created_at: string;
-  score: number;
-  user_id: number;
-  hash: string | undefined;
+  user_id: SupabaseUser["id"];
+  bet: number;
+  reward: number;
+  reels: Pattern[];
 };
 
-export type SupabaseUserStatsViewItem = {
+
+export type SupabaseStatsView = {
   user_id: SupabaseUser["id"];
   user_name: SupabaseUser["name"];
   play_count: number;
-  highest_score: number;
+  user_coins: number;
 };

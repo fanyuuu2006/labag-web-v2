@@ -3,13 +3,13 @@ import { GlowText } from "../../GlowText";
 import { useMemo } from "react";
 import { PodiumItem } from "./PodiumItem";
 import { RestRankCard } from "./RestRankCard";
-import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
 
 interface MainSectionProps {
   rankKey: (typeof VALID_KEYS)[number];
-  items: SupabaseUserStatsViewItem[] | null;
+  items: SupabaseStatsView[] | null;
   fetchTime: string;
 }
 

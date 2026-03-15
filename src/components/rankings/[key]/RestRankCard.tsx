@@ -3,14 +3,14 @@ import { useUserModal } from "@/contexts/UserModalContext";
 import { OverrideProps, DistributiveOmit } from "fanyucomponents";
 import { GlowText } from "../../GlowText";
 import { cn } from "@/utils/className";
-import { SupabaseUserStatsViewItem } from "@/types/backend";
+import { SupabaseStatsView } from "@/types/backend";
 import { VALID_KEYS } from "@/libs/backend";
 import { statsData } from "@/libs/rankings";
 
 type RestRankCardProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLDivElement>, "children">,
   {
-    item: SupabaseUserStatsViewItem;
+    item: SupabaseStatsView;
     rank: number;
     rankKey: (typeof VALID_KEYS)[number];
   }
