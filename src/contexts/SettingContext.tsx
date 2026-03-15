@@ -15,7 +15,7 @@ import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
 
-// Configuration for settings
+
 // 這裡可以輕鬆擴充新的設定選項，設定的key與localStorage儲存的key相關
 const SETTINGS_CONFIG = [
   {
