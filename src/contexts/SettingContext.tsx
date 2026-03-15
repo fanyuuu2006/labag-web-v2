@@ -10,11 +10,20 @@ import {
   SoundOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { createContext, useContext, useState, useMemo, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+  memo,
+  useCallback,
+} from "react";
 import { useUserModal } from "./UserModalContext";
 import { useUser } from "./UserContext";
 import { AuthButton } from "@/components/AuthButton";
 import { cn } from "@/utils/className";
+import { Selector } from "@/components/Selector";
 
 type SettingConfig = {
   key: string;
@@ -72,74 +81,83 @@ const settingContext = createContext<SettingContextType | null>(null);
 
 const STORAGE_KEY_PREFIX = "labag-settings-";
 
-const SettingItem = ({
-  config,
-  value,
-  setValue,
-}: {
-  config: (typeof SETTINGS_CONFIG)[number];
-  value: Settings[SettingKey];
-  setValue: (value: Settings[SettingKey]) => void;
-}) => {
-  const commonHeader = (
-    <div className="flex items-center gap-3">
-      {config.icon && <config.icon className="text-xl" />}
-      <label
-        htmlFor={config.key}
-        className="font-medium cursor-pointer select-none text-xl"
-      >
-        {config.label}
-      </label>
-    </div>
-  );
+const SettingItem = memo(
+  ({
+    config,
+    value,
+    setValue,
+  }: {
+    config: (typeof SETTINGS_CONFIG)[number];
+    value: Settings[SettingKey];
+    setValue: React.Dispatch<React.SetStateAction<Settings[SettingKey]>>;
+  }) => {
+    const commonHeader = (
+      <div className="flex items-center gap-3">
+        {config.icon && <config.icon className="text-xl" />}
+        <label
+          htmlFor={config.key}
+          className="font-medium cursor-pointer select-none text-xl"
+        >
+          {config.label}
+        </label>
+      </div>
+    );
 
-  const renderContent = () => {
     switch (config.type) {
       case "boolean":
         return (
-          <ToggleSwitch
-            className="text-2xl"
-            id={config.key}
-            value={value as boolean}
-            setValue={setValue as React.Dispatch<React.SetStateAction<boolean>>}
-          />
+          <div className="flex items-center justify-between p-2">
+            {commonHeader}
+            <ToggleSwitch
+              className="text-2xl"
+              id={config.key}
+              value={value as boolean}
+              setValue={
+                setValue as React.Dispatch<React.SetStateAction<boolean>>
+              }
+            />
+          </div>
         );
       case "select":
         return (
-          <select
-            id={config.key}
-            value={String(value)}
-            onChange={(e) =>
-              setValue(e.target.value as (typeof config.options)[number])
-            }
-            className="bg-(--background) border border-(--secondary) rounded-lg p-2 text-(--foreground) focus:outline-hidden focus:ring-2 focus:ring-(--primary)"
-          >
-            {config.options.map((option) => (
-              <option key={String(option)} value={String(option)}>
-                {String(option)}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center justify-between p-2">
+            {commonHeader}
+            <Selector
+              id={config.key}
+              options={config.options.map((option) => ({
+                label: option,
+                value: option,
+              }))}
+              value={String(value)}
+              onChange={(e) =>
+                setValue(e.target.value as (typeof config.options)[number])
+              }
+            />
+          </div>
         );
       default:
         return null;
     }
-  };
+  },
+);
 
-  return (
-    <div className="flex items-center justify-between p-2">
-      {commonHeader}
-      {renderContent()}
-    </div>
-  );
-};
+SettingItem.displayName = "SettingItem";
 
 export const SettingProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const { Container, ...modal } = useModal({});
+  const { Container, open, close, isOpen } = useModal({});
+
+  const modal = useMemo(
+    () => ({
+      open,
+      close,
+      isOpen,
+    }),
+    [open, close, isOpen],
+  );
 
   const [settings, setSettings] = useState<Settings>(() => {
     return Object.fromEntries(
@@ -191,19 +209,23 @@ export const SettingProvider = ({
     });
   }, [settings, isLoaded]);
 
-  const updateSetting = <K extends SettingKey>(
-    key: K,
-    value: React.SetStateAction<Settings[K]>,
-  ) => {
-    setSettings((prev) => {
-      const currentVal = prev[key];
-      const nextVal =
-        typeof value === "function"
-          ? (value as (prev: Settings[K]) => Settings[K])(currentVal)
-          : value;
-      return { ...prev, [key]: nextVal };
-    });
-  };
+  const updateSetting = useCallback(
+    <K extends SettingKey>(
+      key: K,
+      value: React.SetStateAction<Settings[K]>,
+    ) => {
+      setSettings((prev) => {
+        const currentVal = prev[key];
+        const nextVal =
+          typeof value === "function"
+            ? (value as (prev: Settings[K]) => Settings[K])(currentVal)
+            : value;
+        return { ...prev, [key]: nextVal };
+      });
+    },
+    [],
+  );
+
   const userModal = useUserModal();
   const { user, loading } = useUser();
 
@@ -213,7 +235,7 @@ export const SettingProvider = ({
       settings,
       setSetting: updateSetting,
     }),
-    [modal, settings],
+    [modal, settings, updateSetting],
   );
 
   return (
