@@ -151,6 +151,30 @@ export const MainSection = () => {
     (!!user &&
       (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet));
 
+  const displayStats = [
+    {
+      label: "投注金額",
+      value: defaultBet,
+      colSpan: 1,
+      isLarge: false,
+      highlight: false,
+    },
+    {
+      label: "持有金額",
+      value: userStats?.user_coins ?? 0,
+      colSpan: 1,
+      isLarge: false,
+      highlight: false,
+    },
+    {
+      label: "本次獎勵",
+      value: reward !== null ? reward : "-",
+      colSpan: 2,
+      isLarge: true,
+      highlight: reward !== null && reward > 0,
+    },
+  ];
+
   return (
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -159,39 +183,37 @@ export const MainSection = () => {
         </div>
         <aside className="flex flex-col justify-center items-center gap-8 w-full">
           {/* 資訊顯示區 */}
-          <div className="w-full flex flex-col gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="card secondary p-4 flex flex-col items-center justify-center gap-2">
-                <span className="text-sm font-bold text-(--muted)">
-                  投注金額
-                </span>
-                <GlowText className="text-2xl font-bold">
-                  {defaultBet}
-                </GlowText>
-              </div>
-              <div className="card secondary p-4 flex flex-col items-center justify-center gap-2">
-                <span className="text-sm font-bold text-(--muted)">
-                  持有金額
-                </span>
-                <GlowText className="text-2xl font-bold">
-                  {userStats?.user_coins ?? 0}
-                </GlowText>
-              </div>
-            </div>
-
-            <div className="card secondary p-6 flex flex-col items-center justify-center gap-4">
-              <span className="text-base font-bold text-(--muted)">
-                本次獎勵
-              </span>
-              <GlowText
+          <div className="w-full grid grid-cols-2 gap-4">
+            {displayStats.map((stat, index) => (
+              <div
+                key={index}
                 className={cn(
-                  "text-5xl font-black transition-all duration-300",
-                  reward !== null && reward > 0 ? "scale-110 drop-shadow-[0_0_15px_var(--primary)] text-(--primary)" : ""
+                  "card secondary flex flex-col items-center justify-center transition-all",
+                  stat.isLarge ? "p-6 gap-4" : "p-4 gap-2",
+                  stat.colSpan === 2 ? "col-span-2" : "col-span-1",
                 )}
               >
-                {reward !== null ? reward : "-"}
-              </GlowText>
-            </div>
+                <span
+                  className={cn(
+                    "font-bold text-(--muted)",
+                    stat.isLarge ? "text-base" : "text-sm",
+                  )}
+                >
+                  {stat.label}
+                </span>
+                <GlowText
+                  className={cn(
+                    "font-bold transition-all duration-300",
+                    stat.isLarge ? "text-5xl font-black" : "text-2xl",
+                    stat.highlight
+                      ? "scale-110 text-(--primary)"
+                      : "",
+                  )}
+                >
+                  {stat.value}
+                </GlowText>
+              </div>
+            ))}
           </div>
 
           {/* 轉動按鈕 */}
