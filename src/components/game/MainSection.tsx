@@ -157,40 +157,36 @@ export const MainSection = () => {
         <div className="flex items-end lg:items-center justify-center">
           <PatternsDiv patterns={patterns} className="w-full md:max-w-2xl" />
         </div>
-        <aside className="flex flex-col justify-start lg:justify-center items-center gap-4 md:gap-6">
+        <aside className="flex flex-col justify-center items-center gap-8 w-full h-full py-8 lg:py-0">
           {/* 資訊顯示區 */}
-          <div className="w-full card secondary rounded-xl p-5 sm:p-6 flex flex-col gap-3 sm:gap-4 items-start">
-            <GlowText
-              as="h2"
-              className="text-base sm:text-lg md:text-2xl font-bold mb-1"
-            >
-              資訊面板
-            </GlowText>
-
-            <div className="flex flex-col gap-1">
-              <span className="text-sm sm:text-base font-bold text-(--muted)">
+          <div className="grid grid-cols-2 gap-4 w-full md:w-100">
+            {/* 投注金額 */}
+            <div className="card secondary rounded-2xl p-4 flex flex-col items-center justify-center gap-1">
+              <span className="text-sm font-bold text-(--muted)">
                 投注金額
               </span>
-              <GlowText className="text-lg sm:text-xl font-bold">
+              <GlowText className="text-xl md:text-2xl font-bold">
                 {defaultBet}
               </GlowText>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm sm:text-base font-bold text-(--muted)">
+            {/* 持有金額 */}
+            <div className="card secondary rounded-2xl p-4 flex flex-col items-center justify-center gap-1">
+              <span className="text-sm font-bold text-(--muted)">
                 持有金額
               </span>
-              <GlowText className="text-lg sm:text-xl font-bold">
+              <GlowText className="text-xl md:text-2xl font-bold">
                 {userStats?.user_coins ?? 0}
               </GlowText>
             </div>
 
-            <div className="flex flex-col gap-1">
-              <span className="text-sm sm:text-base font-bold text-(--muted)">
+            {/* 本次獎勵 - 佔滿兩格 */}
+            <div className="col-span-2 card secondary rounded-2xl p-6 flex flex-col items-center justify-center gap-2">
+              <span className="text-base font-bold text-(--muted)">
                 本次獎勵
               </span>
               <GlowText
-                className="text-lg sm:text-xl font-bold"
+                className="text-4xl md:text-5xl font-black"
                 style={{
                   color:
                     reward !== null && reward > 0
@@ -202,15 +198,16 @@ export const MainSection = () => {
               </GlowText>
             </div>
           </div>
+
           {/* 轉動按鈕 */}
           <button
             disabled={buttonDisabled}
             onClick={handleSpin}
             className={cn(
-              "w-3/4 btn primary font-bold px-6 py-3 text-2xl md:text-3xl lg:text-4xl rounded-full",
+              "w-full md:w-75 btn primary font-bold px-6 py-4 text-2xl md:text-3xl rounded-full disabled:opacity-50 disabled:cursor-not-allowed",
             )}
           >
-            轉動
+            {spinDisabled ? "轉動中..." : "轉動"}
           </button>
         </aside>
       </div>
