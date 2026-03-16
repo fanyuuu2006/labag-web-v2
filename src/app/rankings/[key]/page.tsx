@@ -1,6 +1,7 @@
 import { MainSection } from "@/components/rankings/[key]/MainSection";
 import { VALID_KEYS } from "@/libs/backend";
 import { statsData } from "@/libs/rankings";
+import { site } from "@/libs/site";
 import { SupabaseStatsView } from "@/types/backend";
 import { statsByKey } from "@/utils/backend";
 import { formatDate } from "@/utils/date";
@@ -14,7 +15,7 @@ export async function generateMetadata({
     statsData[key as (typeof VALID_KEYS)[number]]?.label || "排行榜";
 
   return {
-    title: label,
+    title: `${label} | ${site.title}`,
     description: `查看${label}的最新排名`,
     openGraph: {
       title: label,
