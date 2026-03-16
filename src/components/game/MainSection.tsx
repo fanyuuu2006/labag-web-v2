@@ -69,27 +69,30 @@ export const MainSection = () => {
 
       // 設置每個捲軸的動畫
       reels.forEach((pattern, index) => {
-        const timer = setTimeout(() => {
-          if (!isMounted.current) return;
-          
-          setPatterns((prev) => {
-            const newPatterns = [...prev];
-            newPatterns[index] = pattern;
-            return newPatterns;
-          });
-          
-          if (settings.sound) {
-            playAudio("/audios/ding.mp3", { volume: 0.5 });
-          }
-        }, (index + 1) * 500);
-        
+        const timer = setTimeout(
+          () => {
+            if (!isMounted.current) return;
+
+            setPatterns((prev) => {
+              const newPatterns = [...prev];
+              newPatterns[index] = pattern;
+              return newPatterns;
+            });
+
+            if (settings.sound) {
+              playAudio("/audios/ding.mp3", { volume: 0.5 });
+            }
+          },
+          (index + 1) * 500,
+        );
+
         timeoutRefs.current.push(timer);
       });
 
       // 設置獎勵顯示結果
       const rewardTimer = setTimeout(() => {
         if (!isMounted.current) return;
-        
+
         setReward(newReward);
         if (user?.id) {
           statsById(user.id).then((res) => {
@@ -108,7 +111,6 @@ export const MainSection = () => {
         }
       }, 3500);
       timeoutRefs.current.push(unlockTimer);
-
     } catch (error) {
       console.error(error);
       if (isMounted.current) {
@@ -131,7 +133,9 @@ export const MainSection = () => {
       .catch((error) => {
         if (active) console.error("取得預設投注金額失敗:", error);
       });
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -143,7 +147,9 @@ export const MainSection = () => {
         }
       });
     }
-    return () => { active = false; };
+    return () => {
+      active = false;
+    };
   }, [user?.id]);
 
   const buttonDisabled =
@@ -157,21 +163,18 @@ export const MainSection = () => {
       value: defaultBet,
       colSpan: 1,
       isLarge: false,
-      highlight: false,
     },
     {
       label: "持有金額",
       value: userStats?.user_coins ?? 0,
       colSpan: 1,
       isLarge: false,
-      highlight: false,
     },
     {
       label: "本次獎勵",
       value: reward !== null ? reward : "-",
       colSpan: 2,
       isLarge: true,
-      highlight: reward !== null && reward > 0,
     },
   ];
 
@@ -205,9 +208,6 @@ export const MainSection = () => {
                   className={cn(
                     "font-bold transition-all duration-300",
                     stat.isLarge ? "text-5xl font-black" : "text-2xl",
-                    stat.highlight
-                      ? "scale-110 text-(--primary)"
-                      : "",
                   )}
                 >
                   {stat.value}
