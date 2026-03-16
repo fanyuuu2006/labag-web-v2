@@ -33,6 +33,11 @@ export const MainSection = () => {
       return;
     }
 
+    if (userStats && userStats.user_coins < defaultBet) {
+      alert("持有金額不足，無法轉動");
+      return;
+    }
+
     setSpinDisabled(true);
     setPatterns([null, null, null]);
     setReward(null);
@@ -82,7 +87,7 @@ export const MainSection = () => {
         setSpinDisabled(false);
       }, 3500);
     }
-  }, [settings.sound, spinDisabled, user?.id]);
+  }, [defaultBet, settings.sound, spinDisabled, user, userStats]);
 
   useEffect(() => {
     getDefaultBet()
@@ -108,6 +113,9 @@ export const MainSection = () => {
     }
   }, [user?.id]);
 
+  const buttonDisabled =
+    spinDisabled || (userStats ? userStats.user_coins < defaultBet : false);
+
   return (
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -120,7 +128,6 @@ export const MainSection = () => {
             <GlowText
               as="h2"
               className="text-base sm:text-lg md:text-2xl font-bold mb-1"
-              style={{ color: "var(--primary)" }}
             >
               資訊面板
             </GlowText>
@@ -162,7 +169,7 @@ export const MainSection = () => {
           </div>
           {/* 轉動按鈕 */}
           <button
-            disabled={spinDisabled}
+            disabled={buttonDisabled}
             onClick={handleSpin}
             className={cn(
               "w-3/4 btn primary font-bold px-6 py-3 text-2xl md:text-3xl lg:text-4xl rounded-full",
