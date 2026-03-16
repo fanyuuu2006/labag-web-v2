@@ -1,5 +1,5 @@
 import { ALLOW_USER_FIELDS } from "@/libs/backend";
-import { Pattern } from "labag";
+import { Pattern, Payout } from "labag";
 
 export type SignBy = "google";
 
@@ -35,4 +35,10 @@ export type SupabaseStatsView = {
   user_name: SupabaseUser["name"];
   play_count: number;
   user_coins: number;
+};
+
+
+export type PatternWithPayouts = Pattern & {
+  probability: number;
+  payouts: Payout[];
 };

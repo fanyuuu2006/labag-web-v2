@@ -4,10 +4,10 @@ import {
   SupabaseUser,
   SupabaseStatsView,
   SupabaseSpin,
+  PatternWithPayouts,
 } from "@/types/backend";
 import { fetcher } from "./fetcher";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
-import { Pattern, Payout } from "labag";
 
 export const userMe = (token: string) =>
   fetcher<BackendResponse<SupabaseUser>>(
@@ -26,7 +26,7 @@ export const userById = (id: SupabaseUser["id"]) =>
 
 export const spinsByUserId = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseSpin[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins/${id}`,
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}/spins`,
   );
 
 export const statsById = (id: SupabaseUser["id"]) =>
@@ -61,25 +61,13 @@ export const refreshAccessToken = (refreshToken: string) =>
   );
 
 export const patterns = async () => {
-  return fetcher<BackendResponse<Pattern[]>>(
+  return fetcher<BackendResponse<PatternWithPayouts[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns`,
   );
 };
 
-export const payouts = async () => {
-  return fetcher<BackendResponse<Payout[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/payouts`,
-  );
-};
-
-export const patternById = async (id: Pattern["id"]) => {
-  return fetcher<BackendResponse<Pattern>>(
+export const patternById = async (id: PatternWithPayouts["id"]) => {
+  return fetcher<BackendResponse<PatternWithPayouts>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns/${id}`,
-  );
-};
-
-export const payoutsByPatternId = async (id: Pattern["id"]) => {
-  return fetcher<BackendResponse<number[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns/${id}/payouts`,
   );
 };

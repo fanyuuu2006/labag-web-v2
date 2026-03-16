@@ -3,7 +3,6 @@
 import React, { memo } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
-import { modes, ModeName, patterns } from "labag";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -24,15 +23,6 @@ import {
 import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
 import { LeftContentProps, LeftContent } from "./LeftContent";
-import { modeDescriptions } from "@/libs/game";
-import { ModeModalButton } from "@/components/ModeModalButton";
-import { PatternModalButton } from "@/components/PatternModalButton";
-import { MyImage } from "@/components/MyImage";
-
-type ComponentCombination<T extends React.ElementType = React.ElementType> = [
-  T,
-  React.ComponentProps<T>,
-];
 
 const TIMELINE_EVENTS = [
   {
@@ -173,13 +163,6 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
-// 預先計算所有圖案列表，避免每次 Render 重新計算
-const EXTRA_PATTERNS = modes
-  .map((m) => m.variable.pattern)
-  .filter((p): p is NonNullable<typeof p> => !!p);
-
-const DISPLAY_PATTERNS = [...patterns, ...EXTRA_PATTERNS];
-
 const CONTENTS: ContentDivProps[] = [
   {
     icon: StarOutlined,
@@ -205,75 +188,52 @@ const CONTENTS: ContentDivProps[] = [
       </div>
     ),
   },
-  {
-    title: "模式介紹",
-    description: `啦八機擁有多種獨特的遊玩模式，每個模式都有其特殊的觸發條件與計分規則\n點擊各模式卡片可查看詳細介紹`,
-    children: (
-      <div className="grid md:grid-cols-2 gap-6">
-        {(
-          Object.entries(modeDescriptions) as [
-            ModeName,
-            (typeof modeDescriptions)[ModeName],
-          ][]
-        ).map(([modeName, modeData]) => (
-          <ModeModalButton
-            key={modeName}
-            className="btn secondary w-full py-8 text-xl sm:text-2xl font-bold rounded-2xl"
-            modeName={modeName}
-            data-theme={modeName}
-          >
-            {modeData.name}
-          </ModeModalButton>
-        ))}
-      </div>
-    ),
-  },
-  {
-    title: "圖案一覽",
-    description: "點擊圖案可查看詳細計分資訊與出現機率",
-    children: (
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {DISPLAY_PATTERNS.map((pattern) => {
-          const isTheme = pattern.name in modeDescriptions;
-          const [Tag, props]: ComponentCombination = isTheme
-            ? [
-                ModeModalButton,
-                {
-                  modeName: pattern.name,
-                },
-              ]
-            : [
-                PatternModalButton,
-                {
-                  pattern,
-                },
-              ];
-          return (
-            <Tag
-              key={pattern.name}
-              className={
-                "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl"
-              }
-              {...props}
-              data-theme={isTheme ? pattern.name : "normal"}
-            >
-              <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-                <MyImage
-                  src={`/images/patterns/${pattern.name}.jpg`}
-                  alt={pattern.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+  // {
+  //   title: "圖案一覽",
+  //   description: "點擊圖案可查看詳細計分資訊與出現機率",
+  //   children: (
+  //     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+  //       {DISPLAY_PATTERNS.map((pattern) => {
+  //         const isTheme = pattern.name in modeDescriptions;
+  //         const [Tag, props]: ComponentCombination = isTheme
+  //           ? [
+  //               ModeModalButton,
+  //               {
+  //                 modeName: pattern.name,
+  //               },
+  //             ]
+  //           : [
+  //               PatternModalButton,
+  //               {
+  //                 pattern,
+  //               },
+  //             ];
+  //         return (
+  //           <Tag
+  //             key={pattern.name}
+  //             className={
+  //               "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl"
+  //             }
+  //             {...props}
+  //             data-theme={isTheme ? pattern.name : "normal"}
+  //           >
+  //             <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
+  //               <MyImage
+  //                 src={`/images/patterns/${pattern.name}.jpg`}
+  //                 alt={pattern.name}
+  //                 className="w-full h-full object-cover"
+  //               />
+  //             </div>
 
-              <span className="font-bold text-lg capitalize">
-                {pattern.name}
-              </span>
-            </Tag>
-          );
-        })}
-      </div>
-    ),
-  },
+  //             <span className="font-bold text-lg capitalize">
+  //               {pattern.name}
+  //             </span>
+  //           </Tag>
+  //         );
+  //       })}
+  //     </div>
+  //   ),
+  // },
   {
     title: "常見問題",
     description: "這裡整理了一些關於啦八機的常見疑問",

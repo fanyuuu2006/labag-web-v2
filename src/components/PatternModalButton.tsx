@@ -16,7 +16,7 @@ export const PatternModalButton = memo(
     const pm = usePatternModal();
     const handleClick = useCallback(
       (e: React.MouseEvent<HTMLButtonElement>) => {
-        pm.open(pattern);
+        pm.open(pattern.id);
         onClick?.(e);
       },
       [pm, pattern, onClick],

@@ -1,22 +1,18 @@
 "use client";
-import { useModes } from "@/contexts/ModesContext";
 import { useSetting } from "@/contexts/SettingContext";
 import { useRef, useEffect } from "react";
 
 type MusicAudioProps = React.AudioHTMLAttributes<HTMLAudioElement>;
-export const MusicAudio = ({
-  ...rest
-}: MusicAudioProps) => {
+export const MusicAudio = ({ ...rest }: MusicAudioProps) => {
   const { settings } = useSetting();
-  const { modes } = useModes();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    const theme = settings.theme;
 
-  const theme = modes.find((m) => m.name !== "normal")?.name || "normal";
     if (!theme) {
       audio.pause();
       audio.removeAttribute("src");
@@ -33,7 +29,7 @@ export const MusicAudio = ({
     if (settings.music) {
       audio.play().catch((err) => console.warn("music play blocked:", err));
     }
-  }, [modes, settings.music]);
+  }, [settings.music, settings.theme]);
 
   // 播放 / 暫停 控制
   useEffect(() => {
@@ -52,11 +48,5 @@ export const MusicAudio = ({
     };
   }, [settings.music]);
 
-  return (
-    <audio
-      id="background-music"
-      ref={audioRef}
-      {...rest}
-    />
-  );
+  return <audio id="background-music" ref={audioRef} {...rest} />;
 };

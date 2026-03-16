@@ -3,6 +3,7 @@ import { Header } from "@/components/Header/Header";
 import { Body } from "@/components/Body";
 import { site } from "@/libs/site";
 import { SettingProvider } from "@/contexts/SettingContext";
+import { SettingModalProvider } from "@/contexts/SettingModalContext";
 import { PatternModalProvider } from "@/contexts/PatternModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
@@ -100,24 +101,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Body className="flex min-h-screen flex-col">
+      <SettingProvider>
         <UserProvider>
-          <UserModalProvider>
-            <SettingProvider>
-              <PatternModalProvider>
-                <Header className="sticky top-0 z-50" />
-                <main className="h-full w-full overflow-y-auto">
-                  {children}
-                </main>
-                <SettingButton className="fixed bottom-4 right-4 z-49" />
-                <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
-                  <DownloadOutlined className="text-xl" />
-                </InstallPWAButton>
-              </PatternModalProvider>
-            </SettingProvider>
-          </UserModalProvider>
+          <Body className="flex min-h-screen flex-col">
+            <UserModalProvider>
+              <SettingModalProvider>
+                <PatternModalProvider>
+                  <Header className="sticky top-0 z-50" />
+                  <main className="h-full w-full overflow-y-auto">
+                    {children}
+                  </main>
+                  <SettingButton className="fixed bottom-4 right-4 z-49" />
+                  <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
+                    <DownloadOutlined className="text-xl" />
+                  </InstallPWAButton>
+                </PatternModalProvider>
+              </SettingModalProvider>
+            </UserModalProvider>
+          </Body>
         </UserProvider>
-      </Body>
+      </SettingProvider>
     </html>
   );
 }

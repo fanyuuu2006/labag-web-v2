@@ -1,53 +1,32 @@
 "use client";
-import { game, recorder } from "@/libs/game";
-import { useEffect } from "react";
-import { PlayButton } from "./PlayButton";
-import { useRouter } from "next/navigation";
 import { PatternsDiv } from "./PatternsDiv";
-import { InfoCard } from "./InfoCard";
-import { playAudio } from "@/utils/audio";
 import { MusicAudio } from "./MusicAudio";
-import { useSetting } from "@/contexts/SettingContext";
+import { cn } from "@/utils/className";
+import { Pattern } from "labag";
+import { useState } from "react";
 
 export const MainSection = () => {
-  const router = useRouter();
-  const { settings } = useSetting();
-  useEffect(() => {
-    let timeoutId: number | null = null;
-
-    const handleGameOver = () => {
-      timeoutId = window.setTimeout(() => {
-        if (settings.sound) {
-          playAudio(`/audios/ding.mp3`);
-        }
-        router.replace("/game/over");
-      }, 3500);
-    };
-
-    game.addEventListener("gameOver", handleGameOver);
-
-    return () => {
-      if (timeoutId) clearTimeout(timeoutId);
-      game.removeEventListener("gameOver", handleGameOver);
-    };
-  }, [router, settings.sound]);
-
-  useEffect(() => {
-    recorder.init();
-    return () => {
-      recorder.dispose();
-    };
-  }, []);
-
+  const [patterns, setPatterns] = useState<(Pattern | null)[]>([
+    null,
+    null,
+    null,
+  ]);
   return (
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex items-end lg:items-center justify-center">
-          <PatternsDiv />
+          <PatternsDiv patterns={patterns} className="w-full md:max-w-2xl" />
         </div>
         <aside className="flex flex-col justify-start lg:justify-center items-center gap-4 md:gap-6">
-          <InfoCard className="w-full" />
-          <PlayButton className="w-3/4" />
+          {/* 開始按鈕 */}
+          <button
+            className={cn(
+              "w-3/4 btn primary font-bold px-6 py-3 text-2xl md:text-3xl lg:text-4xl rounded-full",
+            )}
+            aria-live="polite"
+          >
+            開始
+          </button>
         </aside>
       </div>
       <MusicAudio loop preload="auto" />

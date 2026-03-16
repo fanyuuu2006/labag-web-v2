@@ -1,5 +1,5 @@
 "use client";
-import { useSetting } from "@/contexts/SettingContext";
+import { useSettingModal } from "@/contexts/SettingModalContext";
 import { useUser } from "@/contexts/UserContext";
 import { SettingOutlined } from "@ant-design/icons";
 import { MyImage } from "./MyImage";
@@ -8,7 +8,7 @@ import { cn } from "@/utils/className";
 type SettingButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const SettingButton = ({ className, ...rest }: SettingButtonProps) => {
-  const { modal } = useSetting();
+  const modal = useSettingModal();
   const { user, loading } = useUser();
 
   if (loading) return null;

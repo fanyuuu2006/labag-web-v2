@@ -6,7 +6,7 @@ import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
 import { CloseOutlined } from "@ant-design/icons";
-import { getPatternInfo } from "@/utils/game";
+import { patternById } from "@/utils/backend";
 
 type PatternModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -23,17 +23,17 @@ export const PatternModalProvider = ({
   children: React.ReactNode;
 }) => {
   const modal = useModal({});
-  const [info, setInfo] = useState<Awaited<
-    ReturnType<typeof getPatternInfo>
-  > | null>(null);
+  const [info, setInfo] = useState<
+    Awaited<ReturnType<typeof patternById>>["data"] | null
+  >(null);
 
-  const displayRate = Number(Number(info?.rate ?? 0).toFixed(1));
+  const displayProbability = Number(Number(info?.probability ?? 0).toFixed(1));
 
   const value = useMemo(
     () => ({
       ...modal,
       open: async (id: Pattern["id"]) => {
-        const data = await getPatternInfo(id);
+        const { data } = await patternById(id);
         if (data) {
           setInfo(data);
           modal.open();
@@ -99,7 +99,7 @@ export const PatternModalProvider = ({
                       當前出現機率
                     </span>
                     <GlowText className="text-base sm:text-lg font-bold">
-                      {displayRate}%
+                      {displayProbability}%
                     </GlowText>
                   </div>
 
@@ -108,13 +108,13 @@ export const PatternModalProvider = ({
                     role="progressbar"
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-valuenow={displayRate}
-                    title={`出現機率 ${displayRate}%`}
+                    aria-valuenow={displayProbability}
+                    title={`出現機率 ${displayProbability}%`}
                   >
                     <div
                       className="h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
-                        width: `${Math.max(0, Math.min(100, displayRate))}%`,
+                        width: `${Math.max(0, Math.min(100, displayProbability))}%`,
                         background: `linear-gradient(90deg, var(--primary), var(--secondary))`,
                       }}
                     />
