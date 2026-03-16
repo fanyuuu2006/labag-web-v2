@@ -8,5 +8,5 @@ export const statsData: Record<
   }
 > = {
   user_coins: { label: "總金幣數", unit: "枚" },
-  play_count: { label: "遊玩次數", unit: "次" },
+  play_count: { label: "轉動次數", unit: "次" },
 };
