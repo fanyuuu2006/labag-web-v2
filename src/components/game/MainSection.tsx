@@ -159,34 +159,34 @@ export const MainSection = () => {
         </div>
         <aside className="flex flex-col justify-center items-center gap-8 w-full h-full py-8 lg:py-0">
           {/* 資訊顯示區 */}
-          <div className="grid grid-cols-2 gap-4 w-full md:w-100">
-            {/* 投注金額 */}
-            <div className="card secondary rounded-2xl p-4 flex flex-col items-center justify-center gap-1">
-              <span className="text-sm font-bold text-(--muted)">
-                投注金額
-              </span>
-              <GlowText className="text-xl md:text-2xl font-bold">
-                {defaultBet}
-              </GlowText>
+          <div className="card secondary rounded-xl w-full p-6 flex flex-col gap-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-sm font-bold text-(--muted)">
+                  投注金額
+                </span>
+                <GlowText className="text-2xl font-bold">
+                  {defaultBet}
+                </GlowText>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-sm font-bold text-(--muted)">
+                  持有金額
+                </span>
+                <GlowText className="text-2xl font-bold">
+                  {userStats?.user_coins ?? 0}
+                </GlowText>
+              </div>
             </div>
 
-            {/* 持有金額 */}
-            <div className="card secondary rounded-2xl p-4 flex flex-col items-center justify-center gap-1">
-              <span className="text-sm font-bold text-(--muted)">
-                持有金額
-              </span>
-              <GlowText className="text-xl md:text-2xl font-bold">
-                {userStats?.user_coins ?? 0}
-              </GlowText>
-            </div>
+            <div className="w-full h-px bg-white/10" />
 
-            {/* 本次獎勵 - 佔滿兩格 */}
-            <div className="col-span-2 card secondary rounded-2xl p-6 flex flex-col items-center justify-center gap-2">
+            <div className="flex flex-col items-center gap-2">
               <span className="text-base font-bold text-(--muted)">
                 本次獎勵
               </span>
               <GlowText
-                className="text-4xl md:text-5xl font-black"
+                className="text-5xl font-black"
                 style={{
                   color:
                     reward !== null && reward > 0
@@ -204,7 +204,7 @@ export const MainSection = () => {
             disabled={buttonDisabled}
             onClick={handleSpin}
             className={cn(
-              "w-full md:w-75 btn primary font-bold px-6 py-4 text-2xl md:text-3xl rounded-full disabled:opacity-50 disabled:cursor-not-allowed",
+              "w-3/4 btn primary font-bold px-6 py-4 text-2xl md:text-3xl rounded-full disabled:opacity-50 disabled:cursor-not-allowed",
             )}
           >
             {spinDisabled ? "轉動中..." : "轉動"}
