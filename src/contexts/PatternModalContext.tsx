@@ -27,7 +27,11 @@ export const PatternModalProvider = ({
     Awaited<ReturnType<typeof patternById>>["data"] | null
   >(null);
 
-  const displayProbability = Number(Number(info?.probability ?? 0).toFixed(1));
+  // pattern 的機率是小數，轉換成保留一位小數 百分比顯示，並且限制在 0% - 100% 之間
+  const displayProbability = useMemo(() => {
+    if (!info) return 0;
+    return Math.max(0, Math.min(100, Number((info.probability * 100).toFixed(1))));
+  }, [info]);
 
   const value = useMemo(
     () => ({
@@ -121,14 +125,11 @@ export const PatternModalProvider = ({
                   </div>
                 </div>
 
-                {/* Scores */}
+                {/* Payouts */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between px-1">
                     <span className="text-sm font-bold text-(--muted)">
-                      得分規則
-                    </span>
-                    <span className="text-xs text-(--muted) opacity-70">
-                      (計分方式請見普通模式說明)
+                      獎勵列表
                     </span>
                   </div>
 
@@ -139,7 +140,7 @@ export const PatternModalProvider = ({
                         className="card primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
                       >
                         <span className="text-sm sm:text-base font-medium text-white/80">
-                          {item.match_count}個相同
+                          {item.match_count} 個相同
                         </span>
                         <div className="flex items-baseline gap-1">
                           <GlowText className="text-lg sm:text-xl font-black tabular-nums">

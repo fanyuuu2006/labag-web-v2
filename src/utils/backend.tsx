@@ -24,6 +24,17 @@ export const userById = (id: SupabaseUser["id"]) =>
     `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}`,
   );
 
+  export const postSpins = (token: string) =>
+  fetcher<BackendResponse<SupabaseSpin>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
 export const spinsByUserId = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseSpin[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}/spins`,
