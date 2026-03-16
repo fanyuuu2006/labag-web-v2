@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
 import { patternById } from "@/utils/backend";
 
 type PatternModalContextType = OverrideProps<
@@ -36,14 +36,15 @@ export const PatternModalProvider = ({
   const value = useMemo(
     () => ({
       ...modal,
-      open: async (id: Pattern["id"]) => {
-        const { data } = await patternById(id);
-        if (data) {
-          setInfo(data);
-          modal.open();
-        }
+      open: (id: Pattern["id"]) => {
+        setInfo(null);
+        modal.open();
+        patternById(id).then(({ data }) => {
+          if (data) {
+            setInfo(data);
+          }
+        });
       },
-      // Keep synchronous open for compatibility if needed, but signature changed to id
     }),
     [modal],
   );
@@ -55,7 +56,12 @@ export const PatternModalProvider = ({
         className="bg-black/40 flex items-center justify-center p-4 z-50"
         aria-labelledby="pattern-modal-title"
       >
-        {info && (
+        {!info ? (
+          <div className="flex flex-col items-center justify-center gap-4 animate-pulse">
+            <LoadingOutlined className="text-5xl" />
+            <GlowText className="text-xl font-bold tracking-widest">載入中...</GlowText>
+          </div>
+        ) : (
           <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
             {/* Header */}
             <header className="flex items-center justify-between sticky top-0 z-10">

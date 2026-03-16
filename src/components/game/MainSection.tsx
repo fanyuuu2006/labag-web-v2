@@ -3,7 +3,7 @@ import { PatternsDiv } from "./PatternsDiv";
 import { MusicAudio } from "./MusicAudio";
 import { cn } from "@/utils/className";
 import { Pattern } from "labag";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { getDefaultBet, postSpins, statsById } from "@/utils/backend";
 import { ACCESS_TOKEN_KEY, useUser } from "@/contexts/UserContext";
 import { useSetting } from "@/contexts/SettingContext";
@@ -24,6 +24,19 @@ export const MainSection = () => {
   const [reward, setReward] = useState<number | null>(null);
   const [userStats, setUserStats] = useState<SupabaseStatsView | null>(null);
 
+  // 用於追蹤組件掛載狀態與清除計時器
+  const isMounted = useRef(true);
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+      timeoutRefs.current.forEach(clearTimeout);
+      timeoutRefs.current = [];
+    };
+  }, []);
+
   const handleSpin = useCallback(async () => {
     if (spinDisabled) return;
 
@@ -42,79 +55,101 @@ export const MainSection = () => {
     setPatterns([null, null, null]);
     setReward(null);
 
+    // 清除舊的計時器
+    timeoutRefs.current.forEach(clearTimeout);
+    timeoutRefs.current = [];
+
     try {
       const response = await postSpins(token);
       if (!response.data) {
-        alert(response.message || "轉動失敗，請稍後再試");
-        return;
+        throw new Error(response.message || "轉動失敗，請稍後再試");
       }
 
-      response.data.reels.forEach((pattern, index) => {
-        setTimeout(
-          () => {
-            setPatterns((prev) => {
-              const newPatterns = [...prev];
-              newPatterns[index] = pattern;
-              return newPatterns;
-            });
-            if (settings.sound) {
-              playAudio("/audios/ding.mp3", {
-                volume: 0.5,
-              });
-            }
-          },
-          (index + 1) * 500,
-        );
+      const { reels, reward: newReward } = response.data;
 
-        setTimeout(() => {
-          if (response.data) {
-            setReward(response.data.reward);
-            if (user?.id) {
-              statsById(user.id).then((res) => {
-                if (res.data) {
-                  setUserStats(res.data);
-                }
-              });
-            }
+      // 設置每個捲軸的動畫
+      reels.forEach((pattern, index) => {
+        const timer = setTimeout(() => {
+          if (!isMounted.current) return;
+          
+          setPatterns((prev) => {
+            const newPatterns = [...prev];
+            newPatterns[index] = pattern;
+            return newPatterns;
+          });
+          
+          if (settings.sound) {
+            playAudio("/audios/ding.mp3", { volume: 0.5 });
           }
-        }, 3000);
+        }, (index + 1) * 500);
+        
+        timeoutRefs.current.push(timer);
       });
+
+      // 設置獎勵顯示結果
+      const rewardTimer = setTimeout(() => {
+        if (!isMounted.current) return;
+        
+        setReward(newReward);
+        if (user?.id) {
+          statsById(user.id).then((res) => {
+            if (isMounted.current && res.data) {
+              setUserStats(res.data);
+            }
+          });
+        }
+      }, 3000);
+      timeoutRefs.current.push(rewardTimer);
+
+      // 解除按鈕鎖定
+      const unlockTimer = setTimeout(() => {
+        if (isMounted.current) {
+          setSpinDisabled(false);
+        }
+      }, 3500);
+      timeoutRefs.current.push(unlockTimer);
+
     } catch (error) {
       console.error(error);
-      alert("發生錯誤，請稍後再試");
-    } finally {
-      setTimeout(() => {
+      if (isMounted.current) {
+        alert((error as Error).message || "發生錯誤，請稍後再試");
         setSpinDisabled(false);
-      }, 3500);
+      }
     }
   }, [defaultBet, settings.sound, spinDisabled, user, userStats]);
 
   useEffect(() => {
+    let active = true;
     getDefaultBet()
       .then((response) => {
-        if (response.data) {
+        if (active && response.data) {
           setDefaultBet(response.data);
-        } else {
+        } else if (active) {
           console.warn("無法取得預設投注金額");
         }
       })
       .catch((error) => {
-        console.error("取得預設投注金額失敗:", error);
+        if (active) console.error("取得預設投注金額失敗:", error);
       });
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
+    let active = true;
     if (user?.id) {
       statsById(user.id).then((res) => {
-        if (res.data) {
+        if (active && res.data) {
           setUserStats(res.data);
         }
       });
     }
+    return () => { active = false; };
   }, [user?.id]);
 
   const buttonDisabled =
-    spinDisabled || (userStats ? userStats.user_coins < defaultBet : false);
+    spinDisabled ||
+    (!!user &&
+      (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet));
 
   return (
     <section className="h-full">
