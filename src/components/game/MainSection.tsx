@@ -136,7 +136,7 @@ export const MainSection = () => {
 
             <div className="flex flex-col gap-1">
               <span className="text-sm sm:text-base font-bold text-(--muted)">
-                持有代幣
+                持有金額
               </span>
               <GlowText className="text-lg sm:text-xl font-bold">
                 {userStats?.user_coins ?? 0}
