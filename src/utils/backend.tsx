@@ -41,10 +41,16 @@ export const getDefaultBet = () => {
   );
 };
 
-export const spinsByUserId = (id: SupabaseUser["id"]) =>
-  fetcher<BackendResponse<SupabaseSpin[]>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}/spins`,
+export const spinsByUserId = (
+  id: SupabaseUser["id"],
+  query?: Partial<{ count: `${number}` }>,
+) => {
+  const param = new URLSearchParams(query || {});
+  const queryStr = param.toString();
+  return fetcher<BackendResponse<SupabaseSpin[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}/spins${queryStr ? `?${queryStr}` : ""}`,
   );
+};
 
 export const statsById = (id: SupabaseUser["id"]) =>
   fetcher<BackendResponse<SupabaseStatsView>>(
@@ -53,12 +59,12 @@ export const statsById = (id: SupabaseUser["id"]) =>
 
 export const statsByKey = (
   key: keyof SupabaseStatsView,
-  queryParams?: {
+  queryParams?: Partial<{
     ascending?: `${boolean}`;
     count?: `${number}`;
-  },
+  }>,
 ) => {
-  const param = new URLSearchParams(queryParams);
+  const param = new URLSearchParams(queryParams || {});
   const query = param.toString();
   return fetcher<BackendResponse<SupabaseStatsView[]>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/game/stats/${key}${query ? `?${query}` : ""}`,

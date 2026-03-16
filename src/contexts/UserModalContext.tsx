@@ -67,7 +67,7 @@ export const UserModalProvider = ({
         const [userRes, statsRes, recordRes] = await Promise.all([
           userById(id),
           statsById(id),
-          spinsByUserId(id),
+          spinsByUserId(id, { count: `${RECORD_COUNT}` }),
         ]);
         setCurrUser(userRes.data);
         setStats(statsRes.data);
@@ -90,9 +90,7 @@ export const UserModalProvider = ({
   const orderedSpins = useMemo(() => {
     if (!spins) return [];
     // ISO 8601 字串可以直接比較，比 new Date() 更快
-    return [...spins].sort((a, b) =>
-      b.created_at.localeCompare(a.created_at),
-    );
+    return [...spins].sort((a, b) => b.created_at.localeCompare(a.created_at));
   }, [spins]);
 
   return (
@@ -229,9 +227,12 @@ export const UserModalProvider = ({
                     </span>
                   </div>
 
-                  <div className="flex flex-col gap-2 overflow-y-auto" style={{
-                    scrollbarWidth: 'none'
-                  }}>
+                  <div
+                    className="flex flex-col gap-2 overflow-y-auto"
+                    style={{
+                      scrollbarWidth: "none",
+                    }}
+                  >
                     {orderedSpins.length > 0 ? (
                       orderedSpins.map((spin) => (
                         <div
