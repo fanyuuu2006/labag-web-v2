@@ -220,7 +220,7 @@ export const UserModalProvider = ({
                 <div className="flex flex-col gap-3 min-h-0 flex-1">
                   <div className="text-base md:text-lg flex items-center justify-between px-1 border-b border-white/10 pb-2">
                     <h3 className="font-bold flex items-center gap-2 text-white/90">
-                      最近遊玩紀錄
+                      最近紀錄
                     </h3>
                     <span className="text-[0.75em] text-(--muted) bg-white/5 px-2 py-1 rounded-full">
                       最近 {RECORD_COUNT} 筆
@@ -265,7 +265,7 @@ export const UserModalProvider = ({
                       ))
                     ) : (
                       <div className="card primary flex flex-col items-center justify-center py-12 h-full">
-                        <p>尚無遊玩紀錄</p>
+                        <p>尚無紀錄</p>
                       </div>
                     )}
                   </div>
