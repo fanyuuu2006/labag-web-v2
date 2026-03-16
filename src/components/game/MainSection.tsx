@@ -159,9 +159,9 @@ export const MainSection = () => {
         </div>
         <aside className="flex flex-col justify-center items-center gap-8 w-full">
           {/* 資訊顯示區 */}
-          <div className="card secondary rounded-xl w-full p-6 flex flex-col gap-6">
+          <div className="w-full flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex flex-col items-center gap-2">
+              <div className="card secondary p-4 flex flex-col items-center justify-center gap-2">
                 <span className="text-sm font-bold text-(--muted)">
                   投注金額
                 </span>
@@ -169,7 +169,7 @@ export const MainSection = () => {
                   {defaultBet}
                 </GlowText>
               </div>
-              <div className="flex flex-col items-center gap-2">
+              <div className="card secondary p-4 flex flex-col items-center justify-center gap-2">
                 <span className="text-sm font-bold text-(--muted)">
                   持有金額
                 </span>
@@ -179,20 +179,15 @@ export const MainSection = () => {
               </div>
             </div>
 
-            <div className="w-full h-px bg-white/10" />
-
-            <div className="flex flex-col items-center gap-2">
+            <div className="card secondary p-6 flex flex-col items-center justify-center gap-4">
               <span className="text-base font-bold text-(--muted)">
                 本次獎勵
               </span>
               <GlowText
-                className="text-5xl font-black"
-                style={{
-                  color:
-                    reward !== null && reward > 0
-                      ? "var(--primary)"
-                      : "inherit",
-                }}
+                className={cn(
+                  "text-5xl font-black transition-all duration-300",
+                  reward !== null && reward > 0 ? "scale-110 drop-shadow-[0_0_15px_var(--primary)] text-(--primary)" : ""
+                )}
               >
                 {reward !== null ? reward : "-"}
               </GlowText>
