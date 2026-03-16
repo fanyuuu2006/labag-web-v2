@@ -157,7 +157,7 @@ export const MainSection = () => {
         <div className="flex items-end lg:items-center justify-center">
           <PatternsDiv patterns={patterns} className="w-full md:max-w-2xl" />
         </div>
-        <aside className="flex flex-col justify-center items-center gap-8 w-full h-full py-8 lg:py-0">
+        <aside className="flex flex-col justify-center items-center gap-8 w-full">
           {/* 資訊顯示區 */}
           <div className="card secondary rounded-xl w-full p-6 flex flex-col gap-6">
             <div className="grid grid-cols-2 gap-4">
