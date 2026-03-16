@@ -17,7 +17,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { statsData } from "@/libs/rankings";
 import { FormatDate } from "@/components/FormatDate";
 
-const RECORD_COUNT = 10;
+const SPINS_COUNT = 30;
 
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
@@ -67,7 +67,7 @@ export const UserModalProvider = ({
         const [userRes, statsRes, recordRes] = await Promise.all([
           userById(id),
           statsById(id),
-          spinsByUserId(id, { count: `${RECORD_COUNT}` }),
+          spinsByUserId(id, { count: `${SPINS_COUNT}` }),
         ]);
         setCurrUser(userRes.data);
         setStats(statsRes.data);
@@ -223,7 +223,7 @@ export const UserModalProvider = ({
                       最近紀錄
                     </h3>
                     <span className="text-[0.75em] text-(--muted) bg-white/5 px-2 py-1 rounded-full">
-                      最近 {RECORD_COUNT} 筆
+                      最近 {SPINS_COUNT} 筆
                     </span>
                   </div>
 
