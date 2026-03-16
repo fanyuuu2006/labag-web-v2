@@ -90,7 +90,7 @@ export const PatternModalProvider = ({
                   as="h2"
                   className="text-lg sm:text-2xl md:text-3xl font-black text-center capitalize"
                 >
-                  {info.id}
+                  ID: {info.id}
                 </GlowText>
               </div>
 
