@@ -174,7 +174,7 @@ export const PatternModalProvider = ({
                     {info.payouts.map((item, index) => (
                       <div
                         key={index}
-                        className="card primary flex items-center justify-between px-3 py-1 sm:px-4 sm:py-2 rounded-lg group hover:brightness-110 transition-all"
+                        className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
                       >
                         <span className="text-sm sm:text-base font-medium text-white/80">
                           {item.match_count} 個相同
