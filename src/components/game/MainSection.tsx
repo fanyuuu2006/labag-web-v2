@@ -14,7 +14,7 @@ import { SupabaseStatsView } from "@/types/backend";
 export const MainSection = () => {
   const { user } = useUser();
   const { settings } = useSetting();
-  const [spinDisabled, setSpinDisabled] = useState<boolean>(false);
+  const [isSpinning, setSpinDisabled] = useState<boolean>(false);
   const [defaultBet, setDefaultBet] = useState<number>(0);
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
@@ -38,7 +38,7 @@ export const MainSection = () => {
   }, []);
 
   const handleSpin = useCallback(async () => {
-    if (spinDisabled) return;
+    if (isSpinning) return;
 
     const token = localStorage.getItem(ACCESS_TOKEN_KEY);
     if (!token) {
@@ -118,7 +118,7 @@ export const MainSection = () => {
         setSpinDisabled(false);
       }
     }
-  }, [defaultBet, settings.sound, spinDisabled, user, userStats]);
+  }, [defaultBet, settings.sound, isSpinning, user, userStats]);
 
   useEffect(() => {
     let active = true;
@@ -153,7 +153,7 @@ export const MainSection = () => {
   }, [user?.id]);
 
   const buttonDisabled =
-    spinDisabled ||
+    isSpinning ||
     (!!user &&
       (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet));
 
@@ -182,7 +182,11 @@ export const MainSection = () => {
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex items-end lg:items-center justify-center">
-          <PatternsDiv patterns={patterns} className="w-full md:max-w-2xl" />
+          <PatternsDiv 
+            patterns={patterns} 
+            isSpinning={isSpinning}
+            className="w-full md:max-w-2xl" 
+          />
         </div>
         <aside className="flex flex-col justify-center items-center gap-8 w-full">
           {/* 資訊顯示區 */}
@@ -224,7 +228,7 @@ export const MainSection = () => {
               "w-3/4 btn primary font-bold px-6 py-4 text-2xl md:text-3xl rounded-full disabled:opacity-50 disabled:cursor-not-allowed",
             )}
           >
-            {spinDisabled ? "轉動中..." : "轉動"}
+            {isSpinning ? "轉動中..." : "轉動"}
           </button>
         </aside>
       </div>
