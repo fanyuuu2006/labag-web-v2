@@ -5,7 +5,7 @@ import { createContext, useContext, useState, useMemo } from "react";
 import { OverrideProps } from "fanyucomponents";
 import { GlowText } from "@/components/GlowText";
 import { MyImage } from "@/components/MyImage";
-import { CloseOutlined, LoadingOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { patternById } from "@/utils/backend";
 
 type PatternModalContextType = OverrideProps<
@@ -30,7 +30,10 @@ export const PatternModalProvider = ({
   // pattern 的機率是小數，轉換成保留一位小數 百分比顯示，並且限制在 0% - 100% 之間
   const displayProbability = useMemo(() => {
     if (!info) return 0;
-    return Math.max(0, Math.min(100, Number((info.probability * 100).toFixed(1))));
+    return Math.max(
+      0,
+      Math.min(100, Number((info.probability * 100).toFixed(1))),
+    );
   }, [info]);
 
   const value = useMemo(
@@ -56,32 +59,60 @@ export const PatternModalProvider = ({
         className="bg-black/40 flex items-center justify-center p-4 z-50"
         aria-labelledby="pattern-modal-title"
       >
-        {!info ? (
-          <div className="flex flex-col items-center justify-center gap-4 animate-pulse">
-            <LoadingOutlined className="text-5xl" />
-            <GlowText className="text-xl font-bold tracking-widest">載入中...</GlowText>
-          </div>
-        ) : (
-          <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
-            {/* Header */}
-            <header className="flex items-center justify-between sticky top-0 z-10">
-              <GlowText
-                as="h2"
-                id="pattern-modal-title"
-                className="text-lg md:text-xl font-extrabold tracking-wider"
-              >
-                圖案資訊
-              </GlowText>
-              <button
-                type="button"
-                aria-label="關閉"
-                className="text-(--muted) hover:text-white"
-                onClick={modal.close}
-              >
-                <CloseOutlined className="text-xl" />
-              </button>
-            </header>
+        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
+          {/* Header */}
+          <header className="flex items-center justify-between sticky top-0 z-10">
+            <GlowText
+              as="h2"
+              id="pattern-modal-title"
+              className="text-lg md:text-xl font-extrabold tracking-wider"
+            >
+              圖案資訊
+            </GlowText>
+            <button
+              type="button"
+              aria-label="關閉"
+              className="text-(--muted) hover:text-white"
+              onClick={modal.close}
+            >
+              <CloseOutlined className="text-xl" />
+            </button>
+          </header>
 
+          {!info ? (
+            <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6 animate-pulse select-none">
+              {/**左側 Image Skeleton */}
+              <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
+                <div className="w-full aspect-square rounded-xl bg-white/10" />
+                <div className="h-8 w-24 bg-white/10 rounded" />
+              </div>
+
+              {/**右側 Info Skeleton */}
+              <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
+                {/**機率進度條 Skeleton */}
+                <div className="p-2 flex flex-col gap-1">
+                  <div className="flex items-center justify-between">
+                    <div className="h-4 w-24 bg-white/10 rounded" />
+                    <div className="h-5 w-12 bg-white/10 rounded" />
+                  </div>
+                  <div className="w-full h-3 bg-white/5 rounded-full" />
+                </div>
+
+                {/* Payouts Skeleton */}
+                <div className="flex flex-col gap-2">
+                  <div className="h-4 w-20 bg-white/10 rounded ml-1" />
+                  <div className="grid gap-2">
+                    {[1, 2].map((i) => (
+                      <div
+                        key={i}
+                        className="h-10 w-full rounded-lg bg-white/5"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
             <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6">
               {/**左側 Image */}
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
@@ -159,8 +190,8 @@ export const PatternModalProvider = ({
                 </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </modal.Container>
     </patternModalContext.Provider>
   );
