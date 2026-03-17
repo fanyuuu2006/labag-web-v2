@@ -100,13 +100,18 @@ export const PatternModalProvider = ({
 
                 {/* Payouts Skeleton */}
                 <div className="flex flex-col gap-2">
-                  <div className="h-4 w-20 bg-white/10 rounded ml-1" />
+                  <div className="flex items-center justify-between px-1">
+                    <div className="h-5 w-20 bg-white/10 rounded" />
+                  </div>
                   <div className="grid gap-2">
                     {[1, 2].map((i) => (
                       <div
                         key={i}
-                        className="h-10 w-full rounded-lg bg-white/5"
-                      />
+                        className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
+                      >
+                        <div className="h-5 w-16 bg-white/10 rounded" />
+                        <div className="h-7 w-8 bg-white/10 rounded" />
+                      </div>
                     ))}
                   </div>
                 </div>
