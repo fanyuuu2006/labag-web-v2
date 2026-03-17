@@ -11,6 +11,8 @@ import { playAudio } from "@/utils/audio";
 import { GlowText } from "../GlowText";
 import { SupabaseStatsView } from "@/types/backend";
 
+const REVEAL_DURATION = 500; // 每個 Pattern 揭示的時間間隔，單位為毫秒
+
 export const MainSection = () => {
   const { user } = useUser();
   const { settings } = useSetting();
@@ -83,7 +85,7 @@ export const MainSection = () => {
               playAudio("/audios/ding.mp3", { volume: 0.5 });
             }
           },
-          (index + 1) * 500,
+          (index + 1) * REVEAL_DURATION,
         );
 
         timeoutRefs.current.push(timer);
@@ -182,10 +184,10 @@ export const MainSection = () => {
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex items-end lg:items-center justify-center">
-          <PatternsDiv 
-            patterns={patterns} 
+          <PatternsDiv
+            patterns={patterns}
             isSpinning={isSpinning}
-            className="w-full md:max-w-2xl" 
+            className="w-full md:max-w-2xl"
           />
         </div>
         <aside className="flex flex-col justify-center items-center gap-8 w-full">
