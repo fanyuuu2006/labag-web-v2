@@ -2,19 +2,21 @@
 
 import { AuthButton } from "@/components/AuthButton";
 import { GlowText } from "@/components/GlowText";
+import { SIGN_BY } from "@/libs/backend";
 import { SignBy } from "@/types/backend";
-import { GoogleOutlined } from "@ant-design/icons";
+import { GithubOutlined, GoogleOutlined } from "@ant-design/icons";
 
-const SIGN_BY_OPTIONS: {
-  icon: React.ComponentType<{ className?: string }>;
-  by: SignBy;
-}[] = [
+const SIGN_BY_COMPONENTS_MAP: Record<
+  SignBy,
   {
-    icon: GoogleOutlined,
-    by: "google",
-  },
-];
-
+    icon: React.ComponentType<{
+      className?: string;
+    }>;
+  }
+> = {
+  google: { icon: GoogleOutlined },
+  github: { icon: GithubOutlined },
+};
 export const MainSection = () => {
   return (
     <section className="h-full">
@@ -30,17 +32,17 @@ export const MainSection = () => {
             請選擇以下方式登入以繼續遊戲
           </p>
           <div className="flex flex-col gap-4 w-full">
-            {SIGN_BY_OPTIONS.map((option) => {
-              const Icon = option.icon;
+            {SIGN_BY.map((by) => {
+              const { icon: Icon } = SIGN_BY_COMPONENTS_MAP[by];
               return (
                 <AuthButton
-                  key={option.by}
+                  key={by}
                   type="login"
-                  signBy={option.by}
+                  signBy={by}
                   className="capitalize w-full btn primary flex items-center justify-center p-3 text-xl gap-3 rounded-xl"
                 >
-                  <Icon  />
-                  <span className="font-bold">{option.by}</span>
+                  <Icon />
+                  <span className="font-bold">{by}</span>
                 </AuthButton>
               );
             })}

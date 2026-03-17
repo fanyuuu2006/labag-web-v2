@@ -11,3 +11,5 @@ export const VALID_KEYS = [
   'user_coins',
   "play_count",
 ] satisfies readonly (keyof SupabaseStatsView)[];
+
+export const SIGN_BY = ["google", "github"] as const;

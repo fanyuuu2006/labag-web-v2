@@ -1,7 +1,7 @@
-import { ALLOW_USER_FIELDS } from "@/libs/backend";
+import { ALLOW_USER_FIELDS, SIGN_BY } from "@/libs/backend";
 import { Pattern, Payout } from "labag";
 
-export type SignBy = "google";
+export type SignBy = typeof SIGN_BY[number];
 
 export type BackendResponse<T> = {
   data: T | null;
