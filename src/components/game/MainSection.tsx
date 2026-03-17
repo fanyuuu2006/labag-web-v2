@@ -16,7 +16,7 @@ const REVEAL_DURATION = 500; // 每個 Pattern 揭示的時間間隔，單位為
 export const MainSection = () => {
   const { user } = useUser();
   const { settings } = useSetting();
-  const [isSpinning, setSpinDisabled] = useState<boolean>(false);
+  const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [defaultBet, setDefaultBet] = useState<number>(0);
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
@@ -53,7 +53,7 @@ export const MainSection = () => {
       return;
     }
 
-    setSpinDisabled(true);
+    setIsSpinning(true);
     setPatterns([null, null, null]);
     setReward(null);
 
@@ -109,7 +109,7 @@ export const MainSection = () => {
       // 解除按鈕鎖定
       const unlockTimer = setTimeout(() => {
         if (isMounted.current) {
-          setSpinDisabled(false);
+          setIsSpinning(false);
         }
       }, 3500);
       timeoutRefs.current.push(unlockTimer);
@@ -117,7 +117,7 @@ export const MainSection = () => {
       console.error(error);
       if (isMounted.current) {
         alert((error as Error).message || "發生錯誤，請稍後再試");
-        setSpinDisabled(false);
+        setIsSpinning(false);
       }
     }
   }, [defaultBet, settings.sound, isSpinning, user, userStats]);
