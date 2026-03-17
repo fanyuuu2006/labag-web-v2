@@ -8,6 +8,8 @@ import { OverrideProps } from "fanyucomponents";
 import { cn } from "@/utils/className";
 import { patterns as fetchPatterns } from "@/utils/backend";
 
+const INTERVAL_DURATION = 100; // 圖案快速切換的間隔時間，單位為毫秒
+
 type PatternsDivProps = OverrideProps<
   React.HTMLAttributes<HTMLDivElement>,
   {
@@ -65,7 +67,6 @@ type SlotProps = OverrideProps<
     children?: never;
   }
 >;
-
 const Slot = ({
   className,
   pattern,
@@ -74,6 +75,24 @@ const Slot = ({
   ...rest
 }: SlotProps) => {
   const pm = usePatternModal();
+  const [randomPattern, setRandomPattern] = useState<Pattern | null>(null);
+
+  useEffect(() => {
+    if (!isSpinning || allPatterns.length === 0) return;
+
+    const interval = setInterval(() => {
+      setRandomPattern(
+        allPatterns[Math.floor(Math.random() * allPatterns.length)],
+      );
+    }, INTERVAL_DURATION);
+
+    return () => {
+      clearInterval(interval);
+      setRandomPattern(null);
+    };
+  }, [isSpinning, allPatterns]);
+
+  const displayPattern = isSpinning ? (randomPattern ?? pattern) : pattern;
 
   const handleClick = useCallback(() => {
     if (isSpinning || !pattern) return;
@@ -88,15 +107,17 @@ const Slot = ({
       )}
       {...rest}
     >
-      {pattern ? (
+      {displayPattern ? (
         <MyImage
-          src={pattern.image}
-          alt={`Pattern: ${pattern.id}`}
-          className="w-full h-full object-cover scale-105 cursor-pointer"
-          title={pattern.id}
+          src={displayPattern.image}
+          alt={`Pattern: ${displayPattern.id}`}
+          className={cn("w-full h-full object-cover scale-105 cursor-pointer", {
+            "blur-xs": isSpinning,
+          })}
+          title={displayPattern.id}
           onClick={handleClick}
           role="button"
-          aria-label={`開啟圖案 ${pattern.id} 詳情`}
+          aria-label={`開啟圖案 ${displayPattern.id} 詳情`}
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
