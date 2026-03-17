@@ -21,7 +21,7 @@ export const MainSection = () => {
       <div className="container h-full flex flex-col items-center justify-center px-4">
         <div className="card rounded-2xl p-6 md:p-10 text-center w-full max-w-lg flex flex-col items-center justify-center gap-4">
           <GlowText className="text-2xl md:text-4xl font-bold tracking-widest">
-            歡迎來到 Labag！
+            歡迎回來
           </GlowText>
           <p className="text-(--muted) text-sm md:text-base">
             請選擇以下方式登入以繼續遊戲
