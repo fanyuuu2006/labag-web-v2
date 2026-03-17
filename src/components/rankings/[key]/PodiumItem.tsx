@@ -62,7 +62,7 @@ export const PodiumItem = memo(
           </button>
           <div className="flex items-end gap-1">
             <GlowText className="text-[1.5em] font-mono font-black tabular-nums">
-              {item[rankKey].toLocaleString()}
+              {item[rankKey]?.toLocaleString() ?? 0}
             </GlowText>
             <span className="text-[0.75em] mb-1 text-(--muted)">
               {statsData[rankKey].unit}

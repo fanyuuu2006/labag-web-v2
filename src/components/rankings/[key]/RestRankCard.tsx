@@ -40,7 +40,7 @@ export const RestRankCard = memo(
 
         <div className="ms-auto flex items-end gap-1">
           <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
-            {item[rankKey].toLocaleString()}
+            {item[rankKey]?.toLocaleString() ?? 0}
           </GlowText>
           <span className="text-[0.75em] mb-1 text-(--muted)">
             {statsData[rankKey].unit}
