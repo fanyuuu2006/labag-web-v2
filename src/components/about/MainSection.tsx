@@ -104,6 +104,7 @@ const FEATURES = [
 
 const TECH_STACK = [
   "Next.js",
+  "React",
   "TypeScript",
   "Tailwind CSS",
   "Supabase",
