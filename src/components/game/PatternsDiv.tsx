@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, memo } from "react";
 import { MyImage } from "../MyImage";
 import { GlowText } from "../GlowText";
 import { Pattern } from "labag";
@@ -9,6 +9,7 @@ import { cn } from "@/utils/className";
 import { patterns as fetchPatterns } from "@/utils/backend";
 
 const INTERVAL_DURATION = 100; // 圖案快速切換的間隔時間，單位為毫秒
+let cachedPatterns: Pattern[] = [];
 
 type PatternsDivProps = OverrideProps<
   React.HTMLAttributes<HTMLDivElement>,
@@ -24,12 +25,13 @@ export const PatternsDiv = ({
   isSpinning,
   ...rest
 }: PatternsDivProps) => {
-  const [allPatterns, setAllPatterns] = useState<Pattern[]>([]);
+  const [allPatterns, setAllPatterns] = useState<Pattern[]>(cachedPatterns);
 
   useEffect(() => {
     if (allPatterns.length === 0) {
       fetchPatterns().then(({ data }) => {
         if (data) {
+          cachedPatterns = data;
           setAllPatterns(data);
         }
       });
@@ -67,7 +69,7 @@ type SlotProps = OverrideProps<
     children?: never;
   }
 >;
-const Slot = ({
+const Slot = memo(({
   className,
   pattern,
   allPatterns,
@@ -134,4 +136,5 @@ const Slot = ({
       )}
     </div>
   );
-};
+});
+Slot.displayName = "Slot";

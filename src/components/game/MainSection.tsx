@@ -3,7 +3,7 @@ import { PatternsDiv } from "./PatternsDiv";
 import { MusicAudio } from "./MusicAudio";
 import { cn } from "@/utils/className";
 import { Pattern } from "labag";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getDefaultBet, postSpins, statsById } from "@/utils/backend";
 import { ACCESS_TOKEN_KEY, useUser } from "@/contexts/UserContext";
 import { useSetting } from "@/contexts/SettingContext";
@@ -154,31 +154,37 @@ export const MainSection = () => {
     };
   }, [user?.id]);
 
-  const buttonDisabled =
-    isSpinning ||
-    (!!user &&
-      (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet));
+  const buttonDisabled = useMemo(() => {
+    return (
+      isSpinning ||
+      (!!user &&
+        (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet))
+    );
+  }, [isSpinning, user, defaultBet, userStats]);
 
-  const displayStats = [
-    {
-      label: "投注金額",
-      value: defaultBet,
-      colSpan: 1,
-      isLarge: false,
-    },
-    {
-      label: "持有金額",
-      value: userStats?.user_coins ?? 0,
-      colSpan: 1,
-      isLarge: false,
-    },
-    {
-      label: "本次獎勵",
-      value: reward !== null ? reward : "-",
-      colSpan: 2,
-      isLarge: true,
-    },
-  ];
+  const displayStats = useMemo(
+    () => [
+      {
+        label: "投注金額",
+        value: defaultBet,
+        colSpan: 1,
+        isLarge: false,
+      },
+      {
+        label: "持有金額",
+        value: userStats?.user_coins ?? 0,
+        colSpan: 1,
+        isLarge: false,
+      },
+      {
+        label: "本次獎勵",
+        value: reward !== null ? reward : "-",
+        colSpan: 2,
+        isLarge: true,
+      },
+    ],
+    [defaultBet, userStats, reward],
+  );
 
   return (
     <section className="h-full">
