@@ -176,7 +176,7 @@ export const PatternModalProvider = ({
                         key={index}
                         className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
                       >
-                        <span className="text-sm sm:text-base font-medium text-white/80">
+                        <span className="text-sm sm:text-base font-medium">
                           {item.match_count} 個相同
                         </span>
                         <div className="flex items-baseline gap-1">
