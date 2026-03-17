@@ -41,7 +41,7 @@ export const MainSection = () => {
                   signBy={by}
                   className="capitalize w-full btn primary flex items-center justify-center p-3 text-xl gap-3 rounded-xl"
                 >
-                  <Icon />
+                  <Icon className="text-[1.25em]" />
                   <span className="font-bold">{by}</span>
                 </AuthButton>
               );
