@@ -18,9 +18,12 @@ const SIGN_BY_OPTIONS: {
 export const MainSection = () => {
   return (
     <section className="h-full">
-      <div className="container h-full flex flex-col items-center justify-center px-4">
-        <div className="card rounded-2xl p-6 md:p-10 text-center w-full max-w-lg flex flex-col items-center justify-center gap-4">
-          <GlowText className="text-2xl md:text-4xl font-bold tracking-widest">
+      <div className="container h-full flex flex-col items-center justify-center">
+        <div className="card rounded-2xl p-8 text-center w-full max-w-lg flex flex-col items-center justify-center gap-4 shadow-xl">
+          <GlowText
+            as={"h2"}
+            className="text-3xl md:text-4xl font-bold tracking-widest"
+          >
             歡迎回來
           </GlowText>
           <p className="text-(--muted) text-sm md:text-base">
@@ -34,10 +37,10 @@ export const MainSection = () => {
                   key={option.by}
                   type="login"
                   signBy={option.by}
-                  className="capitalize w-full  btn primary  flex items-center justify-center p-3 sm:text-lg gap-2 rounded-xl"
+                  className="capitalize w-full btn primary flex items-center justify-center p-3 text-xl gap-3 rounded-xl"
                 >
-                  <Icon className="text-xl" />
-                  {option.by}
+                  <Icon  />
+                  <span className="font-bold">{option.by}</span>
                 </AuthButton>
               );
             })}
