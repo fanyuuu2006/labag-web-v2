@@ -76,9 +76,10 @@ const Slot = ({
 }: SlotProps) => {
   const pm = usePatternModal();
   const [randomPattern, setRandomPattern] = useState<Pattern | null>(null);
+  const isSlotSpinning = isSpinning && !pattern;
 
   useEffect(() => {
-    if (!isSpinning || allPatterns.length === 0) return;
+    if (!isSlotSpinning || allPatterns.length === 0) return;
 
     const interval = setInterval(() => {
       setRandomPattern(
@@ -90,9 +91,9 @@ const Slot = ({
       clearInterval(interval);
       setRandomPattern(null);
     };
-  }, [isSpinning, allPatterns]);
+  }, [isSlotSpinning, allPatterns]);
 
-  const displayPattern = isSpinning ? (randomPattern ?? pattern) : pattern;
+  const displayPattern = isSlotSpinning ? randomPattern : pattern;
 
   const handleClick = useCallback(() => {
     if (isSpinning || !pattern) return;
@@ -112,7 +113,7 @@ const Slot = ({
           src={displayPattern.image}
           alt={`Pattern: ${displayPattern.id}`}
           className={cn("w-full h-full object-cover scale-105 cursor-pointer", {
-            "blur-xs": isSpinning,
+            "blur-xs": isSlotSpinning,
           })}
           title={displayPattern.id}
           onClick={handleClick}
