@@ -1,4 +1,4 @@
-import { MainSection } from "@/components/login-success/Mainsection";
+import { MainSection } from "@/components/login/success/Mainsection";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

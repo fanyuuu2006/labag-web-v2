@@ -19,6 +19,7 @@ import {
 import { ToggleSwitch } from "@/components/ToggleSwitch";
 import { Selector } from "@/components/Selector";
 import { GlowText } from "@/components/GlowText";
+import Link from "next/link";
 
 type SettingModalContextType = Omit<ReturnType<typeof useModal>, "Container">;
 const SettingModalContext = createContext<SettingModalContextType | null>(null);
@@ -164,28 +165,34 @@ export const SettingModalProvider = ({
                   <LoadingOutlined className="text-4xl" />
                 </div>
               ) : (
-                <>
-                  {user && (
-                    <button
-                      className="flex items-center justify-center gap-2 btn secondary w-full rounded-xl py-2 font-medium"
-                      onClick={() => userModal.open(user.id)}
+                <div className="flex flex-col gap-2 items-center justify-center">
+                  {user ? (
+                    <>
+                      <button
+                        className="flex items-center justify-center gap-2 btn secondary w-full rounded-xl py-2 font-medium"
+                        onClick={() => userModal.open(user.id)}
+                      >
+                        <UserOutlined />
+                        開啟個人檔案
+                      </button>
+                      <AuthButton
+                        type="logout"
+                        className={cn(
+                          "w-full btn rounded-xl py-2 font-semibold transition-all bg-red-500 text-white",
+                        )}
+                      />
+                    </>
+                  ) : (
+                    <Link
+                      href="/login"
+                      className="flex items-center justify-center gap-2 btn primary w-full rounded-xl py-2 font-medium"
+                      onClick={close}
                     >
                       <UserOutlined />
-                      開啟個人檔案
-                    </button>
+                      前往登入
+                    </Link>
                   )}
-                  <div className="flex items-center justify-center">
-                    <AuthButton
-                      className={cn(
-                        "w-full btn rounded-xl py-2 font-semibold transition-all",
-                        {
-                          primary: !user,
-                          "bg-red-500 text-white": !!user,
-                        },
-                      )}
-                    />
-                  </div>
-                </>
+                </div>
               )}
             </div>
           </div>

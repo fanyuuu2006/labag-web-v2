@@ -1,6 +1,7 @@
+
 "use client";
 import { useRouter } from "next/navigation";
-import { GlowText } from "../GlowText";
+import { GlowText } from "@/components/GlowText";
 import { useEffect, useState } from "react";
 import {
   ACCESS_TOKEN_KEY,
