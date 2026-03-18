@@ -23,31 +23,39 @@ export const ShareButton = ({ disabled, ...rest }: ShareButtonProps) => {
     setLoading(true);
     try {
       const { data } = await createShare(token);
-        const url = data ? `${window.location.origin}/share/${data.id}` : site.url.toString();
-      const text = `${site.description}\n看看你能轉出什麼大獎！🔥`;
-      const title = `快來試試手氣！🎰 ${site.title}`;
+      const url = data
+        ? new URL(`/share/${data.id}`, window.location.origin).toString()
+        : site.url.toString();
 
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title,
-              text,
-              url,
-            });
-          } catch (error) {
-            if ((error as unknown as Error).name !== "AbortError") {
-              console.error("分享錯誤:", error);
-            }
+      const shareData = {
+        title: `快來試試手氣！🎰 ${site.title}`,
+        text: `${site.description}\n看看你能轉出什麼大獎！🔥`,
+        url,
+      };
+
+      if (
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare(shareData)
+      ) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") {
+            return;
           }
-        } else {
-          try {
-            await navigator.clipboard.writeText(url);
-            alert("已複製分享連結");
-          } catch (err) {
-            console.error("複製失敗", err);
-            alert("複製失敗");
-          }
+          console.error("分享錯誤:", error);
         }
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        alert("已複製分享連結");
+      } catch (err) {
+        console.error("複製失敗", err);
+        alert("複製失敗");
+      }
     } catch (error) {
       console.error("分享錯誤:", error);
       alert("分享失敗");
