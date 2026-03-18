@@ -177,7 +177,7 @@ export const MainSection = () => {
         isLarge: false,
       },
       {
-        label: "本次獎勵",
+        label: "本次獎金",
         value: reward !== null ? reward : "-",
         colSpan: 2,
         isLarge: true,

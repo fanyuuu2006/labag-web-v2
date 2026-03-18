@@ -171,7 +171,7 @@ export const PatternModalProvider = ({
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between px-1">
                     <span className="text-sm font-bold text-(--muted)">
-                      獎勵列表
+                      獎金倍率
                     </span>
                   </div>
 
@@ -186,7 +186,7 @@ export const PatternModalProvider = ({
                         </span>
                         <div className="flex items-baseline gap-1">
                           <GlowText className="text-lg sm:text-xl font-black tabular-nums">
-                            {item.reward}
+                            {item.multiplier}x
                           </GlowText>
                         </div>
                       </div>
