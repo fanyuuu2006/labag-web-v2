@@ -2,6 +2,8 @@
 import { site } from "@/libs/site";
 import Link from "next/link";
 import { GlowText } from "../GlowText";
+import { ShareAltOutlined } from "@ant-design/icons";
+import { ShareButton } from '../ShareButton';
 
 export const MainSection = () => {
   return (
@@ -20,18 +22,21 @@ export const MainSection = () => {
         <div className="flex gap-4 sm:gap-6 mt-6 justify-center items-center">
           <Link
             href={"/game"}
-            className="btn primary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
+            className="btn primary shrink-0 font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
           >
             開始遊戲
           </Link>
           <Link
             href={"/rankings"}
-            className="btn secondary font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
+            className="btn secondary shrink-0 font-bold px-8 py-4 text-xl sm:text-2xl rounded-full text-center"
           >
             排行榜
           </Link>
         </div>
       </div>
+      <ShareButton className="fixed bottom-4 left-4 z-50 text-3xl">
+        <ShareAltOutlined />
+      </ShareButton>
     </section>
   );
 };

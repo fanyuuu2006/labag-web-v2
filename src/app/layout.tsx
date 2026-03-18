@@ -8,8 +8,6 @@ import { PatternModalProvider } from "@/contexts/PatternModalContext";
 import { SettingButton } from "@/components/SettingButton";
 import { UserProvider } from "@/contexts/UserContext";
 import { UserModalProvider } from "@/contexts/UserModalContext";
-import { InstallPWAButton } from "@/components/InstallPWAButton";
-import { DownloadOutlined } from "@ant-design/icons";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -112,9 +110,6 @@ export default function RootLayout({
                     {children}
                   </main>
                   <SettingButton className="fixed bottom-4 right-4 z-49" />
-                  <InstallPWAButton className="btn flex items-center justify-center p-2 rounded-full fixed bottom-4 left-4 z-49">
-                    <DownloadOutlined className="text-xl" />
-                  </InstallPWAButton>
                 </PatternModalProvider>
               </SettingModalProvider>
             </UserModalProvider>
