@@ -15,6 +15,7 @@ export const ShareButton = ({
 
   const handleClick = useCallback(
     async (e: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(e);
       setLoading(true);
       try {
         const token = localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -63,7 +64,6 @@ export const ShareButton = ({
       } finally {
         setLoading(false);
       }
-      onClick?.(e);
     },
     [onClick],
   );

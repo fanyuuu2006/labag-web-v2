@@ -53,7 +53,7 @@ export const MainSection = () => {
         </ShareButton>
 
         {/* 提示氣泡 */}
-        {user && shareClicked && (
+        {user && !shareClicked && (
           <div className="left-full top-1/2 -translate-y-1/2 absolute z-11">
             <div className="bg-(--background) border-b border-l border-(--secondary) absolute z-10 -left-1 top-1/2 -translate-y-1/2 w-3 h-3 rotate-45" />
             <div className="bg-(--background) border border-(--secondary) px-3 py-2 rounded-full">
