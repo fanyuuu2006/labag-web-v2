@@ -1,7 +1,6 @@
 "use client";
 import { PatternsDiv } from "./PatternsDiv";
 import { MusicAudio } from "./MusicAudio";
-import { Selector } from "@/components/Selector";
 import { cn } from "@/utils/className";
 import { Pattern } from "labag";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -162,6 +161,18 @@ export const MainSection = () => {
     };
   }, [user?.id]);
 
+  const handlePrevBet = useCallback(() => {
+    const currentIndex = bets.indexOf(Bet);
+    const newIndex = (currentIndex - 1 + bets.length) % bets.length;
+    settBet(bets[newIndex]);
+  }, [bets, Bet]);
+
+  const handleNextBet = useCallback(() => {
+    const currentIndex = bets.indexOf(Bet);
+    const newIndex = (currentIndex + 1) % bets.length;
+    settBet(bets[newIndex]);
+  }, [bets, Bet]);
+
   const buttonDisabled = useMemo(() => {
     return (
       isSpinning ||
@@ -194,16 +205,32 @@ export const MainSection = () => {
               <span className={cn("font-bold text-(--muted)", "text-sm")}>
                 投注金額
               </span>
-              <Selector
-                id="bet-selector"
-                options={bets.map((b) => ({
-                  label: b.toString(),
-                  value: b.toString(),
-                }))}
-                value={Bet.toString()}
-                onChange={(e) => settBet(Number(e.target.value))}
-                className="bg-transparent border-none text-2xl font-bold text-center w-full appearance-none cursor-pointer text-(--primary) drop-shadow-[0_0_5px_var(--primary)] focus:bg-black/20"
-              />
+              <div className="flex items-center justify-between w-full gap-2">
+                <button
+                  onClick={handlePrevBet}
+                  className="p-1"
+                  disabled={bets.length <= 1}
+                >
+                  <GlowText className="text-xl">◀</GlowText>
+                </button>
+
+                <GlowText
+                  className={cn(
+                    "font-bold transition-all duration-300",
+                    "text-2xl font-black flex-1 text-center",
+                  )}
+                >
+                  {Bet}
+                </GlowText>
+
+                <button
+                  onClick={handleNextBet}
+                  className="p-1 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                  disabled={bets.length <= 1}
+                >
+                  <GlowText className="text-xl">▶</GlowText>
+                </button>
+              </div>
             </div>
             <div
               className={cn(
