@@ -24,8 +24,8 @@ export const ShareButton = ({ disabled, ...rest }: ShareButtonProps) => {
     try {
       const { data } = await createShare(token);
       if (data) {
-        const title = site.title;
-        const text = site.description;
+        const title = `快來試試手氣！🎰 ${site.title}`;
+        const text = `${site.description}\n看看你能轉出什麼大獎！🔥`;
         const url = `${window.location.origin}/share/${data.id}`;
 
         if (navigator.share) {
