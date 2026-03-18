@@ -23,10 +23,9 @@ export const ShareButton = ({ disabled, ...rest }: ShareButtonProps) => {
     setLoading(true);
     try {
       const { data } = await createShare(token);
-      if (data) {
-        const title = `快來試試手氣！🎰 ${site.title}`;
-        const text = `${site.description}\n看看你能轉出什麼大獎！🔥`;
-        const url = `${window.location.origin}/share/${data.id}`;
+        const url = data ? `${window.location.origin}/share/${data.id}` : site.url.toString();
+      const text = `${site.description}\n看看你能轉出什麼大獎！🔥`;
+      const title = `快來試試手氣！🎰 ${site.title}`;
 
         if (navigator.share) {
           try {
@@ -49,7 +48,6 @@ export const ShareButton = ({ disabled, ...rest }: ShareButtonProps) => {
             alert("複製失敗");
           }
         }
-      }
     } catch (error) {
       console.error("分享錯誤:", error);
       alert("分享失敗");
