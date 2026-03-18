@@ -41,13 +41,13 @@ export const MainSection = () => {
           <ShareAltOutlined />
         </ShareButton>
 
-        {/* Tooltip */}
+        {/* 提示氣泡 */}
         {user && (
           <div className="left-full top-1/2 -translate-y-1/2 absolute z-11">
-            <div className="card primary absolute z-10 -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rotate-45"></div>
-            <div className="relative card primary px-3 py-2 rounded-full">
+            <div className="bg-(--background) border-b border-l border-(--secondary) absolute z-10 -left-1 top-1/2 -translate-y-1/2 w-3 h-3 rotate-45"/>
+            <div className="bg-(--background) border border-(--secondary) px-3 py-2 rounded-full">
               <p className="text-xs font-bold text-white whitespace-nowrap flex items-center gap-1">
-                ✨ 分享連結被點擊可獲金幣 💰
+                分享連結被點擊可獲金幣 💰
               </p>
             </div>
           </div>
