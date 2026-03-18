@@ -10,7 +10,7 @@ import { useSetting } from "@/contexts/SettingContext";
 import { playAudio } from "@/utils/audio";
 import { GlowText } from "../GlowText";
 import { SupabaseStatsView } from "@/types/backend";
-
+import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 const REVEAL_DURATION = 500; // 每個 Pattern 揭示的時間間隔，單位為毫秒
 
 export const MainSection = () => {
@@ -204,11 +204,8 @@ export const MainSection = () => {
                 投注金額
               </span>
               <div className="flex items-center justify-between w-full gap-2">
-                <button
-                  onClick={handlePrevBet}
-                  disabled={bets.length <= 1}
-                >
-                  <GlowText className="text-xl">◀</GlowText>
+                <button onClick={handlePrevBet} disabled={bets.length <= 1}>
+                  <CaretLeftOutlined className="text-2xl" />
                 </button>
 
                 <GlowText
@@ -220,11 +217,8 @@ export const MainSection = () => {
                   {Bet}
                 </GlowText>
 
-                <button
-                  onClick={handleNextBet}
-                  disabled={bets.length <= 1}
-                >
-                  <GlowText className="text-xl">▶</GlowText>
+                <button onClick={handleNextBet} disabled={bets.length <= 1}>
+                  <CaretRightOutlined className="text-2xl" />
                 </button>
               </div>
             </div>
