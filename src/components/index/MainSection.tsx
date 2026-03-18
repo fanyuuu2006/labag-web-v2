@@ -46,7 +46,7 @@ export const MainSection = () => {
 
       <div className="fixed bottom-4 left-4 z-50 flex flex-col items-center">
         <ShareButton
-          className="relative text-4xl p-3"
+          className="relative text-3xl p-3"
           onClick={handleShareClick}
         >
           <ShareAltOutlined />
