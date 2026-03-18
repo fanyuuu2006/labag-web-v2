@@ -14,15 +14,15 @@ export const ShareButton = ({ disabled, ...rest }: ShareButtonProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleClick = useCallback(async () => {
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (!token) {
-      alert("請先登入");
-      return;
-    }
-
     setLoading(true);
     try {
-      const { data } = await createShare(token);
+      const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+      let data;
+      if (token) {
+        const response = await createShare(token);
+        data = response.data;
+      }
+
       const url = data
         ? new URL(`/share/${data.id}`, window.location.origin).toString()
         : site.url.toString();

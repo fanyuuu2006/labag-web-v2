@@ -10,8 +10,9 @@ export async function middleware(req: NextRequest) {
   if (id) {
     try {
       await shareClicked(id);
+      console.log("連結被點擊");
     } catch (error) {
-        console.error("處理分享錯誤:", error);
+      console.error("處理分享錯誤:", error);
     }
   }
 
