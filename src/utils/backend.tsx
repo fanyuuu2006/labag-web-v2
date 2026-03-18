@@ -5,6 +5,7 @@ import {
   SupabaseStatsView,
   SupabaseSpin,
   PatternWithPayouts,
+  SupabaseShare,
 } from "@/types/backend";
 import { fetcher } from "./fetcher";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
@@ -94,3 +95,11 @@ export const patternById = async (id: PatternWithPayouts["id"]) => {
     `${NEXT_PUBLIC_BACKEND_URL}/v1/game/patterns/${id}`,
   );
 };
+
+
+export const shareClicked = (id: SupabaseShare["id"]) => fetcher<BackendResponse<{ claimed: boolean }>>(
+  `${NEXT_PUBLIC_BACKEND_URL}/v1/shares/${id}`,
+  {
+    method: "GET",
+  },
+);

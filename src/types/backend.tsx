@@ -42,3 +42,10 @@ export type PatternWithPayouts = Pattern & {
   probability: number;
   payouts: Payout[];
 };
+
+export type SupabaseShare = {
+  id: string;
+  user_id: SupabaseUser["id"];
+  claim_at: string | null;
+  created_at: string;
+};
