@@ -7,7 +7,14 @@ export async function middleware(req: NextRequest) {
   const match = url.pathname.match(/\/share\/([^/]+)/);
   const id = match ? match[1] : null;
 
-  if (id) {
+  const ua = req.headers.get("user-agent") || "";
+
+  const isBot =
+    /bot|crawler|spider|preview|facebook|discord|line|telegram|twitter/i.test(
+      ua,
+    );
+
+  if (id && !isBot) {
     try {
       await shareClicked(id);
       console.log("連結被點擊");
