@@ -98,9 +98,9 @@ const Slot = memo(({
   const displayPattern = isSlotSpinning ? randomPattern : pattern;
 
   const handleClick = useCallback(() => {
-    if (isSpinning || !pattern) return;
+    if (!pattern) return;
     pm.open(pattern.id);
-  }, [isSpinning, pattern, pm]);
+  }, [pattern, pm]);
 
   return (
     <div
