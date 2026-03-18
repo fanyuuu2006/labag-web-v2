@@ -96,10 +96,21 @@ export const patternById = async (id: PatternWithPayouts["id"]) => {
   );
 };
 
+export const createShare = (token: string) =>
+  fetcher<BackendResponse<SupabaseShare>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/shares`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 
-export const shareClicked = (id: SupabaseShare["id"]) => fetcher<BackendResponse<{ claimed: boolean }>>(
-  `${NEXT_PUBLIC_BACKEND_URL}/v1/shares/${id}`,
-  {
-    method: "GET",
-  },
-);
+export const shareClicked = (id: SupabaseShare["id"]) =>
+  fetcher<BackendResponse<SupabaseShare>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/shares/${id}`,
+    {
+      method: "GET",
+    },
+  );
