@@ -1,7 +1,7 @@
 import { ALLOW_USER_FIELDS, SIGN_BY } from "@/libs/backend";
 import { Pattern, Payout } from "labag";
 
-export type SignBy = typeof SIGN_BY[number];
+export type SignBy = (typeof SIGN_BY)[number];
 
 export type BackendResponse<T> = {
   data: T | null;
@@ -27,8 +27,8 @@ export type SupabaseSpin = {
   bet: number;
   reward: number;
   reels: Pattern[];
+  mutiplier: number;
 };
-
 
 export type SupabaseStatsView = {
   user_id: SupabaseUser["id"];
@@ -36,7 +36,6 @@ export type SupabaseStatsView = {
   play_count: number;
   user_coins: number;
 };
-
 
 export type PatternWithPayouts = Pattern & {
   probability: number;
