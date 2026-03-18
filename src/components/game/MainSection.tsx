@@ -1,10 +1,11 @@
 "use client";
 import { PatternsDiv } from "./PatternsDiv";
 import { MusicAudio } from "./MusicAudio";
+import { Selector } from "@/components/Selector";
 import { cn } from "@/utils/className";
 import { Pattern } from "labag";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getDefaultBet, postSpins, statsById } from "@/utils/backend";
+import { getBets, postSpins, statsById } from "@/utils/backend";
 import { ACCESS_TOKEN_KEY, useUser } from "@/contexts/UserContext";
 import { useSetting } from "@/contexts/SettingContext";
 import { playAudio } from "@/utils/audio";
@@ -17,7 +18,8 @@ export const MainSection = () => {
   const { user } = useUser();
   const { settings } = useSetting();
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
-  const [defaultBet, setDefaultBet] = useState<number>(0);
+  const [bets, setBets] = useState<number[]>([]);
+  const [Bet, settBet] = useState<number>(0);
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
     null,
@@ -48,7 +50,7 @@ export const MainSection = () => {
       return;
     }
 
-    if (userStats && userStats.user_coins < defaultBet) {
+    if (userStats && userStats.user_coins < Bet) {
       alert("持有金額不足，無法轉動");
       return;
     }
@@ -62,7 +64,7 @@ export const MainSection = () => {
     timeoutRefs.current = [];
 
     try {
-      const response = await postSpins(token);
+      const response = await postSpins(token, Bet);
       if (!response.data) {
         throw new Error(response.message || "轉動失敗，請稍後再試");
       }
@@ -120,16 +122,22 @@ export const MainSection = () => {
         setIsSpinning(false);
       }
     }
-  }, [defaultBet, settings.sound, isSpinning, user, userStats]);
+  }, [isSpinning, userStats, Bet, settings.sound, user]);
 
   useEffect(() => {
     let active = true;
-    getDefaultBet()
+    getBets()
       .then((response) => {
-        if (active && response.data) {
-          setDefaultBet(response.data);
+        if (
+          active &&
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length > 0
+        ) {
+          setBets(response.data);
+          settBet(response.data[0]);
         } else if (active) {
-          console.warn("無法取得預設投注金額");
+          console.warn("無法取得預設投注金額列表");
         }
       })
       .catch((error) => {
@@ -157,34 +165,11 @@ export const MainSection = () => {
   const buttonDisabled = useMemo(() => {
     return (
       isSpinning ||
-      (!!user &&
-        (defaultBet === 0 || !userStats || userStats.user_coins < defaultBet))
+      (!!user && (Bet === 0 || !userStats || userStats.user_coins < Bet))
     );
-  }, [isSpinning, user, defaultBet, userStats]);
+  }, [isSpinning, user, Bet, userStats]);
 
-  const displayStats = useMemo(
-    () => [
-      {
-        label: "投注金額",
-        value: defaultBet,
-        colSpan: 1,
-        isLarge: false,
-      },
-      {
-        label: "持有金額",
-        value: userStats?.user_coins ?? 0,
-        colSpan: 1,
-        isLarge: false,
-      },
-      {
-        label: "本次獎金",
-        value: reward !== null ? reward : "-",
-        colSpan: 2,
-        isLarge: true,
-      },
-    ],
-    [defaultBet, userStats, reward],
-  );
+
 
   return (
     <section className="h-full">
@@ -199,33 +184,65 @@ export const MainSection = () => {
         <aside className="flex flex-col justify-center items-center gap-8 w-full">
           {/* 資訊顯示區 */}
           <div className="w-full grid grid-cols-2 gap-4">
-            {displayStats.map((stat, index) => (
-              <div
-                key={index}
+            <div
+              className={cn(
+                "card secondary flex flex-col items-center justify-center transition-all",
+                "p-4 gap-2",
+                "col-span-1",
+              )}
+            >
+              <span className={cn("font-bold text-(--muted)", "text-sm")}>
+                投注金額
+              </span>
+              <Selector
+                id="bet-selector"
+                options={bets.map((b) => ({
+                  label: b.toString(),
+                  value: b.toString(),
+                }))}
+                value={Bet.toString()}
+                onChange={(e) => settBet(Number(e.target.value))}
+                className="bg-transparent border-none text-2xl font-bold text-center w-full appearance-none cursor-pointer text-(--primary) drop-shadow-[0_0_5px_var(--primary)] focus:bg-black/20"
+              />
+            </div>
+            <div
+              className={cn(
+                "card secondary flex flex-col items-center justify-center transition-all",
+                "p-4 gap-2",
+                "col-span-1",
+              )}
+            >
+              <span className={cn("font-bold text-(--muted)", "text-sm")}>
+                持有金額
+              </span>
+              <GlowText
                 className={cn(
-                  "card secondary flex flex-col items-center justify-center transition-all",
-                  stat.isLarge ? "p-6 gap-4" : "p-4 gap-2",
-                  stat.colSpan === 2 ? "col-span-2" : "col-span-1",
+                  "font-bold transition-all duration-300",
+                  "text-2xl",
                 )}
               >
-                <span
-                  className={cn(
-                    "font-bold text-(--muted)",
-                    stat.isLarge ? "text-base" : "text-sm",
-                  )}
-                >
-                  {stat.label}
-                </span>
-                <GlowText
-                  className={cn(
-                    "font-bold transition-all duration-300",
-                    stat.isLarge ? "text-5xl font-black" : "text-2xl",
-                  )}
-                >
-                  {stat.value}
-                </GlowText>
-              </div>
-            ))}
+                {userStats?.user_coins ?? 0}
+              </GlowText>
+            </div>
+            <div
+              className={cn(
+                "card secondary flex flex-col items-center justify-center transition-all",
+                "p-6 gap-4",
+                "col-span-2",
+              )}
+            >
+              <span className={cn("font-bold text-(--muted)", "text-base")}>
+                本次獎金
+              </span>
+              <GlowText
+                className={cn(
+                  "font-bold transition-all duration-300",
+                  "text-5xl font-black",
+                )}
+              >
+                {reward !== null ? reward : "-"}
+              </GlowText>
+            </div>
           </div>
 
           {/* 轉動按鈕 */}

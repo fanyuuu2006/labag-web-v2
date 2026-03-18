@@ -25,20 +25,22 @@ export const userById = (id: SupabaseUser["id"]) =>
     `${NEXT_PUBLIC_BACKEND_URL}/v1/users/${id}`,
   );
 
-export const postSpins = (token: string) =>
+export const postSpins = (token: string, bet: number) =>
   fetcher<BackendResponse<SupabaseSpin>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins`,
     {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ bet }),
     },
   );
 
-export const getDefaultBet = () => {
-  return fetcher<BackendResponse<number>>(
-    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins/default-bet`,
+export const getBets = () => {
+  return fetcher<BackendResponse<number[]>>(
+    `${NEXT_PUBLIC_BACKEND_URL}/v1/game/spins/bets`,
   );
 };
 

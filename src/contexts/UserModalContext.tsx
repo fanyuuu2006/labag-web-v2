@@ -264,7 +264,7 @@ export const UserModalProvider = ({
                         </div>
                       ))
                     ) : (
-                      <div className="card primary flex flex-col items-center justify-center py-12 h-full">
+                      <div className="card primary rounded-2xl flex flex-col items-center justify-center py-12 h-full">
                         <p>尚無紀錄</p>
                       </div>
                     )}
