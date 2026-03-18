@@ -237,7 +237,7 @@ export const UserModalProvider = ({
                       orderedSpins.map((spin) => (
                         <div
                           key={spin.id}
-                          className="card primary group relative flex items-center justify-between p-3 md:p-4"
+                          className="card primary rounded-2xl group relative flex items-center justify-between p-3 md:p-4"
                         >
                           <div className="flex flex-col gap-0.5">
                             <FormatDate

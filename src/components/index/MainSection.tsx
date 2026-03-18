@@ -3,9 +3,11 @@ import { site } from "@/libs/site";
 import Link from "next/link";
 import { GlowText } from "../GlowText";
 import { ShareAltOutlined } from "@ant-design/icons";
-import { ShareButton } from '../ShareButton';
+import { ShareButton } from "../ShareButton";
+import { useUser } from "@/contexts/UserContext";
 
 export const MainSection = () => {
+  const { user } = useUser();
   return (
     <section className="h-full">
       <div className="container h-full px-4 flex flex-col items-center justify-center text-center gap-4">
@@ -34,9 +36,23 @@ export const MainSection = () => {
           </Link>
         </div>
       </div>
-      <ShareButton className="fixed bottom-4 left-4 z-50 text-3xl">
-        <ShareAltOutlined />
-      </ShareButton>
+      <div className="fixed bottom-4 left-4 z-50 flex flex-col items-center">
+        <ShareButton className="relative text-4xl p-3">
+          <ShareAltOutlined />
+        </ShareButton>
+
+        {/* Tooltip */}
+        {user && (
+          <div className="left-full top-1/2 -translate-y-1/2 absolute z-11">
+            <div className="card primary absolute z-10 -left-1 top-1/2 -translate-y-1/2 w-2 h-2 rotate-45"></div>
+            <div className="relative card primary px-3 py-2 rounded-full">
+              <p className="text-xs font-bold text-white whitespace-nowrap flex items-center gap-1">
+                ✨ 分享連結被點擊可獲金幣 💰
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };
