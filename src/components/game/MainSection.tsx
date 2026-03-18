@@ -180,8 +180,6 @@ export const MainSection = () => {
     );
   }, [isSpinning, user, Bet, userStats]);
 
-
-
   return (
     <section className="h-full">
       <div className="container h-full grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -208,7 +206,6 @@ export const MainSection = () => {
               <div className="flex items-center justify-between w-full gap-2">
                 <button
                   onClick={handlePrevBet}
-                  className="p-1"
                   disabled={bets.length <= 1}
                 >
                   <GlowText className="text-xl">◀</GlowText>
@@ -225,7 +222,6 @@ export const MainSection = () => {
 
                 <button
                   onClick={handleNextBet}
-                  className="p-1 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
                   disabled={bets.length <= 1}
                 >
                   <GlowText className="text-xl">▶</GlowText>
