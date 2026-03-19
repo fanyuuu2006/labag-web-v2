@@ -30,7 +30,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
   const pm = usePatternModal();
   return (
     <div
-      className="card primary rounded-2xl flex items-center justify-between py-3 px-6"
+      className="card primary rounded-2xl flex items-center justify-between py-3 px-4"
       {...rest}
     >
       <div className="flex flex-col gap-2">
@@ -56,7 +56,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
             ].map((item) => (
               <div
                 key={item.label}
-                className="card primary px-2 py-0.5 rounded-full text-sm font-semibold flex items-center gap-2"
+                className="card primary px-2 py-0.5 rounded-full text-sm font-semibold flex items-center gap-1 shrink-0"
               >
                 <span className="text-xs text-(--muted)">
                   {item.label}
@@ -73,7 +73,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
       </div>
 
       <div className="flex flex-col items-end justify-center gap-2">
-        <div className="flex items-baseline gap-1.5">
+        <div className="flex items-baseline gap-1.5 shrink-0">
           <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight">
             {spin.reward.toLocaleString()}
           </GlowText>
@@ -85,7 +85,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
               <button
                 key={i}
                 aria-label={`查看圖示 ${p?.id ?? i}`}
-                className="card secondary rounded-lg w-[1.5em] h-[1.5em] flex items-center justify-center overflow-hidden"
+                className="card secondary rounded-lg w-[1.5em] h-[1.5em] flex items-center justify-center overflow-hidden shrink-0"
                 onClick={() => pm.open(p.id)}
               >
                 {p?.image ? (
