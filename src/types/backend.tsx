@@ -27,7 +27,7 @@ export type SupabaseSpin = {
   bet: number;
   reward: number;
   reels: Pattern[];
-  mutiplier: number;
+  multiplier: number;
 };
 
 export type SupabaseStatsView = {

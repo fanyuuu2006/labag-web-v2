@@ -16,6 +16,7 @@ import { spinsByUserId, statsById, userById } from "@/utils/backend";
 import { CloseOutlined } from "@ant-design/icons";
 import { statsData } from "@/libs/rankings";
 import { FormatDate } from "@/components/FormatDate";
+import { usePatternModal } from "./PatternModalContext";
 
 const SPINS_COUNT = 30;
 
@@ -26,9 +27,10 @@ type SpinCardProps = OverrideProps<
   }
 >;
 const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
+  const pm = usePatternModal();
   return (
     <div
-      className="card primary rounded-2xl relative flex items-center justify-between p-3 md:p-4"
+      className="card primary rounded-2xl relative flex items-center justify-between p-3"
       {...rest}
     >
       <div className="flex flex-col gap-0.5">
@@ -39,16 +41,47 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
         >
           YYYY/MM/DD HH:mm
         </FormatDate>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-[10px] md:text-xs text-(--muted)">
+            下注: {spin.bet.toLocaleString()}
+          </span>
+          <span className="text-[10px] md:text-xs text-(--muted)">
+            獎金倍數: {spin.multiplier}x
+          </span>
+        </div>
         <span className="text-[10px] md:text-xs text-(--muted) font-mono">
           ID: {spin.id}
         </span>
       </div>
-      <div className="flex flex-col items-end justify-center">
+      <div className="flex flex-col items-end justify-center gap-2">
         <div className="flex items-baseline gap-1.5">
           <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight">
             {spin.reward.toLocaleString()}
           </GlowText>
         </div>
+        {Array.isArray(spin.reels) && spin.reels.length > 0 && (
+          <div className="text-4xl flex items-center gap-2">
+            {spin.reels.map((p, i: number) => (
+              <button
+                key={i}
+                className="card secondary rounded-lg w-[1em] h-[1em] flex items-center justify-center overflow-hidden"
+                onClick={() => pm.open(p.id)}
+              >
+                {p?.image ? (
+                  <MyImage
+                    src={p.image}
+                    alt={p.id || `reel-${i}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-xs text-(--muted) flex items-center justify-center h-full">
+                    {p?.id ?? "?"}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

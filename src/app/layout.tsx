@@ -102,17 +102,17 @@ export default function RootLayout({
       <SettingProvider>
         <UserProvider>
           <Body className="flex min-h-screen flex-col">
-            <UserModalProvider>
-              <SettingModalProvider>
-                <PatternModalProvider>
+            <PatternModalProvider>
+              <UserModalProvider>
+                <SettingModalProvider>
                   <Header className="sticky top-0 z-50" />
                   <main className="h-full w-full overflow-y-auto">
                     {children}
                   </main>
                   <SettingButton className="fixed bottom-4 right-4 z-49" />
-                </PatternModalProvider>
-              </SettingModalProvider>
-            </UserModalProvider>
+                </SettingModalProvider>
+              </UserModalProvider>
+            </PatternModalProvider>
           </Body>
         </UserProvider>
       </SettingProvider>
