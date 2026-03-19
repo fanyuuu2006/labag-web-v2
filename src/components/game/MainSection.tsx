@@ -134,9 +134,7 @@ export const MainSection = () => {
           response.data.length > 0
         ) {
           setBets(response.data);
-          // 預設投注金額為列表中的第中間項
-          const defaultBetIdx = Math.floor(response.data.length / 2);
-          settBet(response.data[defaultBetIdx]);
+          settBet(response.data[0]);
         } else if (active) {
           console.warn("無法取得預設投注金額列表");
         }

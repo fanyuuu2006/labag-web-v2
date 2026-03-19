@@ -216,7 +216,7 @@ export const UserModalProvider = ({
                   ))}
                 </div>
 
-                {/* Records List */}
+                {/* 紀錄列表 */}
                 <div className="flex flex-col gap-3 min-h-0 flex-1">
                   <div className="text-base md:text-lg flex items-center justify-between px-1 border-b border-white/10 pb-2">
                     <h3 className="font-bold flex items-center gap-2 text-white/90">
@@ -256,9 +256,6 @@ export const UserModalProvider = ({
                               <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight drop-shadow-lg">
                                 {spin.reward.toLocaleString()}
                               </GlowText>
-                              <span className="text-xs font-medium text-(--muted) mb-1">
-                                分
-                              </span>
                             </div>
                           </div>
                         </div>
