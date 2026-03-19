@@ -30,14 +30,14 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
   const pm = usePatternModal();
   return (
     <div
-      className="card primary rounded-2xl relative flex items-center justify-between p-3"
+      className="card primary rounded-2xl flex items-center justify-between p-3"
       {...rest}
     >
       <div className="flex flex-col gap-0.5">
         <FormatDate
           title={true}
           date={[spin.created_at]}
-          className="text-sm md:text-base font-bold text-white/90 tracking-wide"
+          className="text-sm md:text-base font-bold tracking-wide"
         >
           YYYY/MM/DD HH:mm
         </FormatDate>
