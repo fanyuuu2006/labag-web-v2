@@ -30,41 +30,62 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
   const pm = usePatternModal();
   return (
     <div
-      className="card primary rounded-2xl flex items-center justify-between p-3"
+      className="card primary rounded-2xl flex items-center justify-between py-3 px-6"
       {...rest}
     >
-      <div className="flex flex-col gap-0.5">
+      <div className="flex flex-col gap-2">
         <FormatDate
           title={true}
           date={[spin.created_at]}
-          className="text-sm md:text-base font-bold tracking-wide"
+          className="text-sm font-bold tracking-wide"
         >
           YYYY/MM/DD HH:mm
         </FormatDate>
-        <div className="flex items-center gap-2 mt-1">
-          <span className="text-[10px] md:text-xs text-(--muted)">
-            下注: {spin.bet.toLocaleString()}
-          </span>
-          <span className="text-[10px] md:text-xs text-(--muted)">
-            獎金倍數: {spin.multiplier}x
-          </span>
+
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            {[
+              {
+                label: "下注",
+                value: spin.bet.toLocaleString(),
+              },
+              {
+                label: "倍率",
+                value: `${spin.multiplier}x`,
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="card primary px-2 py-0.5 rounded-full text-sm font-semibold flex items-center gap-2"
+              >
+                <span className="text-xs text-(--muted)">
+                  {item.label}
+                </span>
+                <GlowText className="font-mono text-sm">{item.value}</GlowText>
+              </div>
+            ))}
+          </div>
         </div>
-        <span className="text-[10px] md:text-xs text-(--muted) font-mono">
+
+        <span className="text-xs text-(--muted) font-mono">
           ID: {spin.id}
         </span>
       </div>
+
       <div className="flex flex-col items-end justify-center gap-2">
         <div className="flex items-baseline gap-1.5">
           <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight">
             {spin.reward.toLocaleString()}
           </GlowText>
         </div>
+
         {Array.isArray(spin.reels) && spin.reels.length > 0 && (
-          <div className="text-4xl flex items-center gap-2">
+          <div className="flex items-center gap-2 text-2xl md:text-3xl">
             {spin.reels.map((p, i: number) => (
               <button
                 key={i}
-                className="card secondary rounded-lg w-[1em] h-[1em] flex items-center justify-center overflow-hidden"
+                aria-label={`查看圖示 ${p?.id ?? i}`}
+                className="card secondary rounded-lg w-[1.5em] h-[1.5em] flex items-center justify-center overflow-hidden"
                 onClick={() => pm.open(p.id)}
               >
                 {p?.image ? (
