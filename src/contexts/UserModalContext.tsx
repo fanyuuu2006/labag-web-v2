@@ -19,6 +19,41 @@ import { FormatDate } from "@/components/FormatDate";
 
 const SPINS_COUNT = 30;
 
+type SpinCardProps = OverrideProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  {
+    spin: SupabaseSpin;
+  }
+>;
+const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
+  return (
+    <div
+      className="card primary rounded-2xl relative flex items-center justify-between p-3 md:p-4"
+      {...rest}
+    >
+      <div className="flex flex-col gap-0.5">
+        <FormatDate
+          title={true}
+          date={[spin.created_at]}
+          className="text-sm md:text-base font-bold text-white/90 tracking-wide"
+        >
+          YYYY/MM/DD HH:mm
+        </FormatDate>
+        <span className="text-[10px] md:text-xs text-(--muted) font-mono">
+          ID: {spin.id}
+        </span>
+      </div>
+      <div className="flex flex-col items-end justify-center">
+        <div className="flex items-baseline gap-1.5">
+          <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight">
+            {spin.reward.toLocaleString()}
+          </GlowText>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 type UserModalContextType = OverrideProps<
   ReturnType<typeof useModal>,
   {
@@ -235,30 +270,7 @@ export const UserModalProvider = ({
                   >
                     {orderedSpins.length > 0 ? (
                       orderedSpins.map((spin) => (
-                        <div
-                          key={spin.id}
-                          className="card primary rounded-2xl group relative flex items-center justify-between p-3 md:p-4"
-                        >
-                          <div className="flex flex-col gap-0.5">
-                            <FormatDate
-                              title={true}
-                              date={[spin.created_at]}
-                              className="text-sm md:text-base font-bold text-white/90 tracking-wide"
-                            >
-                              YYYY/MM/DD HH:mm
-                            </FormatDate>
-                            <span className="text-[10px] md:text-xs text-(--muted) font-mono">
-                              ID: {spin.id}
-                            </span>
-                          </div>
-                          <div className="flex flex-col items-end justify-center">
-                            <div className="flex items-baseline gap-1.5">
-                              <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight drop-shadow-lg">
-                                {spin.reward.toLocaleString()}
-                              </GlowText>
-                            </div>
-                          </div>
-                        </div>
+                        <SpinCard key={spin.id} spin={spin} />
                       ))
                     ) : (
                       <div className="card primary rounded-2xl flex flex-col items-center justify-center py-12 h-full">
