@@ -37,7 +37,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
         <FormatDate
           title={true}
           date={[spin.created_at]}
-          className="text-sm font-bold tracking-wide truncate"
+          className="text-sm font-bold tracking-wide shrink-0"
         >
           YYYY/MM/DD HH:mm
         </FormatDate>
@@ -72,15 +72,15 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
         </span>
       </div>
 
-      <div className="flex items-center justify-end gap-3 w-auto shrink-0">
-        <div className="flex items-baseline gap-1 shrink-0">
-          <GlowText className="text-lg md:text-xl font-black tabular-nums tracking-tight">
+      <div className="flex flex-col items-end gap-2">
+        <div className="flex items-baseline justify-end gap-1 shrink-0">
+          <GlowText className="text-lg md:text-2xl font-black tabular-nums tracking-tight w-full text-right sm:text-right">
             {spin.reward.toLocaleString()}
           </GlowText>
         </div>
 
         {Array.isArray(spin.reels) && spin.reels.length > 0 && (
-          <div className="flex items-center gap-1 text-xl md:text-2xl shrink-0">
+          <div className="flex items-center gap-2 text-2xl md:text-3xl">
             {spin.reels.map((p, i: number) => (
               <button
                 key={i}
