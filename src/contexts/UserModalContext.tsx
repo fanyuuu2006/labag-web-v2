@@ -30,20 +30,20 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
   const pm = usePatternModal();
   return (
     <div
-      className="card primary rounded-2xl flex items-center justify-between py-3 px-4"
+      className="card primary rounded-2xl flex items-center justify-between gap-3 py-2 px-3"
       {...rest}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 min-w-0 flex-1">
         <FormatDate
           title={true}
           date={[spin.created_at]}
-          className="text-sm font-bold tracking-wide"
+          className="text-sm font-bold tracking-wide truncate"
         >
           YYYY/MM/DD HH:mm
         </FormatDate>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1">
             {[
               {
                 label: "下注",
@@ -58,7 +58,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
                 key={item.label}
                 className="card primary px-2 py-0.5 rounded-full text-sm font-semibold flex items-center gap-1 shrink-0"
               >
-                <span className="text-xs text-(--muted)">
+                <span className="text-[0.65rem] text-(--muted)">
                   {item.label}
                 </span>
                 <GlowText className="font-mono text-sm">{item.value}</GlowText>
@@ -72,15 +72,15 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
         </span>
       </div>
 
-      <div className="flex flex-col items-end justify-center gap-2">
-        <div className="flex items-baseline gap-1.5 shrink-0">
-          <GlowText className="text-xl md:text-2xl font-black tabular-nums tracking-tight">
+      <div className="flex items-center justify-end gap-3 w-auto shrink-0">
+        <div className="flex items-baseline gap-1 shrink-0">
+          <GlowText className="text-lg md:text-xl font-black tabular-nums tracking-tight">
             {spin.reward.toLocaleString()}
           </GlowText>
         </div>
 
         {Array.isArray(spin.reels) && spin.reels.length > 0 && (
-          <div className="flex items-center gap-2 text-2xl md:text-3xl">
+          <div className="flex items-center gap-1 text-xl md:text-2xl shrink-0">
             {spin.reels.map((p, i: number) => (
               <button
                 key={i}
@@ -95,7 +95,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <span className="text-xs text-(--muted) flex items-center justify-center h-full">
+                  <span className="text-xs md:text-sm text-(--muted) flex items-center justify-center h-full">
                     {p?.id ?? "?"}
                   </span>
                 )}
