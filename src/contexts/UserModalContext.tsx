@@ -78,7 +78,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
               <button
                 key={i}
                 aria-label={`查看圖示 ${p?.id ?? i}`}
-                className="card rounded-md aspect-square h-[2em] flex items-center justify-center overflow-hidden shrink-0"
+                className="card rounded-md aspect-square h-[1.5em] flex items-center justify-center overflow-hidden shrink-0"
                 onClick={() => pm.open(p.id)}
               >
                 {p?.image ? (
