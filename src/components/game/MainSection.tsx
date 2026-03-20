@@ -252,21 +252,18 @@ export const MainSection = () => {
             <div
               className={cn(
                 "card secondary transition-all",
-                "p-4 md:p-6",
+                "p-5 md:p-6",
                 "col-span-2",
               )}
             >
-              <div className="w-full flex items-center gap-6">
+              <div className="w-full flex items-center gap-4">
                 <div className="flex-1">
                   <span className="text-xs text-(--muted)">本次獎金</span>
-                  <div className="mt-2 flex items-baseline gap-4">
+                  <div className="mt-2 flex items-baseline gap-3">
                     <GlowText
                       className={cn(
                         "font-black transition-all duration-300 tabular-nums",
                         "text-4xl md:text-5xl",
-                        reward && reward > 0
-                          ? "text-(--primary)"
-                          : "text-(--muted)",
                       )}
                     >
                       {reward !== null ? reward : "-"}
@@ -274,16 +271,26 @@ export const MainSection = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col items-end pl-6 border-l border-white/5">
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs text-(--muted)">倍率</span>
-                    <div className="px-3 py-1 rounded-full bg-black/20 text-(--primary) font-bold text-sm flex items-center justify-center">
-                      <GlowText className="text-sm tabular-nums">
-                        {multiplier !== null ? `${multiplier}x` : "-"}
-                      </GlowText>
+                <div className="flex flex-col gap-1 justify-center">
+                  {[
+                    {
+                      label: "倍率",
+                      value: multiplier !== null ? `${multiplier}x` : "-",
+                    },
+                    { label: "投注", value: Bet },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-1">
+                      <span className="text-xs text-(--muted)">
+                        {item.label}:
+                      </span>
+
+                      <div className="rounded-full bg-black/20 text-(--primary) font-bold text-sm flex items-center justify-center">
+                        <GlowText className="text-sm tabular-nums">
+                          {item.value}
+                        </GlowText>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-xs text-(--muted) mt-2">投注：{Bet}</div>
+                  ))}
                 </div>
               </div>
             </div>
