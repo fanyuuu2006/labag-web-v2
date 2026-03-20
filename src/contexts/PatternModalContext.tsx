@@ -138,8 +138,12 @@ export const PatternModalProvider = ({
                 {/**機率進度條 */}
                 <div className="p-2 flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-bold text-(--muted)">當前出現機率</span>
-                    <GlowText className="text-base md:text-lg font-bold">{displayProbability}%</GlowText>
+                    <span className="text-sm font-bold text-(--muted)">
+                      當前出現機率
+                    </span>
+                    <GlowText className="text-base md:text-lg font-bold">
+                      {displayProbability}%
+                    </GlowText>
                   </div>
 
                   <div
@@ -161,36 +165,35 @@ export const PatternModalProvider = ({
                 </div>
 
                 {/* Payouts */}
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between px-1">
-                    <span className="text-sm font-bold text-(--muted)">獎金倍率</span>
-                  </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-1 whitespace-nowrap px-1">
+                      <span className="text-sm font-bold text-(--muted)">
+                        獎金倍率
+                      </span>
+                      <span className="text-xs text-(--muted)">
+                        (每次獎金會隨機加入小幅變動，最終實際獎金金額以畫面為準)
+                      </span>
+                    </div>
 
-                  <div className="px-1">
-                    <p className="text-xs text-(--muted)">
-                      每次獎金會隨機加入小幅變動，最終實際獎金金額以畫面為準
-                    </p>
-                  </div>
+                    <div className="flex flex-col gap-2">
+                      {info.payouts.map((item, index) => (
+                        <div
+                          key={index}
+                          className="card primary rounded-2xl flex items-center justify-between px-4 py-3"
+                        >
+                          <div className="flex flex-col">
+                            <span className="text-sm sm:text-base font-medium">
+                              {item.match_count} 個相同
+                            </span>
+                          </div>
 
-                  <div className="grid gap-2">
-                    {info.payouts.map((item, index) => (
-                      <div
-                        key={index}
-                        className="card primary rounded-2xl flex items-center justify-between px-4 py-3"
-                      >
-                        <div className="flex flex-col">
-                          <span className="text-sm sm:text-base font-medium">
-                            {item.match_count} 個相同
-                          </span>
+                          <div className="flex items-baseline gap-2">
+                            <GlowText className="text-lg sm:text-2xl font-black tabular-nums">
+                              {item.multiplier}x
+                            </GlowText>
+                          </div>
                         </div>
-
-                        <div className="flex items-baseline gap-2">
-                          <GlowText className="text-lg sm:text-2xl font-black tabular-nums">
-                            {item.multiplier}x
-                          </GlowText>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
