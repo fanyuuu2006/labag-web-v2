@@ -17,6 +17,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { statsData } from "@/libs/rankings";
 import { FormatDate } from "@/components/FormatDate";
 import { usePatternModal } from "./PatternModalContext";
+import { intlFormatter } from "@/utils/Intl";
 
 const SPINS_COUNT = 30;
 
@@ -50,7 +51,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
             },
             {
               label: "倍率",
-              value: `${spin.multiplier.toFixed(4)}x`,
+              value: `${intlFormatter.format(spin.multiplier)}x`,
             },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-1 shrink-0">

@@ -11,6 +11,7 @@ import { playAudio } from "@/utils/audio";
 import { GlowText } from "../GlowText";
 import { SupabaseStatsView } from "@/types/backend";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
+import { intlFormatter } from "@/utils/Intl";
 const REVEAL_DURATION = 500; // 每個 Pattern 揭示的時間間隔，單位為毫秒
 
 export const MainSection = () => {
@@ -270,10 +271,9 @@ export const MainSection = () => {
                   {[
                     {
                       label: "倍率",
-                      value:
-                        currSpin && currSpin?.multiplier !== null
-                          ? `${currSpin.multiplier.toFixed(4)}x`
-                          : "-",
+                      value: currSpin
+                        ? `${intlFormatter.format(currSpin.multiplier)}x`
+                        : "-",
                     },
                     { label: "投注", value: currSpin ? currSpin.bet : "-" },
                   ].map((item, i) => (
