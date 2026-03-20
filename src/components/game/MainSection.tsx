@@ -19,14 +19,15 @@ export const MainSection = () => {
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [bets, setBets] = useState<number[]>([]);
   const [Bet, settBet] = useState<number>(0);
+  const [currSpin, setCurrSpin] = useState<
+    Awaited<ReturnType<typeof postSpins>>["data"] | null
+  >(null);
+  const [userStats, setUserStats] = useState<SupabaseStatsView | null>(null);
   const [patterns, setPatterns] = useState<(Pattern | null)[]>([
     null,
     null,
     null,
   ]);
-  const [reward, setReward] = useState<number | null>(null);
-  const [userStats, setUserStats] = useState<SupabaseStatsView | null>(null);
-  const [multiplier, setMultiplier] = useState<number | null>(null);
 
   // 用於追蹤組件掛載狀態與清除計時器
   const isMounted = useRef(true);
@@ -56,9 +57,7 @@ export const MainSection = () => {
     }
 
     setIsSpinning(true);
-    setPatterns([null, null, null]);
-    setReward(null);
-    setMultiplier(null);
+    setCurrSpin(null);
 
     // 清除舊的計時器
     timeoutRefs.current.forEach(clearTimeout);
@@ -70,11 +69,7 @@ export const MainSection = () => {
         throw new Error(response.message || "轉動失敗，請稍後再試");
       }
 
-      const {
-        reels,
-        reward: newReward,
-        multiplier: newMultiplier,
-      } = response.data;
+      const { reels } = response.data;
 
       // 設置每個捲軸的動畫
       reels.forEach((pattern, index) => {
@@ -102,7 +97,6 @@ export const MainSection = () => {
       const rewardTimer = setTimeout(() => {
         if (!isMounted.current) return;
 
-        setReward(newReward);
         if (user?.id) {
           statsById(user.id).then((res) => {
             if (isMounted.current && res.data) {
@@ -110,7 +104,7 @@ export const MainSection = () => {
             }
           });
         }
-        setMultiplier(newMultiplier);
+        setCurrSpin(response.data);
       }, 3000);
       timeoutRefs.current.push(rewardTimer);
 
@@ -266,7 +260,9 @@ export const MainSection = () => {
                         "text-4xl md:text-5xl",
                       )}
                     >
-                      {reward !== null ? reward : "-"}
+                      {currSpin && currSpin?.reward !== null
+                        ? currSpin.reward
+                        : "-"}
                     </GlowText>
                   </div>
                 </div>
@@ -275,7 +271,10 @@ export const MainSection = () => {
                   {[
                     {
                       label: "倍率",
-                      value: multiplier !== null ? `${multiplier}x` : "-",
+                      value:
+                        currSpin && currSpin?.multiplier !== null
+                          ? `${currSpin.multiplier}x`
+                          : "-",
                     },
                     { label: "投注", value: Bet },
                   ].map((item, i) => (
