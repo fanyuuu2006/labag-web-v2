@@ -26,6 +26,7 @@ export const MainSection = () => {
   ]);
   const [reward, setReward] = useState<number | null>(null);
   const [userStats, setUserStats] = useState<SupabaseStatsView | null>(null);
+  const [multiplier, setMultiplier] = useState<number | null>(null);
 
   // 用於追蹤組件掛載狀態與清除計時器
   const isMounted = useRef(true);
@@ -57,6 +58,7 @@ export const MainSection = () => {
     setIsSpinning(true);
     setPatterns([null, null, null]);
     setReward(null);
+    setMultiplier(null);
 
     // 清除舊的計時器
     timeoutRefs.current.forEach(clearTimeout);
@@ -68,7 +70,11 @@ export const MainSection = () => {
         throw new Error(response.message || "轉動失敗，請稍後再試");
       }
 
-      const { reels, reward: newReward } = response.data;
+      const {
+        reels,
+        reward: newReward,
+        multiplier: newMultiplier,
+      } = response.data;
 
       // 設置每個捲軸的動畫
       reels.forEach((pattern, index) => {
@@ -104,6 +110,7 @@ export const MainSection = () => {
             }
           });
         }
+        setMultiplier(newMultiplier);
       }, 3000);
       timeoutRefs.current.push(rewardTimer);
 
@@ -241,24 +248,44 @@ export const MainSection = () => {
                 {userStats?.user_coins ?? 0}
               </GlowText>
             </div>
+            {/** 獎金顯示區 */}
             <div
               className={cn(
-                "card secondary flex flex-col items-center justify-center transition-all",
-                "p-6 gap-4",
+                "card secondary transition-all",
+                "p-4 md:p-6",
                 "col-span-2",
               )}
             >
-              <span className={cn("font-bold text-(--muted)", "text-base")}>
-                本次獎金
-              </span>
-              <GlowText
-                className={cn(
-                  "font-bold transition-all duration-300",
-                  "text-5xl font-black",
-                )}
-              >
-                {reward !== null ? reward : "-"}
-              </GlowText>
+              <div className="w-full flex items-center gap-6">
+                <div className="flex-1">
+                  <span className="text-xs text-(--muted)">本次獎金</span>
+                  <div className="mt-2 flex items-baseline gap-4">
+                    <GlowText
+                      className={cn(
+                        "font-black transition-all duration-300 tabular-nums",
+                        "text-4xl md:text-5xl",
+                        reward && reward > 0
+                          ? "text-(--primary)"
+                          : "text-(--muted)",
+                      )}
+                    >
+                      {reward !== null ? reward : "-"}
+                    </GlowText>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-end pl-6 border-l border-white/5">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-(--muted)">倍率</span>
+                    <div className="px-3 py-1 rounded-full bg-black/20 text-(--primary) font-bold text-sm flex items-center justify-center">
+                      <GlowText className="text-sm tabular-nums">
+                        {multiplier !== null ? `${multiplier}x` : "-"}
+                      </GlowText>
+                    </div>
+                  </div>
+                  <div className="text-xs text-(--muted) mt-2">投注：{Bet}</div>
+                </div>
+              </div>
             </div>
           </div>
 
