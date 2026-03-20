@@ -57,6 +57,7 @@ export const MainSection = () => {
     }
 
     setIsSpinning(true);
+    setPatterns([null, null, null]);
     setCurrSpin(null);
 
     // 清除舊的計時器
