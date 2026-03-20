@@ -168,7 +168,7 @@ export const PatternModalProvider = ({
 
                   <div className="px-1">
                     <p className="text-xs text-(--muted)">
-                      每次獎金會基於倍率加入小幅隨機變動，最終實際獎金金額以畫面為準
+                      每次獎金會隨機加入小幅變動，最終實際獎金金額以畫面為準
                     </p>
                   </div>
 
