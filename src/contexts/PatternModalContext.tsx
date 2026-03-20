@@ -59,7 +59,7 @@ export const PatternModalProvider = ({
         className="bg-black/40 flex items-center justify-center p-4 z-50"
         aria-labelledby="pattern-modal-title"
       >
-        <div className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl card rounded-2xl p-4 md:p-6 flex flex-col gap-4 animate-pop max-h-[85vh] overflow-y-auto">
+        <div className="animate-pop card rounded-2xl w-full max-w-3xl flex flex-col gap-4 p-4 md:p-6 max-h-[85vh] overflow-y-auto">
           {/* Header */}
           <header className="flex items-center justify-between sticky top-0 z-10">
             <GlowText
@@ -120,18 +120,15 @@ export const PatternModalProvider = ({
           ) : (
             <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6">
               {/**左側 Image */}
-              <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
-                <div className="card primary w-full aspect-square rounded-xl overflow-hidden border-2 border-(--secondary)">
+              <div className="shrink-0 flex flex-col items-center gap-3 w-full sm:w-auto sm:pr-4">
+                <div className="relative aspect-square w-28 md:w-36 rounded-xl overflow-hidden border-2 border-(--secondary)">
                   <MyImage
                     src={info.image}
                     alt={info.id}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <GlowText
-                  as="h2"
-                  className="text-lg sm:text-2xl md:text-3xl font-black text-center capitalize"
-                >
+                <GlowText as="h3" className="text-base md:text-lg font-black">
                   ID: {info.id}
                 </GlowText>
               </div>
@@ -139,14 +136,10 @@ export const PatternModalProvider = ({
               {/**右側 Info */}
               <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
                 {/**機率進度條 */}
-                <div className="p-2 flex flex-col gap-1">
+                <div className="p-2 flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-bold text-(--muted)">
-                      當前出現機率
-                    </span>
-                    <GlowText className="text-base sm:text-lg font-bold">
-                      {displayProbability}%
-                    </GlowText>
+                    <span className="text-sm font-bold text-(--muted)">當前出現機率</span>
+                    <GlowText className="text-base md:text-lg font-bold">{displayProbability}%</GlowText>
                   </div>
 
                   <div
@@ -168,28 +161,31 @@ export const PatternModalProvider = ({
                 </div>
 
                 {/* Payouts */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between px-1">
-                    <span className="text-sm font-bold text-(--muted)">
-                      獎金倍率
-                    </span>
+                    <span className="text-sm font-bold text-(--muted)">獎金倍率</span>
                   </div>
 
-                  <p className="text-xs text-(--muted) px-1">
-                    每次獎金會基於倍率加入小幅隨機變動，最終實際獎金金額以畫面為準
-                  </p>
+                  <div className="px-1">
+                    <p className="text-xs text-(--muted)">
+                      每次獎金會基於倍率加入小幅隨機變動，最終實際獎金金額以畫面為準
+                    </p>
+                  </div>
 
                   <div className="grid gap-2">
                     {info.payouts.map((item, index) => (
                       <div
                         key={index}
-                        className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
+                        className="card primary rounded-2xl flex items-center justify-between px-4 py-3"
                       >
-                        <span className="text-sm sm:text-base font-medium">
-                          {item.match_count} 個相同
-                        </span>
-                        <div className="flex items-baseline gap-1">
-                          <GlowText className="text-lg sm:text-xl font-black tabular-nums">
+                        <div className="flex flex-col">
+                          <span className="text-sm sm:text-base font-medium">
+                            {item.match_count} 個相同
+                          </span>
+                        </div>
+
+                        <div className="flex items-baseline gap-2">
+                          <GlowText className="text-lg sm:text-2xl font-black tabular-nums">
                             {item.multiplier}x
                           </GlowText>
                         </div>
