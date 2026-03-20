@@ -50,7 +50,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
             },
             {
               label: "倍率",
-              value: `${spin.multiplier}x`,
+              value: `${spin.multiplier.toFixed(4)}x`,
             },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-1 shrink-0">

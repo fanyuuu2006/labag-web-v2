@@ -237,10 +237,10 @@ export const MainSection = () => {
               <GlowText
                 className={cn(
                   "font-bold transition-all duration-300",
-                  "text-2xl",
+                  "text-xl",
                 )}
               >
-                {userStats?.user_coins ?? 0}
+                {userStats?.user_coins.toLocaleString() ?? 0}
               </GlowText>
             </div>
             {/** 獎金顯示區 */}
@@ -272,7 +272,7 @@ export const MainSection = () => {
                       label: "倍率",
                       value:
                         currSpin && currSpin?.multiplier !== null
-                          ? `${currSpin.multiplier}x`
+                          ? `${currSpin.multiplier.toFixed(4)}x`
                           : "-",
                     },
                     { label: "投注", value: currSpin ? currSpin.bet : "-" },
