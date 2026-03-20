@@ -261,9 +261,7 @@ export const MainSection = () => {
                         "text-4xl md:text-5xl",
                       )}
                     >
-                      {currSpin && currSpin?.reward !== null
-                        ? currSpin.reward
-                        : "-"}
+                      {currSpin ? currSpin.reward : "-"}
                     </GlowText>
                   </div>
                 </div>
@@ -277,7 +275,7 @@ export const MainSection = () => {
                           ? `${currSpin.multiplier}x`
                           : "-",
                     },
-                    { label: "投注", value: Bet },
+                    { label: "投注", value: currSpin ? currSpin.bet : "-" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-1">
                       <span className="text-xs text-(--muted)">
