@@ -175,6 +175,10 @@ export const PatternModalProvider = ({
                     </span>
                   </div>
 
+                  <p className="text-xs text-(--muted) px-1">
+                    每次獎金會基於倍率加入小幅隨機變動，最終實際獎金金額以畫面為準
+                  </p>
+
                   <div className="grid gap-2">
                     {info.payouts.map((item, index) => (
                       <div
