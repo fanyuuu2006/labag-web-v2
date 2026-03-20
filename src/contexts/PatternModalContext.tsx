@@ -166,12 +166,12 @@ export const PatternModalProvider = ({
 
                 {/* Payouts */}
                 <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-1 whitespace-nowrap px-1">
+                  <div className="flex items-center flex-wrap gap-1 px-1">
                       <span className="text-sm font-bold text-(--muted)">
                         獎金倍率
                       </span>
                       <span className="text-xs text-(--muted)">
-                        (每次獎金會隨機加入小幅變動，最終實際獎金金額以畫面為準)
+                        (會隨機加入小幅變動，最終實際獎金金額以畫面為準)
                       </span>
                     </div>
 
