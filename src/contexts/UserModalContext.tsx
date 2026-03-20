@@ -42,34 +42,27 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
           YYYY/MM/DD HH:mm
         </FormatDate>
 
-        <div className="flex items-center gap-1">
-          <div className="flex items-center gap-1">
-            {[
-              {
-                label: "下注",
-                value: spin.bet.toLocaleString(),
-              },
-              {
-                label: "倍率",
-                value: `${spin.multiplier}x`,
-              },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="card primary px-2 py-0.5 rounded-full text-sm font-semibold flex items-center gap-1 shrink-0"
-              >
-                <span className="text-[0.65rem] text-(--muted)">
-                  {item.label}
-                </span>
-                <GlowText className="font-mono text-sm">{item.value}</GlowText>
-              </div>
-            ))}
-          </div>
+        <div className="flex items-center gap-2">
+          {[
+            {
+              label: "下注",
+              value: spin.bet.toLocaleString(),
+            },
+            {
+              label: "倍率",
+              value: `${spin.multiplier}x`,
+            },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-1 shrink-0">
+              <span className="text-[0.65rem] text-(--muted)">
+                {item.label}
+              </span>
+              <GlowText className="font-mono text-sm">{item.value}</GlowText>
+            </div>
+          ))}
         </div>
 
-        <span className="text-xs text-(--muted) font-mono">
-          ID: {spin.id}
-        </span>
+        <span className="text-xs text-(--muted) font-mono">ID: {spin.id}</span>
       </div>
 
       <div className="flex flex-col items-end gap-2">
@@ -85,7 +78,7 @@ const SpinCard = ({ spin, ...rest }: SpinCardProps) => {
               <button
                 key={i}
                 aria-label={`查看圖示 ${p?.id ?? i}`}
-                className="card secondary rounded-lg w-[1.5em] h-[1.5em] flex items-center justify-center overflow-hidden shrink-0"
+                className="card rounded-md aspect-square h-[2em] flex items-center justify-center overflow-hidden shrink-0"
                 onClick={() => pm.open(p.id)}
               >
                 {p?.image ? (
