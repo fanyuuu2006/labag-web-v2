@@ -1,4 +1,4 @@
-import { BookOutlined, HomeOutlined, TrophyOutlined } from "@ant-design/icons";
+import { BookOutlined, HomeOutlined, TrophyOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { VALID_KEYS } from "./backend";
 import { statsData } from "./rankings";
 
@@ -23,6 +23,12 @@ export const routes: RootRoute[] = [
     href: "/",
     isActive: (path: string) => path === "/",
     icon: HomeOutlined,
+  },
+  {
+    label: "遊戲",
+    href: "/game",
+    isActive: (path: string) => path === "/game",
+    icon: PlayCircleOutlined,
   },
   {
     label: "排行榜",

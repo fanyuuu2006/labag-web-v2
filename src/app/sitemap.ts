@@ -13,11 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [parent, ...children];
   });
 
-  // 確保 /game 被包含 (如果不在此列表中)
-  if (!routes.includes("/game")) {
-    routes.push("/game");
-  }
-
   // 移除重複路徑
   const uniqueRoutes = Array.from(new Set(routes));
 
