@@ -80,28 +80,32 @@ export const PatternModalProvider = ({
           </header>
 
           {!info ? (
-            <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6 animate-pulse select-none">
+            <div
+              className="flex flex-col sm:flex-row w-full gap-3 sm:gap-6 select-none"
+              role="status"
+              aria-live="polite"
+            >
               {/**左側 Image Skeleton */}
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
-                <div className="w-full aspect-square rounded-xl bg-white/10" />
-                <div className="h-8 w-24 bg-white/10 rounded" />
+                <div className="w-full aspect-square rounded-xl skeleton" aria-hidden="true" />
+                <div className="h-8 w-24 skeleton rounded" aria-hidden="true" />
               </div>
 
               {/**右側 Info Skeleton */}
               <div className="flex-1 w-full flex flex-col gap-2 sm:gap-3">
                 {/**機率進度條 Skeleton */}
-                <div className="p-2 flex flex-col gap-1">
+                <div className="p-2 flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <div className="h-4 w-24 bg-white/10 rounded" />
-                    <div className="h-5 w-12 bg-white/10 rounded" />
+                    <div className="h-4 w-24 skeleton rounded" aria-hidden="true" />
+                    <div className="h-5 w-12 skeleton rounded" aria-hidden="true" />
                   </div>
-                  <div className="w-full h-3 bg-white/5 rounded-full" />
+                  <div className="w-full h-3 skeleton rounded-full" aria-hidden="true" />
                 </div>
 
                 {/* Payouts Skeleton */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between px-1">
-                    <div className="h-5 w-20 bg-white/10 rounded" />
+                    <div className="h-5 w-20 skeleton rounded" aria-hidden="true" />
                   </div>
                   <div className="grid gap-2">
                     {[1, 2].map((i) => (
@@ -109,8 +113,8 @@ export const PatternModalProvider = ({
                         key={i}
                         className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
                       >
-                        <div className="h-5 w-16 bg-white/10 rounded" />
-                        <div className="h-7 w-8 bg-white/10 rounded" />
+                        <div className="h-5 w-16 skeleton rounded" aria-hidden="true" />
+                        <div className="h-7 w-8 skeleton rounded" aria-hidden="true" />
                       </div>
                     ))}
                   </div>
@@ -155,10 +159,9 @@ export const PatternModalProvider = ({
                     title={`出現機率 ${displayProbability}%`}
                   >
                     <div
-                      className="h-full rounded-full transition-all duration-1000 ease-out"
+                      className="bg-linear-to-r from-(--primary) to-(--secondary) h-full rounded-full transition-all duration-1000 ease-out"
                       style={{
                         width: `${Math.max(0, Math.min(100, displayProbability))}%`,
-                        background: `linear-gradient(90deg, var(--primary), var(--secondary))`,
                       }}
                     />
                   </div>

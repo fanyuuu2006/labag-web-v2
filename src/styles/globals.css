@@ -563,3 +563,47 @@
     width: 110%;
   }
 }
+
+/* === Skeleton / Shimmer Utility === */
+@layer utilities {
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.04);
+    color: transparent;
+  }
+
+  .skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    animation: shimmer 1.2s linear infinite;
+  }
+
+  /* helper for thin lines */
+  .skeleton-line {
+    background-color: rgba(255,255,255,0.04);
+  }
+
+  /* reduce shimmer on reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::after {
+      animation: none;
+      opacity: 0.6;
+    }
+  }
+}

@@ -205,13 +205,13 @@ export const UserModalProvider = ({
             </header>
 
             {isLoading ? (
-              <div className="flex flex-col gap-4 h-full animate-pulse select-none">
+              <div className="flex flex-col gap-4 h-full select-none" role="status" aria-live="polite">
                 {/* Skeleton User Info */}
                 <div className="flex items-center gap-4 shrink-0">
-                  <div className="w-16 h-16 rounded-full bg-white/10 shrink-0" />
-                  <div className="flex flex-col gap-2 flex-1">
-                    <div className="h-6 w-32 bg-white/10 rounded" />
-                    <div className="h-4 w-24 bg-white/5 rounded" />
+                    <div className="w-16 h-16 rounded-full skeleton shrink-0" aria-hidden="true" />
+                    <div className="flex flex-col gap-2 flex-1">
+                      <div className="h-6 w-32 skeleton rounded" aria-hidden="true" />
+                      <div className="h-4 w-24 skeleton rounded" aria-hidden="true" />
                   </div>
                 </div>
 
@@ -220,10 +220,11 @@ export const UserModalProvider = ({
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="flex flex-col items-center justify-center gap-2 p-2 rounded-lg bg-white/5 h-20"
+                      className="flex flex-col items-center justify-center gap-2 p-2 rounded-lg skeleton h-20"
+                      aria-hidden="true"
                     >
-                      <div className="h-6 w-16 bg-white/10 rounded" />
-                      <div className="h-3 w-10 bg-white/5 rounded" />
+                      <div className="h-6 w-16 skeleton rounded" />
+                      <div className="h-3 w-10 skeleton rounded" />
                     </div>
                   ))}
                 </div>
@@ -231,14 +232,15 @@ export const UserModalProvider = ({
                 {/* Skeleton Records List */}
                 <div className="flex flex-col gap-3 flex-1 min-h-0">
                   <div className="flex justify-between items-center px-1 pb-2 border-b border-white/10">
-                    <div className="h-6 w-32 bg-white/10 rounded" />
-                    <div className="h-5 w-20 bg-white/5 rounded-full" />
+                    <div className="h-6 w-32 skeleton rounded" aria-hidden="true" />
+                    <div className="h-5 w-20 skeleton rounded-full" aria-hidden="true" />
                   </div>
                   <div className="flex flex-col gap-2 overflow-hidden">
                     {[1, 2, 3].map((i) => (
                       <div
                         key={i}
-                        className="h-16 w-full rounded-xl bg-white/5"
+                        className="h-16 w-full rounded-xl skeleton"
+                        aria-hidden="true"
                       />
                     ))}
                   </div>
