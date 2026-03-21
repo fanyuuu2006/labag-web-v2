@@ -87,8 +87,14 @@ export const PatternModalProvider = ({
             >
               {/**左側 Image Skeleton */}
               <div className="w-24 sm:w-1/3 flex flex-col items-center gap-2 sm:gap-3 shrink-0 mx-auto sm:mx-0">
-                <div className="w-full aspect-square rounded-xl skeleton" aria-hidden="true" />
-                <div className="h-8 w-24 skeleton rounded" aria-hidden="true" />
+                <div
+                  className="w-28 md:w-36 aspect-square rounded-xl skeleton"
+                  aria-hidden="true"
+                />
+                <div
+                  className="h-6 w-20 skeleton rounded mt-2"
+                  aria-hidden="true"
+                />
               </div>
 
               {/**右側 Info Skeleton */}
@@ -96,25 +102,46 @@ export const PatternModalProvider = ({
                 {/**機率進度條 Skeleton */}
                 <div className="p-2 flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <div className="h-4 w-24 skeleton rounded" aria-hidden="true" />
-                    <div className="h-5 w-12 skeleton rounded" aria-hidden="true" />
+                    <div
+                      className="h-4 w-32 skeleton rounded"
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="h-6 w-16 skeleton rounded"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <div className="w-full h-3 skeleton rounded-full" aria-hidden="true" />
+
+                  <div className="w-full h-3 bg-black/20 rounded-full overflow-hidden border border-white/5">
+                    <div
+                      className="skeleton h-full rounded-full w-1/3"
+                      aria-hidden="true"
+                    />
+                  </div>
                 </div>
 
                 {/* Payouts Skeleton */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between px-1">
-                    <div className="h-5 w-20 skeleton rounded" aria-hidden="true" />
+                    <div
+                      className="h-5 w-20 skeleton rounded"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div className="grid gap-2">
                     {[1, 2].map((i) => (
                       <div
                         key={i}
-                        className="card primary flex items-center justify-between px-4 py-2 rounded-lg"
+                        className="card primary flex items-center justify-between px-4 py-3 rounded-2xl"
                       >
-                        <div className="h-5 w-16 skeleton rounded" aria-hidden="true" />
-                        <div className="h-7 w-8 skeleton rounded" aria-hidden="true" />
+                        <div
+                          className="h-5 w-40 skeleton rounded"
+                          aria-hidden="true"
+                        />
+                        <div
+                          className="h-7 w-12 skeleton rounded"
+                          aria-hidden="true"
+                        />
                       </div>
                     ))}
                   </div>
@@ -170,33 +197,33 @@ export const PatternModalProvider = ({
                 {/* Payouts */}
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center flex-wrap gap-1 px-1">
-                      <span className="text-sm font-bold text-(--muted)">
-                        獎金倍率
-                      </span>
-                      <span className="text-xs text-(--muted)">
-                        (會隨機加入小幅變動，最終實際獎金金額以畫面為準)
-                      </span>
-                    </div>
+                    <span className="text-sm font-bold text-(--muted)">
+                      獎金倍率
+                    </span>
+                    <span className="text-xs text-(--muted)">
+                      (會隨機加入小幅變動，最終實際獎金金額以畫面為準)
+                    </span>
+                  </div>
 
-                    <div className="flex flex-col gap-2">
-                      {info.payouts.map((item, index) => (
-                        <div
-                          key={index}
-                          className="card primary rounded-2xl flex items-center justify-between px-4 py-3"
-                        >
-                          <div className="flex flex-col">
-                            <span className="text-sm sm:text-base font-medium">
-                              {item.match_count} 個相同
-                            </span>
-                          </div>
-
-                          <div className="flex items-baseline gap-2">
-                            <GlowText className="text-lg sm:text-2xl font-black tabular-nums">
-                              {item.multiplier}x
-                            </GlowText>
-                          </div>
+                  <div className="flex flex-col gap-2">
+                    {info.payouts.map((item, index) => (
+                      <div
+                        key={index}
+                        className="card primary rounded-2xl flex items-center justify-between px-4 py-3"
+                      >
+                        <div className="flex flex-col">
+                          <span className="text-sm sm:text-base font-medium">
+                            {item.match_count} 個相同
+                          </span>
                         </div>
-                      ))}
+
+                        <div className="flex items-baseline gap-2">
+                          <GlowText className="text-lg sm:text-2xl font-black tabular-nums">
+                            {item.multiplier}x
+                          </GlowText>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

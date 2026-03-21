@@ -190,14 +190,14 @@ export const UserModalProvider = ({
               <GlowText
                 as="h2"
                 id="currUser-modal-title"
-                className="text-lg md:text-xl font-extrabold tracking-wider"
+                className="shrink-0 text-lg md:text-xl font-extrabold tracking-wider"
               >
                 用戶資料
               </GlowText>
               <button
                 type="button"
                 aria-label="關閉"
-                className="text-(--muted)"
+                className="shrink-0 text-(--muted)"
                 onClick={modal.close}
               >
                 <CloseOutlined className="text-xl" />
@@ -205,13 +205,26 @@ export const UserModalProvider = ({
             </header>
 
             {isLoading ? (
-              <div className="flex flex-col gap-4 h-full select-none" role="status" aria-live="polite">
+              <div
+                className="flex flex-col gap-4 h-full select-none"
+                role="status"
+                aria-live="polite"
+              >
                 {/* Skeleton User Info */}
                 <div className="flex items-center gap-4 shrink-0">
-                    <div className="w-16 h-16 rounded-full skeleton shrink-0" aria-hidden="true" />
-                    <div className="flex flex-col gap-2 flex-1">
-                      <div className="h-6 w-32 skeleton rounded" aria-hidden="true" />
-                      <div className="h-4 w-24 skeleton rounded" aria-hidden="true" />
+                  <div
+                    className="w-16 h-16 rounded-full skeleton shrink-0"
+                    aria-hidden="true"
+                  />
+                  <div className="flex flex-col gap-2 flex-1">
+                    <div
+                      className="h-6 w-32 skeleton rounded"
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="h-4 w-24 skeleton rounded"
+                      aria-hidden="true"
+                    />
                   </div>
                 </div>
 
@@ -232,8 +245,14 @@ export const UserModalProvider = ({
                 {/* Skeleton Records List */}
                 <div className="flex flex-col gap-3 flex-1 min-h-0">
                   <div className="flex justify-between items-center px-1 pb-2 border-b border-white/10">
-                    <div className="h-6 w-32 skeleton rounded" aria-hidden="true" />
-                    <div className="h-5 w-20 skeleton rounded-full" aria-hidden="true" />
+                    <div
+                      className="h-6 w-32 skeleton rounded"
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="h-5 w-20 skeleton rounded-full"
+                      aria-hidden="true"
+                    />
                   </div>
                   <div className="flex flex-col gap-2 overflow-hidden">
                     {[1, 2, 3].map((i) => (
@@ -260,7 +279,7 @@ export const UserModalProvider = ({
                     />
                   </div>
                   <div className="text-xl md:text-2xl flex flex-col gap-1 min-w-0 flex-1">
-                    <GlowText as="h3" className="font-bold">
+                    <GlowText as="h3" className="font-bold shrink-0">
                       {name}
                     </GlowText>
                     <div className="flex items-center gap-2 text-[0.5em] text-(--muted)">

@@ -38,7 +38,7 @@ const TIMELINE_EVENTS = [
         >
           MIT App Inventor 2
         </OutsideLink>{" "}
-        的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。,
+        的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。
       </>
     ),
   },
@@ -249,7 +249,7 @@ const CONTENTS: ContentDivProps[] = [
     children: (
       <div className="grid md:grid-cols-2 gap-6">
         {FAQ_ITEMS.map((item) => (
-          <div key={item.q} className="card primary p-6 space-y-3">
+          <div key={item.q} className="card primary rounded-2xl p-6 space-y-3">
             <h3 className="text-lg font-bold flex items-start gap-2">
               <span className="text-(--primary) font-mono text-xl">Q.</span>
               {item.q}
