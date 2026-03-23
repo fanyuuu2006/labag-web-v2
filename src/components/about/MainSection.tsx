@@ -275,7 +275,7 @@ export const MainSection = memo(() => {
       {
         title: "圖案一覽",
         description:
-          "每個圖案都有不同的分數與出現機率，點擊卡片可查看詳細資訊。",
+          "每個圖案都有不同的分數與出現機率，點擊可查看詳細資訊。",
         icon: FileImageOutlined,
         children: (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
