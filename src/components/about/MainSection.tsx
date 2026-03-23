@@ -1,8 +1,9 @@
 "use client";
 
-import React, { memo } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { site } from "@/libs/site";
 import { GlowText } from "@/components/GlowText";
+import { MyImage } from "@/components/MyImage";
 import {
   ThunderboltOutlined,
   GlobalOutlined,
@@ -19,10 +20,14 @@ import {
   StarOutlined,
   MobileOutlined,
   SafetyCertificateOutlined,
+  FileImageOutlined,
 } from "@ant-design/icons";
 import { OutsideLink } from "fanyucomponents";
 import { ContentDiv, ContentDivProps } from "./ContentDiv";
 import { LeftContentProps, LeftContent } from "./LeftContent";
+import { PatternWithPayouts } from "@/types/backend";
+import { patterns as fetchPatterns } from "@/utils/backend";
+import { usePatternModal } from "@/contexts/PatternModalContext";
 
 const TIMELINE_EVENTS = [
   {
@@ -171,99 +176,6 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
-const CONTENTS: ContentDivProps[] = [
-  {
-    icon: StarOutlined,
-    title: "網站特色",
-    children: (
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {FEATURES.map((feat) => (
-          <div
-            key={feat.title}
-            className="card secondary p-8 flex flex-col gap-6 text-center items-center"
-          >
-            <div className="text-5xl text-(--primary)">
-              <feat.icon />
-            </div>
-            <div className="space-y-3">
-              <h3 className="text-xl font-bold">{feat.title}</h3>
-              <p className="text-(--muted) leading-relaxed">
-                {feat.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  // {
-  //   title: "圖案一覽",
-  //   description: "點擊圖案可查看詳細計分資訊與出現機率",
-  //   children: (
-  //     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-  //       {DISPLAY_PATTERNS.map((pattern) => {
-  //         const isTheme = pattern.name in modeDescriptions;
-  //         const [Tag, props]: ComponentCombination = isTheme
-  //           ? [
-  //               ModeModalButton,
-  //               {
-  //                 modeName: pattern.name,
-  //               },
-  //             ]
-  //           : [
-  //               PatternModalButton,
-  //               {
-  //                 pattern,
-  //               },
-  //             ];
-  //         return (
-  //           <Tag
-  //             key={pattern.name}
-  //             className={
-  //               "btn secondary flex flex-col items-center h-full w-full p-3 rounded-xl"
-  //             }
-  //             {...props}
-  //             data-theme={isTheme ? pattern.name : "normal"}
-  //           >
-  //             <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-3">
-  //               <MyImage
-  //                 src={`/images/patterns/${pattern.name}.jpg`}
-  //                 alt={pattern.name}
-  //                 className="w-full h-full object-cover"
-  //               />
-  //             </div>
-
-  //             <span className="font-bold text-lg capitalize">
-  //               {pattern.name}
-  //             </span>
-  //           </Tag>
-  //         );
-  //       })}
-  //     </div>
-  //   ),
-  // },
-  {
-    title: "常見問題",
-    description: "這裡整理了一些關於啦八機的常見疑問",
-    icon: QuestionCircleOutlined,
-    children: (
-      <div className="grid md:grid-cols-2 gap-6">
-        {FAQ_ITEMS.map((item) => (
-          <div key={item.q} className="card primary rounded-2xl p-6 space-y-3">
-            <h3 className="text-lg font-bold flex items-start gap-2">
-              <span className="text-(--primary) font-mono text-xl">Q.</span>
-              {item.q}
-            </h3>
-            <p className="font-light leading-relaxed pl-7 border-l-2 border-(--border)">
-              {item.a}
-            </p>
-          </div>
-        ))}
-      </div>
-    ),
-  },
-];
-
 const LEFT_CONTENTS: LeftContentProps[] = [
   {
     title: "關於作者",
@@ -315,6 +227,104 @@ const LEFT_CONTENTS: LeftContentProps[] = [
 ];
 
 export const MainSection = memo(() => {
+  const [patterns, setPatterns] = useState<PatternWithPayouts[]>([]);
+  useEffect(() => {
+    fetchPatterns()
+      .then((res) => {
+        if (res.data) {
+          setPatterns(res.data);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const patternModal = usePatternModal();
+
+  const CONTENTS: ContentDivProps[] = useMemo(() => {
+    return [
+      {
+        icon: StarOutlined,
+        title: "網站特色",
+        children: (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {FEATURES.map((feat) => (
+              <div
+                key={feat.title}
+                className="card secondary p-8 flex flex-col gap-6 text-center items-center"
+              >
+                <div className="text-5xl text-(--primary)">
+                  <feat.icon />
+                </div>
+                <div className="space-y-3">
+                  <h3 className="text-xl font-bold">{feat.title}</h3>
+                  <p className="text-(--muted) leading-relaxed">
+                    {feat.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+      {
+        title: "圖案一覽",
+        description:
+          "每個圖案都有不同的分數與出現機率，點擊卡片可查看詳細資訊。",
+        icon: FileImageOutlined,
+        children: (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {patterns.length === 0
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="card primary aspect-square rounded-xl skeleton"
+                  />
+                ))
+              : patterns.map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => patternModal.open(p.id)}
+                    className="btn secondary p-3 sm:p-4 h-full flex flex-col items-center gap-3 rounded-xl"
+                  >
+                    <div className="w-full aspect-square rounded-lg overflow-hidden relative">
+                      <MyImage
+                        src={p.image}
+                        alt={p.id}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </button>
+                ))}
+          </div>
+        ),
+      },
+      {
+        title: "常見問題",
+        description: "這裡整理了一些關於啦八機的常見疑問",
+        icon: QuestionCircleOutlined,
+        children: (
+          <div className="grid md:grid-cols-2 gap-6">
+            {FAQ_ITEMS.map((item) => (
+              <div
+                key={item.q}
+                className="card primary rounded-2xl p-6 space-y-3"
+              >
+                <h3 className="text-lg font-bold flex items-start gap-2">
+                  <span className="text-(--primary) font-mono text-xl">Q.</span>
+                  {item.q}
+                </h3>
+                <p className="font-light leading-relaxed pl-7 border-l-2 border-(--border)">
+                  {item.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        ),
+      },
+    ];
+  }, [patterns, patternModal]);
+
   return (
     <section className="min-h-full py-12 px-4">
       <div className="container mx-auto space-y-24 lg:space-y-32">
