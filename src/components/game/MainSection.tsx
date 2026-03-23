@@ -244,7 +244,8 @@ export const MainSection = () => {
                 {userStats?.user_coins.toLocaleString() ?? 0}
               </GlowText>
             </div>
-            {/** 獎金顯示區 */}
+
+            {/** Spin 資訊顯示區 */}
             <div
               className={cn(
                 "card secondary transition-all",
@@ -252,22 +253,22 @@ export const MainSection = () => {
                 "col-span-2",
               )}
             >
-              <div className="w-full flex items-center gap-4">
-                <div className="flex-1">
+              <div className="w-full flex flex-col md:flex-row items-center md:items-center justify-between gap-4">
+                <div className="flex-1 flex flex-col items-start">
                   <span className="text-xs text-(--muted)">本次獎金</span>
-                  <div className="mt-2 flex items-baseline gap-3">
+                  <div className="mt-2">
                     <GlowText
                       className={cn(
                         "font-black transition-all duration-300 tabular-nums",
                         "text-4xl md:text-5xl",
                       )}
                     >
-                      {currSpin ? currSpin.reward : "-"}
+                      {currSpin ? String(currSpin.reward) : "-"}
                     </GlowText>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1 justify-center">
+                <div className="flex flex-col gap-2 justify-center items-end md:items-end">
                   {[
                     {
                       label: "倍率",
@@ -277,13 +278,11 @@ export const MainSection = () => {
                     },
                     { label: "投注", value: currSpin ? currSpin.bet : "-" },
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-1">
-                      <span className="text-xs text-(--muted)">
-                        {item.label}:
-                      </span>
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="text-xs text-(--muted)">{item.label}:</span>
 
-                      <div className="rounded-full bg-black/20 text-(--primary) font-bold text-sm flex items-center justify-center">
-                        <GlowText className="text-sm tabular-nums">
+                      <div className="card secondary rounded-full font-bold text-sm flex items-center justify-center px-3 py-1 min-w-20">
+                        <GlowText className="text-sm tabular-nums text-center truncate">
                           {item.value}
                         </GlowText>
                       </div>
