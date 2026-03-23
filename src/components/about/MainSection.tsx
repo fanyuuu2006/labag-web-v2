@@ -229,13 +229,19 @@ const LEFT_CONTENTS: LeftContentProps[] = [
 export const MainSection = memo(() => {
   const [patterns, setPatterns] = useState<PatternWithPayouts[]>([]);
   useEffect(() => {
-    fetchPatterns()
-      .then((res) => {
-        if (res.data) {
-          setPatterns(res.data);
-        }
-      })
-      .catch(console.error);
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetchPatterns();
+        if (!mounted) return;
+        if (res?.data) setPatterns(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const patternModal = usePatternModal();
@@ -345,8 +351,8 @@ export const MainSection = memo(() => {
         <div className="grid lg:grid-cols-2 gap-12 items-start relative">
           {/* 左側 */}
           <div className="flex flex-col gap-4 divide-y divide-(--border) lg:sticky lg:top-24">
-            {LEFT_CONTENTS.map((content, idx) => (
-              <LeftContent key={idx} {...content} />
+            {LEFT_CONTENTS.map((content) => (
+              <LeftContent key={content.title} {...content} />
             ))}
           </div>
 
@@ -383,8 +389,8 @@ export const MainSection = memo(() => {
           </div>
         </div>
 
-        {CONTENTS.map((content, idx) => (
-          <ContentDiv key={idx} {...content} />
+        {CONTENTS.map((content) => (
+          <ContentDiv key={content.title} {...content} />
         ))}
       </div>
     </section>
