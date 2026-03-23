@@ -263,7 +263,7 @@ export const MainSection = () => {
                         "text-4xl md:text-5xl",
                       )}
                     >
-                      {currSpin ? String(currSpin.reward) : "-"}
+                      {currSpin ? currSpin.reward : "-"}
                     </GlowText>
                   </div>
                 </div>
@@ -279,7 +279,9 @@ export const MainSection = () => {
                     { label: "投注", value: currSpin ? currSpin.bet : "-" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2">
-                      <span className="text-xs text-(--muted)">{item.label}:</span>
+                      <span className="text-xs text-(--muted)">
+                        {item.label}:
+                      </span>
 
                       <div className="card secondary rounded-full font-bold text-sm flex items-center justify-center px-3 py-1 min-w-20">
                         <GlowText className="text-sm tabular-nums text-center truncate">
