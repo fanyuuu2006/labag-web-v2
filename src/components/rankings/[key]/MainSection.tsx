@@ -23,9 +23,9 @@ export const MainSection = ({
 
   return (
     <section className="h-full flex flex-col items-center py-8">
-      <div className="container flex flex-col gap-8 lg:gap-12 px-4">
+      <div className="container flex flex-col gap-8 lg:gap-12 p-4">
         {/* 標題*/}
-        <div className="flex flex-col items-center justify-center">
+        <div className="sticky top-0 z-100 flex flex-col items-center justify-center">
           <span className="text-(--muted) text-sm md:text-base tracking-[0.2em] mb-2 uppercase">
             — 排行榜 —
           </span>

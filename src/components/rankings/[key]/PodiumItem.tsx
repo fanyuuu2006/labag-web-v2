@@ -52,7 +52,7 @@ export const PodiumItem = memo(
           </span>
 
           <button
-            className="flex items-center gap-2 group"
+            className="flex flex-col items-center gap-1 group"
             onClick={() => modal.open(item.user_id)}
             tabIndex={0}
           >
@@ -83,6 +83,8 @@ export const PodiumItem = memo(
             </GlowText>
           </div>
         </div>
+
+        {/** 頒獎台 */}
         <div
           className={cn(
             "w-[6.5em] md:w-[8em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group",
