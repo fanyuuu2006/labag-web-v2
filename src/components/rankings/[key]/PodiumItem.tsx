@@ -7,6 +7,7 @@ import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
 import { useUserCache } from "./useUserCache";
+import { MyImage } from "@/components/MyImage";
 
 const MEDALS = ["👑", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
@@ -50,16 +51,31 @@ export const PodiumItem = memo(
           >
             {MEDALS[index]}
           </span>
+
           <button
-            type="button"
-            className="font-bold max-w-[14ch] truncate hover:text-(--primary)"
+            className="flex items-center gap-2 group"
             onClick={() => modal.open(item.user_id)}
-            title={`查看 ${user?.name ?? item.user_id} 的資料`}
+            tabIndex={0}
           >
+            <div className="card h-[2em] aspect-square overflow-hidden rounded-full">
+              {user ? (
+                <MyImage
+                  src={user.avatar}
+                  fallbackSrc={"/default-avatar.jpg"}
+                  alt={`${user.name} 的頭像`}
+                  className="object-cover w-full h-full"
+                />
+              ) : (
+                <div className="w-full h-full bg-white/5 skeleton" />
+              )}
+            </div>
+
             {user ? (
-              user.name
+              <span className="font-bold max-w-[14ch] truncate group-hover:text-(--primary) transition-colors">
+                {user.name}
+              </span>
             ) : (
-              <div className="h-4 w-28 bg-white/5 rounded skeleton" />
+              <div className="h-4 w-32 bg-white/5 rounded skeleton" />
             )}
           </button>
           <div className="flex items-end gap-1">
