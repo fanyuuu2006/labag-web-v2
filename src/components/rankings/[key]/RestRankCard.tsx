@@ -1,5 +1,5 @@
 "use client";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { OverrideProps, DistributiveOmit } from "fanyucomponents";
 import { GlowText } from "../../GlowText";
@@ -7,7 +7,7 @@ import { cn } from "@/utils/className";
 import { SupabaseStatsView } from "@/types/backend";
 import { VALID_KEYS } from "@/libs/backend";
 import { statsData } from "@/libs/rankings";
-import { userById } from "@/utils/backend";
+import { useUserCache } from "./useUserCache";
 import { MyImage } from "@/components/MyImage";
 
 type RestRankCardProps = OverrideProps<
@@ -22,16 +22,7 @@ type RestRankCardProps = OverrideProps<
 export const RestRankCard = memo(
   ({ item, rank, rankKey, className, ...rest }: RestRankCardProps) => {
     const modal = useUserModal();
-    const [user, setUser] =
-      useState<Awaited<ReturnType<typeof userById>>["data"] | null>(null);
-
-    useEffect(() => {
-      userById(item.user_id).then(({ data }) => {
-        if (data) {
-          setUser(data);
-        }
-      });
-    }, [item.user_id]);
+    const user = useUserCache(item.user_id);
 
     return (
       <div

@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { cn } from "@/utils/className";
 import { GlowText } from "../../GlowText";
@@ -6,7 +6,7 @@ import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
-import { userById } from "@/utils/backend";
+import { useUserCache } from "./useUserCache";
 
 const MEDALS = ["👑", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
@@ -30,15 +30,7 @@ type PodiumItemProps = OverrideProps<
 export const PodiumItem = memo(
   ({ item, index, rankKey, className, ...rest }: PodiumItemProps) => {
     const modal = useUserModal();
-    const [user, setUser] = useState<
-      Awaited<ReturnType<typeof userById>>["data"] | null
-    >(null);
-
-    useEffect(() => {
-      userById(item.user_id).then(({ data }) => {
-        if (data) setUser(data);
-      });
-    }, [item.user_id]);
+    const user = useUserCache(item.user_id);
 
     return (
       <div

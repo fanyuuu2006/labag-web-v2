@@ -49,7 +49,7 @@ export const MainSection = ({
               <div className="flex justify-center items-end gap-2 md:gap-4 lg:gap-6">
                 {top3.map((item, index) => (
                   <PodiumItem
-                    key={index}
+                    key={item.user_id}
                     index={index}
                     item={item}
                     rankKey={rankKey}
