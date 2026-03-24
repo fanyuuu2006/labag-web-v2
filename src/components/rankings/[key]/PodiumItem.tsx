@@ -7,7 +7,7 @@ import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
 
-const MEDALS = ["🥇", "🥈", "🥉"];
+const MEDALS = ["👑", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
 const HEIGHT_CLASSES = ["h-[10em]", "h-[8em]", "h-[6em]"];
 const COLOR_CLASSES = [
