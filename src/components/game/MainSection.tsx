@@ -254,16 +254,16 @@ export const MainSection = () => {
               )}
             >
               <div className="w-full flex flex-col md:flex-row items-center md:items-center justify-between gap-4">
-                <div className="flex-1 flex flex-col items-start">
+                <div className="flex-1 flex flex-col items-center md:items-start gap-2">
                   <span className="text-xs text-(--muted)">本次獎金</span>
-                  <div className="mt-2">
+                  <div>
                     <GlowText
                       className={cn(
                         "font-black transition-all duration-300 tabular-nums",
                         "text-4xl md:text-5xl",
                       )}
                     >
-                      {currSpin ? currSpin.reward : "-"}
+                      {currSpin ? currSpin.reward.toLocaleString() : "-"}
                     </GlowText>
                   </div>
                 </div>
@@ -284,7 +284,7 @@ export const MainSection = () => {
                       </span>
 
                       <div className="card secondary rounded-full font-bold text-sm flex items-center justify-center px-3 py-1 min-w-20">
-                        <GlowText className="text-sm tabular-nums text-center truncate">
+                        <GlowText className="text-sm tabular-nums text-center">
                           {item.value}
                         </GlowText>
                       </div>
