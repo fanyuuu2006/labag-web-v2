@@ -41,10 +41,11 @@ export const RestRankCard = memo(
           onClick={() => modal.open(item.user_id)}
           tabIndex={0}
         >
-          <div className="h-[2em] aspect-square overflow-hidden rounded-full">
+          <div className="card h-[2em] aspect-square overflow-hidden rounded-full">
             {user ? (
               <MyImage
                 src={user.avatar}
+                fallbackSrc={'/default-avatar.jpg'}
                 alt={`${user.name} 的頭像`}
                 className="object-cover w-full h-full"
               />
