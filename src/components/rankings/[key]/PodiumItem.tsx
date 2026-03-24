@@ -4,7 +4,6 @@ import { cn } from "@/utils/className";
 import { GlowText } from "../../GlowText";
 import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseStatsView } from "@/types/backend";
-import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
 import { useUserCache } from "./useUserCache";
 import { MyImage } from "@/components/MyImage";
@@ -82,9 +81,6 @@ export const PodiumItem = memo(
             <GlowText className="text-[1.5em] font-mono font-black tabular-nums">
               {item[rankKey]?.toLocaleString() ?? 0}
             </GlowText>
-            <span className="text-[0.75em] mb-1 text-(--muted)">
-              {statsData[rankKey].unit}
-            </span>
           </div>
         </div>
         <div

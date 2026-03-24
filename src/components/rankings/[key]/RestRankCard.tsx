@@ -6,7 +6,6 @@ import { GlowText } from "../../GlowText";
 import { cn } from "@/utils/className";
 import { SupabaseStatsView } from "@/types/backend";
 import { VALID_KEYS } from "@/libs/backend";
-import { statsData } from "@/libs/rankings";
 import { useUserCache } from "./useUserCache";
 import { MyImage } from "@/components/MyImage";
 
@@ -45,7 +44,7 @@ export const RestRankCard = memo(
             {user ? (
               <MyImage
                 src={user.avatar}
-                fallbackSrc={'/default-avatar.jpg'}
+                fallbackSrc={"/default-avatar.jpg"}
                 alt={`${user.name} 的頭像`}
                 className="object-cover w-full h-full"
               />
@@ -55,7 +54,7 @@ export const RestRankCard = memo(
           </div>
 
           {user ? (
-              <span className="font-bold max-w-[14ch] truncate group-hover:text-(--primary) transition-colors">
+            <span className="font-bold max-w-[14ch] truncate group-hover:text-(--primary) transition-colors">
               {user.name}
             </span>
           ) : (
@@ -65,14 +64,9 @@ export const RestRankCard = memo(
 
         <div className="ms-auto flex items-end gap-1">
           {item[rankKey] != null ? (
-            <>
-              <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
-                {item[rankKey]?.toLocaleString() ?? 0}
-              </GlowText>
-              <span className="text-[0.75em] mb-1 text-(--muted)">
-                {statsData[rankKey].unit}
-              </span>
-            </>
+            <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
+              {item[rankKey]?.toLocaleString() ?? 0}
+            </GlowText>
           ) : (
             <div className="flex items-center gap-2">
               <div className="h-5 w-12 bg-white/5 rounded skeleton" />
