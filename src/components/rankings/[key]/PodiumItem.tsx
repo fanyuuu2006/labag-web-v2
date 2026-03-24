@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { cn } from "@/utils/className";
 import { GlowText } from "../../GlowText";
@@ -6,6 +6,7 @@ import { DistributiveOmit, OverrideProps } from "fanyucomponents";
 import { SupabaseStatsView } from "@/types/backend";
 import { statsData } from "@/libs/rankings";
 import { VALID_KEYS } from "@/libs/backend";
+import { userById } from "@/utils/backend";
 
 const MEDALS = ["👑", "🥈", "🥉"];
 const ORDER_CLASSES = ["order-2", "order-1", "order-3"];
@@ -15,11 +16,7 @@ const COLOR_CLASSES = [
   "bg-slate-400/30 border-slate-300/50 text-slate-100 shadow-[0_0_25px_rgba(148,163,184,0.5)] saturate-125",
   "bg-orange-500/40 border-orange-400/50 text-orange-200 shadow-[0_0_25px_rgba(249,115,22,0.6)] saturate-125",
 ];
-const SCALE_CLASSES = [
-  "scale-100 z-10",
-  "scale-90 z-9",
-  "scale-85 z-8",
-];
+const SCALE_CLASSES = ["scale-100 z-10", "scale-90 z-9", "scale-85 z-8"];
 
 type PodiumItemProps = OverrideProps<
   DistributiveOmit<React.HTMLAttributes<HTMLDivElement>, "children">,
@@ -33,6 +30,15 @@ type PodiumItemProps = OverrideProps<
 export const PodiumItem = memo(
   ({ item, index, rankKey, className, ...rest }: PodiumItemProps) => {
     const modal = useUserModal();
+    const [user, setUser] = useState<
+      Awaited<ReturnType<typeof userById>>["data"] | null
+    >(null);
+
+    useEffect(() => {
+      userById(item.user_id).then(({ data }) => {
+        if (data) setUser(data);
+      });
+    }, [item.user_id]);
 
     return (
       <div
@@ -40,7 +46,7 @@ export const PodiumItem = memo(
           "flex flex-col items-center transition-all duration-500 hover:scale-110",
           ORDER_CLASSES[index],
           SCALE_CLASSES[index],
-          className
+          className,
         )}
         {...rest}
       >
@@ -56,9 +62,13 @@ export const PodiumItem = memo(
             type="button"
             className="font-bold max-w-[14ch] truncate hover:text-(--primary)"
             onClick={() => modal.open(item.user_id)}
-            title={`查看 ${item.user_name} 的資料`}
+            title={`查看 ${user?.name ?? item.user_id} 的資料`}
           >
-            {item.user_name}
+            {user ? (
+              user.name
+            ) : (
+              <div className="h-4 w-28 bg-white/5 rounded skeleton" />
+            )}
           </button>
           <div className="flex items-end gap-1">
             <GlowText className="text-[1.5em] font-mono font-black tabular-nums">
@@ -73,7 +83,7 @@ export const PodiumItem = memo(
           className={cn(
             "w-[6.5em] md:w-[8em] rounded-t-xl border-x-2 border-t-2 backdrop-blur-md flex items-end justify-center relative overflow-hidden group",
             HEIGHT_CLASSES[index],
-            COLOR_CLASSES[index]
+            COLOR_CLASSES[index],
           )}
         >
           {/** 底部漸層遮罩 */}
@@ -81,6 +91,6 @@ export const PodiumItem = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 PodiumItem.displayName = "PodiumItem";

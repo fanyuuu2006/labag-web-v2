@@ -1,3 +1,4 @@
+"use client";
 import { memo, useEffect, useState } from "react";
 import { useUserModal } from "@/contexts/UserModalContext";
 import { OverrideProps, DistributiveOmit } from "fanyucomponents";
@@ -22,7 +23,7 @@ export const RestRankCard = memo(
   ({ item, rank, rankKey, className, ...rest }: RestRankCardProps) => {
     const modal = useUserModal();
     const [user, setUser] =
-      useState<Awaited<ReturnType<typeof userById>>["data"]>(null);
+      useState<Awaited<ReturnType<typeof userById>>["data"] | null>(null);
 
     useEffect(() => {
       userById(item.user_id).then(({ data }) => {
@@ -50,25 +51,42 @@ export const RestRankCard = memo(
           tabIndex={0}
         >
           <div className="h-[2em] aspect-square overflow-hidden rounded-full">
-            <MyImage
-              src={user?.avatar}
-              alt={`${user?.name} 的頭像`}
-              className="object-cover w-full h-full"
-            />
+            {user ? (
+              <MyImage
+                src={user.avatar}
+                alt={`${user.name} 的頭像`}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <div className="w-full h-full bg-white/5 skeleton" />
+            )}
           </div>
 
-          <span className="font-bold max-w-[14ch] truncate group-hover:text-(--primary) transition-colors">
-            {item.user_name}
-          </span>
+          {user ? (
+              <span className="font-bold max-w-[14ch] truncate group-hover:text-(--primary) transition-colors">
+              {user.name}
+            </span>
+          ) : (
+            <div className="h-4 w-32 bg-white/5 rounded skeleton" />
+          )}
         </button>
 
         <div className="ms-auto flex items-end gap-1">
-          <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
-            {item[rankKey]?.toLocaleString() ?? 0}
-          </GlowText>
-          <span className="text-[0.75em] mb-1 text-(--muted)">
-            {statsData[rankKey].unit}
-          </span>
+          {item[rankKey] != null ? (
+            <>
+              <GlowText className="text-[1.25em] font-bold tabular-nums font-mono shrink-0">
+                {item[rankKey]?.toLocaleString() ?? 0}
+              </GlowText>
+              <span className="text-[0.75em] mb-1 text-(--muted)">
+                {statsData[rankKey].unit}
+              </span>
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <div className="h-5 w-12 bg-white/5 rounded skeleton" />
+              <div className="h-3 w-8 bg-white/5 rounded skeleton" />
+            </div>
+          )}
         </div>
       </div>
     );
