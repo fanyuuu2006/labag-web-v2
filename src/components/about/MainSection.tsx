@@ -359,38 +359,38 @@ export const MainSection = memo(() => {
                         <HistoryOutlined />
                         <span>{dateStr}</span>
                       </div>
-                      <article className="card secondary p-4 space-y-2">
-                        <MyMarkDown
-                          components={{
-                            h3: ({ className, ...props }) => (
-                              <h3
-                                {...props}
-                                className={cn("text-xl font-bold", className)}
-                              />
-                            ),
-                            a: ({ className, ...props }) => (
-                              <OutsideLink
-                                {...props}
-                                className={cn(
-                                  "underline underline-offset-2 text-(--primary) font-medium",
-                                  className,
-                                )}
-                              />
-                            ),
-                            p: ({ className, ...props }) => (
-                              <p
-                                {...props}
-                                className={cn(
-                                  "text-(--muted) leading-relaxed",
-                                  className,
-                                )}
-                              />
-                            ),
-                          }}
-                        >
-                          {event.description}
-                        </MyMarkDown>
-                      </article>
+                      <MyMarkDown
+                        as={"article"}
+                        className="card secondary p-4 space-y-2"
+                        components={{
+                          h3: ({ className, ...props }) => (
+                            <h3
+                              {...props}
+                              className={cn("text-xl font-bold", className)}
+                            />
+                          ),
+                          a: ({ className, ...props }) => (
+                            <OutsideLink
+                              {...props}
+                              className={cn(
+                                "underline underline-offset-2 text-(--primary) font-medium",
+                                className,
+                              )}
+                            />
+                          ),
+                          p: ({ className, ...props }) => (
+                            <p
+                              {...props}
+                              className={cn(
+                                "text-(--muted) leading-relaxed",
+                                className,
+                              )}
+                            />
+                          ),
+                        }}
+                      >
+                        {event.description}
+                      </MyMarkDown>
                     </div>
                   </div>
                 );

@@ -6,9 +6,10 @@ import { MyImage } from "./MyImage";
  * MyMarkDown 元件的屬性介面
  * 繼承自 `div` 的屬性，並允許覆寫
  */
-type MyMarkDownProps = OverrideProps<
-  React.ComponentPropsWithoutRef<"div">,
+type MyMarkDownProps<T extends React.ElementType = "div"> = OverrideProps<
+  React.ComponentPropsWithoutRef<T>,
   {
+    as?: T;
     /**
      * Markdown 內容中可使用的變數，格式為 `$variableName$`，會被替換為對應的值。
      * 支援嵌套物件，例如 `{ score: { a: 100 } }`，則 `$score.a$` 會被替換為 `100`。
@@ -273,9 +274,7 @@ const renderList = (
 
       // 遞迴渲染子項目
       const childNodes =
-        childrenItems.length > 0
-          ? renderList(childrenItems, components)
-          : null;
+        childrenItems.length > 0 ? renderList(childrenItems, components) : null;
       const LiTag = components?.li || "li";
 
       // 組合當前項目及其子列表
@@ -405,14 +404,14 @@ const parseBlocks = (
           break;
         }
       }
-      
+
       i = j - 1; // 更新外層迴圈 index 到最後一個列表項
 
       // 將收集到的列表項目交給 renderList 遞迴渲染
       blocks.push(
-         <React.Fragment key={`list-block-${keyCounter++}`}>
-            {renderList(listItems, components)}
-         </React.Fragment>
+        <React.Fragment key={`list-block-${keyCounter++}`}>
+          {renderList(listItems, components)}
+        </React.Fragment>,
       );
       continue;
     }
@@ -468,7 +467,13 @@ const parseBlocks = (
  * ```
  */
 export const MyMarkDown = memo(
-  ({ variables, children, components, ...rest }: MyMarkDownProps) => {
+  <T extends React.ElementType = "div">({
+    as,
+    variables,
+    children,
+    components,
+    ...rest
+  }: MyMarkDownProps<T>) => {
     const processedContent = useMemo(() => {
       if (!children) return null;
       let result = children;
@@ -485,7 +490,8 @@ export const MyMarkDown = memo(
       return parseBlocks(result, components);
     }, [children, components, variables]);
 
-    return <div {...rest}>{processedContent}</div>;
+    const AsComponent = as || "div";
+    return <AsComponent {...rest}>{processedContent}</AsComponent>;
   },
 );
 MyMarkDown.displayName = "MyMarkDown";
