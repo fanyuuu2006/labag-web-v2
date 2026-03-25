@@ -10,6 +10,7 @@ import {
 import { fetcher } from "./fetcher";
 import { NEXT_PUBLIC_BACKEND_URL } from "@/libs/env";
 
+
 export const userMe = (token: string) =>
   fetcher<BackendResponse<SupabaseUser>>(
     `${NEXT_PUBLIC_BACKEND_URL}/v1/users/me`,

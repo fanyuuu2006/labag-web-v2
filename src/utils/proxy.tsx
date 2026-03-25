@@ -9,31 +9,44 @@ type EndpointSpec = {
   query?: Record<string, unknown>;
 };
 
+// 將 Methods 規格抽成別名，避免重複寫 Partial<Record<...>>
+type MethodsSpec = Partial<Record<HttpMethod, EndpointSpec>>;
+
 type ApiRoute = {
   url: string;
-  method?: Partial<Record<HttpMethod, EndpointSpec>>;
+  method?: MethodsSpec;
   subs?: readonly ApiRoute[];
 };
 
-type NestedRoutes<S extends readonly ApiRoute[] | undefined> =
-  S extends readonly ApiRoute[]
-    ? {
-        [R in S[number] as R["url"]]: RouteProxy<R>;
-      }
-    : object;
+type RouteList = readonly ApiRoute[];
 
-type MethodHandlers<M extends Partial<Record<HttpMethod, EndpointSpec>>> = {
+// 輔助型別：將單一 `ApiRoute` 映射成鍵（字面或 string index）
+type RouteKey<R extends ApiRoute> = R["url"] extends `:${string}` ? string : R["url"];
+
+// 將陣列映射成物件：字面鍵與動態 string index 會合併在同一個型別
+type NestedRoutes<S extends RouteList | undefined> = S extends RouteList
+  ? { [R in S[number] as RouteKey<R>]: RouteProxy<R> }
+  : object;
+
+// 將 methods mapping 轉成對應的 handler 物件（不要在結尾索引，避免變成聯集）
+type MethodHandlers<M extends MethodsSpec> = {
   [K in keyof M]: M[K] extends EndpointSpec
     ? (
         options?: (RequestInit & { method?: K }) & { query?: M[K]["query"] },
       ) => Promise<M[K]["res"]>
     : never;
-}[keyof M];
+};
 
-type RouteProxy<T extends ApiRoute> =
-  T["method"] extends Partial<Record<HttpMethod, EndpointSpec>>
-    ? MethodHandlers<T["method"]> & NestedRoutes<T["subs"]>
-    : NestedRoutes<T["subs"]>;
+type RouteProxy<T extends ApiRoute> = T["method"] extends MethodsSpec
+  ? MethodHandlers<T["method"]> & NestedRoutes<T["subs"]>
+  : NestedRoutes<T["subs"]>;
+
+// 支援根路由為動態 segment（例如 ":id"）的情況：
+// - 若 T.url 以 ':' 開頭，回傳型別會同時包含字面方法/子路由與 string index signature，
+//   方便直接使用 `api['123'](...)` 並保有方法型別。
+type RouteProxyRoot<T extends ApiRoute> = T["url"] extends `:${string}`
+  ? { [param: string]: RouteProxy<T> } & RouteProxy<T>
+  : RouteProxy<T>;
 
 // 將 query 物件序列化為查詢字串（支援陣列與物件）
 function buildQueryString(params?: Record<string, unknown>): string {
@@ -61,7 +74,9 @@ function buildQueryString(params?: Record<string, unknown>): string {
 }
 
 // 建立 API Proxy 的工廠函式：會快取子 proxy 並處理特殊屬性
-export const createApiProxy = <T extends ApiRoute>(basePath: string): RouteProxy<T> => {
+export const createApiProxy = <T extends ApiRoute>(
+  basePath: string,
+): RouteProxyRoot<T> => {
   const childProxyCache = new Map<string | symbol, unknown>();
 
   const proxyHandler: ProxyHandler<object> = {
@@ -86,7 +101,11 @@ export const createApiProxy = <T extends ApiRoute>(basePath: string): RouteProxy
     },
     apply(_target, _thisArg, args: unknown[]) {
       const requestOptions = args[0] || {};
-      if (typeof requestOptions !== "object" || requestOptions === null || !("method" in requestOptions)) {
+      if (
+        typeof requestOptions !== "object" ||
+        requestOptions === null ||
+        !("method" in requestOptions)
+      ) {
         throw new Error(
           "請求參數必須為包含 method 的物件，例如 { method: 'GET' }",
         );
@@ -106,7 +125,5 @@ export const createApiProxy = <T extends ApiRoute>(basePath: string): RouteProxy
 
   // 使用一個空函式作為 callable target，並套上 handler
   const callableProxy = new Proxy(() => {}, proxyHandler);
-  return callableProxy as unknown as RouteProxy<T>;
+  return callableProxy as unknown as RouteProxyRoot<T>;
 };
-
-// 保留舊匯出名稱以免中斷相依性
