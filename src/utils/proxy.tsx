@@ -85,14 +85,14 @@ export const createProxy = <T extends Route>(url: string): ProxyFetcher<T> => {
       return child;
     },
     apply(_target, _thisArg, args: unknown[]) {
-      const opts = args[0] || {};
-      if (typeof opts !== "object" || opts === null || !("method" in opts)) {
+      const options = args[0] || {};
+      if (typeof options !== "object" || options === null || !("method" in options)) {
         throw new Error(
           "請求參數必須為包含 method 的物件，例如 { method: 'GET' }",
         );
       }
 
-      const { query, ...rest } = opts as {
+      const { query, ...rest } = options as {
         query?: Record<string, unknown>;
       } & RequestInit;
       const queryString = serializeQuery(query);
