@@ -28,59 +28,46 @@ import { LeftContentProps, LeftContent } from "./LeftContent";
 import { PatternWithPayouts } from "@/types/backend";
 import { patterns as fetchPatterns } from "@/utils/backend";
 import { usePatternModal } from "@/contexts/PatternModalContext";
+import { MyMarkDown } from "../MyMarkDown";
+import { cn } from "@/utils/className";
 
 const TIMELINE_EVENTS = [
   {
     year: "2023",
     date: "6 月 22 日",
-    title: "初代啦八機誕生",
-    description: (
-      <>
-        治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的
-        <OutsideLink
-          href="https://appinventor.mit.edu/"
-          className="text-(--primary) underline underline-offset-4"
-        >
-          MIT App Inventor 2
-        </OutsideLink>{" "}
-        的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。
-      </>
-    ),
+    description: `### 初代啦八機誕生
+      治平高中商務二孝的那個本壘板飯魚正處於很無聊的狀態，於是想到國昌老師教的 [MIT App Inventor 2](https://appinventor.mit.edu/) 的存在，運用以前玩 Minecraft 做紅石機關的邏輯，做出了第一代啦八機。`,
   },
   {
     year: "2023-2024",
     date: "持續更新",
-    title: "新增多種模式",
-    description:
-      "陸續新增了 超級阿禾模式 (SuperHHH)、綠光阿瑋模式 (GreenWei)、皮卡丘充電模式 (PiKaChu) 等模式，豐富遊戲玩法。",
+    description: `### 新增多種模式
+      陸續新增了 超級阿禾模式 (SuperHHH)、綠光阿瑋模式 (GreenWei)、皮卡丘充電模式 (PiKaChu) 等模式，豐富遊戲玩法。`,
   },
   {
     year: "2024",
     date: "8 月",
-    title: "接觸程式設計",
-    description:
-      "飯魚高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏入程式學習之路。",
+    description: `### 接觸程式設計
+      飯魚高中畢業即將進入大學，買了人生第一台電腦，開始學習 Python，並嘗試用 Python 還原啦八機，踏入程式學習之路。`,
   },
   {
     year: "2025",
     date: "2 月",
-    title: "Next.js 重構",
-    description:
-      "開始接觸前端技術，決定使用 Next.js 重構啦八機，藉由網頁應用呈現更豐富的互動體驗，同時學習現代前端開發最佳實踐。",
+    description: `### Next.js 重構
+      開始接觸前端技術，決定使用 Next.js 重構啦八機，藉由網頁應用呈現更豐富的互動體驗，同時學習現代前端開發最佳實踐。`,
   },
   {
     year: "2026",
     date: "3 月 16 日",
     title: "3.0 版本更新",
-    description:
-      "整個遊戲進行大幅優化與重構，修改了大部分遊戲規則與機制，並新增了金幣系統，讓啦八機成為一個更完整、更有意義的遊戲。",
+    description: `### 3.0 版本更新
+      整個遊戲進行大幅優化與重構，修改了大部分遊戲規則與機制，並新增了金幣系統，讓啦八機成為一個更完整、更有意義的遊戲。`,
   },
   {
     year: "2026",
     date: "至今",
-    title: "持續優化與更新",
-    description:
-      "不斷優化遊戲性能與使用者體驗，並根據玩家反饋持續更新內容，讓啦八機成為一個充滿樂趣與挑戰的遊戲。",
+    description: `### 持續優化與更新
+      不斷優化遊戲性能與使用者體驗，並根據玩家反饋持續更新內容，讓啦八機成為一個充滿樂趣與挑戰的遊戲。`,
   },
 ] as const;
 
@@ -274,8 +261,7 @@ export const MainSection = memo(() => {
       },
       {
         title: "圖案一覽",
-        description:
-          "每個圖案都有不同的分數與出現機率，點擊可查看詳細資訊。",
+        description: "每個圖案都有不同的分數與出現機率，點擊可查看詳細資訊。",
         icon: FileImageOutlined,
         children: (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -361,30 +347,54 @@ export const MainSection = memo(() => {
             <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-(--border) lg:left-8 lg:top-4 lg:bottom-4"></div>
 
             <div className="space-y-12">
-              {TIMELINE_EVENTS.map((event) => (
-                <div
-                  key={event.title}
-                  className="relative pl-12 lg:pl-20 group"
-                >
-                  {/* 時間軸圓點 */}
-                  <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75"></div>
+              {TIMELINE_EVENTS.map((event) => {
+                const dateStr = `${event.year} - ${event.date}`;
+                return (
+                  <div key={dateStr} className="relative pl-12 lg:pl-20 group">
+                    {/* 時間軸圓點 */}
+                    <div className="absolute left-2.75 top-2 w-3 h-3 rounded-full bg-(--primary) lg:left-6.75"></div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-3 text-sm font-mono text-(--muted)">
-                      <HistoryOutlined />
-                      <span>
-                        {event.year} - {event.date}
-                      </span>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3 text-sm font-mono text-(--muted)">
+                        <HistoryOutlined />
+                        <span>{dateStr}</span>
+                      </div>
+                      <article className="card secondary p-4 space-y-2">
+                        <MyMarkDown
+                          components={{
+                            h3: ({ className, ...props }) => (
+                              <h3
+                                {...props}
+                                className={cn("text-xl font-bold", className)}
+                              />
+                            ),
+                            a: ({ className, ...props }) => (
+                              <OutsideLink
+                                {...props}
+                                className={cn(
+                                  "underline underline-offset-2 text-(--primary) font-medium",
+                                  className,
+                                )}
+                              />
+                            ),
+                            p: ({ className, ...props }) => (
+                              <p
+                                {...props}
+                                className={cn(
+                                  "text-(--muted) leading-relaxed",
+                                  className,
+                                )}
+                              />
+                            ),
+                          }}
+                        >
+                          {event.description}
+                        </MyMarkDown>
+                      </article>
                     </div>
-                    <article className="card secondary p-4 space-y-2">
-                      <h3 className="text-xl font-bold">{event.title}</h3>
-                      <p className="text-(--muted) leading-relaxed">
-                        {event.description}
-                      </p>
-                    </article>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
