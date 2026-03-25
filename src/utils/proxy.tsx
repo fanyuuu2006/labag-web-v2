@@ -9,37 +9,39 @@ type EndpointSpec = {
   query?: Record<string, unknown>;
 };
 
-// 將 Methods 規格抽成別名，避免重複寫 Partial<Record<...>>
-type MethodsSpec = Partial<Record<HttpMethod, EndpointSpec>>;
-
 type ApiRoute = {
   url: string;
-  method?: MethodsSpec;
+  method?: Partial<Record<HttpMethod, EndpointSpec>>;
   subs?: readonly ApiRoute[];
 };
 
-type RouteList = readonly ApiRoute[];
+type NestedRoutes<S extends readonly ApiRoute[] | undefined> =
+  S extends readonly ApiRoute[]
+    ? // 非動態 segment：使用字面鍵
+      {
+        [R in S[number] as R["url"] extends `:${string}`
+          ? never
+          : R["url"]]: RouteProxy<R>;
+      } & {
+        // 動態 segment（以 ':' 開始）：提供 string index signature
+        [R in S[number] as R["url"] extends `:${string}`
+          ? string
+          : never]: RouteProxy<R>;
+      }
+    : object;
 
-// 輔助型別：將單一 `ApiRoute` 映射成鍵（字面或 string index）
-type RouteKey<R extends ApiRoute> = R["url"] extends `:${string}` ? string : R["url"];
-
-// 將陣列映射成物件：字面鍵與動態 string index 會合併在同一個型別
-type NestedRoutes<S extends RouteList | undefined> = S extends RouteList
-  ? { [R in S[number] as RouteKey<R>]: RouteProxy<R> }
-  : object;
-
-// 將 methods mapping 轉成對應的 handler 物件（不要在結尾索引，避免變成聯集）
-type MethodHandlers<M extends MethodsSpec> = {
+type MethodHandlers<M extends Partial<Record<HttpMethod, EndpointSpec>>> = {
   [K in keyof M]: M[K] extends EndpointSpec
     ? (
-        options?: (RequestInit & { method?: K }) & { query?: M[K]["query"] },
+        options: (RequestInit & { method?: K }) & { query?: M[K]["query"] },
       ) => Promise<M[K]["res"]>
     : never;
-};
+}[keyof M];
 
-type RouteProxy<T extends ApiRoute> = T["method"] extends MethodsSpec
-  ? MethodHandlers<T["method"]> & NestedRoutes<T["subs"]>
-  : NestedRoutes<T["subs"]>;
+type RouteProxy<T extends ApiRoute> =
+  T["method"] extends Partial<Record<HttpMethod, EndpointSpec>>
+    ? MethodHandlers<T["method"]> & NestedRoutes<T["subs"]>
+    : NestedRoutes<T["subs"]>;
 
 // 支援根路由為動態 segment（例如 ":id"）的情況：
 // - 若 T.url 以 ':' 開頭，回傳型別會同時包含字面方法/子路由與 string index signature，
