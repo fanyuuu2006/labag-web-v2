@@ -1,45 +1,35 @@
-# 🎰 啦八機 LaBaG
+# 🎰 啦八機 LaBaG Web
 
-> 只需動動手指，就能在無聊時打發時間的網頁拉霸小遊戲。
+> 只需動動手指，就能在無聊時候打發時間的線上拉霸小遊戲
 
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Live Demo](https://img.shields.io/badge/demo-labag.vercel.app-000?style=flat-square)](https://labag.vercel.app)
 
 ---
 
 ## Overview
 
-**啦八機 LaBaG** 是一款以 Next.js App Router 打造的網頁版拉霸機遊戲。專案將經典「啦八機」玩法帶上現代 Web 平台，提供流暢的轉輪動畫、音效與主題切換，並透過後端 API 支援使用者登入、金幣系統、排行榜與分享獎勵。
+**啦八機 LaBaG Web** 是經典拉霸機遊戲「啦八機」的 Web 版前端，使用 Next.js App Router 建構。玩家可透過 Google 或 GitHub 登入，進行轉動、累積金幣，並在排行榜上與其他玩家競爭。
 
-**解決的問題：**
-
-- 將原本 MIT App Inventor 時代的離線小遊戲，重構為可跨裝置存取的現代 Web 應用
-- 提供輕量、免安裝（亦支援 PWA）的休閒娛樂體驗
-- 整合 OAuth 登入與雲端資料，讓玩家能保存進度並與他人競爭
+本專案解決的是：將原本 MIT App Inventor 製作的行動端小遊戲，以現代 Web 技術重構為可跨裝置存取、支援 PWA 安裝、具備社群分享與排行榜功能的完整 Web 應用。
 
 **適合對象：**
 
-- 想快速體驗拉霸小遊戲的一般玩家
-- 學習 Next.js App Router、React Context 與外部 API 整合的前端開發者
-- 對 PWA、遊戲化互動（分享獎勵、排行榜）有興趣的技術愛好者
-
-線上版本：[https://labag.vercel.app](https://labag.vercel.app)
+- 想快速體驗輕量休閒小遊戲的一般使用者
+- 對 Next.js App Router、OAuth 登入、外部 API 串接有興趣的前端開發者
+- 需要參考 PWA、主題切換、遊戲 UI 實作的開源貢獻者
 
 ---
 
 ## Features
 
-- 🎮 **三軸拉霸核心玩法** — 支援自訂下注金額，逐軸揭示符號並計算派彩
-- 🔐 **OAuth 登入** — 透過 Google / GitHub 第三方登入，保存個人遊戲進度
-- 🏆 **雙軌排行榜** — 依「持有金幣」與「遊玩次數」分類，展示 Top 玩家
-- 🎨 **多主題模式** — 內建 Normal、SuperHHH、GreenWei、PiKaChu 等視覺主題
-- 🔊 **音效與音樂控制** — 可獨立開關背景音樂與遊戲音效
-- 📤 **分享獎勵機制** — 登入使用者分享專屬連結，被點擊後可獲得金幣
-- 📱 **PWA 支援** — 可安裝至桌面或手機主畫面，提供接近原生 App 的體驗
-- 📖 **符號圖鑑與專案介紹** — 內建 Pattern 說明 Modal 與完整開發歷程頁面
+- 🎮 **拉霸遊戲核心** — 三軸轉動、下注選擇、逐格揭示動畫，整合 `labag` 遊戲邏輯套件
+- 🔐 **OAuth 登入** — 支援 Google、GitHub 第三方登入，含 Access / Refresh Token 自動刷新
+- 🏆 **即時排行榜** — 依「總金幣數」與「轉動次數」分類排名，含頒獎台與完整榜單
+- 🔗 **分享獎勵機制** — 登入用戶可產生分享連結，連結被點擊後可獲得金幣獎勵
+- 🎨 **多主題切換** — 內建 Normal、SuperHHH、GreenWei、PiKaChu 等視覺主題
+- 🔊 **音效與音樂設定** — 可獨立開關背景音樂與遊戲音效，設定持久化至 localStorage
+- 📱 **PWA 支援** — 提供 Web App Manifest，可安裝至主畫面離線快捷啟動
+- 📖 **遊戲說明頁** — 含開發歷程、符號賠率表、技術架構等 Markdown 內容
 
 ---
 
@@ -47,14 +37,14 @@
 
 | 類別 | 技術 |
 |------|------|
-| **前端框架** | [Next.js 16](https://nextjs.org/)（App Router） |
-| **UI 函式庫** | [React 19](https://react.dev/)、[Ant Design 6](https://ant.design/) |
-| **語言** | [TypeScript 5](https://www.typescriptlang.org/) |
-| **樣式** | [Tailwind CSS 4](https://tailwindcss.com/)、`clsx` / `tailwind-merge` |
-| **遊戲邏輯** | [`labag`](https://www.npmjs.com/package/labag)（核心拉霸演算法） |
-| **API / 資料** | 外部 REST API（Supabase 後端），透過 `fetcher` 封裝請求 |
-| **其他** | PWA（Web App Manifest）、Next.js Middleware（分享追蹤） |
-| **部署** | [Vercel](https://vercel.com/) |
+| 前端框架 | [Next.js 16](https://nextjs.org/)（App Router） |
+| UI 函式庫 | [React 19](https://react.dev/) |
+| 語言 | [TypeScript 5](https://www.typescriptlang.org/) |
+| CSS / UI | [Tailwind CSS 4](https://tailwindcss.com/)、[Ant Design Icons](https://ant.design/components/icon) |
+| 共用元件 | [`fanyucomponents`](https://www.npmjs.com/package/fanyucomponents) |
+| API / 資料 | 外部 REST API（Supabase 後端），透過 `fetch` 封裝 |
+| SEO | Next.js Metadata API、`sitemap.ts`、`robots.ts` |
+| 部署 | [Vercel](https://vercel.com/) |
 
 ---
 
@@ -62,44 +52,48 @@
 
 ```
 labag-web/
-├── public/                  # 靜態資源
-│   ├── audios/              # 背景音樂與音效
-│   ├── icons/               # PWA 與 favicon 圖示
-│   ├── images/              # 遊戲符號與主題圖片
-│   └── manifest.json        # PWA 設定檔
+├── public/
+│   ├── manifest.json          # PWA 設定檔
+│   └── icons/                 # App 圖示（192×192、512×512）
 ├── src/
-│   ├── app/                 # Next.js App Router 路由
-│   │   ├── about/           # 關於頁面（開發歷程、技術說明）
-│   │   ├── game/            # 遊戲主畫面
-│   │   ├── login/           # OAuth 登入與回調
-│   │   ├── rankings/        # 排行榜列表與詳情
-│   │   ├── share/           # 分享連結入口（Middleware 處理）
-│   │   ├── layout.tsx       # 根 Layout、SEO Metadata
-│   │   ├── page.tsx         # 首頁
-│   │   ├── robots.ts        # SEO robots 設定
-│   │   └── sitemap.ts       # 網站地圖
-│   ├── components/          # UI 元件（Header、Game、Rankings 等）
-│   ├── contexts/            # React Context（User、Setting、Modal）
-│   ├── hooks/               # 自訂 Hooks
-│   ├── libs/                # 站點設定、後端常數、排行榜資料
-│   ├── styles/              # 全域 CSS（Tailwind）
-│   ├── types/               # TypeScript 型別定義
-│   ├── utils/               # API 請求、音訊、日期等工具函式
-│   └── middleware.ts        # 分享連結點擊追蹤與重導向
+│   ├── app/                   # Next.js App Router 路由頁面
+│   │   ├── page.tsx           # 首頁
+│   │   ├── game/              # 遊戲頁面
+│   │   ├── rankings/          # 排行榜（含動態路由 [key]）
+│   │   ├── login/             # 登入與 OAuth 回調
+│   │   ├── about/             # 關於 / 遊戲說明
+│   │   ├── share/             # 分享連結追蹤（middleware 重導向）
+│   │   ├── layout.tsx         # 根 Layout 與 SEO Metadata
+│   │   ├── sitemap.ts         # 動態 Sitemap 生成
+│   │   └── robots.ts          # 搜尋引擎爬蟲設定
+│   ├── components/            # React 元件
+│   │   ├── game/              # 遊戲主畫面、轉軸、音效
+│   │   ├── rankings/          # 排行榜 UI 元件
+│   │   ├── Header/            # 導覽列（桌面 / 行動版）
+│   │   └── ...                # 共用元件（AuthButton、ShareButton 等）
+│   ├── contexts/              # React Context（User、Setting、Modal）
+│   ├── hooks/                 # 自訂 Hooks
+│   ├── libs/                  # 站點設定、環境變數、常數
+│   ├── styles/                # 全域 CSS 與元件樣式
+│   ├── types/                 # TypeScript 型別定義
+│   ├── utils/                 # 工具函式（fetcher、backend API、audio）
+│   └── middleware.ts          # 分享連結點擊追蹤 Middleware
 ├── next.config.ts
-├── package.json
-└── tsconfig.json
+├── postcss.config.mjs
+├── tsconfig.json
+└── eslint.config.mjs
 ```
 
 ### 重要目錄說明
 
 | 目錄 | 用途 |
 |------|------|
-| `src/app/` | 定義所有頁面路由與 Layout，遵循 Next.js App Router 慣例 |
-| `src/components/` | 依功能模組拆分的可重用 UI 元件 |
-| `src/contexts/` | 管理使用者登入狀態、遊戲設定（主題、音效）與 Modal 狀態 |
-| `src/utils/backend.tsx` | 封裝所有後端 API 呼叫（遊戲、使用者、排行榜、分享） |
-| `src/libs/` | 站點中繼資料、導航路由與後端相關常數 |
+| `src/app/` | Next.js App Router 頁面與路由，每個資料夾對應一個 URL 路徑 |
+| `src/components/` | 可複用的 React UI 元件，依功能模組分子目錄 |
+| `src/contexts/` | 全域狀態管理（使用者登入、遊戲設定、Modal 控制） |
+| `src/libs/` | 站點 metadata、路由定義、後端常數等靜態設定 |
+| `src/utils/backend.tsx` | 後端 REST API 呼叫封裝（遊戲、使用者、排行榜、分享） |
+| `src/middleware.ts` | 攔截 `/share/:id` 路徑，記錄點擊後重導向至首頁 |
 
 ---
 
@@ -107,9 +101,8 @@ labag-web/
 
 ### 前置需求
 
-- [Node.js](https://nodejs.org/) 18.18 或以上
-- npm / yarn / pnpm（擇一）
-- 可連線的 LaBaG 後端 API 服務
+- [Node.js](https://nodejs.org/) 18.17 或以上
+- npm（或 yarn / pnpm / bun）
 
 ### 安裝與啟動
 
@@ -121,26 +114,24 @@ cd labag-web
 # 2. 安裝依賴
 npm install
 
-# 3. 設定環境變數
-cp .env.example .env.local
-# 編輯 .env.local，填入後端 API 位址
+# 3. 建立 .env.local 並設定環境變數（見下方 Environment Variables 章節）
 
 # 4. 啟動開發伺服器
 npm run dev
 ```
 
-開啟瀏覽器前往 [http://localhost:3000](http://localhost:3000)。
+開啟 [http://localhost:3000](http://localhost:3000) 即可預覽。
 
 ### 其他指令
 
 ```bash
-# 程式碼檢查
+# 程式碼 Lint 檢查
 npm run lint
 
-# 建置正式版
+# 建置 Production 版本
 npm run build
 
-# 啟動正式版伺服器（需先 build）
+# 啟動 Production 伺服器（需先 build）
 npm run start
 ```
 
@@ -148,20 +139,17 @@ npm run start
 
 ## Environment Variables
 
-在專案根目錄建立 `.env.local` 檔案：
+在專案根目錄建立 `.env.local` 檔案，並填入以下變數：
 
 ```env
-# 後端 API 根網址（必填）
-# 開發環境範例
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8787
-
-# 正式環境範例
-# NEXT_PUBLIC_BACKEND_URL=https://your-backend-api.example.com
+# 後端 API 根 URL（必填）
+# 開發環境可指向本地後端，Production 指向正式 API
+NEXT_PUBLIC_BACKEND_URL=https://your-backend-api.example.com
 ```
 
-| 變數 | 必填 | 說明 |
-|------|------|------|
-| `NEXT_PUBLIC_BACKEND_URL` | ✅ | 後端 REST API 的根 URL，用於 OAuth 登入、遊戲邏輯、排行榜與分享功能 |
+| 變數名稱 | 必填 | 說明 |
+|----------|------|------|
+| `NEXT_PUBLIC_BACKEND_URL` | ✅ | 後端 REST API 的根 URL，前端所有 API 請求皆以此為 base |
 
 > **注意：** 以 `NEXT_PUBLIC_` 為前綴的變數會暴露至瀏覽器端，請勿存放機密金鑰。
 
@@ -169,32 +157,23 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:8787
 
 ## Deployment
 
-### Vercel（推薦）
+本專案預設部署於 [Vercel](https://vercel.com/)，正式環境網址：[https://labag.vercel.app](https://labag.vercel.app)
 
-本專案預設部署於 [Vercel](https://vercel.com/)，與 Next.js 原生整合。
+### Vercel 部署步驟
 
-1. 將 Repository 連結至 Vercel 專案
-2. 在 Vercel 專案設定中新增環境變數 `NEXT_PUBLIC_BACKEND_URL`
-3. 推送至 main 分支即可自動觸發建置與部署
+1. 將此 repository 連結至 Vercel 專案
+2. 在 Vercel Dashboard → **Settings → Environment Variables** 中設定 `NEXT_PUBLIC_BACKEND_URL`
+3. 推送至 main 分支，Vercel 將自動觸發 build 與部署
 
----
+### 其他平台
 
-## Future Improvements
+亦可部署至任何支援 Next.js 的平台（如 Netlify、Railway、自架 Node.js 伺服器），只需確保：
 
-- **離線遊玩模式** — 擴充 Service Worker，讓部分 UI 與靜態資源可在無網路時存取
-- **即時排行榜更新** — 引入 WebSocket 或 SSE，讓排行榜資料無需手動重新整理
-- **更多遊戲模式** — 新增限時活動、每日簽到或特殊符號組合等玩法擴充
-- **效能優化** — 對遊戲動畫與音效資源實施 lazy loading 與 CDN 快取策略
-- **無障礙（a11y）強化** — 補充鍵盤操作支援與 ARIA 標籤，提升螢幕閱讀器相容性
+- 執行 `npm run build` 後以 `npm run start` 啟動
+- 環境變數 `NEXT_PUBLIC_BACKEND_URL` 已正確設定
 
 ---
 
 ## License
 
-本專案以 [MIT License](./LICENSE) 授權。
-
----
-
-## 版權聲明
-
-本專案由 🍚🐟 創建，僅供學習與娛樂用途。所有音樂與圖片素材均來源於公開資源，若有侵權請聯繫刪除。
+本專案以 [MIT License](LICENSE) 授權釋出。
